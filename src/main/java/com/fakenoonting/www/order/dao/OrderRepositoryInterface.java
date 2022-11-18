@@ -1,13 +1,17 @@
 package com.fakenoonting.www.order.dao;
 
-import com.fakenoonting.www.order.vo.OrderVO;
+import com.fakenoonting.www.order.vo.OrdersVO;
 
 import java.util.List;
 
 public interface OrderRepositoryInterface {
 
-    public int save(OrderVO orderVO);
-    public OrderVO findById(Long id);
+    public int save(OrdersVO ordersVO);
+    public OrdersVO findById(Long id);
+    public List<OrdersVO> findAllByMemberId(Long memberId);
 
-    public List<OrderVO> findAllByMemberId(Long memberId);
+    public OrdersVO updateOrderVO(OrdersVO ordersVO);
+
+    public int deleteByOrderId(Long id);
+
 }
