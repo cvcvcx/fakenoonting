@@ -15,7 +15,7 @@ public class MemoryOrderItemRepository implements OrderItemRepositoryInterface{
     @Override
     public int save(OrderItemVO orderItemVO) {
         autoincrement+=1;
-        orderItemVO.setOrderId(autoincrement);
+        orderItemVO.setId(autoincrement);
         store.put(autoincrement,orderItemVO);
         return 0;
     }
