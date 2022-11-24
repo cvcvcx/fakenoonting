@@ -16,9 +16,11 @@ public class OrderItemVO {
     //상품과는 1:1관계가 된다. (OrderItem) 1 : 1 (Product)
     private Long productId;//(name = "product_id,fk)
 
-    public OrderItemVO(Long id, Long orderId, Long productId) {
-        this.id = id;
+    private Integer orderItemCount;
+
+    public OrderItemVO(Long orderId, Long productId, Integer orderItemCount) {
         this.orderId = orderId;
         this.productId = productId;
+        this.orderItemCount = orderItemCount;
     }
 }
