@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-2 text-center">
-                        <a href="#"><button class="btn btn-black" type="button"><img src="${contextPath}/resources/images/logo.png"></button></a>
+                        <a href="${contextPath}"><button class="btn btn-black" type="button"><img src="${contextPath}/resources/images/logo.png"></button></a>
                     </div>
                     <div class="col-lg-3 col-sm-1">
                         <div class="col-lg-2 input-group"><!-- mb-2 pt-2 -->
@@ -59,7 +59,7 @@
                 <div class="offcanvas offcanvas-end text-bgdark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
                     <div class="offcanvas-header">
                         <div class="offcanvas-title" id="offcanvasDarkNavbarLabel">
-                            <a href="#"><button class="btn btn-black" type="button"><img src="images/logo.png"></button></a>
+                            <a href="${contextPath}"><button class="btn btn-black" type="button"><img src="${contextPath}/resources/images/logo.png"></button></a>
                         </div>
                     </div>
                     <div class="offcanvas-body">

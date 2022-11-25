@@ -79,17 +79,17 @@
                 </div>
             </section>
             <section>
-                <a href="#"><img src="${contextPath}/resources/images/books01.jpg" alt="사진"></a>
-                <a href="#"><img src="${contextPath}/resources/images/cat2.png" alt="사진"></a>
-                <a href="#"><img src="${contextPath}/resources/images/cat3.jpg" alt="사진"></a>
-                <a href="#"><img src="${contextPath}/resources/images/cat4.png" alt="사진"></a>
-                <a href="#"><img src="${contextPath}/resources/images/cat5.jpg" alt="사진"></a>
-                <a href="#"><img src="${contextPath}/resources/images/cat6.png" alt="사진"></a>
-                <a href="#"><img src="${contextPath}/resources/images/cat7.jpg" alt="사진"></a>
-                <a href="#"><img src="${contextPath}/resources/images/cat8.png" alt="사진"></a>
-                <a href="#"><img src="${contextPath}/resources/images/cat9.jpg" alt="사진"></a>
-                <a href="#"><img src="${contextPath}/resources/images/cat10.jpg" alt="사진"></a>
-                <a href="#"><img src="${contextPath}/resources/images/cat11.png" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat1.jpg" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat2.png" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat3.jpg" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat4.png" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat5.jpg" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat6.png" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat7.jpg" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat8.png" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat9.jpg" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat10.jpg" alt="사진"></a>
+                <a href="${contextPath}/productDetails"><img src="${contextPath}/resources/images/cat11.png" alt="사진"></a>
             </section>
         </article>
 
