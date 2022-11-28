@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MemoryMemberRepository implements MemberRepositoryInterface{
 
-	private static Map<String, MemberVO> store = new HashMap<>();
+	private static Map<Long, MemberVO> store = new HashMap<>();
 	
 	// 나중에 try ~ catch 써야 함
 	// 유저 정보를 리포지토리에 저장
@@ -26,7 +26,7 @@ public class MemoryMemberRepository implements MemberRepositoryInterface{
 	
 	// 유저 아이디로 검색
 	@Override
-	public MemberVO getById(String userId) {		
+	public MemberVO getById(Long userId) {		
 		
 		return store.get(userId);
 		

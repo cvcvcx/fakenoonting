@@ -1,5 +1,7 @@
 package com.fakenoonting.www.member.controller;
 
-public class MemberController {
+public class MemberDeleteController {
+	
+	
 
 }

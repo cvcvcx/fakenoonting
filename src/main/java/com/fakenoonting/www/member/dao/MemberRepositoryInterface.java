@@ -11,7 +11,7 @@ public interface MemberRepositoryInterface {
 	int save(MemberVO user) ;
 	
 	// 유저 아이디로 검색
-	MemberVO getById(String userId) ;
+	MemberVO getById(Long userId) ;
 	
 	// 유저 이름으로 검색
 	Optional<MemberVO> getByName(String userName);

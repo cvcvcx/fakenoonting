@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class MemberVO {
 	
-	private String id;	
+	private Long id;	
 	private String pwd;
 	private String nick;
 	private String name;
@@ -20,7 +20,7 @@ public class MemberVO {
 	
 	
 	
-	public MemberVO(String id, String pwd, String nick, String name, char gender, int phone, String mail, Date birth,
+	public MemberVO(Long id, String pwd, String nick, String name, char gender, int phone, String mail, Date birth,
 			String address, Date regdate, boolean isExist) {
 		
 		super();
@@ -40,10 +40,10 @@ public class MemberVO {
 	
 
 	
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

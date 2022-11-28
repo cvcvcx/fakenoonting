@@ -23,6 +23,8 @@
 
 	<context:component-scan base-package="com.fakenoonting.www" />
 
+
+
 <!-- 사진 파일을 옮기기 위한 멀티파트리졸버 설정 -->
 	<beans:bean id="multipartResolver"
 				class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -33,6 +35,5 @@
 <!-- 아래 밸류가 저장되는 위치 자기 컴퓨터에서 폴더 하나 만들어서 경로 설정할것 -->
 		<beans:constructor-arg value="/Users/chochanghun/Desktop/studyImgData"/>
 	</beans:bean>
-	
 	
 </beans:beans>
