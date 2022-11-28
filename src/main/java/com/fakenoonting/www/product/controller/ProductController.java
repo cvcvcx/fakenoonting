@@ -15,4 +15,10 @@ public class ProductController {
         mav.setViewName("/product/productDetails");
         return mav;
     }
+    @RequestMapping("/upload")
+    public ModelAndView productUpload(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/util/upload/uploadAjax");
+        return mav;
+    }
 }
