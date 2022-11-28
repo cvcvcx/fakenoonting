@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 @Controller
 @Slf4j
@@ -43,7 +44,8 @@ public class UploadController {
 
         for(MultipartFile multipartFile: uploadFile){
             String uploadFileName = multipartFile.getOriginalFilename();
-
+            String uuid = UUID.randomUUID().toString();
+            uploadFileName = uuid+"_"+uploadFileName;
             log.info("multipartFile.getName" + multipartFile.getOriginalFilename());
 
             File saveFile = new File(savePath,uploadFileName);
