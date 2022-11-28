@@ -25,25 +25,24 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <jsp:include page="../../common/header.jsp" flush="false"></jsp:include>
     <div class="container">
       <form
+        class="form-horizontal"
         action="${contextPath}/util/upload/uploadImage"
-        enctype="multipart/form-data"
         method="post"
+        enctype="multipart/form-data"
+        target="iframe1"
       >
-        <div class="form_section">
-          <div class="form_section_title">
-            <label>상품 이미지</label>
-          </div>
-          <div class="form_section_content">
-            <input
-              type="file"
-              id="fileItem"
-              name="uploadFile"
-              multiple
-              style="height: 30px"
-            />
+        <!-- file의 변수명과 컨트롤러의 MultipartFile file이 일치해야 한다. -->
+        <div class="form-group">
+          <div class="col-sm-8">
+            <input type="file" name='uploadFile' class="btn btn-warning" multiple />
+            <input type="submit" value="파일올리기" class="btn btn-primary" />
           </div>
         </div>
-        <button type="submit"></button>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <iframe name="iframe1"></iframe>
+          </div>
+        </div>
       </form>
     </div>
     <jsp:include page="../../common/footer.jsp" flush="false"></jsp:include>

@@ -24,7 +24,7 @@ public class UploadController {
 
     //만약, 프로필 같은 사진을 업로드 한다고 해도, 여기로 요청만 보내진다면 서버로 저장할 수 있음
     //상품 후기 글도 마찬가지
-    @PostMapping("/uploadImage")
+    @PostMapping(value = "/uploadImage", produces = "text/plain;charset=utf-8")
     public void uploadAjax(MultipartFile[] uploadFile){
 
         log.info("uploadAjaxPost요청 진행중...");
