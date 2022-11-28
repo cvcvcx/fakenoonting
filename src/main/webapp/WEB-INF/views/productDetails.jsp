@@ -29,148 +29,245 @@
         <!-- article -->
         <article>
             <!-- start section -->
-            <section class="big-section wow animate__fadeIn">
+            <section>
                 <div class="container">
                     <div class="row">
-                        <div class="col-12 d-flex flex-column flex-lg-row align-items-md-center">
-                            <img src="${contextPath}/resources/images/cat1.jpg"  alt="사진" class="w-50"></img>
-                            <div class="margin-20px-bottom">
-                                <label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">color</label>
-                                <ul class="alt-font shop-color">
-                                    <li>
-                                        <input class="d-none" type="radio" id="color-1" name="color" checked />
-                                        <label for="color-1"><span style="background-color: #363636"></span></label>
-                                    </li>
-                                    <li>
-                                        <input class="d-none" type="radio" id="color-2" name="color" />
-                                        <label for="color-2"><span style="background-color: #657fa8"></span></label>
-                                    </li>
-                                    <li>
-                                        <input class="d-none" type="radio" id="color-3" name="color" />
-                                        <label for="color-3"><span style="background-color: #936f5e"></span></label>
-                                    </li>
-                                    <li>
-                                        <input class="d-none" type="radio" id="color-4" name="color" />
-                                        <label for="color-4"><span style="background-color: #97a27f"></span></label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="margin-4-rem-bottom">
-                                <label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
-                                <ul class="text-extra-small shop-size">
-                                    <li>
-                                        <input class="d-none" type="radio" id="size-1" name="size" checked />
-                                        <label for="size-1" class="width-80"><span>S</span></label>
-                                    </li>
-                                    <li>
-                                        <input class="d-none" type="radio" id="size-2" name="size" />
-                                        <label for="size-2" class="width-80"><span>M</span></label>
-                                    </li>
-                                    <li>
-                                        <input class="d-none" type="radio" id="size-3" name="size" />
-                                        <label for="size-3" class="width-80"><span>L</span></label>
-                                    </li>
-                                </ul>
-                                <label class="size-chart text-uppercase w-60px margin-10px-left">
-                                    <a class="modal-popup alt-font text-extra-small text-decoration-line-bottom" href="#modal-popup">사이즈 가이드</a>
-                                </label>
-                                <div id="modal-popup" class="white-popup-block mfp-hide w-55 mx-auto position-relative bg-white modal-popup-main padding-5-rem-all xl-w-70 md-w-80 md-padding-4-rem-all xs-w-95 xs-padding-3-rem-all">
-                                    <div class="table-style-01">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <th>사이즈</th>
-                                                    <th>S</th>
-                                                    <th>M</th>
-                                                    <th>L</th>
-                                                    <th>XL</th>
-                                                    <th>XXL</th>
-                                                    <th>2XL</th>
-                                                    <th>3XL</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>어깨</td>
-                                                    <td>16</td>
-                                                    <td>17</td>
-                                                    <td>18</td>
-                                                    <td>19</td>
-                                                    <td>20</td>
-                                                    <td>21</td>
-                                                    <td>22</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>가슴단</td>
-                                                    <td>28-29</td>
-                                                    <td>30-31</td>
-                                                    <td>32-33</td>
-                                                    <td>34-35</td>
-                                                    <td>36-37</td>
-                                                    <td>38-39</td>
-                                                    <td>40-41</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>소매단</td>
-                                                    <td>9</td>
-                                                    <td>9.5</td>
-                                                    <td>10</td>
-                                                    <td>10.5</td>
-                                                    <td>11</td>
-                                                    <td>11.5</td>
-                                                    <td>12</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>총길이</td>
-                                                    <td>63</td>
-                                                    <td>66</td>
-                                                    <td>69</td>
-                                                    <td>72</td>
-                                                    <td>75</td>
-                                                    <td>78</td>
-                                                    <td>81</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>밑단</td>
-                                                    <td>33</td>
-                                                    <td>33.5</td>
-                                                    <td>34</td>
-                                                    <td>34.5</td>
-                                                    <td>35</td>
-                                                    <td>35.5</td>
-                                                    <td>36</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>암홀</td>
-                                                    <td>22</td>
-                                                    <td>22.5</td>
-                                                    <td>32</td>
-                                                    <td>23.5</td>
-                                                    <td>24</td>
-                                                    <td>24.5</td>
-                                                    <td>25</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        <div class="col-md-6">
+                            <img src="${contextPath}/resources/images/cat1.jpg" alt="사진" class="w-100">
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    냥냥펀치 프린팅 기모 셔츠 7color
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <div class="quantity margin-15px-right">
-                                <label class="screen-reader-text">수량</label>
-                                <input type="button" value="-" class="qty-minus qty-btn" data-quantity="minus" data-field="quantity">
-                                <input class="input-text qty-text" type="number" name="quantity" value="1">
-                                <input type="button" value="+" class="qty-plus qty-btn" data-quantity="plus" data-field="quantity">
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-6 col-md-5">
+                                    판매가
+                                </div>
+                                <div class="col-6 col-md-7">
+                                    115,000원
+                                </div>
                             </div>
-                            <a href="#" class="btn btn-medium btn-primary">BUY IT NOW</a>
-                            <div class="margin-25px-top">
-                                <a href="#" class="text-uppercase text-extra-small alt-font margin-20px-right font-weight-500 "><i class=" margin-5px-right"></i>WISH</a> <!-- 아이콘 추가 해야함 -->
-                                <a href="#" class="text-uppercase text-extra-small alt-font margin-20px-right font-weight-500 "><i class=" margin-5px-right"></i>CART</a> <!-- 아이콘 추가 해야함 -->
+                            <div class="row mb-3">
+                                <div class="col-8 col-md-5">
+                                    색상
+                                </div>
+                                <div class="col-4 col-md-7">
+                                    <button class="btn btn-light">블랙</button>
+                                    <button class="btn btn-light">그레이</button>
+                                    <button class="btn btn-light">네이비</button>
+                                    <button class="btn btn-light">다크베이지</button>
+                                    <button class="btn btn-light">아이보리</button>
+                                    <button class="btn btn-light">라이트베이지</button>
+                                    <button class="btn btn-light">인디블루</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 col-md-5">
+                                    Size
+                                </div>
+                                <div class="col-4 col-md-7">
+                                    <input type="radio" class="btn-check" name="options-outlined" id="S-outlined" autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="S-outlined">S</label>
+                                    <input type="radio" class="btn-check" name="options-outlined" id="M-outlined" autocomplete="off" checked>
+                                    <label class="btn btn-outline-secondary" for="M-outlined">M</label>
+                                    <input type="radio" class="btn-check" name="options-outlined" id="L-outlined" autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="L-outlined">L</label>
+                                    <button class="btn btn-light">
+                                        <a href="#modal-popup">사이즈 가이드</a>
+                                    </button>
+                                </div>  
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-8 col-md-5">
+                                    <label class="screen-reader-text">냥냥펀치 프린팅 기모 셔츠 7color<br>-블랙/S</label>
+                                </div>
+                                <div class="col-4 col-md-7">
+                                    <input class="input-text qty-text" type="number" name="quantity" value="1">
+                                    <button type="button" class="btn-close" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-3">
+                                <div class="col-8 col-md-5">
+                                    총 상품금액(수량)
+                                </div>
+                                <div class="col-4 col-md-7">
+                                    <b>115,000원</b>(1개)
+                                </div>
+                            </div>
+
+                            <!-- Button trigger modal -->
+                            <div class="row text-center">
+                                <div class="col-12 col-md-12">
+                                    <div class="d-grid gap-2 mx-auto">
+                                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#buyNow">
+                                            BUY IT NOW
+                                        </button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="buyNow" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="buyNowLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="buyNowLabel">kikerday.com 내용</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        필수 옵션을 선택해주세요.
+                                                    </div>
+                                                        <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#wishButton">
+                                            WISH
+                                        </button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="wishButton" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="wishButtonLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="wishButtonLabel">kikerday.com 내용</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        관심상품으로 등록되었습니다.
+                                                    </div>
+                                                        <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#cartbutton">
+                                            CART
+                                        </button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="cartbutton" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cartbuttonLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="cartbuttonLabel">장바구니 담기</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        장바구니에 상품이 정상적으로 담겼습니다.
+                                                    </div>
+                                                        <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">쇼핑계속하기</button>
+                                                        <button type="button" class="btn btn-dark"><a href="#">장바구니 이동</a></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
             <!-- end section -->
+            
+            <!-- start 제품 상세 이미지, 텍스트 -->
+            <section>
+                <div class="container">
+                    <div class="text-center">
+                        <img src="${contextPath}/resources/images/cat2.png" alt="사진" class="w-50">
+                        <img src="${contextPath}/resources/images/cat3.jpg" alt="사진" class="w-50">
+                        <img src="${contextPath}/resources/images/cat4.png" alt="사진" class="w-50">
+                        <img src="${contextPath}/resources/images/cat5.jpg" alt="사진" class="w-50">
+                        <img src="${contextPath}/resources/images/cat6.png" alt="사진" class="w-50">
+                    </div>
+                </div>
+                <div id="modal-popup">
+                    <div class="d-flex justify-content-center">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>사이즈</th>
+                                    <th>S</th>
+                                    <th>M</th>
+                                    <th>L</th>
+                                    <th>XL</th>
+                                    <th>XXL</th>
+                                    <th>2XL</th>
+                                    <th>3XL</th>
+                                </tr>
+                                <tr>
+                                    <th>어깨</th>
+                                    <td>16</td>
+                                    <td>17</td>
+                                    <td>18</td>
+                                    <td>19</td>
+                                    <td>20</td>
+                                    <td>21</td>
+                                    <td>22</td>
+                                </tr>
+                                <tr>
+                                    <th>가슴단</th>
+                                    <td>28-29</td>
+                                    <td>30-31</td>
+                                    <td>32-33</td>
+                                    <td>34-35</td>
+                                    <td>36-37</td>
+                                    <td>38-39</td>
+                                    <td>40-41</td>
+                                </tr>
+                                <tr>
+                                    <th>소매단</th>
+                                    <td>9</td>
+                                    <td>9.5</td>
+                                    <td>10</td>
+                                    <td>10.5</td>
+                                    <td>11</td>
+                                    <td>11.5</td>
+                                    <td>12</td>
+                                </tr>
+                                <tr>
+                                    <th>총길이</th>
+                                    <td>63</td>
+                                    <td>66</td>
+                                    <td>69</td>
+                                    <td>72</td>
+                                    <td>75</td>
+                                    <td>78</td>
+                                    <td>81</td>
+                                </tr>
+                                <tr>
+                                    <th>밑단</th>
+                                    <td>33</td>
+                                    <td>33.5</td>
+                                    <td>34</td>
+                                    <td>34.5</td>
+                                    <td>35</td>
+                                    <td>35.5</td>
+                                    <td>36</td>
+                                </tr>
+                                <tr>
+                                    <th>암홀</th>
+                                    <td>22</td>
+                                    <td>22.5</td>
+                                    <td>32</td>
+                                    <td>23.5</td>
+                                    <td>24</td>
+                                    <td>24.5</td>
+                                    <td>25</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <!-- end 제품 상세 이미지, 텍스트 -->
+                       
             <!-- start section -->
             <section class="border-top border-width-1px border-color-medium-gray pt-0 wow animate__fadeIn">
                 <div class="container-fluid">

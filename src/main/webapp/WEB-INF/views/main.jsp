@@ -49,22 +49,22 @@
                         <div class="carousel-item active" data-bs-interval="5000">
                             <img src="${contextPath}/resources/images/cat7.jpg" class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>First slide label</h5>
-                                <p>Some representative placeholder content for the first slide.</p>
+                                <h5>냥냥이 프린팅 후드티</h5>
+                                <p>귀여운 냥냥이가 꽃을 만지는 모습이 프린팅 되어있는 후드티! 편안하고 귀여워 고민 없이 손이 가는 사랑스러운 후드티!</p>
                             </div>
                         </div>
                         <div class="carousel-item" data-bs-interval="5000">
                             <img src="${contextPath}/resources/images/cat4.png" class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>First slide label</h5>
-                                <p>Some representative placeholder content for the first slide.</p>
+                                <h5>야옹이 프린팅 맨투맨</h5>
+                                <p>컴퓨터를 구경하는 귀여운 야옹이 모습이 프린팅 되어있는 맨투맨.</p>
                             </div>
                         </div>
                         <div class="carousel-item" data-bs-interval="5000">
                             <img src="${contextPath}/resources/images/cat5.jpg" class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>First slide label</h5>
-                                <p>Some representative placeholder content for the first slide.</p>
+                                <h5>떼껄룩 자수 자켓</h5>
+                                <p>다크 시크 떼껄룩이 자수로 박혀있는 자켓! 늦가을부터 초봄까지 꾸준히 착용 가능한 자켓!</p>
                             </div>
                         </div>
                     </div>

@@ -130,7 +130,8 @@
                 <a href="#" class="text-reset">[사업자정보확인]</a>
                 CHIEF PRIVACY OFFICER : 고양이<br>
                 E-MAIL : <a href="#" class="text-reset">cat771177@gmail.com</a>
-                HOSTING BY 키커데이(주)  
+                HOSTING BY 키커데이(주)
+                <button class="btn btn-light"><a href="#">관리자</a></button>
             </div>
         </div>
     </section>
