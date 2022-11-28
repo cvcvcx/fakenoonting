@@ -1,6 +1,7 @@
 package com.fakenoonting.www.util.upload;
 
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +54,9 @@ public class UploadController {
             try {
                 multipartFile.transferTo(saveFile);
                 File thumbnailFile = new File(savePath,"s_"+uploadFileName);
+                Thumbnails.of(saveFile)
+                        .size(160,160)
+                        .toFile(thumbnailFile);
             }catch (Exception e){
                 e.printStackTrace();
             }
