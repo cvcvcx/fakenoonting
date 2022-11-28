@@ -52,6 +52,7 @@ public class UploadController {
 
             try {
                 multipartFile.transferTo(saveFile);
+                File thumbnailFile = new File(savePath,"s_"+uploadFileName);
             }catch (Exception e){
                 e.printStackTrace();
             }
