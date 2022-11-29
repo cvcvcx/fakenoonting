@@ -10,8 +10,8 @@
 		<property name="driverClassName"
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
 		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:mysql://localhost:3306/awsdb?useSSL=false&amp;serverTimezone=Asia/Seoul" />
-		<property name="username" value="awsuser" />
+			value="jdbc:log4jdbc:mysql://localhost:3306/mydb?useSSL=false&amp;serverTimezone=Asia/Seoul" />
+		<property name="username" value="fakenoonuser" />
 		<property name="password" value="1111" />
 	</bean>
 
@@ -20,16 +20,16 @@
 		<constructor-arg ref="hikariConfig" />
 	</bean>
 
-<!--	<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
-<!--		<property name="dataSource" ref="dataSource"></property>-->
-<!--		&lt;!&ndash; <property name="configLocation" value="classpath:/mybatis-config.xml"></property> &ndash;&gt;-->
-<!--		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>-->
-<!--	</bean>-->
+	<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- <property name="configLocation" value="classpath:/mybatis-config.xml"></property> -->
+		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+	</bean>
 
-	<!-- SqlSession 객체 주입 -->
-<!--	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">-->
-<!--		<constructor-arg name="sqlSessionFactory" ref="SqlSessionFactory"></constructor-arg>-->
-<!--	</bean>-->
+	 SqlSession 객체 주입
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="SqlSessionFactory"></constructor-arg>
+	</bean>
 
 </beans>
 

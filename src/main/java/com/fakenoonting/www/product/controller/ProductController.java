@@ -9,9 +9,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ProductController {
 
+    @RequestMapping("/list")
+    public ModelAndView productList(){
+
+
+
+    }
     @RequestMapping("/detail")
     public ModelAndView productDetail(){
         ModelAndView mav = new ModelAndView();
+
         mav.setViewName("/product/productDetails");
         return mav;
     }
