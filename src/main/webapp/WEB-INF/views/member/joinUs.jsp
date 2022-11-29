@@ -13,7 +13,7 @@
 
 
 <!-- 메뉴바 -->
-<jsp:include page="../common/topMenu.jsp" flush="false"/>
+<jsp:include page="../common/header.jsp" flush="false"/>
 	
 <!------ body----------------------------------------->  
 

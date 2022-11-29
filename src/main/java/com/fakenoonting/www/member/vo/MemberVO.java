@@ -2,119 +2,30 @@ package com.fakenoonting.www.member.vo;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
+
+@Component("memberVO")
+@Data
+@NoArgsConstructor
 public class MemberVO {
 	
-	private String id;	
+	private long id;			// 개발자 쪽 구분 ID
+	private String email;		// 사용자 ID
 	private String pwd;
-	private String nick;
-	private String name;
+	private String nick;		// 사용자 닉네임
+	private String name;		// 사용자 이름
 	private char gender;
 	private int phone;
-	private String mail;
 	private Date birth;
-	private String address;
-	private Date regdate;
-	private boolean isExist;
-	
-	
-	
-	public MemberVO(String id, String pwd, String nick, String name, char gender, int phone, String mail, Date birth,
-			String address, Date regdate, boolean isExist) {
-		
-		super();
-		this.id = id;
-		this.pwd = pwd;
-		this.nick = nick;
-		this.name = name;
-		this.gender = gender;
-		this.phone = phone;
-		this.mail = mail;
-		this.birth = birth;
-		this.address = address;
-		this.regdate = regdate;
-		this.isExist = isExist;
-		
-	}
-	
-
-	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getPwd() {
-		return pwd;
-	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
-	
-	public String getNick() {
-		return nick;
-	}
-	public void setNick(String nick) {
-		this.nick = nick;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public char getGender() {
-		return gender;
-	}
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
-	
-	public int getPhone() {
-		return phone;
-	}
-	public void setPhone(int phone) {
-		this.phone = phone;
-	}
-	
-	public String getMail() {
-		return mail;
-	}
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-	
-	public Date getBirth() {
-		return birth;
-	}
-	public void setBirth(Date birth) {
-		this.birth = birth;
-	}
-	
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	public Date getRegdate() {
-		return regdate;
-	}
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
-	}
-	
-	public boolean isExist() {
-		return isExist;
-	}
-	public void setExist(boolean isExist) {
-		this.isExist = isExist;
-	}
+	private String address1;	// 상위 주소
+	private String address2;	// 상세 주소
+	private int zipcode;		// 우편 번호
+	private Date create_date;	// ID 생성 날짜
+	private Date delete_date;	// ID 삭제 날짜	
 
 }
