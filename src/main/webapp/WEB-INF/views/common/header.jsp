@@ -30,11 +30,11 @@
     <div class="container">
         <!-- 상위네브바 -->
         <div class="row d-flex justify-content-start p-2">
-            <nav class="navbar navbar-white bg-white sticky-top">
+            <nav class="navbar navbar-white bg-white fuxid-top">
                 <div class="row container-fluid">
                     <div class="col-lg-3 col-sm-1">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                            <a href="#"><button type="button" class="btn btn-default">LOGIN</button></a>
+                            <a href="${contextPath}/member/loginForm.do"><button type="button" class="btn btn-default">LOGIN</button></a>
                             <a href="#"><button type="button" class="btn btn-default">JOIN US</button></a>
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -58,7 +58,7 @@
                     <div class="col-lg-3 col-sm-1">
                         <div class="col-lg-2 input-group"><!-- mb-2 pt-2 -->
                             <form class="d-flex" role="button">
-                                <input type="text" class="form-control rounded-start" id="keyword" name="keyword" placeholder="검색">
+                                <input type="text" class="form-control rounede-start" id="keyword" name="keyword" placeholder="검색">
                                 <button class="btn btn-outline-secondary" type="submit">
                                     <span class="material-icons-outlined">
                                         search
@@ -174,9 +174,6 @@
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">QandA</a></li>
                     <li><a class="dropdown-item" href="#">REVIEW</a></li>
-                    <li><a class="dropdown-item" href="${contextPath}/product/detail">ProductDetail</a></li>
-                    <li><a class="dropdown-item" href="${contextPath}/product/upload">상품 업로드</a></li>
-
                 </ul>
             </div>
         </div>
