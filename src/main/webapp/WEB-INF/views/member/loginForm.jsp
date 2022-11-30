@@ -14,6 +14,24 @@ request.setCharacterEncoding("UTF-8");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>login</title>
 
+<!-- 로그인 아이디 / 비번에 따른 경고창 --> 
+<c:choose>	
+	<c:when test="${result == 'loginFailed'}">
+		<script>
+		window.onload = function() {
+			alert("\n아이디를 잘못 입력하셨습니다.\n\n다시 로그인을 해주세요!");
+		}
+		</script>
+	</c:when>
+	<c:when test="${result == 'PasswordFailed'}">
+		<script>
+		window.onload = function() {
+			alert("\n비밀번호를 잘못 입력하셨습니다.\n\n다시 로그인을 해주세요!");
+		}
+		</script>
+	</c:when>
+</c:choose>
+
 <style>
 /*모두적용*/
 ul {
@@ -197,8 +215,7 @@ ul {
 
 			<!---------------------------------------------------------------------------------------->
 			<div class="login-box">
-				<form class="form-horizontal" method="post" name=""
-					action="${contextPath}">
+				<form class="form-horizontal" method="post" name=""	action="${contextPath}/member/login.do">
 					<div class="form-group" id="login-margin">
 
 						<div class="logo">PLEASE LOG IN!</div>
@@ -242,8 +259,7 @@ ul {
 					</div>
 
 					<div class="form-group d-grid" id="loginbtn">
-						<a class="btn btn-outline-warning btn-dark btn-lg" type="button">SIGN
-							IN</a>
+						<button type="submit"	class="btn btn-primary">로그인</button>
 					</div>
 					<br>
 					<div class="form-group d-grid" id="loginbtn">
