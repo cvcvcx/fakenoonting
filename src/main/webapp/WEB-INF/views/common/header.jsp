@@ -34,21 +34,18 @@
 
 							<c:choose>
 								<c:when test="${isLogOn == true && member != null}">
-									<p class="navbar-text">
-										<b>${member.name}님, 즐거운 시간되십시요.</b>
-									</p>
-									<a href="${contextPath}/member/logout.do"
-										class="btn btn-danger"> <span
-										class="glyphicon glyphicon-log-out"></span> LOGOUT
+									<a href="${contextPath}/member/logout.do">
+										<button type="button" class="btn btn-default">LOGOUT</button>
 									</a>
 								</c:when>
 								<c:otherwise>
-									<a href="${contextPath}/member/loginForm.do"> LOGIN </a>
+									<a href="${contextPath}/member/loginForm.do">
+										<button type="button" class="btn btn-default">LOGIN</button>
+									</a>
 								</c:otherwise>
 							</c:choose>
 
-
-							<a href="#"><button type="button" class="btn btn-default">JOIN
+							<a href="${contextPath}/member/regiMemberForm.do"><button type="button" class="btn btn-default">JOIN
 									US</button></a>
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default dropdown-toggle"
@@ -93,6 +90,7 @@
 						</div>
 					</div>
 				</div>
+
 				<!-- 햄버거 버튼 부분 -->
 				<div class="offcanvas offcanvas-end text-bgdark" tabindex="-1"
 					id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
@@ -106,19 +104,37 @@
 					<div class="offcanvas-body">
 						<div class="item">
 							<fieldset>
-								<ul class="navbar-nav justify-content-end flex-grow-1 pe-1">
-									<li class="nav-item"><b>MEMBER LOGIN</b></li>
-									<li class="nav-item"><input class="form-control "
-										type="text" placeholder="E-MAIL"></li>
-									<li class="nav-item"><input class="form-control "
-										type="password" placeholder="PW"></li>
-									<div class="btn-group" role="group"
-										aria-label="Default button group">
-										<button type="button" class="btn btn-black">Login</button>
-										<button type="button" class="btn btn-black">Join Us</button>
-										<!-- <button type="button" class="btn btn-outline-light">Join Us</button> -->
-									</div>
-								</ul>
+
+								<c:choose>
+									<c:when test="${isLogOn == true && member != null}">
+										<a href="${contextPath}/member/logout.do">
+											<button type="button" class="btn btn-default">LOGOUT</button>
+										</a>
+									</c:when>
+									<c:otherwise>
+										<ul class="navbar-nav justify-content-end flex-grow-1 pe-1">
+											<li class="nav-item"><b>MEMBER LOGIN</b></li>
+											<li class="nav-item"><input class="form-control "
+												type="text" placeholder="E-MAIL"></li>
+											<li class="nav-item"><input class="form-control "
+												type="password" placeholder="PW"></li>
+											<div class="btn-group" role="group"
+												aria-label="Default button group">
+												<form class="form-horizontal" method="post"
+													name="hamLoginForm" action="${contextPath}/member/login.do">
+													<button type="submit" class="btn btn-black">Login</button>
+												</form>
+												<form class="form-horizontal" method="get"
+													name="hamLoginForm" action="${contextPath}/member/regiMemberForm.do">
+													<button type="button" class="btn btn-black">Join
+														Us</button>
+												</form>
+												<!-- <button type="button" class="btn btn-outline-light">Join Us</button> -->
+											</div>
+										</ul>
+									</c:otherwise>
+								</c:choose>
+
 							</fieldset>
 						</div>
 						<div class="right_board">

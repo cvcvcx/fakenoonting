@@ -215,7 +215,7 @@ ul {
 
 			<!---------------------------------------------------------------------------------------->
 			<div class="login-box">
-				<form class="form-horizontal" method="post" name=""	action="${contextPath}/member/login.do">
+				<form class="form-horizontal" method="post" name="loginForm" action="${contextPath}/member/login.do">
 					<div class="form-group" id="login-margin">
 
 						<div class="logo">PLEASE LOG IN!</div>
@@ -261,6 +261,7 @@ ul {
 					<div class="form-group d-grid" id="loginbtn">
 						<button type="submit"	class="btn btn-primary">로그인</button>
 					</div>
+					
 					<br>
 					<div class="form-group d-grid" id="loginbtn">
 						<a class="btn" style="color: aliceblue" type="button"
