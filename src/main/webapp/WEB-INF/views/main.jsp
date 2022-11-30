@@ -338,7 +338,7 @@
             </section>
         </article>
 
-
+<hr>
         <!-- footer -->
         <hr>
 		<jsp:include page="./common/footer.jsp" flush="false"/>
