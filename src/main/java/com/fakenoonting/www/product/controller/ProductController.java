@@ -45,7 +45,7 @@ public class ProductController {
         return mav;
     }
     @PostMapping("/upload")
-    public ModelAndView uploadProduct(){
+    public ModelAndView uploadProduct(ProductVO productVO){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/product/productList");
         return mav;

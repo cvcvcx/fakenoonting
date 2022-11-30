@@ -11,5 +11,5 @@ public interface ProductRepositoryInterface {
 
     public List<ProductVO> findAll();
 
-    public void imageEnroll(ProductImgItemVO img);
+    public int imageEnroll(ProductImgItemVO img);
 }

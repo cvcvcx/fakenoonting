@@ -1,5 +1,6 @@
 package com.fakenoonting.www.product.dao;
 
+import com.fakenoonting.www.product.vo.ProductImgItemVO;
 import com.fakenoonting.www.product.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
@@ -33,5 +34,10 @@ public class ProductRepository implements ProductRepositoryInterface{
     public List<ProductVO> findAll(){
         log.info("ProductRepo findAll 실행...");
         return sqlSession.selectList(nameSpace+".findAll");
+    }
+
+    @Override
+    public int imageEnroll(ProductImgItemVO img) {
+        return sqlSession.insert(nameSpace+".uploadImg");
     }
 }

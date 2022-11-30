@@ -63,6 +63,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 */
   		formData.append("uploadFile", fileObj);
 
+
   		$.ajax({
   			url: '${contextPath}/util/upload/uploadImage',
   	    	processData : false,
@@ -98,12 +99,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     		str += "<div id='result_card'>";
     		str += "<img src='${contextPath}/util/upload/display?fileName=" + fileCallPath +"'>";
     		str += "<div class='imgDeleteBtn' data-file='" + fileCallPath + "'>x</div>";
-    		str += "<input type='hidden' name='imageList[0].fileName' value='"+ obj.fileName +"'>";
-    		str += "<input type='hidden' name='imageList[0].uuid' value='"+ obj.uuid +"'>";
+    		str += "<input type='hidden' name='imageList[0].fileName' value='"+ obj.orgImgName +"'>";
+    		str += "<input type='hidden' name='imageList[0].uuid' value='"+ obj.imgUUID +"'>";
     		str += "<input type='hidden' name='imageList[0].uploadPath' value='"+ obj.uploadPath +"'>";
     		str += "</div>";
 
        		uploadResult.append(str);
+
+       		console.log(uploadResultArr);
 
     	}
 
