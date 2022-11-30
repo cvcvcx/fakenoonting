@@ -34,7 +34,7 @@
                 <div class="row container-fluid">
                     <div class="col-lg-3 col-sm-1">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                            <a href="#"><button type="button" class="btn btn-default">LOGIN</button></a>
+                            <a href="${contextPath}/member/loginForm.do"><button type="button" class="btn btn-default">LOGIN</button></a>
                             <a href="#"><button type="button" class="btn btn-default">JOIN US</button></a>
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
