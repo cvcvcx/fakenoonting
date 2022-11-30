@@ -24,9 +24,9 @@
 	
 	<!-- 로그인 처리 -->
 	<!-- #{id} = #{MemberVO.id} -->
-	<select id="loginByID" parameterType="com.fakenoonting.www.member.vo.MemberVO" resultType="com.fakenoonting.www.member.vo.MemberVO">
+	<select id="loginByEmail" parameterType="com.fakenoonting.www.member.vo.MemberVO" resultType="com.fakenoonting.www.member.vo.MemberVO">
 		<![CDATA[
-			SELECT * FROM T_MEMBER WHERE id = #{id}
+			SELECT * FROM T_MEMBER WHERE email = #{email}
 		]]>
 	</select>
    
