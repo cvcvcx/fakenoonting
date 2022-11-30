@@ -2,6 +2,7 @@ package com.fakenoonting.www.product.vo;
 
 //상품의 글
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,6 +10,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Getter @Setter @ToString
+@NoArgsConstructor
 public class ProductVO {
 
     private Long id;

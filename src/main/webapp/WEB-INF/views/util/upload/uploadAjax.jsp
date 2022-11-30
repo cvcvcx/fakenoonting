@@ -22,15 +22,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     </style>
   </head>
   <body>
-    <jsp:include page="../../common/header.jsp" flush="false"></jsp:include>
     <div class="container">
       <form
         class="form-horizontal"
         action="${contextPath}/util/upload/uploadImage"
         method="post"
         enctype="multipart/form-data"
-        target="iframe1"
       >
+
         <!-- file의 변수명과 컨트롤러의 MultipartFile file이 일치해야 한다. -->
         <div class="form-group">
           <div class="col-sm-8">
@@ -42,7 +41,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </div>
       </form>
     </div>
-    <jsp:include page="../../common/footer.jsp" flush="false"></jsp:include>
   </body>
   <script>
 
@@ -82,7 +80,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   		});
 
   	});
-let regex = new RegExp("(.*?)\.(jpg|png)$");
     function showUploadImage(uploadResultArr){
 
     		/* 전달받은 데이터 검증 */

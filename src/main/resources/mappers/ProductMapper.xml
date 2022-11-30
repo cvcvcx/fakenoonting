@@ -12,11 +12,46 @@
         <result column="modify_date" property="modifyDate" />
     </resultMap>
 
-    <select id="selectById" parameterType="com.fakenoonting.www.product.vo.ProductVO" resultMap="productResultMap">
+    <resultMap id="productImgItem" type="com.fakenoonting.www.product.vo.ProductImgItemVO">
+        <result column="product_img_id" property="id" />
+        <result column="org_img_name" property="orgImgName" />
+        <result column="upload_path" property="uploadPath" />
+        <result column="img_UUID" property="imgUUID" />
+        <result column="img_size" property="imgSize" />
+        <result column="create_date" property="createDate" />
+    </resultMap>
+
+    <insert id="saveProduct" parameterType="com.fakenoonting.www.product.vo.ProductVO">
+        <![CDATA[
+            insert into product
+            (id,prod_name,price)
+             Values (#{id},#{productName},#{price})
+        ]]>
+    </insert>
+
+
+    <select id="findById" parameterType="com.fakenoonting.www.product.vo.ProductVO" resultMap="productResultMap">
         <![CDATA[
             select *
             from product
-            where #{id}
+            where id = #{id}
+        ]]>
+    </select>
+
+
+
+    <select id="findAll" resultMap="productResultMap">
+        <![CDATA[
+            select *
+            from product
+        ]]>
+    </select>
+
+    <select id="findImgsByProdId" resultMap="productImgItem" parameterType="com.fakenoonting.www.product.vo.ProductVO">
+        <![CDATA[
+            select *
+            from product_img_item
+            where product_id = #{id}
         ]]>
     </select>
 
