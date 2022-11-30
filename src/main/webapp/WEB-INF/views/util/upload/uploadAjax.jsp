@@ -110,6 +110,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     	}
 
+
+
+
   	function fileCheck(fileName, fileSize){
     		if(fileSize >= maxSize){
     			alert("파일 사이즈 초과");
