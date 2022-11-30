@@ -90,15 +90,15 @@ public class MemberControllerImpl implements MemberControllerInterface {
 				HttpSession session = request.getSession();
 				session.setAttribute("member", memberVO);
 				session.setAttribute("isLogOn", true);
-				// mav.setViewName("redirect:/member/listMembers.do");
 				mav.setViewName("redirect:/");	// 메인화면으로 이동
+
 			} else {	// 아이디는 있는데 비밀번호가 틀린 경우
-				rAttr.addAttribute("result", "비밀번호가 틀렸습니다.");
+				rAttr.addAttribute("result", "PasswordFailed");
 				mav.setViewName("redirect:/member/loginForm.do");
 			}
 		} else {	// 로그인 이메일이 존재하지 않으면
 			// 로그인 실패 메시지를 가지고 로그인 화면으로 이동한다.
-			rAttr.addAttribute("result", "아이디가 존재하지 않습니다.");
+			rAttr.addAttribute("result", "loginFailed");
 			mav.setViewName("redirect:/member/loginForm.do");
 		}
 		

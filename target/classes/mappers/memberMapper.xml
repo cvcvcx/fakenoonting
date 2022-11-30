@@ -26,7 +26,7 @@
 	<!-- #{id} = #{MemberVO.id} -->
 	<select id="loginByEmail" parameterType="com.fakenoonting.www.member.vo.MemberVO" resultType="com.fakenoonting.www.member.vo.MemberVO">
 		<![CDATA[
-			SELECT * FROM T_MEMBER WHERE email = #{email}
+			SELECT * FROM MEMBER WHERE email = #{email}
 		]]>
 	</select>
    
