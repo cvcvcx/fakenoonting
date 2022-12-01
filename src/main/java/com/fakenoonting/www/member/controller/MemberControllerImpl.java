@@ -43,10 +43,10 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	}
 		
 	// 회원 가입 폼
-	@RequestMapping(value = "/memberForm.do", method = RequestMethod.GET)
-	public String memberForm() {
+	@RequestMapping(value = "/regiMemberForm.do", method = RequestMethod.GET)
+	public String registerForm() {
 		
-		return "/member/memberForm";		
+		return "/member/registerForm";
 	}
 
 	// 회원 가입 폼 (ajax)
@@ -61,8 +61,6 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	//===================================================================================	
 	// Service로 던지는 컨트롤러
 	//===================================================================================
-
-	
 	
 	// 로그인 처리
 	@Override
@@ -74,10 +72,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		System.out.println("로그인 정보 => " + memberVO.getEmail() + " : " + memberVO.getPwd());
 		
 		ModelAndView mav = new ModelAndView();
-		
-		// 테스트임 ㅋㅋ
-		int i = 0;
-		
+				
 		// 객체 하나를 만들어서 매칭 결과 저장 (로그인한 정보가 일단 DB에 있는지 확인을 위해)
 		MemberVO member = memberService.login(memberVO);
 		System.out.println("로그인 정보 결과 => " + memberVO);
@@ -88,19 +83,64 @@ public class MemberControllerImpl implements MemberControllerInterface {
 				HttpSession session = request.getSession();
 				session.setAttribute("member", memberVO);
 				session.setAttribute("isLogOn", true);
-				// mav.setViewName("redirect:/member/listMembers.do");
 				mav.setViewName("redirect:/");	// 메인화면으로 이동
+
 			} else {	// 아이디는 있는데 비밀번호가 틀린 경우
-				rAttr.addAttribute("result", "비밀번호가 틀렸습니다.");
+				rAttr.addAttribute("result", "PasswordFailed");
 				mav.setViewName("redirect:/member/loginForm.do");
 			}
 		} else {	// 로그인 이메일이 존재하지 않으면
 			// 로그인 실패 메시지를 가지고 로그인 화면으로 이동한다.
-			rAttr.addAttribute("result", "아이디가 존재하지 않습니다.");
+			rAttr.addAttribute("result", "loginFailed");
 			mav.setViewName("redirect:/member/loginForm.do");
 		}
 		
 		return mav;
 	}
 
+
+	
+	// 로그아웃
+	@Override
+	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response)
+	throws Exception{
+	
+		//
+		HttpSession session = request.getSession();
+		
+		session.removeAttribute("member");
+		session.removeAttribute("isLogOn");		
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/");
+		
+		System.out.println("MemberController logout() 실행... ");
+		
+		return mav;
+		
+	}
+	
+	
+	
+	// 회원 가입 처리
+	@Override
+	@RequestMapping(value = "/registerMember.do", method = RequestMethod.POST)
+	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response)
+	throws Exception{
+
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		
+		int result = 0;
+		
+		//result = memberService.registerMember(memberVO);
+		
+		ModelAndView mav = new ModelAndView("redirect:/member/regiComplitedMember");
+		
+		return mav;
+		
+	}
+
+	
 }

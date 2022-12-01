@@ -12,16 +12,18 @@ request.setCharacterEncoding("UTF-8");
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>find pwd</title>
+<title>회원 가입</title>
 <link rel="stylesheet" href="/style.css">
 
 </head>
+
+
+
+<!------ body----------------------------------------->
 <body>
 
 	<!-- 메뉴바 -->
 	<jsp:include page="../common/header.jsp" flush="false" />
-
-	<!------ body----------------------------------------->
 
 	<div class="path ">
 		<div>
@@ -33,41 +35,35 @@ request.setCharacterEncoding("UTF-8");
           <path fill-rule="evenodd"
 						d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z" />
         </svg>
-				<li><strong>joinUS</strong></li>
+				<li><strong>JOIN US</strong></li>
 			</ul>
 		</div>
 	</div>
+
 	<br>
 	<br>
-	<!---------------------------------------------------------------------------------------->
+
 	<div class="container">
 		<div class="contents d-flex align-items-start flex-column mb-2">
-
-			<!---------------------------------------------------------------------------------------->
 			<div class="joinUs-box">
-				<form class="form-horizontal" method="post" name=""
-					action="${contextPath}">
+				<form class="form-horizontal" method="post" name="registerForm"	action="${contextPath}/member/registerMember.do">
 					<div class="form-group" id="login-margin">
 						<div class="logo">
-							JOIN US
 							<div class="joinUs-icon">
 								<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"
 									fill="currentColor" class="bi bi-person-plus-fill"
 									viewBox="0 0 16 16" id="login-icon">
-                    <path
-										d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                    <path fill-rule="evenodd"
+			                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+  				                <path fill-rule="evenodd"
 										d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
-                  </svg>
+            				    </svg>
 							</div>
 						</div>
 
 						<div class="form-group" id="login-margin">
-
-
 							<div class="input-group col-mb-3">
 								<input type="text" class="form-control" width="30px"
-									placeholder="Username" aria-label="Username"> <span
+									placeholder="Email" aria-label="Email"> <span
 									class="input-group-text">@</span> <input type="text"
 									class="form-control" placeholder="직접입력" aria-label="Username">
 
@@ -101,7 +97,6 @@ request.setCharacterEncoding("UTF-8");
 							<div class="input-group col-mb-3">
 								<select class="form-select" aria-label="Default select example">
 									<option selected>010</option>
-
 									<option value="2">011</option>
 									<option value="3">017</option>
 									<option value="3">019</option>
@@ -129,13 +124,11 @@ request.setCharacterEncoding("UTF-8");
 										<label for="floatingTextarea">상세주소</label>
 									</div>
 								</div>
-
-
-
 							</div>
 
+							<br>
+							
 							<div class="subscribed">
-
 								<strong>[키커쇼핑몰의 개인 정보 수집 및 이용 안내]</strong> 개인 정보 제3자 제공 동의 <br>①
 								개인정보를 제공받는 자: 키커쇼핑몰 <br>② 개인정보를 제공받는 자의 개인 정보 이용 목적 : 영업관리,
 								설문조사 및 프로모션, 이벤트 경품 제공, eDM 발송, 행사 관련 마케팅 <br>③ 제공하는 개인정보항목
@@ -145,37 +138,31 @@ request.setCharacterEncoding("UTF-8");
 								이용정책에 동의하지 않을 수 있으나, 키커쇼핑몰로부터 솔루션, 최신 IT정보, 행사초청안내 등의 유용한 정보를
 								제공받지 못 할 수 있습니다. <br> 개인 정보 보호에 대한 자세한 내용은
 								http://www.kikerDay.com 을 참조바랍니다.
-								<div class="checkbox" align="center">
-									<label> <input type="checkbox" id="is_subscribed"
-										name="is_subscribed" value="o" />
-									</label> kikerDay의 개인정보 수집 및 이용에 동의합니다.
-								</div>
+							</div>
+							<br>
+							<div class="checkbox" align="center">
+								<label> <input type="checkbox" id="is_subscribed"
+									name="is_subscribed" value="o" />
+								</label> kikerDay의 개인정보 수집 및 이용에 동의합니다.
 							</div>
 							<br>
 							<div class="form-group " align="center">
-								<a type="button" style="color: rgb(231, 154, 11)" class="btn">Join
-									Us</a> <a type="button" style="color: rgb(231, 154, 11)"
-									class="btn">Login</a> <a type="button"
-									style="color: rgb(231, 154, 11)" class="btn">Reset</a>
+								<button type="submit" style="color: rgb(231, 154, 11)" class="btn">Join Us</button>
+								<button type="reset" style="color: rgb(231, 154, 11)" class="btn">Reset</button>
 							</div>
-
 						</div>
 					</div>
+				</form>
 			</div>
-			</form>
 		</div>
 	</div>
-	</div>
-
-	<!------------------- END body------------------------------------------------------------------------------------------------>
-
-
-	<!------------------- END body------------------------------------------------------------------------------------------------>
 
 	<hr>
+	
 	<!-- 푸터 -->
 	<jsp:include page="../common/footer.jsp" flush="false" />
 
-
 </body>
+<!------------------- END body------------------------------------------------------------------------------------------------>
+
 </html>
