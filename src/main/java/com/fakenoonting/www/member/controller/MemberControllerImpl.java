@@ -25,8 +25,6 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberControllerImpl.class);
 
-	@Autowired
-	private MemberVO member;
 	
 	@Autowired
 	private MemberServiceImpl memberService;
@@ -81,7 +79,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		int i = 0;
 		
 		// 객체 하나를 만들어서 매칭 결과 저장 (로그인한 정보가 일단 DB에 있는지 확인을 위해)
-		member = memberService.login(memberVO);
+		MemberVO member = memberService.login(memberVO);
 		System.out.println("로그인 정보 결과 => " + memberVO);
 		
 		// 로그인한 정보가 DB에 있는지 확인

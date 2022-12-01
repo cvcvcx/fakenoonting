@@ -174,6 +174,9 @@
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">QandA</a></li>
                     <li><a class="dropdown-item" href="#">REVIEW</a></li>
+                    <li><a class="dropdown-item" href="${contextPath}/product/upload">상품업로드</a></li>
+                    <li><a class="dropdown-item" href="${contextPath}/product/list">상품리스트(admin)</a></li>
+                    <li><a class="dropdown-item" href="${contextPath}/product/detail">상품상세페이지</a></li>
                 </ul>
             </div>
         </div>

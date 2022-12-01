@@ -23,7 +23,7 @@ public class ProductController {
     public ModelAndView productList(Model model) {
         ModelAndView mav = new ModelAndView();
         // 뷰 네임 설정
-        mav.setViewName("/product/productList");
+        mav.setViewName("/product/productAdminList");
         List<ProductVO> list = productService.productList();
         model.addAttribute("list", list);
 
@@ -47,7 +47,7 @@ public class ProductController {
     @PostMapping("/upload")
     public ModelAndView uploadProduct(ProductVO productVO){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/product/productList");
+        mav.setViewName("/product/productAdminList");
         return mav;
     }
 }

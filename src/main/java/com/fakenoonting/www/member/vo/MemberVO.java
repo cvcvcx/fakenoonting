@@ -2,6 +2,7 @@ package com.fakenoonting.www.member.vo;
 
 import java.util.Date;
 
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Component("memberVO")
 @Data
 @NoArgsConstructor
+@Getter
 public class MemberVO {
 	
 	private long id;			// 개발자 쪽 구분 ID
