@@ -1,7 +1,7 @@
 package com.fakenoonting.www.product.service;
 
 
-import com.fakenoonting.www.product.dao.ProductRepositoryInterface;
+import com.fakenoonting.www.product.dao.ProductDAO;
 import com.fakenoonting.www.product.vo.ProductImgItemVO;
 import com.fakenoonting.www.product.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.util.List;
 public class ProductService {
 
     @Autowired
-    private ProductRepositoryInterface productRepo;
+    private ProductDAO productRepo;
 
     public List<ProductVO> productList(){
         log.info("ProductService 상품 리스트 조회...");
