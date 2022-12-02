@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -14,8 +15,9 @@ import com.fakenoonting.www.member.vo.MemberVO;
 
 
 public interface MemberControllerInterface {
+	
 	//===================================================================================	
-	// TopMenu 에서 View로 던지는 컨트롤러
+	// header 에서 각 View로 던지는 컨트롤러
 	//===================================================================================
 	
 	// 로그인 폼
@@ -41,7 +43,19 @@ public interface MemberControllerInterface {
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	// 회원가입 처리
-	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr,
+	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO,
 	HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	// 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
+	public ModelAndView selectMember(@RequestParam("email") String email,
+			HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	// 아이디(email)에 해당하는 회원 정보 수정
+	public ModelAndView updateMember(@ModelAttribute("info") MemberVO memberVO, RedirectAttributes rAttr,
+			HttpServletRequest request, HttpServletResponse response )throws Exception;
+	
+	// 아이디(email)에 해당하는 회원 정보 삭제
+	public ModelAndView deleteMember(@RequestParam("email") String email,
+			HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 }
