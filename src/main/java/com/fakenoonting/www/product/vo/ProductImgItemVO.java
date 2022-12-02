@@ -6,22 +6,17 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 
 @Getter @Setter @NoArgsConstructor @ToString
 public class ProductImgItemVO {
-    private Long id;
+    private String imgUUID;
     private Long productId;
     private String orgImgName;
-    private String saveImgName;
-    private Integer imgSize;
+    private String uploadPath;
+
 
     private Timestamp createDate;
 
-    public ProductImgItemVO(Long productId, String orgImgName, String saveImgName, Integer imgSize) {
-        this.productId = productId;
-        this.orgImgName = orgImgName;
-        this.saveImgName = saveImgName;
-        this.imgSize = imgSize;
-    }
 }

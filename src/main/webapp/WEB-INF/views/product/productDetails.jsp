@@ -9,28 +9,18 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Sharp|Material+Icons+Two+Tone|Material+Icons+Outlined"
-            rel="stylesheet">
-        <!-- CSS only -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-            rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" 
-            crossorigin="anonymous">
-        <!-- JavaScript Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-            crossorigin="anonymous">
-        </script>
         <title>kikerday</title>
     </head>
     <body>
 	    <!-- 메뉴바 -->
 		<jsp:include page="../common/header.jsp" flush="false"/>
-        
+
         <!-- article -->
         <article>
             <!-- start section -->
             <section>
                 <div class="container">
+                <h2>${product.id}</h2>
                     <div class="row">
                         <div class="col-md-6">
                             <img src="${contextPath}/resources/images/cat1.jpg" alt="사진" class="w-100">
@@ -78,7 +68,7 @@
                                     <button class="btn btn-light">
                                         <a href="#modal-popup">사이즈 가이드</a>
                                     </button>
-                                </div>  
+                                </div>
                             </div>
                             <hr>
                             <div class="row">
@@ -175,7 +165,7 @@
                 </div>
             </section>
             <!-- end section -->
-            
+
             <!-- start 제품 상세 이미지, 텍스트 -->
             <section>
                 <div class="container">
@@ -188,86 +178,86 @@
                     </div>
                 </div>
                 <div id="modal-popup">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">사이즈</th>
-                                <th scope="col">S</th>
-                                <th scope="col">M</th>
-                                <th scope="col">L</th>
-                                <th scope="col">XL</th>
-                                <th scope="col">2XL</th>
-                                <th scope="col">3XL</th>
-                                <th scope="col">4XL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">어깨</th>
-                                <td>16</td>
-                                <td>17</td>
-                                <td>18</td>
-                                <td>19</td>
-                                <td>20</td>
-                                <td>21</td>
-                                <td>22</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">가슴단</th>
-                                <td>28-29</td>
-                                <td>30-31</td>
-                                <td>32-33</td>
-                                <td>34-35</td>
-                                <td>36-37</td>
-                                <td>38-39</td>
-                                <td>40-41</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">소매단</th>
-                                <td>9</td>
-                                <td>9.5</td>
-                                <td>10</td>
-                                <td>10.5</td>
-                                <td>11</td>
-                                <td>11.5</td>
-                                <td>12</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">총길이</th>
-                                <td>63</td>
-                                <td>66</td>
-                                <td>69</td>
-                                <td>72</td>
-                                <td>75</td>
-                                <td>78</td>
-                                <td>81</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">밑단</th>
-                                <td>33</td>
-                                <td>33.5</td>
-                                <td>34</td>
-                                <td>34.5</td>
-                                <td>35</td>
-                                <td>35.5</td>
-                                <td>36</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">암홀</th>
-                                <td>22</td>
-                                <td>22.5</td>
-                                <td>32</td>
-                                <td>23.5</td>
-                                <td>24</td>
-                                <td>24.5</td>
-                                <td>25</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="d-flex justify-content-center">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>사이즈</th>
+                                    <th>S</th>
+                                    <th>M</th>
+                                    <th>L</th>
+                                    <th>XL</th>
+                                    <th>XXL</th>
+                                    <th>2XL</th>
+                                    <th>3XL</th>
+                                </tr>
+                                <tr>
+                                    <th>어깨</th>
+                                    <td>16</td>
+                                    <td>17</td>
+                                    <td>18</td>
+                                    <td>19</td>
+                                    <td>20</td>
+                                    <td>21</td>
+                                    <td>22</td>
+                                </tr>
+                                <tr>
+                                    <th>가슴단</th>
+                                    <td>28-29</td>
+                                    <td>30-31</td>
+                                    <td>32-33</td>
+                                    <td>34-35</td>
+                                    <td>36-37</td>
+                                    <td>38-39</td>
+                                    <td>40-41</td>
+                                </tr>
+                                <tr>
+                                    <th>소매단</th>
+                                    <td>9</td>
+                                    <td>9.5</td>
+                                    <td>10</td>
+                                    <td>10.5</td>
+                                    <td>11</td>
+                                    <td>11.5</td>
+                                    <td>12</td>
+                                </tr>
+                                <tr>
+                                    <th>총길이</th>
+                                    <td>63</td>
+                                    <td>66</td>
+                                    <td>69</td>
+                                    <td>72</td>
+                                    <td>75</td>
+                                    <td>78</td>
+                                    <td>81</td>
+                                </tr>
+                                <tr>
+                                    <th>밑단</th>
+                                    <td>33</td>
+                                    <td>33.5</td>
+                                    <td>34</td>
+                                    <td>34.5</td>
+                                    <td>35</td>
+                                    <td>35.5</td>
+                                    <td>36</td>
+                                </tr>
+                                <tr>
+                                    <th>암홀</th>
+                                    <td>22</td>
+                                    <td>22.5</td>
+                                    <td>32</td>
+                                    <td>23.5</td>
+                                    <td>24</td>
+                                    <td>24.5</td>
+                                    <td>25</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
             <!-- end 제품 상세 이미지, 텍스트 -->
-                       
+
             <!-- start section -->
             <section class="border-top border-width-1px border-color-medium-gray pt-0 wow animate__fadeIn">
                 <div class="container-fluid">
@@ -321,7 +311,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                         <!-- end tab item -->
@@ -344,7 +334,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                </div>                            
+                                </div>
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-12 col-lg-10 margin-4-rem-bottom ">
@@ -361,11 +351,11 @@
                                                 <input id="basic-name" class="medium-input border-radius-4px bg-white margin-30px-bottom" type="text" name="name" placeholder="Enter your name">
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12">
-                                                <label class="margin-15px-bottom">이메일 <span class="text-radical-red">*</span></label>                                    
+                                                <label class="margin-15px-bottom">이메일 <span class="text-radical-red">*</span></label>
                                                 <input class="medium-input border-radius-4px bg-white margin-30px-bottom" type="text" name="email" placeholder="Enter your email">
                                             </div>
                                             <div class="col-md-12 col-sm-12 col-xs-12 margin-30px-bottom">
-                                                <label class="margin-15px-bottom">별점<span class="text-radical-red">*</span></label>                                    
+                                                <label class="margin-15px-bottom">별점<span class="text-radical-red">*</span></label>
                                                 <span class="text-orange text-extra-small d-block"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></span>
                                             </div>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -386,7 +376,7 @@
             </section>
             <!-- end section -->
         </article>
-        
+
         <!-- footer -->
         <hr>
 		<jsp:include page="../common/footer.jsp" flush="false"/>

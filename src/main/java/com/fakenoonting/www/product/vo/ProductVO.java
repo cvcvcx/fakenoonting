@@ -2,15 +2,20 @@ package com.fakenoonting.www.product.vo;
 
 //상품의 글
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter @Setter @ToString
+@NoArgsConstructor
 public class ProductVO {
 
     private Long id;
+//이미지를 저장할 productImgItems변수 생성
+    private List<ProductImgItemVO> productImgItems;
     private String productName;//상품이름
     private Long price;//상품 가격
     private String content;//상품본문

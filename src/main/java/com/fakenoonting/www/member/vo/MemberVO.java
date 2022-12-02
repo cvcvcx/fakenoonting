@@ -2,6 +2,7 @@ package com.fakenoonting.www.member.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
@@ -21,6 +22,7 @@ public class MemberVO {
 	private String name;		// 사용자 이름
 	private char gender;
 	private int phone;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birth;
 	private String address1;	// 상위 주소
 	private String address2;	// 상세 주소

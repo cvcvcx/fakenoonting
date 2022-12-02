@@ -12,7 +12,8 @@ request.setCharacterEncoding("UTF-8");
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>login</title>
+<title>로그인</title>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 <!-- 로그인 아이디 / 비번에 따른 경고창 --> 
 <c:choose>	
@@ -37,30 +38,27 @@ request.setCharacterEncoding("UTF-8");
 ul {
 	list-style: none;
 }
-
 .path {
 	margin-left: 80em;
 }
-
 .path li {
 	display: inline-block;
 	padding: 0 0 0 4px;
 	margin: 0 0 0 4px;
 	color: #757575;
 }
-
 /*=====body===============================================================================================*/
 .login-box {
 	background: #101318;
 	width: 400px;
 	margin: auto;
+	margin-bottom:5em;
 	height: 500px;
 	padding: 30px;
 	border-radius: 10px;
 	-webkit-box-shadow: 0px 0px 3px 1px rgb(30, 29, 39);
 	box-shadow: 0px 0px 3px 1px rgba(38, 35, 128, 1);
 }
-
 .login-box .logo {
 	color: white;
 	font-family: sans-serif;
@@ -68,120 +66,22 @@ ul {
 	font-weight: 600;
 	text-align: center;
 }
-
 .login-icon {
 	position: relative;
 	width: 100%;
 	height: 100%;
 	display: inline-flex;
+	
 }
-
 .login-icon #login-icon {
 	margin: auto;
+	margin-top:10px;
 }
-
 .login-box #login-margin {
 	padding: 10px;
 	margin: auto;
 	font-style: sans-serif;
 	color: #ededed;
-}
-/*------end-login-box--------*/
-.joinUs-box {
-	background: #101318;
-	width: 550px;
-	margin: auto;
-	height: 750px;
-	padding: 30px;
-	border-radius: 10px;
-	-webkit-box-shadow: 0px 0px 3px 1px rgb(30, 29, 39);
-	box-shadow: 0px 0px 3px 1px rgba(38, 35, 128, 1);
-}
-
-.joinUs-box .logo {
-	color: white;
-	font-family: sans-serif;
-	font-size: 30px;
-	font-weight: 600;
-	text-align: center;
-}
-
-.joinUs-icon {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	display: inline-flex;
-}
-
-.joinUs-icon #login-icon {
-	margin: auto;
-}
-
-.subscribed {
-	background-color: rgb(246, 249, 249);
-	font-size: 12px;
-	border-radius: 5px;
-	padding: 2px;
-}
-
-/*------cart-------------------------------------*/
-.cart-table {
-	width: 80%;
-	margin: auto;
-	display: block;
-}
-
-#quantity-checkbox {
-	width: 80%;
-	justify-content: center;
-}
-
-#quantity-check {
-	margin: 0%;
-	padding: 0%;
-	width: 30%;
-	height: 50px;
-	font-size: 15px;
-	text-align: center;
-	vertical-align: middle;
-}
-
-#quantity-check input {
-	border-radius: 8%;
-	width: 100%;
-	height: 50%;
-}
-
-/*-----end-cart-------------------------------------*/
-
-/*========================================================================================================*/
-
-/* 모바일 TOP 버튼 */
-#scrollTopMob {
-	display: none;
-	position: fixed;
-	bottom: 64px; /* 브라우저 아래쪽 끝에서부터의 거리 */
-	right: 30px; /* 브라우저 오른쪽 끝에서부터의 거리 */
-	z-index: 99;
-}
-
-/* PC DOWN 버튼 */
-#scrollDownPc {
-	display: none;
-	position: fixed;
-	bottom: 20px; /* 브라우저 아래쪽 끝에서부터의 거리 */
-	right: 30px; /* 브라우저 오른쪽 끝에서부터의 거리 */
-	cursor: pointer;
-	z-index: 99;
-}
-
-/* 모바일 DOWN 버튼 */
-#scrollDownMob {
-	display: none;
-	position: fixed;
-	bottom: 20px; /* 브라우저 아래쪽 끝에서부터의 거리 */
-	right: 30px; /* 브라우저 오른쪽 끝에서부터의 거리 */
-	z-index: 99;
 }
 </style>
 
@@ -219,10 +119,7 @@ ul {
 					<div class="form-group" id="login-margin">
 
 						<div class="logo">PLEASE LOG IN!</div>
-						<div class="login-icon">
-							<i id="login-icon" class="fa fa-cloud-upload fa-5x "
-								style="color: rgb(243, 235, 235)" aria-hidden="false"></i>
-						</div>
+						 <div class="login-icon"><i  id="login-icon" class="fa fa-cloud-upload fa-5x " style="color:rgb(243, 235, 235)" aria-hidden="true" ></i></div>
 
 					</div>
 
@@ -259,7 +156,7 @@ ul {
 					</div>
 
 					<div class="form-group d-grid" id="loginbtn">
-						<button type="submit"	class="btn btn-primary">로그인</button>
+						<button type="submit"	class="btn btn-outline-warning btn-dark btn-lg">로그인</button>
 					</div>
 					
 					<br>

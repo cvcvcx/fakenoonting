@@ -178,7 +178,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>5.3.20</version>
+			<version>5.3.16</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
@@ -244,6 +244,21 @@
 			<artifactId>thumbnailator</artifactId>
 			<version>0.4.14</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.14.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>2.14.1</version>
+		</dependency>
+
+
+
 
 
 		<!-- dependency 추가 끝 -->

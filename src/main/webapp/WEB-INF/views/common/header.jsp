@@ -103,8 +103,7 @@
 					</div>
 					<div class="offcanvas-body">
 						<div class="item">
-							<fieldset>
-
+							<div class="container">
 								<c:choose>
 									<c:when test="${isLogOn == true && member != null}">
 										<a href="${contextPath}/member/logout.do">
@@ -114,28 +113,23 @@
 									<c:otherwise>
 										<ul class="navbar-nav justify-content-end flex-grow-1 pe-1">
 											<li class="nav-item"><b>MEMBER LOGIN</b></li>
+											<form class="form-horizontal" method="post"
+													name="hamLoginForm" action="${contextPath}/member/login.do">
 											<li class="nav-item"><input class="form-control "
-												type="text" placeholder="E-MAIL"></li>
+												type="text" placeholder="E-MAIL" name="email"></li>
 											<li class="nav-item"><input class="form-control "
-												type="password" placeholder="PW"></li>
+												type="password" placeholder="PW" name="pwd"></li>
 											<div class="btn-group" role="group"
 												aria-label="Default button group">
-												<form class="form-horizontal" method="post"
-													name="hamLoginForm" action="${contextPath}/member/login.do">
 													<button type="submit" class="btn btn-black">Login</button>
 												</form>
-												<form class="form-horizontal" method="get"
-													name="hamLoginForm" action="${contextPath}/member/regiMemberForm.do">
-													<button type="button" class="btn btn-black">Join
-														Us</button>
-												</form>
-												<!-- <button type="button" class="btn btn-outline-light">Join Us</button> -->
+													<a href="${contextPath}/member/regiMemberForm.do"><button type="button" class="btn btn-black">Join
+														Us</button></a>
 											</div>
 										</ul>
 									</c:otherwise>
 								</c:choose>
-
-							</fieldset>
+							</div>
 						</div>
 						<div class="right_board">
 							<a href="#">Q&A</a> <a href="#">REVIEW</a>
