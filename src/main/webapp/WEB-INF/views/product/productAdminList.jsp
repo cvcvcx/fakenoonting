@@ -41,7 +41,8 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                 <td align="center">${list.id}</td>
                 <td>
                   <img
-                  src="${contextPath}/util/upload/display?fileName=${imgItem.uploadPath}/s_${imgItem.imgUUID}_${imgItem.orgImgName}"
+                    src="${contextPath}/util/upload/display?fileName=${imgItem.uploadPath}/s_${imgItem.imgUUID}_${imgItem.orgImgName}"
+                  />
                 </td>
                 <td>
                   <a href="${contextPath}/product/detail?id=${list.id}"
