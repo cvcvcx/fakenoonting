@@ -1,16 +1,28 @@
 package com.fakenoonting.www.util.upload;
 
+import com.fakenoonting.www.product.vo.ProductImgItemVO;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -26,8 +38,19 @@ public class UploadController {
 
     //만약, 프로필 같은 사진을 업로드 한다고 해도, 여기로 요청만 보내진다면 서버로 저장할 수 있음
     //상품 후기 글도 마찬가지
-    @PostMapping(value = "/uploadImage", produces = "text/plain;charset=utf-8")
-    public void uploadAjax(MultipartFile[] uploadFile){
+    @PostMapping(value = "/uploadImage", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<ProductImgItemVO>> uploadAjax(MultipartFile[] uploadFile) throws IOException {
+
+        for(MultipartFile multipartFile: uploadFile){
+            File checkfile = new File(multipartFile.getOriginalFilename());
+            String type = null;
+
+            type = Files.probeContentType(checkfile.toPath());
+            if(!type.startsWith("image")){
+                List<ProductImgItemVO> imgs = null;
+                return new ResponseEntity<>(imgs, HttpStatus.BAD_REQUEST);
+            }
+        }
 
         log.info("uploadAjaxPost요청 진행중...");
         String uploadFolder = uploadPath;
@@ -43,9 +66,22 @@ public class UploadController {
             savePath.mkdirs();
         }
 
+        List<ProductImgItemVO> productImgs = new ArrayList<>();
+
+
+
         for(MultipartFile multipartFile: uploadFile){
+
+            ProductImgItemVO img = new ProductImgItemVO();
+
             String uploadFileName = multipartFile.getOriginalFilename();
+
+            img.setOrgImgName(uploadFileName);
+            img.setUploadPath("/"+datePath);
+
             String uuid = UUID.randomUUID().toString();
+            img.setImgUUID(uuid);
+
             uploadFileName = uuid+"_"+uploadFileName;
             log.info("multipartFile.getName" + multipartFile.getOriginalFilename());
 
@@ -60,10 +96,38 @@ public class UploadController {
             }catch (Exception e){
                 e.printStackTrace();
             }
+            productImgs.add(img);
         }
-
+        ResponseEntity<List<ProductImgItemVO>> result = new ResponseEntity<>(productImgs, HttpStatus.OK);
+        return result;
 
     }
 
+    @GetMapping("/display")
+    public ResponseEntity<byte[]> getImage(String fileName) throws IOException {
+        File file = new File(uploadPath+fileName);
+        ResponseEntity<byte[]> result = null;
+        HttpHeaders header = new HttpHeaders();
+        header.add("Content-type",Files.probeContentType(file.toPath()));
+        result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file),header,HttpStatus.OK);
+        return result;
+    }
+    @PostMapping("/deleteFile")
+    public ResponseEntity<String> deleteFile(String fileName){
+        File file = null;
+
+        try {
+            file = new File(uploadPath+ URLDecoder.decode(fileName,"UTF-8"));
+            file.delete();
+            String originFileName = file.getAbsolutePath().replace("s_","");
+            file= new File(originFileName);
+            file.delete();
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<String>("fail",HttpStatus.NOT_IMPLEMENTED);
+        }
+        return new ResponseEntity<String>("success", HttpStatus.OK);
+
+    }
 
 }
