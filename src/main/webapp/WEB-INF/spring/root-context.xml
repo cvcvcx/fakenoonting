@@ -20,7 +20,7 @@
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
 		<property name="jdbcUrl"
 			value="jdbc:log4jdbc:mysql://localhost:3306/mydb?useSSL=false&amp;serverTimezone=Asia/Seoul" />
-		<property name="username" value="fakenoonuser" />
+		<property name="username" value="fakenoonting" />
 		<property name="password" value="1111" />
 	</bean>
 
