@@ -37,7 +37,24 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public int imageEnroll(ProductImgItemVO img) {
-        return sqlSession.insert(nameSpace+".uploadImg");
+    public int deleteProduct(ProductVO productId){
+        log.info("deleteProduct 실행중..");
+        return sqlSession.delete(nameSpace+".deleteProduct",productId);
     }
+
+    @Override
+    public int deleteImg(ProductVO productId){
+        log.info("deleteImg 실행중...");
+        return sqlSession.delete(nameSpace+".deleteImg",productId);
+    }
+
+
+    @Override
+    public int imageEnroll(ProductImgItemVO img) {
+        return sqlSession.insert(nameSpace+".uploadImg",img);
+    }
+    public List<ProductImgItemVO> findImagesByProductId(ProductVO productVO){
+        return sqlSession.selectList(nameSpace+".findImagesByProductId",productVO);
+    }
+
 }

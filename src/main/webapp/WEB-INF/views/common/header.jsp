@@ -165,10 +165,10 @@
 		</div>
 	</div>
 	<hr>
-	<div class="row container-fluid" style="float: none; margin: 100 auto;"
+	<div class="row container-fluid" style="float: none; auto;"
 		id="main_list">
 		<div class="col-lg-2 align-self-center"
-			style="float: none; margin: 100 auto;">
+			style="float: none; ">
 			<button class="navbar-toggler btn pull-left" type="button"
 				data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
 				aria-controls="offcanvasDarkNavbar">
@@ -178,7 +178,7 @@
 		<div class="nav-scroller py-1 mb-2 col-lg-8 align-self-center"
 			id="top_menu_list">
 			<nav class="nav d-flex justify-content-between" id="top_menu_bar">
-				<a class="p-2 link-secondary" href="#">TOP</a> <a
+				<a class="p-2 link-secondary" href="${contextPath}/product/list">TOP</a> <a
 					class="p-2 link-secondary" href="#">PANTS</a> <a
 					class="p-2 link-secondary" href="#">OUTER</a> <a
 					class="p-2 link-secondary" href="#">SHOES</a> <a
@@ -189,7 +189,7 @@
 		</div>
 		<!-- 커뮤니티 버튼 -->
 		<div class="col-md-2 align-self-center"
-			style="float: none; margin: 100 auto;">
+			style="float: none;">
 			<div class="dropdown d-grid gap-2 d-md-flex justify-content-md-end">
 				<a class="btn btn-success btn-sm dropdown-toggle" href="#"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">

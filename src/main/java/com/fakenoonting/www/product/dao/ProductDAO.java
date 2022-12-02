@@ -11,5 +11,8 @@ public interface ProductDAO {
 
     public List<ProductVO> findAll();
 
+    public int deleteProduct(ProductVO productId);
+    public int deleteImg(ProductVO productId);
     public int imageEnroll(ProductImgItemVO img);
+    public List<ProductImgItemVO> findImagesByProductId(ProductVO productVO);
 }

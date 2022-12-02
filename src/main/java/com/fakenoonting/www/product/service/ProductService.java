@@ -20,12 +20,15 @@ public class ProductService {
     public List<ProductVO> productList(){
         log.info("ProductService 상품 리스트 조회...");
         List<ProductVO> products = productRepo.findAll();
+        products.forEach(productVO -> {
+            productVO.setProductImgItems(productRepo.findImagesByProductId(productVO));
+        });
         return products;
     }
 
     public void productUpload(ProductVO productVO){
-        productRepo.save(productVO);
-
+        int save = productRepo.save(productVO);
+        log.info(productVO.getId()+"");
         if(productVO.getProductImgItems()==null||productVO.getProductImgItems().size()<=0){
             return;
         }
@@ -35,5 +38,20 @@ public class ProductService {
             productRepo.imageEnroll(imgItem);
         });
     }
+
+    public int productDelete(ProductVO productVO){
+        log.info("productService delete진행중...");
+
+        productRepo.deleteImg(productVO);
+
+
+        return productRepo.deleteProduct(productVO);
+    }
+
+    public ProductVO productDetail(ProductVO productVO){
+        log.info("productDetail 실행...");
+        return productRepo.findById(productVO);
+    }
+
 
 }

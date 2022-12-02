@@ -14,14 +14,14 @@
     </resultMap>
 
     <resultMap id="productImgItem" type="com.fakenoonting.www.product.vo.ProductImgItemVO">
+        <result column="img_UUID" property="imgUUID" />
         <result column="product_id" property="productId" />
         <result column="org_img_name" property="orgImgName" />
         <result column="upload_path" property="uploadPath" />
-        <result column="img_UUID" property="imgUUID" />
         <result column="create_date" property="createDate" />
     </resultMap>
 
-    <insert id="saveProduct" parameterType="com.fakenoonting.www.product.vo.ProductVO">
+    <insert id="saveProduct" parameterType="com.fakenoonting.www.product.vo.ProductVO" >
         <![CDATA[
             insert into product
             (prod_name,price,content)
@@ -50,7 +50,7 @@
         ]]>
     </select>
 
-    <select id="findImgsByProdId" resultMap="productImgItem" parameterType="com.fakenoonting.www.product.vo.ProductVO">
+    <select id="findImagesByProductId" resultMap="productImgItem" parameterType="com.fakenoonting.www.product.vo.ProductVO">
         <![CDATA[
             select *
             from product_img_item
@@ -58,7 +58,23 @@
         ]]>
     </select>
 
-    <insert id="uploadImg">
+    <delete id="deleteProduct" parameterType="com.fakenoonting.www.product.vo.ProductVO">
+        <![CDATA[
+           delete
+           from product
+           where id = #{id}
+        ]]>
+    </delete>
+
+    <delete id="deleteImg" parameterType="com.fakenoonting.www.product.vo.ProductVO">
+        <![CDATA[
+           delete
+           from product_img_item
+           where product_id = #{id}
+        ]]>
+    </delete>
+
+    <insert id="uploadImg" parameterType="com.fakenoonting.www.product.vo.ProductImgItemVO">
         insert into product_img_item
         (product_id, org_img_name,upload_path,img_UUID)
         values (#{productId},#{orgImgName},#{uploadPath},#{imgUUID})

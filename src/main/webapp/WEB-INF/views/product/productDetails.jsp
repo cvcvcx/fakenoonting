@@ -20,6 +20,7 @@
             <!-- start section -->
             <section>
                 <div class="container">
+                <h2>${product.id}</h2>
                     <div class="row">
                         <div class="col-md-6">
                             <img src="${contextPath}/resources/images/cat1.jpg" alt="사진" class="w-100">

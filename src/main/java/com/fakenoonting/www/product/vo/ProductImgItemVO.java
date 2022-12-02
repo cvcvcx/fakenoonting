@@ -11,11 +11,11 @@ import java.util.List;
 
 @Getter @Setter @NoArgsConstructor @ToString
 public class ProductImgItemVO {
+    private String imgUUID;
     private Long productId;
     private String orgImgName;
     private String uploadPath;
 
-    private String imgUUID;
 
     private Timestamp createDate;
 

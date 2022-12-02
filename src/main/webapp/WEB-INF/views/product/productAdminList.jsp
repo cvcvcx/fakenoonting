@@ -1,9 +1,9 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib prefix="f"
 uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
 <% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
@@ -31,17 +31,20 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
               <th class="col-sm1 text-center">상품설명</th>
               <th class="col-sm1 text-center">작성일자</th>
               <th class="col-sm1 text-center">상품가격</th>
+              <th class="col-sm1 text-center">상품삭제</th>
             </tr>
           </thead>
           <tbody>
             <c:forEach items="${list}" var="list">
+              <c:set var="imgItem" value="${list.productImgItems[0]}" />
               <tr>
                 <td align="center">${list.id}</td>
                 <td>
-
+                  <img
+                  src="${contextPath}/util/upload/display?fileName=${imgItem.uploadPath}/s_${imgItem.imgUUID}_${imgItem.orgImgName}"
                 </td>
                 <td>
-                  <a href="${contentPath}/main/board/boardDetail?seq=${list.id}"
+                  <a href="${contextPath}/product/detail?id=${list.id}"
                     >${list.productName}</a
                   >
                 </td>
@@ -54,6 +57,14 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                   ></f:formatDate>
                 </td>
                 <td align="right">${list.price}</td>
+                <td align="right">
+                  <a
+                    href="${contextPath}/product/delete?id=${list.id}"
+                    class="btn btn-danger deleteProduct"
+                  >
+                    삭제
+                  </a>
+                </td>
               </tr>
             </c:forEach>
           </tbody>
