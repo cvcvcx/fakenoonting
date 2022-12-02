@@ -103,8 +103,7 @@
 					</div>
 					<div class="offcanvas-body">
 						<div class="item">
-							<fieldset>
-
+							<div class="container">
 								<c:choose>
 									<c:when test="${isLogOn == true && member != null}">
 										<a href="${contextPath}/member/logout.do">
@@ -114,28 +113,23 @@
 									<c:otherwise>
 										<ul class="navbar-nav justify-content-end flex-grow-1 pe-1">
 											<li class="nav-item"><b>MEMBER LOGIN</b></li>
+											<form class="form-horizontal" method="post"
+													name="hamLoginForm" action="${contextPath}/member/login.do">
 											<li class="nav-item"><input class="form-control "
-												type="text" placeholder="E-MAIL"></li>
+												type="text" placeholder="E-MAIL" name="email"></li>
 											<li class="nav-item"><input class="form-control "
-												type="password" placeholder="PW"></li>
+												type="password" placeholder="PW" name="pwd"></li>
 											<div class="btn-group" role="group"
 												aria-label="Default button group">
-												<form class="form-horizontal" method="post"
-													name="hamLoginForm" action="${contextPath}/member/login.do">
 													<button type="submit" class="btn btn-black">Login</button>
 												</form>
-												<form class="form-horizontal" method="get"
-													name="hamLoginForm" action="${contextPath}/member/regiMemberForm.do">
-													<button type="button" class="btn btn-black">Join
-														Us</button>
-												</form>
-												<!-- <button type="button" class="btn btn-outline-light">Join Us</button> -->
+													<a href="${contextPath}/member/regiMemberForm.do"><button type="button" class="btn btn-black">Join
+														Us</button></a>
 											</div>
 										</ul>
 									</c:otherwise>
 								</c:choose>
-
-							</fieldset>
+							</div>
 						</div>
 						<div class="right_board">
 							<a href="#">Q&A</a> <a href="#">REVIEW</a>
@@ -165,10 +159,10 @@
 		</div>
 	</div>
 	<hr>
-	<div class="row container-fluid" style="float: none; auto;"
+	<div class="row container-fluid" style="float: none; margin: 100 auto;"
 		id="main_list">
 		<div class="col-lg-2 align-self-center"
-			style="float: none; ">
+			style="float: none; margin: 100 auto;">
 			<button class="navbar-toggler btn pull-left" type="button"
 				data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
 				aria-controls="offcanvasDarkNavbar">
@@ -178,7 +172,7 @@
 		<div class="nav-scroller py-1 mb-2 col-lg-8 align-self-center"
 			id="top_menu_list">
 			<nav class="nav d-flex justify-content-between" id="top_menu_bar">
-				<a class="p-2 link-secondary" href="${contextPath}/product/list">TOP</a> <a
+				<a class="p-2 link-secondary" href="#">TOP</a> <a
 					class="p-2 link-secondary" href="#">PANTS</a> <a
 					class="p-2 link-secondary" href="#">OUTER</a> <a
 					class="p-2 link-secondary" href="#">SHOES</a> <a
@@ -189,7 +183,7 @@
 		</div>
 		<!-- 커뮤니티 버튼 -->
 		<div class="col-md-2 align-self-center"
-			style="float: none;">
+			style="float: none; margin: 100 auto;">
 			<div class="dropdown d-grid gap-2 d-md-flex justify-content-md-end">
 				<a class="btn btn-success btn-sm dropdown-toggle" href="#"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
