@@ -98,7 +98,7 @@
 <script>
     $("#registerQuestion").on("click", function(e) {
         e.preventDefault();
-        location.href="/questionForm";
+        location.href="${contextPath}/questionForm";
     });
 
     $(function checkSuccess() {

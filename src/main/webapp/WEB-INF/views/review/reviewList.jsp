@@ -97,7 +97,10 @@
 <script>
     $("#registerReview").on("click", function(e) {
         e.preventDefault();
-        location.href="/reviewForm";
+        //뷰 경로 앞에 항상 ${contextPath}를 붙여주세요 -- 서버 설정에 따라 오류가 날 수 있음
+        //서버 앱 경로가 빈칸인 경우에는 /reviewForm과 같은 식으로 써도 되는데
+        //서버 앱 경로가 빈칸이 아닌 경우에는 ${contextPath} 가 안붙어있으면 에라가 납니다.
+        location.href="${contextPath}/reviewForm";
     });
 
     $(function checkSuccess() {
