@@ -35,38 +35,38 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	
 	//===================================================================================	
-	// header 에서 각 View로 던지는 컨트롤러
+	// header 및 각 페이지에서 View로 던지는 컨트롤러
 	//===================================================================================
 	
-	// 로그인 폼
+	// 1. 로그인 폼
 	@RequestMapping(value = "/loginForm.do", method = RequestMethod.GET)
 	public String loginForm() {
 		
 		return "/member/loginForm";		
 	}
 
-	// 회원 가입 폼
+	// 2. 회원 가입 폼
 	@RequestMapping(value = "/regiMemberForm.do", method = RequestMethod.GET)
 	public String registerForm() {
 		
 		return "/member/registerForm";
 	}
 
-	// 회원 가입 폼 (ajax)
+	// 3. 회원 가입 폼 (ajax)
 	@RequestMapping(value = "/registerAjaxForm.do", method = RequestMethod.GET)
 	public String registerAjaxForm() {
 		
 		return "/member/registerAjax";		
 	}
 
-	// 회원 가입 완료 페이지 이동
+	// 4. 회원 가입 완료 페이지 이동
 	@RequestMapping(value = "/regiComplitedMember.do", method = RequestMethod.GET)
 	public String regiComplitedMember() {
 		
 		return "/member/regiComplitedMember";		
 	}
 	
-	// 마이 페이지로 이동
+	// 5. 마이 페이지 이동
 	@RequestMapping(value = "/myPage.do", method = RequestMethod.GET)
 	public String myPage() {
 		
@@ -76,10 +76,10 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	
 	//===================================================================================	
-	// Service로 던지는 컨트롤러
+	// 기능 컨트롤러
 	//===================================================================================
 	
-	// 로그인 처리
+	// 1. 로그인 처리
 	@Override
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request,
@@ -117,7 +117,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 
 
 	
-	// 로그아웃
+	// 2. 로그아웃
 	@Override
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response)
@@ -137,7 +137,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	
 	
-	// 회원 가입 처리
+	// 3. 회원 가입 처리
 	@Override
 	@RequestMapping(value = "/registerMember.do", method = RequestMethod.POST)
 	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response)
@@ -147,17 +147,22 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		// 회원 가입이 정상정으로 되었는지 판별하기 위한 변수
-		int result = memberService.registerMember(memberVO);
-
+		int regiResult = memberService.registerMember(memberVO);
 		ModelAndView mav = new ModelAndView();		
-		mav.setViewName("redirect:/member/regiComplitedMember.do");			
+
+		if(regiResult==0) {
+			rAttr.addAttribute("regiResult", "registerFailed");
+			mav.setViewName("redirect:/member/regiMemberForm.do");
+		} else {
+			mav.setViewName("redirect:/member/regiComplitedMember.do");				
+		}
 		
 		return mav;
 	}
 
 	
 	
-	// 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
+	// 4. 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
 	@Override
 	@RequestMapping(value="/selectMember.do", method=RequestMethod.GET)
 	public ModelAndView selectMember(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response)
@@ -178,7 +183,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	
 	
-	// 아이디(email)에 해당하는 회원 정보 수정
+	// 5. 아이디(email)에 해당하는 회원 정보 수정
 	@Override
 	@RequestMapping(value="/updateMember.do", method=RequestMethod.POST)
 	public ModelAndView updateMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response)
@@ -198,7 +203,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	
 	
-	// 아이디(email)에 해당하는 회원 정보 삭제
+	// 6. 아이디(email)에 해당하는 회원 정보 삭제
 	@Override
 	@RequestMapping(value="/deleteMember.do", method=RequestMethod.GET)
 	public ModelAndView deleteMember(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response)

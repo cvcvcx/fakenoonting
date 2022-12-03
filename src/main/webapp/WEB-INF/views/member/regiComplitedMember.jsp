@@ -167,7 +167,7 @@ translateY(
 			<p>The style you want to go out of the house. kikerday</p>
 
 			<a href="${contextPath}/" class="btn btn-swap">
-				해석이 안된다면...? <span>이 버튼을 누르셈!!!! </span>
+				해석이 안된다면...? <span>이 버튼을 누르셈! </span>
 			</a>
 		</div>
 	</div>
