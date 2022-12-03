@@ -136,8 +136,8 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		int result = 0;
 		result = memberService.registerMember(memberVO);
 		
-//		ModelAndView mav = new ModelAndView("redirect:/member/regiComplitedMember");
-		ModelAndView mav = new ModelAndView("redirect:/");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/member/regiComplitedMember");
 		
 		return mav;
 		
