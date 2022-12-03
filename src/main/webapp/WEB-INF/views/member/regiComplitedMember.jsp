@@ -78,7 +78,7 @@ body {
 	margin-top: 2em;
 	background-color: none;
 	border: none;
-	font-size: 35px;
+	font-size: 20px;
 	padding: 20px 40px;
 	width: 250px;
 	cursor: pointer;
@@ -157,27 +157,20 @@ translateY(
 
 <body>
 
-	<!-- 메뉴바 -->
-	<jsp:include page="../common/header.jsp" flush="false" />
-
 	<div class="container">
 		<div class="inner">
 			<h1>Welcome To Kikerday</h1>
-			<p style="background: rgb(235, 45, 127); border-radius: 4em;">Member
-				registration completed</p>
+			<p style="background: rgb(235, 45, 127); border-radius: 4em;">회원 가입이 완료 되었습니다~!!!!</p>
 			<p>The Day of Dream and Hope! Welcome to kickerday.</p>
 			<p>You are the one who sets the trends for the younger generation</p>
 			<p>We'll be with you on your day.</p>
 			<p>The style you want to go out of the house. kikerday</p>
 
-			<button type="submit" class="btn btn-swap">
-				welcome <span>shopping </span>
-			</button>
+			<a href="${contextPath}/" class="btn btn-swap">
+				해석이 안된다면...? <span>이 버튼을 누르셈!!!! </span>
+			</a>
 		</div>
 	</div>
-
-	<!-- footer -->
-	<jsp:include page="../common/footer.jsp" flush="false" />
 
 </body>
 

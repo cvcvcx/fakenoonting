@@ -59,6 +59,13 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		return "/member/registerAjax";		
 	}
 
+	// 회원 가입 완료 페이지 이동
+	@RequestMapping(value = "/regiComplitedMember.do", method = RequestMethod.GET)
+	public String regiComplitedMember() {
+		
+		return "/member/regiComplitedMember";		
+	}
+	
 	// 마이 페이지로 이동
 	@RequestMapping(value = "/myPage.do", method = RequestMethod.GET)
 	public String myPage() {
@@ -126,7 +133,6 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		mav.setViewName("redirect:/");
 		
 		return mav;
-		
 	}
 	
 	
@@ -142,18 +148,11 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		
 		// 회원 가입이 정상정으로 되었는지 판별하기 위한 변수
 		int result = memberService.registerMember(memberVO);
-		ModelAndView mav = new ModelAndView();
+
+		ModelAndView mav = new ModelAndView();		
+		mav.setViewName("redirect:/member/regiComplitedMember.do");			
 		
-		if(result == 0) {
-			rAttr.addAttribute("result", "registerFailed");
-			mav.setViewName("redirect:/regiMemberForm.do");			
-		} else {
-			rAttr.addAttribute("result", "registerSuccess");
-			mav.setViewName("redirect:/");			
-		}
-			
 		return mav;
-		
 	}
 
 	

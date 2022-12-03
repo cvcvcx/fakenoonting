@@ -29,6 +29,9 @@ public interface MemberControllerInterface {
 	// 회원 가입 폼 (ajax)
 	public String registerAjaxForm();
 
+	// 회원 가입 완료 페이지 이동
+	public String regiComplitedMember();
+	
 	// 마이 페이지로 이동
 	public String myPage() ;
 
