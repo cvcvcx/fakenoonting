@@ -44,7 +44,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		
 		return "/member/loginForm";		
 	}
-		
+
 	// 회원 가입 폼
 	@RequestMapping(value = "/regiMemberForm.do", method = RequestMethod.GET)
 	public String registerForm() {
@@ -58,7 +58,14 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		
 		return "/member/registerAjax";		
 	}
-	
+
+	// 마이 페이지로 이동
+	@RequestMapping(value = "/myPage.do", method = RequestMethod.GET)
+	public String myPage() {
+		
+		return "/member/myPageForm";		
+	}
+
 	
 	
 	//===================================================================================	
@@ -127,18 +134,24 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	// 회원 가입 처리
 	@Override
 	@RequestMapping(value = "/registerMember.do", method = RequestMethod.POST)
-	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO, HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response)
 	throws Exception{
 
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		
-		int result = 0;
-		result = memberService.registerMember(memberVO);
-		
+		// 회원 가입이 정상정으로 되었는지 판별하기 위한 변수
+		int result = memberService.registerMember(memberVO);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/member/regiComplitedMember");
 		
+		if(result == 0) {
+			rAttr.addAttribute("result", "registerFailed");
+			mav.setViewName("redirect:/regiMemberForm.do");			
+		} else {
+			rAttr.addAttribute("result", "registerSuccess");
+			mav.setViewName("redirect:/");			
+		}
+			
 		return mav;
 		
 	}
@@ -168,7 +181,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	// 아이디(email)에 해당하는 회원 정보 수정
 	@Override
-	@RequestMapping(value="updateMember.do", method=RequestMethod.POST)
+	@RequestMapping(value="/updateMember.do", method=RequestMethod.POST)
 	public ModelAndView updateMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
@@ -179,16 +192,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		int result = memberService.updateMember(memberVO);
 		ModelAndView mav = new ModelAndView();
 		
-		if(result != 0) {	// 수정된 결과 값이 있다면
-			// 수정 완료 메세지를 보내면서 마이 페이지 화면으로 이동한다.
-			rAttr.addAttribute("result", "updateSuccess");
-			mav.setViewName("redirect:/member/mypageMembers");
-			
-		} else {	// 수정된 결과 값이 없다면
-			// 수정 된 게 없다는 메세지를 보내면서 마이 페이지 화면으로 이동한다.
-			rAttr.addAttribute("result", "updateFailed");
-			mav.setViewName("redirect:/member/mypageMembers");
-		}
+		mav.setViewName("redirect:/member/myPage.do");		
 
 		return mav;
 	}
@@ -197,7 +201,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	// 아이디(email)에 해당하는 회원 정보 삭제
 	@Override
-	@RequestMapping(value="deleteMember.do", method=RequestMethod.GET)
+	@RequestMapping(value="/deleteMember.do", method=RequestMethod.GET)
 	public ModelAndView deleteMember(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		

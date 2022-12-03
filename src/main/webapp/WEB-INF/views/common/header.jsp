@@ -52,8 +52,8 @@
 									data-bs-toggle="dropdown" aria-expanded="false">MY
 									PAGE</button>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">마이 페이지</a></li>
-									<li><a class="dropdown-item" href="#">주문조회</a></li>
+									<li><a class="dropdown-item" href="${contextPath}/member/myPage.do">마이 페이지</a></li>
+									<li><a class="dropdown-item" href="${contextPath}/order/orderLookup">주문조회</a></li>
 									<li><a class="dropdown-item" href="#">회원정보수정</a></li>
 									<li><a class="dropdown-item" href="#">최근본상품</a></li>
 									<li><a class="dropdown-item" href="#">관심상품</a></li>
@@ -103,7 +103,8 @@
 					</div>
 					<div class="offcanvas-body">
 						<div class="item">
-							<div class="container">
+							<fieldset>
+
 								<c:choose>
 									<c:when test="${isLogOn == true && member != null}">
 										<a href="${contextPath}/member/logout.do">
@@ -113,23 +114,28 @@
 									<c:otherwise>
 										<ul class="navbar-nav justify-content-end flex-grow-1 pe-1">
 											<li class="nav-item"><b>MEMBER LOGIN</b></li>
-											<form class="form-horizontal" method="post"
-													name="hamLoginForm" action="${contextPath}/member/login.do">
 											<li class="nav-item"><input class="form-control "
-												type="text" placeholder="E-MAIL" name="email"></li>
+												type="text" placeholder="E-MAIL"></li>
 											<li class="nav-item"><input class="form-control "
-												type="password" placeholder="PW" name="pwd"></li>
+												type="password" placeholder="PW"></li>
 											<div class="btn-group" role="group"
 												aria-label="Default button group">
+												<form class="form-horizontal" method="post"
+													name="hamLoginForm" action="${contextPath}/member/login.do">
 													<button type="submit" class="btn btn-black">Login</button>
 												</form>
-													<a href="${contextPath}/member/regiMemberForm.do"><button type="button" class="btn btn-black">Join
-														Us</button></a>
+												<form class="form-horizontal" method="get"
+													name="hamLoginForm" action="${contextPath}/member/regiMemberForm.do">
+													<button type="button" class="btn btn-black">Join
+														Us</button>
+												</form>
+												<!-- <button type="button" class="btn btn-outline-light">Join Us</button> -->
 											</div>
 										</ul>
 									</c:otherwise>
 								</c:choose>
-							</div>
+
+							</fieldset>
 						</div>
 						<div class="right_board">
 							<a href="#">Q&A</a> <a href="#">REVIEW</a>
@@ -172,7 +178,7 @@
 		<div class="nav-scroller py-1 mb-2 col-lg-8 align-self-center"
 			id="top_menu_list">
 			<nav class="nav d-flex justify-content-between" id="top_menu_bar">
-				<a class="p-2 link-secondary" href="${contextPath}/product/list">TOP</a> <a
+				<a class="p-2 link-secondary" href="#">TOP</a> <a
 					class="p-2 link-secondary" href="#">PANTS</a> <a
 					class="p-2 link-secondary" href="#">OUTER</a> <a
 					class="p-2 link-secondary" href="#">SHOES</a> <a
@@ -191,8 +197,6 @@
 				<ul class="dropdown-menu">
 					<li><a class="dropdown-item" href="#">QandA</a></li>
 					<li><a class="dropdown-item" href="#">REVIEW</a></li>
-					<li><a class="dropdown-item" href="${contextPath}/product/upload">AdminUpload</a></li>
-					<li><a class="dropdown-item" href="${contextPath}/product/adminList">AdminList</a></li>
 				</ul>
 			</div>
 		</div>

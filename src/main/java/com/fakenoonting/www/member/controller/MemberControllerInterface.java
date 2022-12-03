@@ -28,7 +28,10 @@ public interface MemberControllerInterface {
 
 	// 회원 가입 폼 (ajax)
 	public String registerAjaxForm();
-	
+
+	// 마이 페이지로 이동
+	public String myPage() ;
+
 	
 	
 	//===================================================================================	
@@ -43,7 +46,7 @@ public interface MemberControllerInterface {
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	// 회원가입 처리
-	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO,
+	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr,
 	HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	// 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
