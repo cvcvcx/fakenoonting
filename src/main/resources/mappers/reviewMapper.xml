@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fakenoonting.www.review.reviewMapper">
+
+    <resultMap id="reviewResult" type="com.fakenoonting.www.reviews.domain.Review">
+        <result column="id" property="reviewId"/>
+        <result column="member_id" property="memberId"/>
+        <result column="product_id" property="productId"/>
+        <result column="content" property="contents"/>
+        <result column="create_date" property="regDate"/>
+        <result column="grade" property="grade"/>
+        <result column="isExist" property="isExist"/>
+    </resultMap>
+
+    <!-- 리뷰 등록하기    테스트용으로 각 아이디, 평점값 넣어둠 -->
+    <insert id="register" parameterType="com.fakenoonting.www.reviews.domain.Review">
+        <![CDATA[
+			INSERT INTO review (id, member_id, product_id, content, create_date, grade, isExist)
+			SELECT IFNULL(MAX(id), 0)+1, 111, 222, #{contents}, now(), #{grade}, 1
+            FROM review
+		]]>
+    </insert>
+
+    <!-- 리뷰 존재 여부 확인 -->
+    <select id="isExist" parameterType="com.fakenoonting.www.reviews.domain.Review" resultMap="reviewResult">
+        <![CDATA[
+            SELECT id
+            FROM review
+            WHERE member_id = #{memberId} AND product_id = #{productId}
+        ]]>
+    </select>
+
+    <!-- 리뷰 수정하기 -->
+    <update id="update" parameterType="com.fakenoonting.www.reviews.domain.Review">
+        <![CDATA[
+            UPDATE review
+            SET content = #{contents}, grade = #{grade}
+            WHERE id = #{reviewId}
+        ]]>
+    </update>
+
+    <!-- 리뷰 삭제하기 -->
+    <delete id="delete" parameterType="int">
+        <![CDATA[
+            DELETE FROM review
+            WHERE id = #{reviewId}
+        ]]>
+    </delete>
+
+    <!-- 리뷰 1개 찾기(고유번호 사용) -->
+    <select id="findById" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+        <![CDATA[
+            SELECT *
+            FROM review
+            WHERE id = #{reviewId}
+        ]]>
+    </select>
+
+    <!-- 모든 상품의 모든 리뷰 찾기 -->
+    <select id="findAll" resultType="com.fakenoonting.www.reviews.domain.Review">
+        <![CDATA[
+            SELECT id, content, create_date, grade
+            FROM review
+            ORDER BY id DESC
+        ]]>
+    </select>
+
+    <!-- 모든 상품의 모든 리뷰 찾기 + 페이징적용-->
+    <select id="findAllPaging" parameterType="com.fakenoonting.www.util.paging.Pagination" resultType="com.fakenoonting.www.reviews.domain.Review" resultMap="reviewResult">
+        <![CDATA[
+            SELECT id, content, create_date, grade
+            FROM review
+            ORDER BY id DESC
+            LIMIT #{startList}, #{listSize}
+        ]]>
+    </select>
+
+    <!-- 특정 상품의 모든 리뷰 찾기 -->
+    <select id="findAllByProductId" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+        <![CDATA[
+            SELECT *
+            FROM review
+            WHERE product_id = #{productId}
+            ORDER BY create_date DESC
+        ]]>
+    </select>
+
+    <!-- 특정 유저의 모든 리뷰 찾기 -->
+    <select id="findAllByMemberId" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+        <![CDATA[
+            SELECT *
+            FROM review
+            WHERE member_id = #{memberId}
+            ORDER BY create_date DESC
+        ]]>
+    </select>
+
+    <!-- 특정 상품의 모든 리뷰 평점순으로 찾기 -->
+    <select id="findAllByGrade" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+        <![CDATA[
+            SELECT *
+            FROM (
+                    SELECT *
+                    FROM review
+                    WHERE product_id = #{productId}
+                    ORDER BY create_date DESC
+                 )
+            ORDER BY grade DESC
+        ]]>
+    </select>
+
+    <!-- 특정 상품의 리뷰 평균 평점 구하기 -->
+    <select id="getAvgGrade" parameterType="int" resultType="double">
+        <![CDATA[
+            SELECT AVG(grade)
+            FROM review
+            WHERE product_id = #{productId}
+        ]]>
+    </select>
+
+    <!-- 모든 상품의 모든 리뷰 개수 -->
+    <select id="allReviewCount" resultType="int">
+        <![CDATA[
+            SELECT COUNT(*)
+            FROM review
+        ]]>
+    </select>
+
+</mapper>
