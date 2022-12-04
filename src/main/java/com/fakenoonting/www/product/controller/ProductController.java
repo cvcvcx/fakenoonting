@@ -1,7 +1,6 @@
 package com.fakenoonting.www.product.controller;
 
 import com.fakenoonting.www.product.service.ProductService;
-import com.fakenoonting.www.product.vo.ProductImgItemVO;
 import com.fakenoonting.www.product.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

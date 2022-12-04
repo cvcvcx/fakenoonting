@@ -1,6 +1,6 @@
 package com.fakenoonting.www.util.upload;
 
-import com.fakenoonting.www.product.vo.ProductImgItemVO;
+import com.fakenoonting.www.util.upload.vo.ImgItemVO;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.http.HttpHeaders;
@@ -39,7 +39,7 @@ public class UploadController {
     //만약, 프로필 같은 사진을 업로드 한다고 해도, 여기로 요청만 보내진다면 서버로 저장할 수 있음
     //상품 후기 글도 마찬가지
     @PostMapping(value = "/uploadImage", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<ProductImgItemVO>> uploadAjax(MultipartFile[] uploadFile) throws IOException {
+    public ResponseEntity<List<ImgItemVO>> uploadAjax(MultipartFile[] uploadFile) throws IOException {
 
         for(MultipartFile multipartFile: uploadFile){
             File checkfile = new File(multipartFile.getOriginalFilename());
@@ -47,7 +47,7 @@ public class UploadController {
 
             type = Files.probeContentType(checkfile.toPath());
             if(!type.startsWith("image")){
-                List<ProductImgItemVO> imgs = null;
+                List<ImgItemVO> imgs = null;
                 return new ResponseEntity<>(imgs, HttpStatus.BAD_REQUEST);
             }
         }
@@ -66,13 +66,13 @@ public class UploadController {
             savePath.mkdirs();
         }
 
-        List<ProductImgItemVO> productImgs = new ArrayList<>();
+        List<ImgItemVO> productImgs = new ArrayList<>();
 
 
 
         for(MultipartFile multipartFile: uploadFile){
 
-            ProductImgItemVO img = new ProductImgItemVO();
+            ImgItemVO img = new ImgItemVO();
 
             String uploadFileName = multipartFile.getOriginalFilename();
 
@@ -98,7 +98,7 @@ public class UploadController {
             }
             productImgs.add(img);
         }
-        ResponseEntity<List<ProductImgItemVO>> result = new ResponseEntity<>(productImgs, HttpStatus.OK);
+        ResponseEntity<List<ImgItemVO>> result = new ResponseEntity<>(productImgs, HttpStatus.OK);
         return result;
 
     }
