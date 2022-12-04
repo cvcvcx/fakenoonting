@@ -15,7 +15,7 @@
 
     <resultMap id="productImgItem" type="com.fakenoonting.www.util.upload.vo.ImgItemVO">
         <result column="img_UUID" property="imgUUID" />
-        <result column="product_id" property="productId" />
+        <result column="product_id" property="foreignId" />
         <result column="org_img_name" property="orgImgName" />
         <result column="upload_path" property="uploadPath" />
         <result column="create_date" property="createDate" />
@@ -77,6 +77,6 @@
     <insert id="uploadImg" parameterType="com.fakenoonting.www.util.upload.vo.ImgItemVO">
         insert into product_img_item
         (product_id, org_img_name,upload_path,img_UUID)
-        values (#{productId},#{orgImgName},#{uploadPath},#{imgUUID})
+        values (#{foreignId},#{orgImgName},#{uploadPath},#{imgUUID})
     </insert>
 </mapper>

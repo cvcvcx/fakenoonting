@@ -34,7 +34,7 @@ public class ProductService {
         }
         List<ImgItemVO> productImgItems = productVO.getProductImgItems();
         productImgItems.forEach(imgItem->{
-            imgItem.setProductId(productVO.getId());
+            imgItem.setForeignId(productVO.getId());
             productRepo.imageEnroll(imgItem);
         });
     }
