@@ -13,7 +13,7 @@
         <result column="modify_date" property="modifyDate" />
     </resultMap>
 
-    <resultMap id="productImgItem" type="com.fakenoonting.www.product.vo.ProductImgItemVO">
+    <resultMap id="productImgItem" type="com.fakenoonting.www.util.upload.vo.ImgItemVO">
         <result column="img_UUID" property="imgUUID" />
         <result column="product_id" property="productId" />
         <result column="org_img_name" property="orgImgName" />
@@ -66,7 +66,7 @@
         ]]>
     </delete>
 
-    <delete id="deleteImg" parameterType="com.fakenoonting.www.product.vo.ProductVO">
+    <delete id="deleteProductImg" parameterType="com.fakenoonting.www.product.vo.ProductVO">
         <![CDATA[
            delete
            from product_img_item
@@ -74,7 +74,7 @@
         ]]>
     </delete>
 
-    <insert id="uploadImg" parameterType="com.fakenoonting.www.product.vo.ProductImgItemVO">
+    <insert id="uploadImg" parameterType="com.fakenoonting.www.util.upload.vo.ImgItemVO">
         insert into product_img_item
         (product_id, org_img_name,upload_path,img_UUID)
         values (#{productId},#{orgImgName},#{uploadPath},#{imgUUID})

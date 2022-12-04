@@ -2,7 +2,7 @@ package com.fakenoonting.www.product.service;
 
 
 import com.fakenoonting.www.product.dao.ProductDAO;
-import com.fakenoonting.www.product.vo.ProductImgItemVO;
+import com.fakenoonting.www.util.upload.vo.ImgItemVO;
 import com.fakenoonting.www.product.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class ProductService {
         if(productVO.getProductImgItems()==null||productVO.getProductImgItems().size()<=0){
             return;
         }
-        List<ProductImgItemVO> productImgItems = productVO.getProductImgItems();
+        List<ImgItemVO> productImgItems = productVO.getProductImgItems();
         productImgItems.forEach(imgItem->{
             imgItem.setProductId(productVO.getId());
             productRepo.imageEnroll(imgItem);
