@@ -9,6 +9,17 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Sharp|Material+Icons+Two+Tone|Material+Icons+Outlined"
+            rel="stylesheet">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+            rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+            crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous">
+        </script>
         <title>kikerday</title>
     </head>
     <body>
@@ -20,7 +31,6 @@
             <!-- start section -->
             <section>
                 <div class="container">
-                <h2>${product.id}</h2>
                     <div class="row">
                         <div class="col-md-6">
                             <img src="${contextPath}/resources/images/cat1.jpg" alt="사진" class="w-100">
@@ -178,82 +188,82 @@
                     </div>
                 </div>
                 <div id="modal-popup">
-                    <div class="d-flex justify-content-center">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <th>사이즈</th>
-                                    <th>S</th>
-                                    <th>M</th>
-                                    <th>L</th>
-                                    <th>XL</th>
-                                    <th>XXL</th>
-                                    <th>2XL</th>
-                                    <th>3XL</th>
-                                </tr>
-                                <tr>
-                                    <th>어깨</th>
-                                    <td>16</td>
-                                    <td>17</td>
-                                    <td>18</td>
-                                    <td>19</td>
-                                    <td>20</td>
-                                    <td>21</td>
-                                    <td>22</td>
-                                </tr>
-                                <tr>
-                                    <th>가슴단</th>
-                                    <td>28-29</td>
-                                    <td>30-31</td>
-                                    <td>32-33</td>
-                                    <td>34-35</td>
-                                    <td>36-37</td>
-                                    <td>38-39</td>
-                                    <td>40-41</td>
-                                </tr>
-                                <tr>
-                                    <th>소매단</th>
-                                    <td>9</td>
-                                    <td>9.5</td>
-                                    <td>10</td>
-                                    <td>10.5</td>
-                                    <td>11</td>
-                                    <td>11.5</td>
-                                    <td>12</td>
-                                </tr>
-                                <tr>
-                                    <th>총길이</th>
-                                    <td>63</td>
-                                    <td>66</td>
-                                    <td>69</td>
-                                    <td>72</td>
-                                    <td>75</td>
-                                    <td>78</td>
-                                    <td>81</td>
-                                </tr>
-                                <tr>
-                                    <th>밑단</th>
-                                    <td>33</td>
-                                    <td>33.5</td>
-                                    <td>34</td>
-                                    <td>34.5</td>
-                                    <td>35</td>
-                                    <td>35.5</td>
-                                    <td>36</td>
-                                </tr>
-                                <tr>
-                                    <th>암홀</th>
-                                    <td>22</td>
-                                    <td>22.5</td>
-                                    <td>32</td>
-                                    <td>23.5</td>
-                                    <td>24</td>
-                                    <td>24.5</td>
-                                    <td>25</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">사이즈</th>
+                                <th scope="col">S</th>
+                                <th scope="col">M</th>
+                                <th scope="col">L</th>
+                                <th scope="col">XL</th>
+                                <th scope="col">2XL</th>
+                                <th scope="col">3XL</th>
+                                <th scope="col">4XL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">어깨</th>
+                                <td>16</td>
+                                <td>17</td>
+                                <td>18</td>
+                                <td>19</td>
+                                <td>20</td>
+                                <td>21</td>
+                                <td>22</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">가슴단</th>
+                                <td>28-29</td>
+                                <td>30-31</td>
+                                <td>32-33</td>
+                                <td>34-35</td>
+                                <td>36-37</td>
+                                <td>38-39</td>
+                                <td>40-41</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">소매단</th>
+                                <td>9</td>
+                                <td>9.5</td>
+                                <td>10</td>
+                                <td>10.5</td>
+                                <td>11</td>
+                                <td>11.5</td>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">총길이</th>
+                                <td>63</td>
+                                <td>66</td>
+                                <td>69</td>
+                                <td>72</td>
+                                <td>75</td>
+                                <td>78</td>
+                                <td>81</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">밑단</th>
+                                <td>33</td>
+                                <td>33.5</td>
+                                <td>34</td>
+                                <td>34.5</td>
+                                <td>35</td>
+                                <td>35.5</td>
+                                <td>36</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">암홀</th>
+                                <td>22</td>
+                                <td>22.5</td>
+                                <td>32</td>
+                                <td>23.5</td>
+                                <td>24</td>
+                                <td>24.5</td>
+                                <td>25</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
             <!-- end 제품 상세 이미지, 텍스트 -->
@@ -266,7 +276,6 @@
                             <ul class="nav nav-tabs justify-content-center text-center alt-font font-weight-500 text-uppercase margin-9-rem-bottom border-bottom border-color-medium-gray md-margin-50px-bottom sm-margin-35px-bottom">
                                 <li class="nav-item"><a data-bs-toggle="tab" href="#description" class="nav-link active">제품설명</a></li>
                                 <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#additionalinformation">추가정보</a></li>
-                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#reviews">구매후기 (2)</a></li>
                             </ul>
                         </div>
                     </div>
@@ -315,66 +324,49 @@
                             </div>
                         </div>
                         <!-- end tab item -->
-                        <!-- start tab item -->
-                        <div id="reviews" class="tab-pane fade">
-                            <div class="row align-items-center justify-content-center">
-                                <div class="col-12 col-lg-10">
-                                    <ul class="blog-comment margin-5-half-rem-bottom">
-                                        <li>
-                                            <div class="d-block d-md-flex w-100 align-items-center align-items-md-start">
-                                                <div class="w-75px sm-w-50px sm-margin-10px-bottom">
-                                                    <img src="https://via.placeholder.com/125x125" class="rounded-circle w-95 sm-w-100" alt=""/>
-                                                </div>
-                                                <div class="w-100 padding-25px-left last-paragraph-no-margin sm-no-padding-left">
-                                                    <a href="#" class="text-extra-dark-gray text-fast-blue-hover alt-font font-weight-500 text-medium">조아라님</a>
-                                                    <span class="text-orange text-extra-small float-end letter-spacing-2px"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
-                                                    <div class="text-medium text-medium-gray margin-15px-bottom">2022.11.11, 6:05 PM</div>
-                                                    <p class="w-85">옷이 오버핏이라 날다람쥐가 될 수 있어요. 기모가 두툼해서 담요대용으로도 좋아요. 다른색으로 한개 더 사려고 색깔 고르고 있어요.</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="row justify-content-center">
-                                <div class="col-12 col-lg-10 margin-4-rem-bottom ">
-                                    <h6 class="alt-font text-extra-dark-gray font-weight-500 margin-5px-bottom">리뷰 쓰기</h6>
-                                    <div class="margin-5px-bottom">이름과 이메일을 입력해주세요.<span class="text-radical-red">*</span></div>
-                                </div>
-                            </div>
-                            <div class="row justify-content-center">
-                                <div class="col-12 col-lg-10">
-                                    <form action="#" method="post">
-                                        <div class="row align-items-center">
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                                <label class="margin-15px-bottom" for="basic-name">이름 <span class="text-radical-red">*</span></label>
-                                                <input id="basic-name" class="medium-input border-radius-4px bg-white margin-30px-bottom" type="text" name="name" placeholder="Enter your name">
-                                            </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                                <label class="margin-15px-bottom">이메일 <span class="text-radical-red">*</span></label>
-                                                <input class="medium-input border-radius-4px bg-white margin-30px-bottom" type="text" name="email" placeholder="Enter your email">
-                                            </div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12 margin-30px-bottom">
-                                                <label class="margin-15px-bottom">별점<span class="text-radical-red">*</span></label>
-                                                <span class="text-orange text-extra-small d-block"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></span>
-                                            </div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <div class="margin-15px-bottom">내용</div>
-                                                <textarea class="medium-textarea border-radius-4px bg-white h-120px margin-2-half-rem-bottom" rows="6" name="comment" placeholder="내용을 입력해주세요."></textarea>
-                                            </div>
-                                            <div class="col-12 sm-margin-20px-bottom">
-                                                <input class="btn btn-medium btn-dark-gray mb-0 btn-round-edge-small" type="button" name="submit" value="확인">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end tab item -->
                     </div>
                 </div>
+
+                <%-- 리뷰관련 --%>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 p-0 tab-style-07">
+                            <ul class="nav nav-tabs justify-content-center text-center alt-font font-weight-500 text-uppercase margin-9-rem-bottom border-bottom border-color-medium-gray md-margin-50px-bottom sm-margin-35px-bottom">
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#reviews">구매후기 (<%-- ${allReviewCount} --%>)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="tab-content">
+<%--                        아작스 추가전까지 봉인--%>
+
+                        <jsp:include page="../review/reviewList.jsp" flush="false"/>
+                        <a href="${contextPath}/reviewTest"><button>리뷰확인하러가기</button></a>
+                    </div>
+                </div>
+
+                <%-- 문의관련 --%>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 p-0 tab-style-07">
+                            <ul class="nav nav-tabs justify-content-center text-center alt-font font-weight-500 text-uppercase margin-9-rem-bottom border-bottom border-color-medium-gray md-margin-50px-bottom sm-margin-35px-bottom">
+                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#reviews">Q&A</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="tab-content">
+<%--                        아작스 추가전까지 봉인--%>
+<%--                        <jsp:include page="../question/questionList.jsp" />--%>
+                        <a href="${contextPath}/questionTest"><button>문의확인하러가기</button></a>
+                    </div>
+                </div>
+
             </section>
             <!-- end section -->
+
         </article>
 
         <!-- footer -->

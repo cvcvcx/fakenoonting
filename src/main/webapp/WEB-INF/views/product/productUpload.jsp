@@ -95,7 +95,7 @@
                   "].orgImgName' value='" +
                   jobj.data("filename") +
                   "'>";
-                str +=
+                str +
                   "<input type='hidden' name='productImgItems[" +
                   i +
                   "].imgUUID' value='" +
