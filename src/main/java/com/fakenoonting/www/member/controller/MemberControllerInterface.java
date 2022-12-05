@@ -17,44 +17,50 @@ import com.fakenoonting.www.member.vo.MemberVO;
 public interface MemberControllerInterface {
 	
 	//===================================================================================	
-	// header 에서 각 View로 던지는 컨트롤러
+	// header 및 각 페이지에서 View로 던지는 컨트롤러
 	//===================================================================================
 	
-	// 로그인 폼
+	// 1. 로그인 폼
 	public String loginForm();
 		
-	// 회원 가입 폼
+	// 2. 회원 가입 폼
 	public String registerForm();
 
-	// 회원 가입 폼 (ajax)
+	// 3. 회원 가입 폼 (ajax)
 	public String registerAjaxForm();
+
+	// 4. 회원 가입 완료 페이지 이동
+	public String regiComplitedMember();
 	
+	// 5. 마이 페이지 이동
+	public String myPage() ;
+
 	
 	
 	//===================================================================================	
-	// Service로 던지는 컨트롤러
+	// 기능 컨트롤러
 	//===================================================================================
 
-	// 로그인 처리
+	// 1. 로그인 처리
 	public ModelAndView login(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	// 로그아웃 처리
+	// 2. 로그아웃 처리
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-	// 회원가입 처리
-	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO,
+	// 3. 회원가입 처리
+	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr,
 	HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	// 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
+	// 4. 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
 	public ModelAndView selectMember(@RequestParam("email") String email,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	// 아이디(email)에 해당하는 회원 정보 수정
+	// 5. 아이디(email)에 해당하는 회원 정보 수정
 	public ModelAndView updateMember(@ModelAttribute("info") MemberVO memberVO, RedirectAttributes rAttr,
 			HttpServletRequest request, HttpServletResponse response )throws Exception;
 	
-	// 아이디(email)에 해당하는 회원 정보 삭제
+	// 6. 아이디(email)에 해당하는 회원 정보 삭제
 	public ModelAndView deleteMember(@RequestParam("email") String email,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 

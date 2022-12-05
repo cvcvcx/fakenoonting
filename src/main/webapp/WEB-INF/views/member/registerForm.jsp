@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="result" value="${param.result}" />
+<c:set var="regiResult" value="${param.regiResult}" />
 <%
 request.setCharacterEncoding("UTF-8");
 %>
@@ -13,6 +13,21 @@ request.setCharacterEncoding("UTF-8");
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>회원가입</title>
+
+
+
+<!-- 회원 가입 실패 시 -->
+<c:choose>	
+	<c:when test="${regiResult == 'registerFailed'}">
+		<script>
+		window.onload = function() {
+			alert("\n회원 가입이 실패했습니다.\n\n다시 가입 후 문제 발생 시 문의해주세요!");
+		}
+		</script>
+	</c:when>
+</c:choose>
+
+
 
 <style>
 ul {
