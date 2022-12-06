@@ -102,7 +102,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   <input
                     class="input-text qty-text"
                     type="number"
-                    name="productCount"
+                    id="productCount"
                     value="1"
                   />
                   <button
@@ -213,16 +213,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     <!-- Button trigger modal -->
                     <button
                       type="button"
+                      id="cartButton"
                       class="btn btn-light"
-                      data-bs-toggle="modal"
-                      data-bs-target="#cartbutton"
                     >
                       CART
                     </button>
                     <!-- Modal -->
                     <div
                       class="modal fade"
-                      id="cartbutton"
+                      id="cartModal"
                       data-bs-backdrop="static"
                       data-bs-keyboard="false"
                       tabindex="-1"
@@ -543,6 +542,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
         let newForm = $("<form></form>");
         newForm.attr("action", "${contextPath}/order/newOrder");
+        newForm.attr("method","post")
         newForm.append(
           $("<input />", {
             type: "text",
@@ -550,7 +550,32 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             value: "${product.id}",
           })
         );
+        newForm.append(
+        $("<input />",{
+            type: "text",
+            name: "productCount",
+            value: $("#prductCount").val()
+        })
+        )
         newForm.appendTo("body");
+        //.submit();
+        // $("#buyNow").modal('show');
+      });
+      $("button[role='cartButton']").on("click", function (e) {
+        console.log("cartButton clicked!")
+        e.preventDefault();
+
+        let newForm = $("<form></form>");
+        newForm.attr("action", "${contextPath}/cart/addCart");
+        newForm.attr("method","post")
+        newForm.append(
+          $("<input />", {
+            type: "text",
+            name: "productId",
+            value: "${product.id}",
+          })
+        );
+        newForm.appendTo("body").submit();
         // $("#buyNow").modal('show');
       });
     </script>

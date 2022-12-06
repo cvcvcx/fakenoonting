@@ -116,7 +116,7 @@
                                                         <th scope="col" class="alt-font"><input class="form-check-input"
                                                                 type="checkbox" value="selectall" name="selectall"
                                                                 onclick='selectAll(this)' aria-label="..."> </th>
-                                                        <th scope="col"></th>
+                                                        <th scope="col">상품 이미지</th>
                                                         <th scope="col" class="alt-font">products</th>
                                                         <th scope="col" class="alt-font">price</th>
                                                         <th scope="col" class="alt-font">quantity</th>

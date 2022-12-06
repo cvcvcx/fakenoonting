@@ -39,6 +39,18 @@ public class MemberServiceImpl implements MemberServiceInterface{
 		return memberDAO.registerMember(memberVO);
 	}
 
+
+	
+	// 아이디(email) 중복 검사 (AJAX)
+	@Override
+	public int emailCheck(MemberVO memberVO) throws Exception {
+		
+		logger.info("MemberServiceImpl 아이디(email) 중복 검사() 시작...");
+		
+		int result = memberDAO.emailCheck(memberVO);
+		return result;
+	}
+	
 	
 	
 	// 아이디(email)에 해당하는 회원 정보 추출

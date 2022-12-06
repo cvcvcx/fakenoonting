@@ -26,13 +26,10 @@ public interface MemberControllerInterface {
 	// 2. 회원 가입 폼
 	public String registerForm();
 
-	// 3. 회원 가입 폼 (ajax)
-	public String registerAjaxForm();
-
-	// 4. 회원 가입 완료 페이지 이동
+	// 3. 회원 가입 완료 페이지 이동
 	public String regiComplitedMember();
 	
-	// 5. 마이 페이지 이동
+	// 4. 마이 페이지 이동
 	public String myPage() ;
 
 	
@@ -51,16 +48,19 @@ public interface MemberControllerInterface {
 	// 3. 회원가입 처리
 	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr,
 	HttpServletRequest request, HttpServletResponse response) throws Exception;
-	
-	// 4. 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
+
+	// 4. 아이디(email) 중복 검사 (AJAX)
+	public int emailCheck(MemberVO memberVO) throws Exception;
+
+	// 5. 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
 	public ModelAndView selectMember(@RequestParam("email") String email,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	// 5. 아이디(email)에 해당하는 회원 정보 수정
+	// 6. 아이디(email)에 해당하는 회원 정보 수정
 	public ModelAndView updateMember(@ModelAttribute("info") MemberVO memberVO, RedirectAttributes rAttr,
 			HttpServletRequest request, HttpServletResponse response )throws Exception;
 	
-	// 6. 아이디(email)에 해당하는 회원 정보 삭제
+	// 7. 아이디(email)에 해당하는 회원 정보 삭제
 	public ModelAndView deleteMember(@RequestParam("email") String email,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 

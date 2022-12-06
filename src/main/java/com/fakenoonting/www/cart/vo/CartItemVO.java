@@ -1,5 +1,6 @@
 package com.fakenoonting.www.cart.vo;
 
+import com.fakenoonting.www.product.vo.ProductSizeVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ public class CartItemVO {
     private Long id;
     private Long memberId;
     private Long productId;
+    private ProductSizeVO productSizeVO;
     private Integer productCount;
     private Timestamp createDate;
 
