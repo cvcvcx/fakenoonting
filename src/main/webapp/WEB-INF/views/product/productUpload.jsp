@@ -38,6 +38,36 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="col-sm-2 control-label">상품사이즈</label>
+          <div class="col-sm-12 row" id="size-div">
+            <div class="col-sm-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="productSizeList[0].size"
+                  name="productSizeList[0].size"
+                  maxlength="200"
+                  required
+                  placeholder="상품사이즈를 입력하세요"
+                />
+            </div>
+            <div class="col-sm-6">
+            <input
+              type="text"
+              class="form-control"
+              id="productSizeList[0].productCount"
+              name="productSizeList[0].productCount"
+              maxlength="200"
+              required
+              placeholder="상품개수를 입력하세요"
+            />
+            </div>
+          </div>
+            <div class="col-sm-3 mt-2">
+                <button class="btn btn-primary" id="addSize" >사이즈 추가</button>
+            </div>
+        </div>
+        <div class="form-group">
           <label class="col-sm-2 control-label">상품가격</label>
           <div class="col-sm-3">
             <input
@@ -78,6 +108,23 @@
     <jsp:include page="../common/footer.jsp" flush="false" />
 <script src="${contextPath}/resources/js/upload.js"></script>
   <script>
+    let sizeDiv = $("#size-div");
+    let sizeListCount = 0;
+    $("button[id='addSize']").on("click",function(e){
+        e.preventDefault();
+        console.log("addSize Clicked!");
+        sizeListCount++;
+        let sizeDiv1 = $("<div></div>")
+        let sizeDiv2 = $("<div></div>")
+        sizeDiv1.attr("class","col-sm-6 ");
+        sizeDiv2.attr("class","col-sm-6 ");
+        sizeDiv1.append($("<input/>",{type:"text",name:"productSizeList["+sizeListCount+"].size",maxlength:"200",class:"form-control",placeholder:"상품사이즈를 입력하세요"}));
+        sizeDiv2.append($("<input/>",{type:"text",name:"productSizeList["+sizeListCount+"].productCount",maxlength:"200",class:"form-control",placeholder:"상품개수를 입력하세요"}));
+        
+        sizeDiv1.appendTo("#size-div");
+        sizeDiv2.appendTo("#size-div");
+    })
+
 
     let formObj = $("form[role='form']");
     $("button[type='submit']").on("click",function(e){
@@ -95,13 +142,13 @@
                   "].orgImgName' value='" +
                   jobj.data("filename") +
                   "'>";
-                str +=
+        str +=
                   "<input type='hidden' name='productImgItems[" +
                   i +
                   "].imgUUID' value='" +
                   jobj.data("uuid") +
                   "'>";
-                str +=
+        str +=
                   "<input type='hidden' name='productImgItems[" +
                   i +
                   "].uploadPath' value='" +
