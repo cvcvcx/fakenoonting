@@ -1,5 +1,6 @@
 package com.fakenoonting.www.product.controller;
 
+
 import com.fakenoonting.www.product.service.ProductService;
 import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.reviews.service.ReviewService;
@@ -85,6 +86,6 @@ public class ProductController {
     public String deleteProduct(ProductVO productVO){
         log.info("deleteProduct 요청 진행중");
         productService.productDelete(productVO);
-        return "redirect:list";
+        return "redirect:adminList";
     }
 }

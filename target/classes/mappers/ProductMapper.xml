@@ -66,6 +66,12 @@
         ]]>
     </delete>
 
+    <insert id="uploadImg" parameterType="com.fakenoonting.www.util.upload.vo.ImgItemVO">
+        insert into product_img_item
+        (product_id, org_img_name,upload_path,img_UUID)
+        values (#{foreignId},#{orgImgName},#{uploadPath},#{imgUUID})
+    </insert>
+
     <delete id="deleteProductImg" parameterType="com.fakenoonting.www.product.vo.ProductVO">
         <![CDATA[
            delete
@@ -74,9 +80,18 @@
         ]]>
     </delete>
 
-    <insert id="uploadImg" parameterType="com.fakenoonting.www.util.upload.vo.ImgItemVO">
-        insert into product_img_item
-        (product_id, org_img_name,upload_path,img_UUID)
-        values (#{foreignId},#{orgImgName},#{uploadPath},#{imgUUID})
+    <insert id="sizeEnroll" parameterType="com.fakenoonting.www.product.vo.ProductSizeVO">
+        insert into product_size
+        (product_id,size,product_count)
+        values (#{productId},#{size},#{productCount})
     </insert>
+
+    <delete id="deleteProductSize" parameterType="com.fakenoonting.www.product.vo.ProductVO">
+        <![CDATA[
+           delete
+           from product_size
+           where product_id = #{id}
+        ]]>
+    </delete>
+
 </mapper>

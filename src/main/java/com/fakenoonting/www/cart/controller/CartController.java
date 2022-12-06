@@ -2,6 +2,7 @@ package com.fakenoonting.www.cart.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,5 +14,10 @@ public class CartController {
     public ModelAndView cartList(){
         ModelAndView mav = new ModelAndView("/cart/cart");
         return mav;
+    }
+
+    @PostMapping
+    public void addCart(){
+
     }
 }
