@@ -86,13 +86,13 @@ public class MemberControllerImpl implements MemberControllerInterface {
 				
 		// 객체 하나를 만들어서 매칭 결과 저장 (로그인한 정보가 일단 DB에 있는지 확인을 위해)
 		member = memberService.loginByID(memberVO);
-		System.out.println("로그인 정보 결과 => " + memberVO);
+		System.out.println("로그인 정보 결과 => " + member);
 		
 		// 로그인한 정보가 DB에 있는지 확인
 		if(member != null) {	// 로그인 정보에 해당하는 자료가 있으면
 			if(member.getPwd().equals(memberVO.getPwd())) { // 이메일과 비밀번호가 일치하면 세션을 발급.
 				HttpSession session = request.getSession();
-				session.setAttribute("member", memberVO);
+				session.setAttribute("member", member);
 				session.setAttribute("isLogOn", true);
 				mav.setViewName("redirect:/");	// 메인화면으로 이동
 

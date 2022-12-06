@@ -55,37 +55,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               <div class="row">
                 <div class="col-8 col-md-5">Size</div>
                 <div class="col-4 col-md-7">
-                  <input
-                    type="radio"
-                    class="btn-check"
-                    name="options-outlined"
-                    id="S-outlined"
-                    autocomplete="off"
-                  />
-                  <label class="btn btn-outline-secondary" for="S-outlined"
-                    >S</label
-                  >
-                  <input
-                    type="radio"
-                    class="btn-check"
-                    name="options-outlined"
-                    id="M-outlined"
-                    autocomplete="off"
-                    checked
-                  />
-                  <label class="btn btn-outline-secondary" for="M-outlined"
-                    >M</label
-                  >
-                  <input
-                    type="radio"
-                    class="btn-check"
-                    name="options-outlined"
-                    id="L-outlined"
-                    autocomplete="off"
-                  />
-                  <label class="btn btn-outline-secondary" for="L-outlined"
-                    >L</label
-                  >
+                  <select class="form-select" id="sizeId" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="Small">Small</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Large">Large</option>
+                  </select>
                   <button class="btn btn-light">
                     <a href="#modal-popup">사이즈 가이드</a>
                   </button>
@@ -213,7 +188,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     <!-- Button trigger modal -->
                     <button
                       type="button"
-                      id="cartButton"
+                      role="cartButton"
                       class="btn btn-light"
                     >
                       CART
@@ -550,13 +525,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             value: "${product.id}",
           })
         );
+        let productCount = $('#productCount').val();
         newForm.append(
         $("<input />",{
             type: "text",
             name: "productCount",
-            value: $("#prductCount").val()
+            value: productCount
         })
-        )
+        );
         newForm.appendTo("body");
         //.submit();
         // $("#buyNow").modal('show');
@@ -575,6 +551,22 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             value: "${product.id}",
           })
         );
+        let productCount = $('#productCount').val();
+        newForm.append(
+        $("<input />",{
+            type: "text",
+            name: "productCount",
+            value: productCount
+        })
+        );
+        let productSize =  $("select[id=size]").val();
+         newForm.append(
+                $("<input />",{
+                    type: "text",
+                    name: "productSize",
+                    value: productSize
+                })
+                );
         newForm.appendTo("body").submit();
         // $("#buyNow").modal('show');
       });
