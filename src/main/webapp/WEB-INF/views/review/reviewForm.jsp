@@ -36,6 +36,7 @@
 				<label for="grade">평점</label>
 				<input type="number" class="form-control" name="grade" id="grade" placeholder="평점을 선택해 주세요">
 			</div>
+		<jsp:include page="../util/upload/uploadAjax.jsp" flush="false"/>
 		</form>
 		<div>
 			<button type="button" class="btn btn-sm btn-primary" id="btnSave">저장하기</button>
@@ -43,7 +44,7 @@
 		</div>
 	</div>
 </article>
-
+<script src="${contextPath}/resources/js/upload.js"></script>
 <script>
 	$("#btnSave").on("click", function(e) {
 		e.preventDefault();
@@ -59,8 +60,34 @@
 			$("#grade").focus();
 			return false;
 		}
+        let formObj = $("form[role='form']");
+         let str = "";
 
-		$("#form").submit();
+        $("#uploadResult li").each(function(i,obj){
+        let jobj = $(obj);
+        console.log(jobj)
+        str +=
+                  "<input type='text' name='reviewImgItems[" +
+                  i +
+                  "].orgImgName' value='" +
+                  jobj.data("filename") +
+                  "'>";
+                str +=
+                  "<input type='text' name='reviewImgItems[" +
+                  i +
+                  "].imgUUID' value='" +
+                  jobj.data("uuid") +
+                  "'>";
+                str +=
+                  "<input type='text' name='reviewImgItems[" +
+                  i +
+                  "].uploadPath' value='" +
+                  jobj.data("path") +
+                  "'>";
+        });
+    formObj.append(str);
+    //.submit();
+    //데이터가 어떻게 추가되는지 확인하기 위해 submit을 주석처리
 	});
 
 	$("#btnList").on("click", function(e) {

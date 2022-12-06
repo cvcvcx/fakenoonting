@@ -1,6 +1,6 @@
 package com.fakenoonting.www.product.dao;
 
-import com.fakenoonting.www.product.vo.ProductImgItemVO;
+import com.fakenoonting.www.util.upload.vo.ImgItemVO;
 import com.fakenoonting.www.product.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
@@ -45,15 +45,15 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public int deleteImg(ProductVO productId){
         log.info("deleteImg 실행중...");
-        return sqlSession.delete(nameSpace+".deleteImg",productId);
+        return sqlSession.delete(nameSpace+".deleteProductImg",productId);
     }
 
 
     @Override
-    public int imageEnroll(ProductImgItemVO img) {
+    public int imageEnroll(ImgItemVO img) {
         return sqlSession.insert(nameSpace+".uploadImg",img);
     }
-    public List<ProductImgItemVO> findImagesByProductId(ProductVO productVO){
+    public List<ImgItemVO> findImagesByProductId(ProductVO productVO){
         return sqlSession.selectList(nameSpace+".findImagesByProductId",productVO);
     }
 

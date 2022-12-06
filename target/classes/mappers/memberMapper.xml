@@ -38,6 +38,15 @@
 		]]>
 	</insert>
 	
+	<!-- 아이디 중복 검사 : 입력한 아이디가 존재하는지 알아낸다. -->
+	<select id="emailCheck" parameterType="com.fakenoonting.www.member.vo.MemberVO" resultType="int">
+		<![CDATA[
+		SELECT	COUNT(*)
+		FROM	MEMBER
+		WHERE	email = #{email}
+		]]>
+	</select>
+	
 		<!-- 아이디에 해당하는 회원 정보 가져오기 -->
 <!-- 	<select id="selectMember" parameterType="String" resultType="com.fakenoonting.www.member.vo.MemberVO">
 		<![CDATA[
