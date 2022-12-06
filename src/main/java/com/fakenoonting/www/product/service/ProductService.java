@@ -2,6 +2,7 @@ package com.fakenoonting.www.product.service;
 
 
 import com.fakenoonting.www.product.dao.ProductDAO;
+import com.fakenoonting.www.product.vo.ProductSizeVO;
 import com.fakenoonting.www.util.upload.vo.ImgItemVO;
 import com.fakenoonting.www.product.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
@@ -37,13 +38,18 @@ public class ProductService {
             imgItem.setForeignId(productVO.getId());
             productRepo.imageEnroll(imgItem);
         });
+        List<ProductSizeVO> productSizeList = productVO.getProductSizeList();
+        productSizeList.forEach(sizeItem->{
+            sizeItem.setProductId(productVO.getId());
+            productRepo.sizeEnroll(sizeItem);
+        });
     }
 
     public int productDelete(ProductVO productVO){
         log.info("productService delete진행중...");
 
         productRepo.deleteImg(productVO);
-
+        productRepo.deleteSize(productVO);
 
         return productRepo.deleteProduct(productVO);
     }

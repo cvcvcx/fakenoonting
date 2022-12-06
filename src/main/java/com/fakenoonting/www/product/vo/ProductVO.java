@@ -23,11 +23,5 @@ public class ProductVO {
     private Timestamp uploadDate;//업로드 날짜
     private Character productStatus;//상품의 현재 상태(ex: 판매중, 재고없음, 판매종료)
     private Timestamp modifyDate;//업로드 날짜
-
-    public ProductVO(String productName, Long price, String content, Character productStatus) {
-        this.productName = productName;
-        this.price = price;
-        this.content = content;
-        this.productStatus = productStatus;
-    }
+    private List<ProductSizeVO> productSizeList;
 }

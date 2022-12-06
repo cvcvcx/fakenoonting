@@ -178,7 +178,7 @@
 		<div class="nav-scroller py-1 mb-2 col-lg-8 align-self-center"
 			id="top_menu_list">
 			<nav class="nav d-flex justify-content-between" id="top_menu_bar">
-				<a class="p-2 link-secondary" href="#">TOP</a> <a
+				<a class="p-2 link-secondary" href="${contextPath}/product/list">TOP</a> <a
 					class="p-2 link-secondary" href="#">PANTS</a> <a
 					class="p-2 link-secondary" href="#">OUTER</a> <a
 					class="p-2 link-secondary" href="#">SHOES</a> <a
@@ -197,6 +197,8 @@
 				<ul class="dropdown-menu">
 					<li><a class="dropdown-item" href="#">QandA</a></li>
 					<li><a class="dropdown-item" href="#">REVIEW</a></li>
+					<li><a class="dropdown-item" href="${contextPath}/product/adminList">adminList</a></li>
+					<li><a class="dropdown-item" href="${contextPath}/product/upload">adminProductUpload</a></li>
 				</ul>
 			</div>
 		</div>

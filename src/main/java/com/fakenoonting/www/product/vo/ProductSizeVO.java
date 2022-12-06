@@ -7,15 +7,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter @ToString @NoArgsConstructor
-public class ProductSize {
+public class ProductSizeVO {
     private Long id;
     private Long productId;
     private String size;
     private Integer productCount;
-
-    public ProductSize(Long productId, String size, Integer productCount) {
-        this.productId = productId;
-        this.size = size;
-        this.productCount = productCount;
-    }
 }

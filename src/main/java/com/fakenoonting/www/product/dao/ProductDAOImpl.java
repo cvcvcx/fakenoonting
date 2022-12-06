@@ -1,5 +1,6 @@
 package com.fakenoonting.www.product.dao;
 
+import com.fakenoonting.www.product.vo.ProductSizeVO;
 import com.fakenoonting.www.util.upload.vo.ImgItemVO;
 import com.fakenoonting.www.product.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,16 @@ public class ProductDAOImpl implements ProductDAO {
     public int imageEnroll(ImgItemVO img) {
         return sqlSession.insert(nameSpace+".uploadImg",img);
     }
+
+    @Override
+    public int sizeEnroll(ProductSizeVO size){return sqlSession.insert(nameSpace+".sizeEnroll",size);}
+
+    @Override
+    public int deleteSize(ProductVO productId) {
+
+        return sqlSession.delete(nameSpace+".deleteProductSize",productId);
+    }
+
     public List<ImgItemVO> findImagesByProductId(ProductVO productVO){
         return sqlSession.selectList(nameSpace+".findImagesByProductId",productVO);
     }
