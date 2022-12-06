@@ -41,7 +41,6 @@ public class CartController {
     public ModelAndView cartList(Model model, HttpSession httpSession){
         MemberVO member = (MemberVO)httpSession.getAttribute("member");
         List<CartItemVO> cartList = cartService.findCartItemsByMemberId(member);
-
         log.info("cartList 불러오기 =>"+cartList);
         model.addAttribute("cartList",cartList);
         ModelAndView mav = new ModelAndView();

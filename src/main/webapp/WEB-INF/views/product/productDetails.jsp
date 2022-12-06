@@ -21,6 +21,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <!-- start section -->
       <section>
         <div class="container">
+          <h2>${product.id}</h2>
           <div class="row">
             <div class="col-md-6">
               <img
@@ -43,35 +44,44 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               <div class="row mb-3">
                 <div class="col-8 col-md-5">색상</div>
                 <div class="col-4 col-md-7">
-                  <button class="btn btn-light">블랙</button>
-                  <button class="btn btn-light">그레이</button>
-                  <button class="btn btn-light">네이비</button>
-                  <button class="btn btn-light">다크베이지</button>
-                  <button class="btn btn-light">아이보리</button>
-                  <button class="btn btn-light">라이트베이지</button>
-                  <button class="btn btn-light">인디블루</button>
+                  <select class="form-select" aria-label="select color">
+                    <option selected>색상을 선택해 주세요.</option>
+                    <option value="1">블랙</option>
+                    <option value="2">그레이</option>
+                    <option value="3">네이비</option>
+                    <option value="4">다크베이지</option>
+                    <option value="5">아이보리</option>
+                    <option value="6">라이트베이지</option>
+                    <option value="7">인디블루</option>
+                  </select>
                 </div>
               </div>
               <div class="row">
-                <div class="col-8 col-md-5">Size</div>
-                <div class="col-4 col-md-7">
-                  <select class="form-select" id="sizeId" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="Small">Small</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Large">Large</option>
-                  </select>
+                <div class="col-8 col-md-5">
+                  Size
                   <button class="btn btn-light">
                     <a href="#modal-popup">사이즈 가이드</a>
                   </button>
+                </div>
+                <div class="col-4 col-md-7">
+                  <select class="form-select" aria-label="select size">
+                    <option selected>사이즈를 선택해 주세요.</option>
+                    <option value="1">S</option>
+                    <option value="2">M</option>
+                    <option value="3">L</option>
+                    <option value="4">XL</option>
+                    <option value="5">2XL</option>
+                    <option value="6">3XL</option>
+                    <option value="7">4XL</option>
+                  </select>
                 </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-8 col-md-5">
-                  <label class="screen-reader-text"
-                    >냥냥펀치 프린팅 기모 셔츠 7color<br />-블랙/S</label
-                  >
+                  <label class="screen-reader-text">
+                    냥냥펀치 프린팅 기모 셔츠 7color<br />-블랙/S
+                  </label>
                 </div>
                 <div class="col-4 col-md-7">
                   <input
@@ -100,6 +110,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     <button type="button" role="buyButton" class="btn btn-dark">
                       BUY IT NOW
                     </button>
+
                     <!-- Modal -->
                     <div
                       class="modal fade"
@@ -186,11 +197,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       </div>
                     </div>
                     <!-- Button trigger modal -->
-                    <button
-                      type="button"
-                      role="cartButton"
-                      class="btn btn-light"
-                    >
+                    <button type="button" id="cartButton" class="btn btn-light">
                       CART
                     </button>
                     <!-- Modal -->
@@ -370,16 +377,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     data-bs-toggle="tab"
                     href="#description"
                     class="nav-link active"
-                    >제품설명</a
                   >
+                    제품설명
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a
                     class="nav-link"
                     data-bs-toggle="tab"
                     href="#additionalinformation"
-                    >추가정보</a
                   >
+                    추가정보
+                  </a>
                 </li>
               </ul>
             </div>
@@ -463,9 +472,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 class="nav nav-tabs justify-content-center text-center alt-font font-weight-500 text-uppercase margin-9-rem-bottom border-bottom border-color-medium-gray md-margin-50px-bottom sm-margin-35px-bottom"
               >
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#reviews"
-                    >구매후기 (<%-- ${allReviewCount} --%>)</a
-                  >
+                  <a class="nav-link" data-bs-toggle="tab" href="#reviews">
+                    구매후기 (<%-- ${allReviewCount} --%>)
+                  </a>
                 </li>
               </ul>
             </div>
@@ -476,9 +485,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <%-- 아작스 추가전까지 봉인--%>
 
             <jsp:include page="../review/reviewList.jsp" flush="false" />
-            <a href="${contextPath}/reviewTest"
-              ><button>리뷰확인하러가기</button></a
-            >
+            <a href="${contextPath}/reviewTest">
+              <button>리뷰확인하러가기</button>
+            </a>
           </div>
         </div>
 
@@ -490,9 +499,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 class="nav nav-tabs justify-content-center text-center alt-font font-weight-500 text-uppercase margin-9-rem-bottom border-bottom border-color-medium-gray md-margin-50px-bottom sm-margin-35px-bottom"
               >
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#reviews"
-                    >Q&A</a
-                  >
+                  <a class="nav-link" data-bs-toggle="tab" href="#reviews">
+                    Q&A
+                  </a>
                 </li>
               </ul>
             </div>
@@ -502,9 +511,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <div class="tab-content">
             <%-- 아작스 추가전까지 봉인--%> <%--
             <jsp:include page="../question/questionList.jsp" />--%>
-            <a href="${contextPath}/questionTest"
-              ><button>문의확인하러가기</button></a
-            >
+            <a href="${contextPath}/questionTest">
+              <button>문의확인하러가기</button>
+            </a>
           </div>
         </div>
       </section>
@@ -517,7 +526,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
         let newForm = $("<form></form>");
         newForm.attr("action", "${contextPath}/order/newOrder");
-        newForm.attr("method","post")
+        newForm.attr("method", "post");
         newForm.append(
           $("<input />", {
             type: "text",
@@ -525,25 +534,25 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             value: "${product.id}",
           })
         );
-        let productCount = $('#productCount').val();
+        let productCount = $("#productCount").val();
         newForm.append(
-        $("<input />",{
+          $("<input />", {
             type: "text",
             name: "productCount",
-            value: productCount
-        })
+            value: productCount,
+          })
         );
         newForm.appendTo("body");
         //.submit();
         // $("#buyNow").modal('show');
       });
       $("button[role='cartButton']").on("click", function (e) {
-        console.log("cartButton clicked!")
+        console.log("cartButton clicked!");
         e.preventDefault();
 
         let newForm = $("<form></form>");
         newForm.attr("action", "${contextPath}/cart/addCart");
-        newForm.attr("method","post")
+        newForm.attr("method", "post");
         newForm.append(
           $("<input />", {
             type: "text",
@@ -551,22 +560,22 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             value: "${product.id}",
           })
         );
-        let productCount = $('#productCount').val();
+        let productCount = $("#productCount").val();
         newForm.append(
-        $("<input />",{
+          $("<input />", {
             type: "text",
             name: "productCount",
-            value: productCount
-        })
+            value: productCount,
+          })
         );
-        let productSize =  $("select[id=size]").val();
-         newForm.append(
-                $("<input />",{
-                    type: "text",
-                    name: "productSize",
-                    value: productSize
-                })
-                );
+        let productSize = $("select[id=size]").val();
+        newForm.append(
+          $("<input />", {
+            type: "text",
+            name: "productSize",
+            value: productSize,
+          })
+        );
         newForm.appendTo("body").submit();
         // $("#buyNow").modal('show');
       });
