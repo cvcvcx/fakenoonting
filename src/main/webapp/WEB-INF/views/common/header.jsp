@@ -165,10 +165,10 @@
 		</div>
 	</div>
 	<hr>
-	<div class="row container-fluid" style="float: none; margin: 100 auto;"
+	<div class="row container-fluid" style="float: none; margin: auto;"
 		id="main_list">
 		<div class="col-lg-2 align-self-center"
-			style="float: none; margin: 100 auto;">
+			style="float: none; margin: auto;">
 			<button class="navbar-toggler btn pull-left" type="button"
 				data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
 				aria-controls="offcanvasDarkNavbar">
@@ -189,7 +189,7 @@
 		</div>
 		<!-- 커뮤니티 버튼 -->
 		<div class="col-md-2 align-self-center"
-			style="float: none; margin: 100 auto;">
+			style="float: none; margin: auto;">
 			<div class="dropdown d-grid gap-2 d-md-flex justify-content-md-end">
 				<a class="btn btn-success btn-sm dropdown-toggle" href="#"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
