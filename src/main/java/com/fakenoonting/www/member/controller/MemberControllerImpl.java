@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,22 +52,15 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		
 		return "/member/registerForm";
 	}
-
-	// 3. 회원 가입 폼 (ajax)
-	@RequestMapping(value = "/registerAjaxForm.do", method = RequestMethod.GET)
-	public String registerAjaxForm() {
-		
-		return "/member/registerAjax";		
-	}
-
-	// 4. 회원 가입 완료 페이지 이동
+	
+	// 3. 회원 가입 완료 페이지 이동
 	@RequestMapping(value = "/regiComplitedMember.do", method = RequestMethod.GET)
 	public String regiComplitedMember() {
 		
 		return "/member/regiComplitedMember";		
 	}
 	
-	// 5. 마이 페이지 이동
+	// 4. 마이 페이지 이동
 	@RequestMapping(value = "/myPage.do", method = RequestMethod.GET)
 	public String myPage() {
 		
@@ -160,9 +154,24 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		return mav;
 	}
 
+
+	
+	// 4. 아이디(email) 중복 검사 (AJAX)
+	@Override
+	@ResponseBody
+	@RequestMapping(value = "/emailCheck", method = RequestMethod.POST)
+	public int emailCheck(MemberVO memberVO) throws Exception {
+
+		System.out.println("MemberController 아이디(email) 중복 검사 (AJAX) email ==> " + memberVO.getEmail());
+		
+		int result = memberService.emailCheck(memberVO);
+		System.out.println("result : " + result);
+		return result;
+	}
 	
 	
-	// 4. 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
+	
+	// 5. 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
 	@Override
 	@RequestMapping(value="/selectMember.do", method=RequestMethod.GET)
 	public ModelAndView selectMember(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response)
@@ -183,7 +192,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	
 	
-	// 5. 아이디(email)에 해당하는 회원 정보 수정
+	// 6. 아이디(email)에 해당하는 회원 정보 수정
 	@Override
 	@RequestMapping(value="/updateMember.do", method=RequestMethod.POST)
 	public ModelAndView updateMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response)
@@ -203,7 +212,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	
 	
-	// 6. 아이디(email)에 해당하는 회원 정보 삭제
+	// 7. 아이디(email)에 해당하는 회원 정보 삭제
 	@Override
 	@RequestMapping(value="/deleteMember.do", method=RequestMethod.GET)
 	public ModelAndView deleteMember(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response)
