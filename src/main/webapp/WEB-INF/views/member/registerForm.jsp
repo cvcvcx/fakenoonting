@@ -174,7 +174,7 @@ ul {
 						<div class="form-group col-mb-3 ">
 							<select class="form-select " id="gender" name="gender"
 								aria-label="Default select example">
-								<option selected>성별</option>
+								<option selected value="">성별</option>
 								<option value="M">남성</option>
 								<option value="F">여성</option>
 							</select>
@@ -242,9 +242,9 @@ ul {
 							수 있습니다. <br> 개인 정보 보호에 대한 자세한 내용은 http://www.kikerDay.com 을
 							참조바랍니다.
 							<div class="checkbox" align="center">
-								<label> <input type="checkbox" id="is_subscribed"
-									name="is_subscribed" value="o" />
-								</label> kikerDay의 개인정보 수집 및 이용에 동의합니다.
+								<label> <input type="checkbox" id="agreement"
+									name="agreement"  /> kikerDay의 개인정보 수집 및 이용에 동의합니다.
+								</label> 
 							</div>
 						</div>
 
@@ -269,6 +269,8 @@ ul {
 
 </body>
 <!------------------- END body------------------------------------------------------------------------------------------------>
+
+
 
 
 
@@ -299,7 +301,9 @@ ul {
 
 
 
-<!------------ 입력란 공란 판단 / 취소 버튼 설정 --------------->
+
+
+<!------------ 입력란 공란 판단 / 취소 버튼 설정 / phone 조합 --------------->
 <script>
 	// $(document).ready( function() {})
 	// 문서가 준비되면 매개변수로 넣은 콜백 함수를 실행하라는 의미
@@ -312,13 +316,13 @@ ul {
 						});
 
 						// 회원가입 버튼을 눌렀을 경우
-						$("#submit")
+						$("button[type='submit']")
 								.on(
 										"click",
 										function() {
 
 											// 이메일 공란 판단
-											if ($("#email").val() == "") {
+											if (! $("#email").val()) {
 												alert("이메일을 입력하세요.");
 												$("#email").focus();
 												return false;
@@ -358,11 +362,11 @@ ul {
 											}
 
 											// 성별 공란 판단
-											if ($("#gender").val() == "") {
+											if ( $("#gender").val() == "") {
 												alert("성별을 고르셔야 합니다.");
 												$("#email").focus();
 												return false;
-											}
+											} 
 
 											// 닉네임 공란 판단
 											if ($("#nick").val() == "") {
@@ -412,38 +416,48 @@ ul {
 												$("#address2").focus();
 												return false;
 											}
-										});
+											
+											// 동의 여부 체크 판단
+											if ($('#agreement').is(":checked") == false) {
+												alert("비동의 시 가입이 진행되지 않습니다.");
+												return false;
+											}
+											
+											
+											
+											<!----------- phone 조합 Script ------------>
+																						
+											let phoneObj = $(".phone");
+											let regiFormObj = $("form[role='registerForm']");
+							
+											function phoneCombined() {
+												console.log("Submit Clicked");
 
+												let str = "";
+												let phone = $(
+														'select[id=phone1]')
+														.val()
+														+ $('input[id=phone2]')
+																.val()
+														+ $('input[id=phone3]')
+																.val();
+												str += "<input type='hidden' name=phone value= ' " + phone + " ' >";
+
+												phoneObj.append(str);
+												regiFormObj.submit();
+
+											}
+				
+											// 모든 공란이 해결 되었으면 폰 조합 함수 실행
+											phoneCombined();
+											<!----------- END phone 조합 Script --------->
+											
+										});
 					});
 </script>
-<!--------- END 입력란 공란 판단 / 취소 버튼 설정 --------------->
+<!--------- END 입력란 공란 판단 / 취소 버튼 / phone 조합 설정 --------------->
 
 
-
-<!----------- phone 조합 Script ------------>
-<script>
-	let phoneObj = $(".phone");
-	let regiFormObj = $("form[role='registerForm']");
-
-	$("button[type='submit']")
-			.on(
-					"click",
-					function(e) {
-						e.preventDefault();
-						console.log("Submit Clicked");
-
-						let str = "";
-						let phone = $('select[id=phone1]').val()
-								+ $('input[id=phone2]').val()
-								+ $('input[id=phone3]').val();
-						str += "<input type='hidden' name=phone value= ' " + phone + " ' >";
-
-						phoneObj.append(str);
-						regiFormObj.submit();
-
-					})
-</script>
-<!----------- END phone 조합 Script --------->
 
 
 
