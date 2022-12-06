@@ -15,6 +15,9 @@ public interface MemberServiceInterface {
 
 		// 회원가입 처리
 		public int registerMember(MemberVO memberVO) throws DataAccessException;
+		
+		// 아이디(email) 중복 검사 (AJAX)
+		public int emailCheck(MemberVO memberVO) throws Exception;
 	
 		// 아이디(email)에 해당하는 회원 정보 추출
 		public MemberVO selectMember(String email) throws DataAccessException;

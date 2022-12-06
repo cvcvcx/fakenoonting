@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,37 +36,44 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	
 	//===================================================================================	
-	// header 에서 각 View로 던지는 컨트롤러
+	// header 및 각 페이지에서 View로 던지는 컨트롤러
 	//===================================================================================
 	
-	// 로그인 폼
+	// 1. 로그인 폼
 	@RequestMapping(value = "/loginForm.do", method = RequestMethod.GET)
 	public String loginForm() {
 		
 		return "/member/loginForm";		
 	}
-		
-	// 회원 가입 폼
+
+	// 2. 회원 가입 폼
 	@RequestMapping(value = "/regiMemberForm.do", method = RequestMethod.GET)
 	public String registerForm() {
 		
 		return "/member/registerForm";
 	}
-
-	// 회원 가입 폼 (ajax)
-	@RequestMapping(value = "/registerAjaxForm.do", method = RequestMethod.GET)
-	public String registerAjaxForm() {
+	
+	// 3. 회원 가입 완료 페이지 이동
+	@RequestMapping(value = "/regiComplitedMember.do", method = RequestMethod.GET)
+	public String regiComplitedMember() {
 		
-		return "/member/registerAjax";		
+		return "/member/regiComplitedMember";		
 	}
 	
+	// 4. 마이 페이지 이동
+	@RequestMapping(value = "/myPage.do", method = RequestMethod.GET)
+	public String myPage() {
+		
+		return "/member/myPageForm";		
+	}
+
 	
 	
 	//===================================================================================	
-	// Service로 던지는 컨트롤러
+	// 기능 컨트롤러
 	//===================================================================================
 	
-	// 로그인 처리
+	// 1. 로그인 처리
 	@Override
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request,
@@ -103,7 +111,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 
 
 	
-	// 로그아웃
+	// 2. 로그아웃
 	@Override
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response)
@@ -119,33 +127,51 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		mav.setViewName("redirect:/");
 		
 		return mav;
-		
 	}
 	
 	
 	
-	// 회원 가입 처리
+	// 3. 회원 가입 처리
 	@Override
 	@RequestMapping(value = "/registerMember.do", method = RequestMethod.POST)
-	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO, HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView registerMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response)
 	throws Exception{
 
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		
-		int result = 0;
-		result = memberService.registerMember(memberVO);
-		
-//		ModelAndView mav = new ModelAndView("redirect:/member/regiComplitedMember");
-		ModelAndView mav = new ModelAndView("redirect:/");
+		// 회원 가입이 정상정으로 되었는지 판별하기 위한 변수
+		int regiResult = memberService.registerMember(memberVO);
+		ModelAndView mav = new ModelAndView();		
+
+		if(regiResult==0) {
+			rAttr.addAttribute("regiResult", "registerFailed");
+			mav.setViewName("redirect:/member/regiMemberForm.do");
+		} else {
+			mav.setViewName("redirect:/member/regiComplitedMember.do");				
+		}
 		
 		return mav;
-		
 	}
 
+
+	
+	// 4. 아이디(email) 중복 검사 (AJAX)
+	@Override
+	@ResponseBody
+	@RequestMapping(value = "/emailCheck", method = RequestMethod.POST)
+	public int emailCheck(MemberVO memberVO) throws Exception {
+
+		System.out.println("MemberController 아이디(email) 중복 검사 (AJAX) email ==> " + memberVO.getEmail());
+		
+		int result = memberService.emailCheck(memberVO);
+		System.out.println("result : " + result);
+		return result;
+	}
 	
 	
-	// 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
+	
+	// 5. 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
 	@Override
 	@RequestMapping(value="/selectMember.do", method=RequestMethod.GET)
 	public ModelAndView selectMember(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response)
@@ -166,9 +192,9 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	
 	
-	// 아이디(email)에 해당하는 회원 정보 수정
+	// 6. 아이디(email)에 해당하는 회원 정보 수정
 	@Override
-	@RequestMapping(value="updateMember.do", method=RequestMethod.POST)
+	@RequestMapping(value="/updateMember.do", method=RequestMethod.POST)
 	public ModelAndView updateMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
@@ -179,25 +205,16 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		int result = memberService.updateMember(memberVO);
 		ModelAndView mav = new ModelAndView();
 		
-		if(result != 0) {	// 수정된 결과 값이 있다면
-			// 수정 완료 메세지를 보내면서 마이 페이지 화면으로 이동한다.
-			rAttr.addAttribute("result", "updateSuccess");
-			mav.setViewName("redirect:/member/mypageMembers");
-			
-		} else {	// 수정된 결과 값이 없다면
-			// 수정 된 게 없다는 메세지를 보내면서 마이 페이지 화면으로 이동한다.
-			rAttr.addAttribute("result", "updateFailed");
-			mav.setViewName("redirect:/member/mypageMembers");
-		}
+		mav.setViewName("redirect:/member/myPage.do");		
 
 		return mav;
 	}
 	
 	
 	
-	// 아이디(email)에 해당하는 회원 정보 삭제
+	// 7. 아이디(email)에 해당하는 회원 정보 삭제
 	@Override
-	@RequestMapping(value="deleteMember.do", method=RequestMethod.GET)
+	@RequestMapping(value="/deleteMember.do", method=RequestMethod.GET)
 	public ModelAndView deleteMember(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		
