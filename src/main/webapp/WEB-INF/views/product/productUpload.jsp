@@ -106,8 +106,8 @@
     </div>
 
     <jsp:include page="../common/footer.jsp" flush="false" />
-<script src="${contextPath}/resources/js/upload.js"></script>
-  <script>
+    <script src="${contextPath}/resources/js/upload.js"></script>
+    <script>
     let sizeDiv = $("#size-div");
     let sizeListCount = 0;
     $("button[id='addSize']").on("click",function(e){
@@ -120,7 +120,6 @@
         sizeDiv2.attr("class","col-sm-6 ");
         sizeDiv1.append($("<input/>",{type:"text",name:"productSizeList["+sizeListCount+"].size",maxlength:"200",class:"form-control",placeholder:"상품사이즈를 입력하세요"}));
         sizeDiv2.append($("<input/>",{type:"text",name:"productSizeList["+sizeListCount+"].productCount",maxlength:"200",class:"form-control",placeholder:"상품개수를 입력하세요"}));
-        
         sizeDiv1.appendTo("#size-div");
         sizeDiv2.appendTo("#size-div");
     })

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -31,10 +32,12 @@ public class CartController {
     }
 
     @PostMapping("/addCart")
-    public void addCart(CartItemVO cartItemVO, HttpSession httpSession){
+    @ResponseBody
+    public String addCart(CartItemVO cartItemVO, HttpSession httpSession){
         MemberVO member = (MemberVO)httpSession.getAttribute("member");
         cartItemVO.setMemberId(member.getId());
         cartService.addCart(cartItemVO);
+        return "Y";
     }
 
     @GetMapping("/list")
