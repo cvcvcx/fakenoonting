@@ -41,5 +41,5 @@ public interface ReviewRepository {
     public double getAvgGrade(int productId) throws Exception;
 
     // 모든 상품의 모든 리뷰 개수
-    public int allReviewCount() throws Exception;
+    public int productReviewCount(int productId) throws Exception;
 }

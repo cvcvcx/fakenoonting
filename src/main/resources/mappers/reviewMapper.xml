@@ -115,17 +115,18 @@
     <!-- 특정 상품의 리뷰 평균 평점 구하기 -->
     <select id="getAvgGrade" parameterType="int" resultType="double">
         <![CDATA[
-            SELECT AVG(grade)
+            SELECT ifnull(AVG(grade), 0)
             FROM review
             WHERE product_id = #{productId}
         ]]>
     </select>
 
-    <!-- 모든 상품의 모든 리뷰 개수 -->
-    <select id="allReviewCount" resultType="int">
+    <!-- 특정 상품의 모든 리뷰 개수 -->
+    <select id="productReviewCount" parameterType="int" resultType="int">
         <![CDATA[
             SELECT COUNT(*)
             FROM review
+            WHERE product_id = #{productId}
         ]]>
     </select>
 

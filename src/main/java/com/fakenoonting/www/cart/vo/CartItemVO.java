@@ -15,7 +15,7 @@ public class CartItemVO {
     private Long id;
     private Long memberId;
     private Long productId;
-    private ProductSizeVO productSizeVO;
+    private String productSize;
     private Integer productCount;
     private Timestamp createDate;
 

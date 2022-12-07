@@ -80,8 +80,8 @@ public class ReviewService {
     }
 
     // 모든 상품의 모든 리뷰 개수
-    public int allReviewCount() throws Exception {
-        return reviewRepository.allReviewCount();
+    public int productReviewCount(int productId) throws Exception {
+        return reviewRepository.productReviewCount(productId);
     }
 
 }
