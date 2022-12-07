@@ -26,5 +26,5 @@ public interface ProductDAO {
 
     List<ProductSizeVO> findSizeByProductId(ProductVO productVO);
 
-    List<ProductSizeVO> findContentImgByProductId(ProductVO productVO);
+    List<ImgItemVO> findContentImgByProductId(ProductVO productVO);
 }
