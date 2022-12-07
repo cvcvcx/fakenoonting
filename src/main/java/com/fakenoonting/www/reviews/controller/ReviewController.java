@@ -32,7 +32,7 @@ public class ReviewController {
             , @RequestParam(required = false, defaultValue = "1") int range) throws Exception {
 
         model.addAttribute("allReviewCount", reviewService.allReviewCount());
-        model.addAttribute("avgGrade", reviewService.getAvgGrade(10)); // product_id랑 연동될때까지 10 넣어둠
+        model.addAttribute("avgGrade", reviewService.getAvgGrade(21)); // product_id랑 연동될때까지 10 넣어둠
 
         Pagination pagination = new Pagination();
         pagination.pageInfo(page, range, reviewService.allReviewCount());
