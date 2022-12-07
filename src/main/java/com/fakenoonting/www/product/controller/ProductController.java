@@ -78,7 +78,7 @@ public class ProductController {
     }
     @PostMapping("/upload")
     public ModelAndView uploadProduct(ProductVO productVO){
-        log.info("uploadPost요청 진행중");
+        log.info("uploadPost요청 진행중 productVO=>" +productVO);
         ModelAndView mav = new ModelAndView();
         productService.productUpload(productVO);
         mav.setViewName("redirect:list");
