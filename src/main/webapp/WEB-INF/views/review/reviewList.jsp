@@ -28,10 +28,10 @@
         <h2>아이템번호 ${product.id}</h2>
         <h2>평점 ★
             <c:choose>
-                <c:when test="${avgGrade == null}">
+                <c:when test="${avgGrade == 0}">
                     <c:out value="0" />
                 </c:when>
-                <c:when test="${avgGrade != null}">
+                <c:when test="${avgGrade != 0}">
                     <c:out value="${avgGrade}" />
                 </c:when>
             </c:choose>

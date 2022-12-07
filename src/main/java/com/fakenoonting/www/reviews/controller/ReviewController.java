@@ -34,7 +34,7 @@ public class ReviewController {
 
         ProductVO productId = new ProductVO();
         model.addAttribute("productReviewCount", reviewService.productReviewCount(productId.getId().intValue()));
-        model.addAttribute("avgGrade", reviewService.getAvgGrade(productId.getId().intValue())); // product_id랑 연동될때까지 10 넣어둠
+        model.addAttribute("avgGrade", reviewService.getAvgGrade(productId.getId().intValue()));
 
         Pagination pagination = new Pagination();
         pagination.pageInfo(page, range, reviewService.productReviewCount(productId.getId().intValue()));
