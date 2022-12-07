@@ -18,6 +18,8 @@ public interface ProductDAO {
 
     int contentImageEnroll(ImgItemVO img);
 
+    int deleteContentImg(ProductVO productId);
+
     public int sizeEnroll(ProductSizeVO size);
 
     public int deleteSize(ProductVO productId);

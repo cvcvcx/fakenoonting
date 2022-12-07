@@ -82,7 +82,7 @@
     </delete>
 
     <insert id="uploadContentImg" parameterType="com.fakenoonting.www.util.upload.vo.ImgItemVO">
-        insert into product_img_item
+        insert into product_content_img_item
         (product_id, org_img_name,upload_path,img_UUID)
         values (#{foreignId},#{orgImgName},#{uploadPath},#{imgUUID})
     </insert>

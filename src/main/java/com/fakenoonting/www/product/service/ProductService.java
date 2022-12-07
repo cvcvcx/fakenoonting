@@ -57,7 +57,7 @@ public class ProductService {
 
         productDAO.deleteImg(productVO);
         productDAO.deleteSize(productVO);
-
+        productDAO.deleteContentImg(productVO);
         return productDAO.deleteProduct(productVO);
     }
 
