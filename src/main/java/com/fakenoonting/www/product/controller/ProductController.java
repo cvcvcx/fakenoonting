@@ -52,8 +52,11 @@ public class ProductController {
             , @RequestParam(defaultValue = "1") int page
             , @RequestParam(defaultValue = "1") int range) throws Exception {
         ModelAndView mav = new ModelAndView();
-        ProductVO productVO = new ProductVO();
-        productVO.setId(id);
+
+        ProductVO productId = new ProductVO();
+        productId.setId(id);
+        ProductVO product = productService.productDetail(productId);
+        log.info("productDetail => "+product.getProductSizeList());
 
         model.addAttribute("allReviewCount", reviewService.allReviewCount());
         model.addAttribute("avgGrade", reviewService.getAvgGrade(10)); // product_id랑 연동될때까지 10 넣어둠
@@ -62,7 +65,7 @@ public class ProductController {
         pagination.pageInfo(page, range, reviewService.allReviewCount());
         model.addAttribute("pagination", pagination);
         model.addAttribute("boardList", reviewService.findAllPaging(pagination));
-        model.addAttribute("product",productVO);
+        model.addAttribute("product",product);
         mav.setViewName("/product/productDetails");
         return mav;
     }

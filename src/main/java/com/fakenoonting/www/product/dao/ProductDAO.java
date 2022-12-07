@@ -21,4 +21,6 @@ public interface ProductDAO {
     public int deleteSize(ProductVO productId);
 
     public List<ImgItemVO> findImagesByProductId(ProductVO productVO);
+
+    List<ProductSizeVO> findSizeByProductId(ProductVO productVO);
 }

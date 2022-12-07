@@ -64,8 +64,15 @@ public class ProductDAOImpl implements ProductDAO {
         return sqlSession.delete(nameSpace+".deleteProductSize",productId);
     }
 
+    @Override
     public List<ImgItemVO> findImagesByProductId(ProductVO productVO){
         return sqlSession.selectList(nameSpace+".findImagesByProductId",productVO);
     }
+    @Override
+    public List<ProductSizeVO> findSizeByProductId(ProductVO productVO){
+        return sqlSession.selectList(nameSpace+".findSizeByProductId",productVO);
+    }
+
+
 
 }

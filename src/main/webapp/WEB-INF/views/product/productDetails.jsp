@@ -24,11 +24,82 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <h2>${product.id}</h2>
           <div class="row">
             <div class="col-md-6">
-              <img
-                src="${contextPath}/resources/images/cat1.jpg"
-                alt="사진"
-                class="w-100"
-              />
+              <div
+                id="carouselExampleIndicators"
+                class="carousel slide"
+                data-bs-ride="carousel"
+              >
+                <div class="carousel-indicators">
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3"
+                  ></button>
+                </div>
+                <div class="carousel-inner">
+                  <c:forEach
+                    items="${product.productImgItems}"
+                    var="imgItem"
+                    varStatus="status"
+                  >
+                    <div
+                      class="carousel-item ratio ratio-1x1 <c:out value="${status.index == 0 ? 'active' : ''}"/> ">
+                      <img
+                        src="${contextPath}/util/upload/display?fileName=${imgItem.uploadPath}/${imgItem.imgUUID}_${imgItem.orgImgName}"
+                        class="w-100"
+                        alt="..."
+                      />
+                    </div>
+                  </c:forEach>
+
+                  <!-- <c:forEach
+                    items="${product.productImgItems}"
+                    var="imgItem"
+                    varStatus="status"
+                  >
+
+                  </c:forEach> -->
+                </div>
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
             </div>
             <div class="col-md-6 text-left">
               <div class="row">
@@ -46,13 +117,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <div class="col-4 col-md-7">
                   <select class="form-select" aria-label="select color">
                     <option selected>색상을 선택해 주세요.</option>
-                    <option value="1">블랙</option>
-                    <option value="2">그레이</option>
-                    <option value="3">네이비</option>
-                    <option value="4">다크베이지</option>
-                    <option value="5">아이보리</option>
-                    <option value="6">라이트베이지</option>
-                    <option value="7">인디블루</option>
                   </select>
                 </div>
               </div>
@@ -66,13 +130,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <div class="col-4 col-md-7">
                   <select class="form-select" aria-label="select size">
                     <option selected>사이즈를 선택해 주세요.</option>
-                    <option value="1">S</option>
-                    <option value="2">M</option>
-                    <option value="3">L</option>
-                    <option value="4">XL</option>
-                    <option value="5">2XL</option>
-                    <option value="6">3XL</option>
-                    <option value="7">4XL</option>
+                    <c:forEach
+                      items="${product.productSizeList}"
+                      var="sizeList"
+                    >
+                      <option value="${idx}">
+                        ${sizeList.size} 남은수량 : ${sizeList.productCount} 개
+                      </option>
+                    </c:forEach>
                   </select>
                 </div>
               </div>

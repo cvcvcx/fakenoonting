@@ -56,7 +56,10 @@ public class ProductService {
 
     public ProductVO productDetail(ProductVO productVO){
         log.info("productDetail 실행...");
-        return productRepo.findById(productVO);
+        ProductVO result = productRepo.findById(productVO);
+        result.setProductSizeList(productRepo.findSizeByProductId(productVO));
+        result.setProductImgItems(productRepo.findImagesByProductId(productVO));
+        return result;
     }
 
 
