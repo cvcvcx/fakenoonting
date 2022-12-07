@@ -6,7 +6,6 @@ function getContextPath() {
        return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
 };
 
-$()
 
 $("input[type='file']").on("change", function (e) {
     let formData = new FormData();

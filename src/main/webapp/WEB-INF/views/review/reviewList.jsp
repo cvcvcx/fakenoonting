@@ -22,7 +22,7 @@
 </head>
 <body>
 <article>
-    <div class="container">
+    <div class="container" id ="test">
         <br>
         <h2>평균 ★ ${avgGrade}</h2>
         <h2>리뷰개수 ${allReviewCount}</h2>
@@ -78,7 +78,7 @@
 
                     <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="idx">
                         <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
-                            <a class="page-link" href="#" onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}')"> ${idx} </a>
+                            <a class="page-link" data-page="${idx}"> ${idx} </a>
                         </li>
                     </c:forEach>
 
@@ -114,7 +114,13 @@
             alert("리뷰가 등록되었습니다.");
         }
     });
-
+    $(".page-link").on("click", function(e){
+        e.preventDefault();
+        let pageButton = $(e.target);
+        console.log("click"+pageButton);
+        let page = pageButton.data("page");
+        fn_pagination(page, '${pagination.range}');
+      });
     $("#btnProductDetails").on("click", function(e) {
         e.preventDefault();
         location.href="/product/detail";
@@ -127,7 +133,7 @@
         var page = ((range - 2) * rangeSize) + 1;
         var range = range - 1;
 
-        var url = "${pageContext.request.contextPath}/reviewTest";
+        var url = "${contextPath}/reviewTest";
         url = url + "?page=" + page;
         url = url + "&range=" + range;
 
@@ -136,11 +142,22 @@
 
     // 페이지 번호 클릭
     function fn_pagination(page, range) {
-        var url = "${pageContext.request.contextPath}/reviewTest";
+        var url = "${contextPath}/reviewTest";
         url = url + "?page=" + page;
         url = url + "&range=" + range;
 
-        location.href = url;
+        $.ajax({
+        type:"GET",
+        url:url,
+        success: function(result){
+            $("#test").html(result);
+        },
+        error: function(result){
+        alert("에러가 발생했습니다.");
+        }
+
+        });
+
     }
 
     // 다음 버튼 이벤트
