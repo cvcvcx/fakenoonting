@@ -21,7 +21,7 @@ import java.util.Map;
 @Controller
 public class ReviewController {
 
-//    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
     private final ReviewService reviewService;
 
     @Autowired
@@ -29,9 +29,9 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    // 아작스로 추가전까지 임시페이지 만들어서 사용
-    @RequestMapping(value = "reviewTest", method = RequestMethod.GET)
-    public String reviewTest(Model model
+    // 리뷰 리스트
+    @RequestMapping(value = "/reviewList", method = RequestMethod.GET)
+    public String reviewList(Model model
             , @RequestParam(required = false, defaultValue = "1") int page
             , @RequestParam(required = false, defaultValue = "1") int range) throws Exception {
 
@@ -60,10 +60,10 @@ public class ReviewController {
 
     // 리뷰 등록하기
     @RequestMapping(value = "/registerReview", method = RequestMethod.POST)
-    public String registerReview(Review review, RedirectAttributes rttr) throws Exception {
+    public String registerReview(Review review, RedirectAttributes rttr, int productId) throws Exception {
         reviewService.register(review);
         rttr.addFlashAttribute("result", "success");
-        return "redirect:reviewTest";
+        return "redirect:/product/detail?id=" + productId;
     }
 
 

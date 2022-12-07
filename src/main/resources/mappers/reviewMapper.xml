@@ -15,11 +15,11 @@
         <result column="isExist" property="isExist"/>
     </resultMap>
 
-    <!-- 리뷰 등록하기    테스트용으로 각 아이디, 평점값 넣어둠 -->
+    <!-- 리뷰 등록하기    멤버아이디 수정하기!! -->
     <insert id="register" parameterType="com.fakenoonting.www.reviews.domain.Review">
         <![CDATA[
 			INSERT INTO review (id, member_id, product_id, content, create_date, grade, isExist)
-			SELECT IFNULL(MAX(id), 0)+1, 111, 222, #{contents}, now(), #{grade}, 1
+			SELECT IFNULL(MAX(id), 0)+1, 111, #{productId}, #{contents}, now(), #{grade}, 1
             FROM review
 		]]>
     </insert>
@@ -100,16 +100,13 @@
     </select>
 
     <!-- 특정 상품의 모든 리뷰 평점순으로 찾기 -->
-    <select id="findAllByGrade" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+    <select id="findAllByGrade" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review" resultMap="reviewResult">
         <![CDATA[
             SELECT *
-            FROM (
-                    SELECT *
-                    FROM review
-                    WHERE product_id = #{productId}
-                    ORDER BY create_date DESC
-                 )
-            ORDER BY grade DESC
+            FROM review
+            WHERE product_id = #{productId}
+            ORDER BY create_date, grade DESC
+            LIMIT #{startList}, #{listSize}
         ]]>
     </select>
 
