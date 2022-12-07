@@ -1,5 +1,7 @@
 package com.fakenoonting.www.member.controller;
 
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -67,7 +69,27 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		return "/member/myPageForm";		
 	}
 
+	// 5. 회원 정보 수정 페이지 이동
+	@Override
+	@RequestMapping(value = "/updateMemberForm.do", method = RequestMethod.GET)
+	public ModelAndView updateMemberForm(HttpSession httpSession, HttpServletRequest request, HttpServletResponse response) {
+		
+		MemberVO memberVO = (MemberVO)httpSession.getAttribute("member");
+		logger.info("MemberController 회원 정보 추출 memberVO ==> " + memberVO);
+		
+		// birth 생년 월일 모양 변환
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String birth = dateFormat.format(memberVO.getBirth());
+		
+		// 찾아온 데이터를 가지고 개인 정보 수정화면으로 넘어간다.
+		ModelAndView mav = new ModelAndView("/member/updateMemberForm");
+		mav.addObject("member", memberVO);
+		mav.addObject("birth", birth);
+		
+		return mav;
+	};
 	
+		
 	
 	//===================================================================================	
 	// 기능 컨트롤러
@@ -92,7 +114,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		if(member != null) {	// 로그인 정보에 해당하는 자료가 있으면
 			if(member.getPwd().equals(memberVO.getPwd())) { // 이메일과 비밀번호가 일치하면 세션을 발급.
 				HttpSession session = request.getSession();
-				session.setAttribute("member", memberVO);
+				session.setAttribute("member", member);
 				session.setAttribute("isLogOn", true);
 				mav.setViewName("redirect:/");	// 메인화면으로 이동
 
@@ -170,29 +192,8 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	}
 	
 	
-	
-	// 5. 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
-	@Override
-	@RequestMapping(value="/selectMember.do", method=RequestMethod.GET)
-	public ModelAndView selectMember(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
 		
-		System.out.println("MemberController 회원 정보 조회 email ==> " + email);
-		
-		// 수정을 요청한 email에 해당하는 정보를 찾는 일을 서비스에게 부탁한다.
-		MemberVO memberVO = memberService.selectMember(email);
-		System.out.println("MemberController 회원 정보 조회 memberVO ==> " + memberVO);
-		
-		// 찾아온 데이터를 가지고 개인 정보 수정화면으로 넘어간다.
-		ModelAndView mav = new ModelAndView("/member/updateMemberForm");
-		mav.addObject("member", memberVO);
-		
-		return mav;
-	}
-	
-	
-	
-	// 6. 아이디(email)에 해당하는 회원 정보 수정
+	// 5. 아이디(email)에 해당하는 회원 정보 수정
 	@Override
 	@RequestMapping(value="/updateMember.do", method=RequestMethod.POST)
 	public ModelAndView updateMember(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response)
@@ -212,14 +213,22 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	
 	
 	
-	// 7. 아이디(email)에 해당하는 회원 정보 삭제
+	// 6. 아이디(email)에 해당하는 회원 정보 삭제
 	@Override
 	@RequestMapping(value="/deleteMember.do", method=RequestMethod.GET)
-	public ModelAndView deleteMember(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView deleteMember(HttpSession httpSession, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		
+		MemberVO memberVO = (MemberVO)httpSession.getAttribute("member");
+		String email = memberVO.getEmail();
+		logger.info("MemberController 회원 정보 삭제 전 정보 확인 email ==> " + email);
 		
 		request.setCharacterEncoding("UTF-8");
 		int result = memberService.deleteMember(email);
+		
+		// 회원 탈퇴를 하면서 동시에 회원 세션 정보도 지운다.
+		httpSession.removeAttribute("member");
+		httpSession.removeAttribute("isLogOn");	
 		
 		ModelAndView mav = new ModelAndView("redirect:/");
 		return mav;

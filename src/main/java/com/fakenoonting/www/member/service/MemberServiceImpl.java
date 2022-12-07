@@ -50,14 +50,14 @@ public class MemberServiceImpl implements MemberServiceInterface{
 		int result = memberDAO.emailCheck(memberVO);
 		return result;
 	}
-	
+		
 	
 	
 	// 아이디(email)에 해당하는 회원 정보 추출
 	@Override
 	public MemberVO selectMember(String email) throws DataAccessException {
-		logger.info("MemberServiceImpl 회원정보 추출 시작..." + email);		
-
+		logger.info("MemberServiceImpl 회원정보 추출 시작..." + email);	
+		
 		MemberVO memberVO = memberDAO.selectMember(email);
 		return memberVO;
 	}
