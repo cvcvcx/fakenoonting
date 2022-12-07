@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReviewService {
@@ -60,8 +61,8 @@ public class ReviewService {
     }
 
     // 특정 상품의 모든 리뷰 찾기
-    public List<Review> findAllByProductId(int productId) throws Exception {
-        return reviewRepository.findAllByProductId(productId);
+    public List<Review> findAllByProductId(Map<String, Object> map) throws Exception {
+        return reviewRepository.findAllByProductId(map);
     }
 
     // 특정 유저의 모든 리뷰 찾기

@@ -4,6 +4,7 @@ import com.fakenoonting.www.reviews.domain.Review;
 import com.fakenoonting.www.util.paging.Pagination;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReviewRepository {
 
@@ -29,7 +30,7 @@ public interface ReviewRepository {
     public List<Review> findAllPaging(Pagination pagination) throws Exception;
 
     // 특정 상품의 모든 리뷰 찾기
-    public List<Review> findAllByProductId(int productId) throws Exception;
+    public List<Review> findAllByProductId(Map<String, Object> map) throws Exception;
 
     // 특정 유저의 모든 리뷰 찾기
     public List<Review> findAllByMemberId(int memberId) throws Exception;

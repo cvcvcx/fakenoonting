@@ -79,12 +79,13 @@
     </select>
 
     <!-- 특정 상품의 모든 리뷰 찾기 -->
-    <select id="findAllByProductId" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+    <select id="findAllByProductId" parameterType="HashMap" resultType="com.fakenoonting.www.reviews.domain.Review" resultMap="reviewResult">
         <![CDATA[
-            SELECT *
+            SELECT id, content, create_date, grade
             FROM review
             WHERE product_id = #{productId}
             ORDER BY create_date DESC
+            LIMIT #{startList}, #{listSize}
         ]]>
     </select>
 

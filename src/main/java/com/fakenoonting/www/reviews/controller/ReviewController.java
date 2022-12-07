@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Controller
 public class ReviewController {
@@ -39,7 +42,12 @@ public class ReviewController {
         Pagination pagination = new Pagination();
         pagination.pageInfo(page, range, reviewService.productReviewCount(productId.getId().intValue()));
         model.addAttribute("pagination", pagination);
-        model.addAttribute("boardList", reviewService.findAllPaging(pagination));
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("productId", productId.getId().intValue());
+        result.put("startList", pagination.getStartList());
+        result.put("listSize", pagination.getListSize());
+        model.addAttribute("boardList", reviewService.findAllByProductId(result));
 
         return "review/reviewList";
     }

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequestMapping("product")
@@ -64,7 +66,13 @@ public class ProductController {
         Pagination pagination = new Pagination();
         pagination.pageInfo(page, range, reviewService.productReviewCount(productId.getId().intValue()));
         model.addAttribute("pagination", pagination);
-        model.addAttribute("boardList", reviewService.findAllPaging(pagination));
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("productId", productId.getId().intValue());
+        result.put("startList", pagination.getStartList());
+        result.put("listSize", pagination.getListSize());
+        model.addAttribute("boardList", reviewService.findAllByProductId(result));
+
         model.addAttribute("product",product);
         mav.setViewName("/product/productDetails");
         return mav;

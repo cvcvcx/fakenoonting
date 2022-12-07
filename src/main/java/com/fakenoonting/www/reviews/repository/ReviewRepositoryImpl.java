@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ReviewRepositoryImpl implements ReviewRepository {
@@ -64,8 +65,8 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     // 특정 상품의 모든 리뷰 찾기
     @Override
-    public List<Review> findAllByProductId(int productId) throws Exception {
-        return sqlSession.selectList(namespace + ".findAllByProductId");
+    public List<Review> findAllByProductId(Map<String, Object> map) throws Exception {
+        return sqlSession.selectList(namespace + ".findAllByProductId", map);
     }
 
     // 특정 유저의 모든 리뷰 찾기
