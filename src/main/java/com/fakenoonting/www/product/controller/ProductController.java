@@ -58,11 +58,11 @@ public class ProductController {
         ProductVO product = productService.productDetail(productId);
         log.info("productDetail => "+product.getProductSizeList());
 
-        model.addAttribute("allReviewCount", reviewService.allReviewCount());
-        model.addAttribute("avgGrade", reviewService.getAvgGrade(10)); // product_id랑 연동될때까지 10 넣어둠
+        model.addAttribute("productReviewCount", reviewService.productReviewCount(productId.getId().intValue()));
+        model.addAttribute("avgGrade", reviewService.getAvgGrade(productId.getId().intValue())); // product_id랑 연동될때까지 10 넣어둠
 
         Pagination pagination = new Pagination();
-        pagination.pageInfo(page, range, reviewService.allReviewCount());
+        pagination.pageInfo(page, range, reviewService.productReviewCount(productId.getId().intValue()));
         model.addAttribute("pagination", pagination);
         model.addAttribute("boardList", reviewService.findAllPaging(pagination));
         model.addAttribute("product",product);

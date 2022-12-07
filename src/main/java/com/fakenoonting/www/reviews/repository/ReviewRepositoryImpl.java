@@ -86,10 +86,10 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         return sqlSession.selectOne(namespace + ".getAvgGrade", productId);
     }
 
-    // 모든 상품의 모든 리뷰 개수
+    // 특정 상품의 모든 리뷰 개수
     @Override
-    public int allReviewCount() throws Exception {
-        return sqlSession.selectOne(namespace + ".allReviewCount");
+    public int productReviewCount(int productId) throws Exception {
+        return sqlSession.selectOne(namespace + ".productReviewCount", productId);
     }
 
 }

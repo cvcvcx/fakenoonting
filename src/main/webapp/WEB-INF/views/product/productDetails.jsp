@@ -411,7 +411,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               >
                 <li class="nav-item">
                   <a class="nav-link" data-bs-toggle="tab" href="#reviews">
-                    구매후기 (<%-- ${allReviewCount} --%>)
+                    구매후기 (${productReviewCount})
                   </a>
                 </li>
               </ul>
@@ -420,12 +420,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </div>
         <div class="container">
           <div class="tab-content">
-            <%-- 아작스 추가전까지 봉인--%>
-
             <jsp:include page="../review/reviewList.jsp" flush="false" />
-            <a href="${contextPath}/reviewTest">
-              <button>리뷰확인하러가기</button>
-            </a>
           </div>
         </div>
 

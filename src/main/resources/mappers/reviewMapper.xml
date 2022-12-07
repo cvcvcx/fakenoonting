@@ -121,11 +121,12 @@
         ]]>
     </select>
 
-    <!-- 모든 상품의 모든 리뷰 개수 -->
-    <select id="allReviewCount" resultType="int">
+    <!-- 특정 상품의 모든 리뷰 개수 -->
+    <select id="productReviewCount" parameterType="int" resultType="int">
         <![CDATA[
             SELECT COUNT(*)
             FROM review
+            WHERE product_id = #{productId}
         ]]>
     </select>
 

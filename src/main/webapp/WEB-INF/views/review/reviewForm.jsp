@@ -3,7 +3,10 @@
 <%@ taglib prefix="fmt"	uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%	request.setCharacterEncoding("UTF-8"); %>
-
+<%
+	String result = request.getParameter("productId");
+	int productId = Integer.parseInt(result);
+%>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -26,6 +29,8 @@
 
 <article>
 	<div class="container" role="main">
+		<h2>상품번호: <%=productId %> </h2>
+		<br>
 		<h2>리뷰작성</h2>
 		<form name="form" id="form" role="form" method="post" action="/registerReview">
 			<div class="mb-3">
@@ -40,10 +45,11 @@
 		</form>
 		<div>
 			<button type="button" class="btn btn-sm btn-primary" id="btnSave">저장하기</button>
-			<button type="button" class="btn btn-sm btn-primary" id="btnList">뒤로가기</button>
+			<button type="button" class="btn btn-sm btn-primary" id="btnBack">뒤로가기</button>
 		</div>
 	</div>
 </article>
+
 <script src="${contextPath}/resources/js/upload.js"></script>
 <script>
 	$("#btnSave").on("click", function(e) {
@@ -90,9 +96,9 @@
     //데이터가 어떻게 추가되는지 확인하기 위해 submit을 주석처리
 	});
 
-	$("#btnList").on("click", function(e) {
+	$("#btnBack").on("click", function(e) {
 		e.preventDefault();
-		location.href="/reviewTest";
+		location.href="${contextPath}/product/detail?id=" + <%=productId%>;
 	});
 </script>
 
