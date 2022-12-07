@@ -56,7 +56,7 @@ public class ProductController {
         ProductVO productId = new ProductVO();
         productId.setId(id);
         ProductVO product = productService.productDetail(productId);
-        log.info("productDetail => "+product.getProductSizeList());
+        log.info("productDetail => "+product.getProductContentImgItems());
 
         model.addAttribute("productReviewCount", reviewService.productReviewCount(productId.getId().intValue()));
         model.addAttribute("avgGrade", reviewService.getAvgGrade(productId.getId().intValue())); // product_id랑 연동될때까지 10 넣어둠
