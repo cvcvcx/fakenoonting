@@ -8,8 +8,8 @@
         <result column="member_id" property="memberId" />
         <result column="product_id" property="productId" />
         <result column="content" property="content" />
-        <result column="product_size" property="productSize" />
-        <result column="product_count" property="productCount" />
+        <result column="item_size" property="productSize" />
+        <result column="item_count" property="productCount" />
         <result column="create_date" property="createDate" />
     </resultMap>
 

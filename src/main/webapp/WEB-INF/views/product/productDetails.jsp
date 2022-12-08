@@ -95,14 +95,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <div class="col-6 col-md-5">판매가</div>
                 <div class="col-6 col-md-7">${product.price} 원</div>
               </div>
-              <div class="row mb-3">
-                <div class="col-8 col-md-5">색상</div>
-                <div class="col-4 col-md-7">
-                  <select class="form-select" aria-label="select color">
-                    <option selected>색상을 선택해 주세요.</option>
-                  </select>
-                </div>
-              </div>
+
               <div class="row">
                 <div class="col-8 col-md-5">
                   사이즈
@@ -170,7 +163,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         <div class="modal-content">
                           <div class="modal-header">
                             <h1 class="modal-title fs-5" id="buyNowLabel">
-                              kikerday.com 내용
                             </h1>
                             <button
                               type="button"
@@ -180,7 +172,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             ></button>
                           </div>
                           <div class="modal-body">
-                            필수 옵션을 선택해주세요.
+                            필수 옵션을 선택해주세요. ${product.productName}
                           </div>
                           <div class="modal-footer">
                             <button
@@ -255,7 +247,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       aria-labelledby="cartbuttonLabel"
                       aria-hidden="true"
                     >
-                      <div class="modal-dialog">
+                      <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                           <div class="modal-header">
                             <h1 class="modal-title fs-5" id="cartbuttonLabel">
@@ -523,8 +515,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             type : 'post',
             url : '${contextPath}/cart/addCart',
             data : formData,
-            success: function(){
-                $("#cartModal").modal('show');
+            success: function(result){
+              
+              $("#cartModal .modal-body").html(result);
+              $("#cartModal").modal("show");
             },
             error:function(request, status, error){
         		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
