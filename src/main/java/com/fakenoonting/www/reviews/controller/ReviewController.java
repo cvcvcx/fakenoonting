@@ -30,27 +30,27 @@ public class ReviewController {
     }
 
     // 리뷰 리스트
-    @RequestMapping(value = "/reviewList", method = RequestMethod.GET)
-    public String reviewList(Model model
-            , @RequestParam(required = false, defaultValue = "1") int page
-            , @RequestParam(required = false, defaultValue = "1") int range) throws Exception {
-
-        ProductVO productId = new ProductVO();
-        model.addAttribute("productReviewCount", reviewService.productReviewCount(productId.getId().intValue()));
-        model.addAttribute("avgGrade", reviewService.getAvgGrade(productId.getId().intValue()));
-
-        Pagination pagination = new Pagination();
-        pagination.pageInfo(page, range, reviewService.productReviewCount(productId.getId().intValue()));
-        model.addAttribute("pagination", pagination);
-
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("productId", productId.getId().intValue());
-        result.put("startList", pagination.getStartList());
-        result.put("listSize", pagination.getListSize());
-        model.addAttribute("boardList", reviewService.findAllByProductId(result));
-
-        return "review/reviewList";
-    }
+//    @RequestMapping(value = "/reviewList", method = RequestMethod.GET)
+//    public String reviewList(Model model
+//            , @RequestParam(required = false, defaultValue = "1") int page
+//            , @RequestParam(required = false, defaultValue = "1") int range) throws Exception {
+//
+//        ProductVO productId = new ProductVO();
+//        model.addAttribute("productReviewCount", reviewService.productReviewCount(productId.getId().intValue()));
+//        model.addAttribute("avgGrade", reviewService.getAvgGrade(productId.getId().intValue()));
+//
+//        Pagination pagination = new Pagination();
+//        pagination.pageInfo(page, range, reviewService.productReviewCount(productId.getId().intValue()));
+//        model.addAttribute("pagination", pagination);
+//
+//        Map<String, Object> result = new HashMap<String, Object>();
+//        result.put("productId", productId.getId().intValue());
+//        result.put("startList", pagination.getStartList());
+//        result.put("listSize", pagination.getListSize());
+//        model.addAttribute("boardList", reviewService.findAllByProductId(result));
+//
+//        return "review/reviewList";
+//    }
 
     // 리뷰 작성 폼으로 이동
     @RequestMapping(value = "/reviewForm", method = RequestMethod.GET)
@@ -66,8 +66,14 @@ public class ReviewController {
         return "redirect:/product/detail?id=" + productId;
     }
 
-
-
+    // 정렬
+    @RequestMapping(value = "/sortReview", method = RequestMethod.POST)
+    public String sortReview(Model model, int productId
+            , @RequestParam(defaultValue = "1") Integer sort) throws Exception {
+        logger.info("sortNum : " + sort);
+        model.addAttribute("sort", sort);
+        return "redirect:/product/detail?id=" + productId;
+    }
 
 
 //

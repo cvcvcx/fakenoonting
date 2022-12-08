@@ -48,8 +48,10 @@
         </h2>
         <br>
 
-        <button type="button" class="btn btn-sm btn-primary" id="sortByRegDate">최신순</button>
-        <button type="button" class="btn btn-sm btn-primary" id="sortByGrade">평점순</button>
+        <a class="sortRegDate">최신순</a>
+
+<%--        sort값을 전달해야함--%>
+        <a class="sortGrade" href="#" data-sort="2">평점순</a>
         <br>
 
         <div class="table-responsive">
@@ -104,7 +106,7 @@
 
                     <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="idx">
                         <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
-                            <a class="page-link" data-page="${idx}"> ${idx} </a>
+                            <a class="page-link" data-page="${idx}" data-sort="${sort}"> ${idx} </a>
                         </li>
                     </c:forEach>
 
@@ -121,6 +123,13 @@
 </article>
 
 <script>
+    function fn_grade() {
+        // 여기서 sort값만 정달해주면되늗??
+
+    }
+</script>
+
+<script>
     $(function checkSuccess() {
         let result = "${result}";
 
@@ -135,12 +144,54 @@
 </script>
 
 <script>
+
+    $(".sortGrade").on("click", function(e){
+        e.preventDefault();
+        let sort = 2;
+        <%--alert(${sort});--%>
+
+        // let pageButton = $(e.target);
+        // let sort = pageButton.data("sort");
+        // alert("sort값 2로 변경   sort: " + sort);
+        // return true;
+        // 이 값을 유지해서 밑에 보내줘야하는데
+
+        var url = "${contextPath}/product/detail";
+        url = url + "?id=" + ${product.id};
+        url = url + "&page=" + page;
+        url = url + "&range=" + range;
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: "sort" + sort,
+            success: function(result){
+                alert("sort성공");
+            },
+            error: function(result){
+                alert("sort에러");
+            }
+        });
+    });
+
+
+    // let val = $(".sortGrade").data("sort");
+    // alert("sortGrade값은" + val);
+
     $(".page-link").on("click", function(e){
         e.preventDefault();
         let pageButton = $(e.target);
-        console.log("click"+pageButton);
         let page = pageButton.data("page");
-        fn_pagination(page, '${pagination.range}');
+
+        let sort;
+        if (fn_grade() == true) {
+            sort = 2;
+        } else {
+            sort = 1;
+        }
+
+        alert("넘어가는sort값은????   " + sort);
+        fn_pagination(page, '${pagination.range}', sort);
     });
 
     // 이전 버튼 이벤트
@@ -166,17 +217,20 @@
     }
 
     // 페이지 번호 클릭
-    function fn_pagination(page, range) {
+    function fn_pagination(page, range, sort) {
         if(page == null) return false;
 
+        <%--alert("asdasdasdasd" + ${param.sort});--%>
         var url = "${contextPath}/product/detail";
         url = url + "?id=" + ${product.id};
         url = url + "&page=" + page;
         url = url + "&range=" + range;
+        url = url + "&sort=" + sort;
 
         $.ajax({
             type:"GET",
             url:url,
+            data:{"sort": "sort"},
             success: function(result){
                 $("#test").html(result);
             },

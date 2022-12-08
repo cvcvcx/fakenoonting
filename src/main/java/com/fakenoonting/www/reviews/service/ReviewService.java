@@ -65,14 +65,9 @@ public class ReviewService {
         return reviewRepository.findAllByProductId(map);
     }
 
-    // 특정 유저의 모든 리뷰 찾기
-    public List<Review> findAllByMemberId(int memberId) throws Exception {
-        return reviewRepository.findAllByMemberId(memberId);
-    }
-
     // 특정 상품의 모든 리뷰 평점순으로 찾기
-    public List<Review> findAllByGrade(int productId) throws Exception {
-        return reviewRepository.findAllByGrade(productId);
+    public List<Review> findAllByGrade(Map<String, Object> map) throws Exception {
+        return reviewRepository.findAllByGrade(map);
     }
 
     // 특정 상품의 리뷰 평균 평점 구하기
@@ -85,4 +80,8 @@ public class ReviewService {
         return reviewRepository.productReviewCount(productId);
     }
 
+    // 특정 유저의 모든 리뷰 찾기
+    public List<Review> findAllByMemberId(int memberId) throws Exception {
+        return reviewRepository.findAllByMemberId(memberId);
+    }
 }

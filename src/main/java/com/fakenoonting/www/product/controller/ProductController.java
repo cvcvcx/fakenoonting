@@ -52,7 +52,8 @@ public class ProductController {
     @RequestMapping("/detail")
     public ModelAndView productDetail(long id,Model model
             , @RequestParam(defaultValue = "1") int page
-            , @RequestParam(defaultValue = "1") int range) throws Exception {
+            , @RequestParam(defaultValue = "1") int range
+            , @RequestParam(defaultValue = "1") Integer sort) throws Exception {
         ModelAndView mav = new ModelAndView();
 
         ProductVO productId = new ProductVO();
@@ -71,7 +72,20 @@ public class ProductController {
         result.put("productId", productId.getId().intValue());
         result.put("startList", pagination.getStartList());
         result.put("listSize", pagination.getListSize());
-        model.addAttribute("boardList", reviewService.findAllByProductId(result));
+
+        log.info("sortNum : " + sort);
+        model.addAttribute("sort", sort);
+        if (sort == 1) {
+            log.info("날짜순정렬1");
+            model.addAttribute("boardList", reviewService.findAllByProductId(result));
+        } else if (sort == 2) {
+            log.info("평점순정렬");
+            model.addAttribute("boardList", reviewService.findAllByGrade(result));
+        } else {
+            log.info("날짜순정렬else");
+            model.addAttribute("boardList", reviewService.findAllByProductId(result));
+        }
+
 
         model.addAttribute("product",product);
         mav.setViewName("/product/productDetails");
