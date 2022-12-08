@@ -16,10 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+
+
 @Slf4j
-@RequestMapping("cart")
 @Controller
-public class CartController {
+@RequestMapping("/cart")
+public class CartController implements CartControllerInterface {
 
     @Autowired
     private CartService cartService;
@@ -31,6 +33,7 @@ public class CartController {
         return mav;
     }
 
+    
     @PostMapping("/addCart")
     public String addCart(CartItemVO cartItemVO, HttpSession httpSession) {
         MemberVO member = (MemberVO) httpSession.getAttribute("member");

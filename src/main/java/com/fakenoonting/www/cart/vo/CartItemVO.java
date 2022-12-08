@@ -2,25 +2,36 @@ package com.fakenoonting.www.cart.vo;
 
 import com.fakenoonting.www.product.vo.ProductSizeVO;
 import com.fakenoonting.www.product.vo.ProductVO;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
 
 
-@Getter @Setter @ToString @NoArgsConstructor
+
+@Component("cartVO")
+@Data
+@NoArgsConstructor
 public class CartItemVO {
-//장바구니로 이동할 때, 만들어서 보내야하는 VO 폼에서 이 값을 name으로 받아와야 한다.
-    private Long id;
-    private Long memberId;
-    private Long productId;
-    private String productSize;
-    private Integer productCount;
-    private Timestamp createDate;
-    //아래는 cart 데이터베이스에는 존재하지 않지만, 보여주는 화면에 필요한 요소들임(필요한 것 상품이미지, 상품제목, 상품 가격이 필요하므로 productVO를 가져옴)
-    private ProductVO productVO;
-    private String productImgPath;
+
+	// Cart DB 존재 변수들
+    private Long id;				// 카트 부분 개발자 쪽 구분 ID
+    private Long memberId;			// Member 부분 개발자 쪽 구분 ID
+    private Long productId;			// Product 부분 개발자 쪽 구분 ID
+    private String productSize;		// Product 구매 사이즈
+    private int productCount;		// Product 구매 갯수
+    private Date createDate;		// Cart 에 담은 날짜
+    
+    // Cart DB 미 존재 변수들
+    // 그저 보여주는 화면에 필요한 요소 (상품 이미지, 상품 제목, 상품 가격 등 필요하기 때문에)
+    private ProductVO productVO;	// ProductVO 그 자체, 자세한 건 ProductVO 참고
+    private String productImgPath;	// Product 이미지
 
 }

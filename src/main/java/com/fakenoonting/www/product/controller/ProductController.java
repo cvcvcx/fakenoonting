@@ -1,6 +1,5 @@
 package com.fakenoonting.www.product.controller;
 
-
 import com.fakenoonting.www.product.service.ProductService;
 import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.reviews.service.ReviewService;
@@ -17,9 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+
+
 @Slf4j
-@RequestMapping("product")
 @Controller
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
@@ -28,35 +29,49 @@ public class ProductController {
     @Autowired
     private ReviewService reviewService;
 
+    
+    
+    // 물품 특정 카테고리(TOP) 전체 리스트 추출
     @GetMapping("/list")
     public ModelAndView productList(Model model){
-        ModelAndView mav = new ModelAndView("/product/productList");
         List<ProductVO> list = productService.productList();
+
+        ModelAndView mav = new ModelAndView("/product/productList");
         model.addAttribute("list",list);
 
         return mav;
     }
-    @RequestMapping("/adminList")
+    
+    
+    
+    // 관리자 물품 전체 리스트 추출
+    @GetMapping("/adminList")
     public ModelAndView productAdminList(Model model) {
-        ModelAndView mav = new ModelAndView();
-        // 뷰 네임 설정
-        mav.setViewName("/product/productAdminList");
         List<ProductVO> list = productService.productList();
+
+        ModelAndView mav = new ModelAndView();
+        // 뷰 경로 설정
+        mav.setViewName("/product/productAdminList");
         model.addAttribute("list", list);
 
         return mav;
     }
 
-    @RequestMapping("/detail")
-    public ModelAndView productDetail(long id,Model model
+    
+    
+    // 상세 페이지 
+    @GetMapping("/detail")
+    public ModelAndView productDetail(long id, Model model
             , @RequestParam(defaultValue = "1") int page
             , @RequestParam(defaultValue = "1") int range) throws Exception {
-        ModelAndView mav = new ModelAndView();
 
         ProductVO productId = new ProductVO();
         productId.setId(id);
-        ProductVO product = productService.productDetail(productId);
-        log.info("productDetail => "+product.getProductContentImgItems());
+    	ProductVO product = productService.productDetail(productId);
+        
+        log.info("productDetail => " + product.getProductContentImgItems());
+
+        ModelAndView mav = new ModelAndView();
 
         model.addAttribute("allReviewCount", reviewService.allReviewCount());
         model.addAttribute("avgGrade", reviewService.getAvgGrade(10)); // product_id랑 연동될때까지 10 넣어둠
@@ -66,16 +81,24 @@ public class ProductController {
         model.addAttribute("pagination", pagination);
         model.addAttribute("boardList", reviewService.findAllPaging(pagination));
         model.addAttribute("product",product);
+        
         mav.setViewName("/product/productDetails");
         return mav;
     }
 
+    
+    
+    //
     @GetMapping(value = "/upload")
     public ModelAndView productUpload() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/product/productUpload");
         return mav;
     }
+    
+    
+    
+    // 
     @PostMapping("/upload")
     public ModelAndView uploadProduct(ProductVO productVO){
         log.info("uploadPost요청 진행중 productVO=>" +productVO);
@@ -85,6 +108,9 @@ public class ProductController {
         return mav;
     }
 
+    
+    
+    // 
     @GetMapping("/delete")
     public String deleteProduct(ProductVO productVO){
         log.info("deleteProduct 요청 진행중");
