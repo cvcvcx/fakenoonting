@@ -40,6 +40,13 @@ public class CartController {
         return "redirect:/cart/list";
     }
 
+    @PostMapping("/delete")
+    public String deleteCartItem(CartItemVO cartItemVO){
+        log.info("deleteCartItem 실행...");
+        cartService.deleteCartItem(cartItemVO);
+        return "redirect:/cart/list";
+    }
+
     @GetMapping("/list")
     public ModelAndView cartList(Model model, HttpSession httpSession) {
         MemberVO member = (MemberVO) httpSession.getAttribute("member");

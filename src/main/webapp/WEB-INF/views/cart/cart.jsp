@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%> <%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="result" value="${param.result}" />
 <% request.setCharacterEncoding("UTF-8"); %>
@@ -14,7 +15,7 @@
   <body>
     <!------ body----------------------------------------->
 
-    <div class="path">
+    <div class="path" id="modalChangeDiv">
       <div>
         <ul>
           <li>
@@ -159,7 +160,13 @@
                               aria-label="Vertical button group"
                             >
                               <a type="button" class="btn btn-light">order</a>
-                              <a type="button" class="btn btn-light">cancel</a>
+                              <a
+                                type="button"
+                                role="cancelBtn"
+                                value="${cartItem.id}"
+                                class="btn btn-light"
+                                >cancel</a
+                              >
                             </div>
                           </th>
                         </tr>
@@ -295,5 +302,32 @@
 
     <!------------------- END body------------------------------------------------------------------------------------------------>
     <hr />
+    <script>
+      $("document").ready(function () {
+        $("a[role='cancelBtn']").click(function (e) {
+          let cancelCartItemId = e.target.getAttribute("value");
+          $.ajax({
+            url: "${contextPath}/cart/delete",
+            type: "post",
+            data: { id: cancelCartItemId },
+            success: function (result) {
+              $("#modalChangeDiv").html(result);
+            },
+            error: function (request, status, error) {
+              alert(
+                "code:" +
+                  request.status +
+                  "\n" +
+                  "message:" +
+                  request.responseText +
+                  "\n" +
+                  "error:" +
+                  error
+              );
+            },
+          });
+        });
+      });
+    </script>
   </body>
 </html>

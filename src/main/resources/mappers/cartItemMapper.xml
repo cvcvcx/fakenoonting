@@ -26,4 +26,11 @@
             where member_id = #{id}
         ]]>
     </select>
+    <delete id="deleteCartItem" parameterType="com.fakenoonting.www.cart.vo.CartItemVO">
+        <![CDATA[
+            delete
+            from cart_item
+            where id = #{id}
+        ]]>
+    </delete>
 </mapper>

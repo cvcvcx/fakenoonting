@@ -48,7 +48,7 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public int deleteCartItem(CartItemVO cartItemVO){
-        return 0;
+        return cartItemDAO.deleteCartItem(cartItemVO);
     }
 
 }
