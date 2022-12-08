@@ -11,10 +11,64 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>장바구니</title>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!--  <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>-->
+
+    <link rel="stylesheet" href="/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://getbootstrap.com/docs/5.2/assets/css/docs.css"
+      rel="stylesheet"
+    />
+    <link
+      href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- 부가적인 테마 -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"
+    />
+
+    <style>
+      ul {
+        list-style: none;
+      }
+
+      .cart-table {
+        width: 80%;
+        margin: auto;
+        display: block;
+      }
+
+      #quantity-check {
+        margin: 0%;
+        padding: 0%;
+
+        height: 50px;
+        font-size: 15px;
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      #quantity-check input {
+        border-radius: 8%;
+        width: 100%;
+        height: 50%;
+      }
+    </style>
   </head>
   <body>
     <!------ body----------------------------------------->
 
+    <<<<<<< HEAD
     <div class="path" id="modalChangeDiv">
       <div>
         <ul>
@@ -42,6 +96,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     </div>
     <br />
     <br />
+    ======= >>>>>>> 69b5bbb7be6440d13b8a60fbe6662ba9c70a4f59
     <!---------------------------------------------------------------------------------------->
     <div class="container">
       <div class="contents d-flex flex-column mb-2">
@@ -74,6 +129,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             class="form-check-input"
                             type="checkbox"
                             id="checkboxNoLabel"
+                            name="selectAll"
+                            onclick="selectAll(this)"
                             value=""
                             aria-label="..."
                           />
@@ -160,6 +217,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                               aria-label="Vertical button group"
                             >
                               <a type="button" class="btn btn-light">order</a>
+
                               <a
                                 type="button"
                                 role="cancelBtn"
@@ -167,6 +225,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 class="btn btn-light"
                                 >cancel</a
                               >
+                              <a type="button" class="btn btn-light">cancel</a>
                             </div>
                           </th>
                         </tr>
@@ -254,28 +313,28 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           class="btn btn-outline-light btn-dark btn-sm"
           style="width: 120px; height: 50px"
         >
-          Continue Shopping
+          홈으로
         </button>
         <button
           type="button"
           class="btn btn-outline-light btn-dark btn-sm"
           style="width: 120px; height: 50px"
         >
-          Reset
+          비우기
         </button>
         <button
           type="button"
           class="btn btn-warning btn-sm"
           style="width: 120px"
         >
-          Select Buying
+          선택구매
         </button>
         <button
           type="button"
           class="btn btn-warning btn-sm"
           style="width: 120px"
         >
-          all Buying
+          전체구매
         </button>
       </div>
 
@@ -328,6 +387,29 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           });
         });
       });
+
+      function checkSelectAll() {
+        // 전체 체크박스
+        const checkboxes = document.querySelectorAll('input[name="list"]');
+        // 선택된 체크박스
+        const checked = document.querySelectorAll('input[name="list"]:checked');
+        // select all 체크박스
+        const selectAll = document.querySelector('input[name="selectall"]');
+
+        if (checkboxes.length === checked.length) {
+          selectAll.checked = true;
+        } else {
+          selectAll.checked = false;
+        }
+      }
+
+      function selectAll(selectAll) {
+        const checkboxes = document.getElementsByName("list");
+
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = selectAll.checked;
+        });
+      }
     </script>
   </body>
 </html>
