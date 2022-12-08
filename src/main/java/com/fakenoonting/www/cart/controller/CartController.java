@@ -25,27 +25,27 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping
-    public ModelAndView cartList(HttpSession httpSession){
+    public ModelAndView cartList(HttpSession httpSession) {
         ModelAndView mav = new ModelAndView("/cart/cart");
 
         return mav;
     }
 
     @PostMapping("/addCart")
-    @ResponseBody
-    public String addCart(CartItemVO cartItemVO, HttpSession httpSession){
-        MemberVO member = (MemberVO)httpSession.getAttribute("member");
+    public String addCart(CartItemVO cartItemVO, HttpSession httpSession) {
+        MemberVO member = (MemberVO) httpSession.getAttribute("member");
         cartItemVO.setMemberId(member.getId());
         cartService.addCart(cartItemVO);
-        return "Y";
+
+        return "redirect:/cart/list";
     }
 
     @GetMapping("/list")
-    public ModelAndView cartList(Model model, HttpSession httpSession){
-        MemberVO member = (MemberVO)httpSession.getAttribute("member");
+    public ModelAndView cartList(Model model, HttpSession httpSession) {
+        MemberVO member = (MemberVO) httpSession.getAttribute("member");
         List<CartItemVO> cartList = cartService.findCartItemsByMemberId(member);
-        log.info("cartList 불러오기 =>"+cartList);
-        model.addAttribute("cartList",cartList);
+        log.info("cartList 불러오기 =>" + cartList);
+        model.addAttribute("cartList", cartList);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/cart/cart");
         return mav;
