@@ -54,7 +54,7 @@
 								<ul class="dropdown-menu">
 									<li><a class="dropdown-item" href="${contextPath}/member/myPage.do">마이 페이지</a></li>
 									<li><a class="dropdown-item" href="${contextPath}/order/orderLookup">주문조회</a></li>
-									<li><a class="dropdown-item" href="#">회원정보수정</a></li>
+									<li><a class="dropdown-item" href="${contextPath}/member/updateMemberForm.do">회원정보수정</a></li>
 									<li><a class="dropdown-item" href="#">최근본상품</a></li>
 									<li><a class="dropdown-item" href="#">관심상품</a></li>
 									<li><a class="dropdown-item" href="#">나의리뷰</a></li>

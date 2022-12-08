@@ -2,6 +2,7 @@ package com.fakenoonting.www.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,10 @@ public interface MemberControllerInterface {
 	// 4. 마이 페이지 이동
 	public String myPage() ;
 
+	// 5. 아이디(email)에 해당하는 회원 정보 추출 및 회원 정보 수정 페이지 이동
+	public ModelAndView updateMemberForm(HttpSession httpSession,
+			HttpServletRequest request, HttpServletResponse response) ;
+	
 	
 	
 	//===================================================================================	
@@ -51,17 +56,13 @@ public interface MemberControllerInterface {
 
 	// 4. 아이디(email) 중복 검사 (AJAX)
 	public int emailCheck(MemberVO memberVO) throws Exception;
-
-	// 5. 아이디(email)에 해당하는 회원 정보 추출 및 수정 페이지 이동
-	public ModelAndView selectMember(@RequestParam("email") String email,
-			HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	// 6. 아이디(email)에 해당하는 회원 정보 수정
+	// 5. 아이디(email)에 해당하는 회원 정보 수정
 	public ModelAndView updateMember(@ModelAttribute("info") MemberVO memberVO, RedirectAttributes rAttr,
 			HttpServletRequest request, HttpServletResponse response )throws Exception;
 	
-	// 7. 아이디(email)에 해당하는 회원 정보 삭제
-	public ModelAndView deleteMember(@RequestParam("email") String email,
+	// 6. 아이디(email)에 해당하는 회원 정보 삭제
+	public ModelAndView deleteMember(HttpSession httpSession,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 }

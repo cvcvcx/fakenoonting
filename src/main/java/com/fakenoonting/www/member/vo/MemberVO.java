@@ -29,5 +29,6 @@ public class MemberVO {
 	private int zipcode;		// 우편 번호
 	private Date create_date;	// ID 생성 날짜
 	private Date delete_date;	// ID 삭제 날짜	
+	private int money_point;	// 포인트	
 
 }
