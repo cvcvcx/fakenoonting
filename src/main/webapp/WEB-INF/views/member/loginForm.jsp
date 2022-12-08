@@ -213,7 +213,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             </div>
 
             <br />
-            <div class="form-group d-grid" id="loginbtn">
+            <div class="form-group d-grid" id="loginbtn" tabindex="0">
               <a
                 class="btn"
                 style="color: aliceblue"
@@ -231,8 +231,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     <!-- footer -->
     <jsp:include page="../common/footer.jsp" flush="false" />
     <script>
-      $(document).ready(function () {
-        $("#login-box").focus();
+      $(function () {
+        setTimeout(function () {
+          $("#loginbtn").attr("tabindex", -1).focus();
+        }, 1);
       });
     </script>
   </body>

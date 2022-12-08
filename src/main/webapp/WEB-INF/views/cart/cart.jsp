@@ -319,26 +319,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       $("document").ready(function () {
         $("a[role='cancelBtn']").click(function (e) {
           let cancelCartItemId = e.target.getAttribute("value");
-          $.ajax({
-            url: "${contextPath}/cart/delete",
-            type: "post",
-            data: { cartItemIdArr: [cancelCartItemId] },
-            success: function (result) {
-              $("#modalChangeDiv").html(result);
-            },
-            error: function (request, status, error) {
-              alert(
-                "code:" +
-                  request.status +
-                  "\n" +
-                  "message:" +
-                  request.responseText +
-                  "\n" +
-                  "error:" +
-                  error
-              );
-            },
-          });
+          let cartItemIdArr = new Array();
+          cartItemIdArr.push(cancelCartItemId);
+          fn_deleteCartItem(cartItemIdArr);
         });
       });
 
@@ -360,9 +343,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           alert("선택된 상품이 없습니다.");
           return;
         }
+        fn_deleteCartItem(cartItemIdArr);
+      }
+      //ajax- cartItemId배열을 받아서 ajax요청으로 컨트롤러로 뿌려줌 CartController 참조
+      function fn_deleteCartItem(cartItemIdArr) {
         $.ajax({
           url: "${contextPath}/cart/delete",
           type: "post",
+          //contentType에 형식을 지정해주고, data를 JSON.stringify를 통해 변환해줘야 컨트롤러에서 List<Long>타입으로 받을 수 있음
           contentType: "application/json; charset:UTF-8",
           data: JSON.stringify(cartItemIdArr),
           success: function (result) {
