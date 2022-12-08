@@ -66,14 +66,14 @@ public class ReviewController {
         return "redirect:/product/detail?id=" + productId;
     }
 
-    // 정렬
-    @RequestMapping(value = "/sortReview", method = RequestMethod.POST)
-    public String sortReview(Model model, int productId
-            , @RequestParam(defaultValue = "1") Integer sort) throws Exception {
-        logger.info("sortNum : " + sort);
-        model.addAttribute("sort", sort);
-        return "redirect:/product/detail?id=" + productId;
-    }
+//    // 정렬
+//    @RequestMapping(value = "/sortReview", method = RequestMethod.POST)
+//    public String sortReview(Model model, int productId
+//            , @RequestParam(defaultValue = "1") Integer sort) throws Exception {
+//        logger.info("sortNum : " + sort);
+//        model.addAttribute("sort", sort);
+//        return "redirect:/product/detail?id=" + productId;
+//    }
 
 
 //

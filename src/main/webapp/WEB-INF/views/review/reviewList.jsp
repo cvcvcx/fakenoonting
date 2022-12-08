@@ -106,7 +106,7 @@
 
                     <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="idx">
                         <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
-                            <a class="page-link" data-page="${idx}" data-sort="${sort}"> ${idx} </a>
+                            <a class="page-link" data-page="${idx}"> ${idx} </a>
                         </li>
                     </c:forEach>
 
@@ -183,15 +183,15 @@
         let pageButton = $(e.target);
         let page = pageButton.data("page");
 
-        let sort;
-        if (fn_grade() == true) {
-            sort = 2;
-        } else {
-            sort = 1;
-        }
-
-        alert("넘어가는sort값은????   " + sort);
-        fn_pagination(page, '${pagination.range}', sort);
+        // let sort;
+        // if (fn_grade() == true) {
+        //     sort = 2;
+        // } else {
+        //     sort = 1;
+        // }
+        //
+        // alert("넘어가는sort값은????   " + sort);
+        fn_pagination(page, '${pagination.range}');
     });
 
     // 이전 버튼 이벤트
@@ -217,7 +217,7 @@
     }
 
     // 페이지 번호 클릭
-    function fn_pagination(page, range, sort) {
+    function fn_pagination(page, range) {
         if(page == null) return false;
 
         <%--alert("asdasdasdasd" + ${param.sort});--%>
@@ -225,12 +225,12 @@
         url = url + "?id=" + ${product.id};
         url = url + "&page=" + page;
         url = url + "&range=" + range;
-        url = url + "&sort=" + sort;
+        // url = url + "&sort=" + sort;
 
         $.ajax({
             type:"GET",
             url:url,
-            data:{"sort": "sort"},
+            // data:{"sort": "sort"},
             success: function(result){
                 $("#test").html(result);
             },
