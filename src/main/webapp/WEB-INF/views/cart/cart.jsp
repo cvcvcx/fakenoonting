@@ -68,7 +68,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   <body>
     <!------ body----------------------------------------->
 
-    <<<<<<< HEAD
     <div class="path" id="modalChangeDiv">
       <div>
         <ul>
@@ -96,7 +95,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     </div>
     <br />
     <br />
-    ======= >>>>>>> 69b5bbb7be6440d13b8a60fbe6662ba9c70a4f59
     <!---------------------------------------------------------------------------------------->
     <div class="container">
       <div class="contents d-flex flex-column mb-2">
@@ -225,7 +223,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 class="btn btn-light"
                                 >cancel</a
                               >
-                              <a type="button" class="btn btn-light">cancel</a>
+                              
                             </div>
                           </th>
                         </tr>
