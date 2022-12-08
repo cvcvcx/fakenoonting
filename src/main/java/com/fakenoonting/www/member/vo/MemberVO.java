@@ -15,18 +15,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberVO {
 	
-	private long id;			// 개발자 쪽 구분 ID
+	private Long id;			// Member부분 개발자 쪽 구분 ID
 	private String email;		// 사용자 ID
 	private String pwd;
 	private String nick;		// 사용자 닉네임
 	private String name;		// 사용자 이름
-	private char gender;
-	private int phone;
+	private Character gender;
+	private Integer phone;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birth;
 	private String address1;	// 상위 주소
 	private String address2;	// 상세 주소
-	private int zipcode;		// 우편 번호
+	private Integer zipcode;		// 우편 번호
 	private Date create_date;	// ID 생성 날짜
 	private Date delete_date;	// ID 삭제 날짜	
 	private int money_point;	// 포인트	

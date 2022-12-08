@@ -17,6 +17,8 @@ public class ProductService {
     @Autowired
     private ProductDAO productDAO;
 
+    
+    
     public List<ProductVO> productList() {
         log.info("ProductService 상품 리스트 조회...");
         List<ProductVO> products = productDAO.findAll();
