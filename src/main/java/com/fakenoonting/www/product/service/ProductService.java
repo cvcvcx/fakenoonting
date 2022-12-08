@@ -1,6 +1,5 @@
 package com.fakenoonting.www.product.service;
 
-
 import com.fakenoonting.www.product.dao.ProductDAO;
 import com.fakenoonting.www.product.vo.ProductSizeVO;
 import com.fakenoonting.www.util.upload.vo.ImgItemVO;
@@ -16,48 +15,59 @@ import java.util.List;
 public class ProductService {
 
     @Autowired
-    private ProductDAO productRepo;
+    private ProductDAO productDAO;
 
-    public List<ProductVO> productList(){
+    public List<ProductVO> productList() {
         log.info("ProductService 상품 리스트 조회...");
-        List<ProductVO> products = productRepo.findAll();
+        List<ProductVO> products = productDAO.findAll();
         products.forEach(productVO -> {
-            productVO.setProductImgItems(productRepo.findImagesByProductId(productVO));
+            productVO.setProductImgItems(productDAO.findImagesByProductId(productVO));
         });
         return products;
     }
 
-    public void productUpload(ProductVO productVO){
-        int save = productRepo.save(productVO);
-        log.info(productVO.getId()+"");
-        if(productVO.getProductImgItems()==null||productVO.getProductImgItems().size()<=0){
+    public void productUpload(ProductVO productVO) {
+        int save = productDAO.save(productVO);
+        log.info(productVO.getId() + "");
+        if (productVO.getProductImgItems() == null || productVO.getProductImgItems().size() <= 0) {
             return;
         }
+        // 썸네일 사진(디테일 왼쪽 위 사진)
         List<ImgItemVO> productImgItems = productVO.getProductImgItems();
-        productImgItems.forEach(imgItem->{
+        productImgItems.forEach(imgItem -> {
             imgItem.setForeignId(productVO.getId());
-            productRepo.imageEnroll(imgItem);
+            productDAO.imageEnroll(imgItem);
         });
+        // 본문 사진 DB에 저장
+        List<ImgItemVO> productContentItems = productVO.getProductContentImgItems();
+        productContentItems.forEach(imgItem -> {
+            imgItem.setForeignId(productVO.getId());
+            productDAO.contentImageEnroll(imgItem);
+        });
+
         List<ProductSizeVO> productSizeList = productVO.getProductSizeList();
-        productSizeList.forEach(sizeItem->{
+        productSizeList.forEach(sizeItem -> {
             sizeItem.setProductId(productVO.getId());
-            productRepo.sizeEnroll(sizeItem);
+            productDAO.sizeEnroll(sizeItem);
         });
     }
 
-    public int productDelete(ProductVO productVO){
+    public int productDelete(ProductVO productVO) {
         log.info("productService delete진행중...");
 
-        productRepo.deleteImg(productVO);
-        productRepo.deleteSize(productVO);
-
-        return productRepo.deleteProduct(productVO);
+        productDAO.deleteImg(productVO);
+        productDAO.deleteSize(productVO);
+        productDAO.deleteContentImg(productVO);
+        return productDAO.deleteProduct(productVO);
     }
 
-    public ProductVO productDetail(ProductVO productVO){
+    public ProductVO productDetail(ProductVO productVO) {
         log.info("productDetail 실행...");
-        return productRepo.findById(productVO);
+        ProductVO result = productDAO.findById(productVO);
+        result.setProductSizeList(productDAO.findSizeByProductId(productVO));
+        result.setProductImgItems(productDAO.findImagesByProductId(productVO));
+        result.setProductContentImgItems(productDAO.findContentImgByProductId(productVO));
+        return result;
     }
-
 
 }

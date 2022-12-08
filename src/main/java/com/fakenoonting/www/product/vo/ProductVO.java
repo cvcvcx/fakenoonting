@@ -17,6 +17,8 @@ public class ProductVO {
     private Long id;
 //이미지를 저장할 productImgItems변수 생성
     private List<ImgItemVO> productImgItems;
+    //본문용 이미지 저장하는 productContentImgItems변수 생성
+    private List<ImgItemVO> productContentImgItems;
     private String productName;//상품이름
     private Long price;//상품 가격
     private String content;//상품본문

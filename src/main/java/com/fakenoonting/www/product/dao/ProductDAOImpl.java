@@ -54,6 +54,16 @@ public class ProductDAOImpl implements ProductDAO {
     public int imageEnroll(ImgItemVO img) {
         return sqlSession.insert(nameSpace+".uploadImg",img);
     }
+    @Override
+    public int contentImageEnroll(ImgItemVO img) {
+        return sqlSession.insert(nameSpace+".uploadContentImg",img);
+    }
+    @Override
+    public int deleteContentImg(ProductVO productId){
+        log.info("deleteImg 실행중...");
+        return sqlSession.delete(nameSpace+".deleteContentImg",productId);
+    }
+
 
     @Override
     public int sizeEnroll(ProductSizeVO size){return sqlSession.insert(nameSpace+".sizeEnroll",size);}
@@ -64,8 +74,19 @@ public class ProductDAOImpl implements ProductDAO {
         return sqlSession.delete(nameSpace+".deleteProductSize",productId);
     }
 
+    @Override
     public List<ImgItemVO> findImagesByProductId(ProductVO productVO){
         return sqlSession.selectList(nameSpace+".findImagesByProductId",productVO);
     }
+    @Override
+    public List<ProductSizeVO> findSizeByProductId(ProductVO productVO){
+        return sqlSession.selectList(nameSpace+".findSizeByProductId",productVO);
+    }
+    @Override
+    public List<ImgItemVO> findContentImgByProductId(ProductVO productVO){
+        return sqlSession.selectList(nameSpace+".findContentImagesByProductId",productVO);
+    }
+
+
 
 }

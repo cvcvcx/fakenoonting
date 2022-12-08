@@ -79,6 +79,20 @@
                                 <p class="card-title">냥냥펀치 기모 후드티 4color</p>
                                 <hr>
                                 <p class="card-text">36,700원</p>
+                                <div class="d-inline">
+                                    <a href="#" class="wish_icon">
+                                        <span class="material-icons-outlined">
+                                            favorite_border
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="d-inline">
+                                    <a href="#" class="cart_icon">
+                                        <span class="material-icons-outlined">
+                                            shopping_cart
+                                        </span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
