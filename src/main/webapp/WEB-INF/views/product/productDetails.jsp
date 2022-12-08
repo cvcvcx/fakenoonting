@@ -477,7 +477,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         //로그인이 되었는지 체크
         let member = "${member}";
         if(member == null||member == ''){
-            alert("로그인이 필요합니다.")
+            alert("로그인이 필요합니다.");
+
             return;
         }
         //사이즈 옵션이 만약 선택되지 않았을 때라면 필수옵션을 선택해 달라는 모달을 띄우고 리턴
@@ -498,7 +499,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         //로그인 상태 체크
         let member = "${member}";
         if(member == null||member == ''){
-            alert("로그인이 필요합니다.")
+            alert("로그인이 필요합니다.");
+            location.href = "${contextPath}/member/loginForm.do";
             return;
         }
         //필수옵션 선택 체크

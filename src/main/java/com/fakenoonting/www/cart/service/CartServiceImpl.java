@@ -7,14 +7,15 @@ import com.fakenoonting.www.product.dao.ProductDAO;
 import com.fakenoonting.www.product.service.ProductService;
 import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.util.upload.vo.ImgItemVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Slf4j
 @Service
-public class CartServiceImpl implements CartService{
+public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartItemDAO cartItemDAO;
@@ -24,22 +25,24 @@ public class CartServiceImpl implements CartService{
 
     @Autowired
     private ProductService productService;
+
     @Override
     public int addCartItem(CartItemVO cartItemVO) {
         return cartItemDAO.addCartItem(cartItemVO);
     }
 
     @Override
-    public List<CartItemVO> findCartItemsByMemberId(MemberVO memberVO){
+    public List<CartItemVO> findCartItemsByMemberId(MemberVO memberVO) {
 
-        List<CartItemVO> result=cartItemDAO.findCartItemsByMemberId(memberVO);
+        List<CartItemVO> result = cartItemDAO.findCartItemsByMemberId(memberVO);
         result.forEach(cartItemVO -> {
             ProductVO productVO = new ProductVO();
             productVO.setId(cartItemVO.getProductId());
             ProductVO productVOById = productService.productDetail(productVO);
             cartItemVO.setProductVO(productVOById);
             ImgItemVO imgItemVO = productVOById.getProductImgItems().get(0);
-            String imgPath = imgItemVO.getUploadPath()+"/s_"+imgItemVO.getImgUUID()+"_"+imgItemVO.getOrgImgName();
+            String imgPath = imgItemVO.getUploadPath() + "/s_" + imgItemVO.getImgUUID() + "_"
+                    + imgItemVO.getOrgImgName();
             cartItemVO.setProductImgPath(imgPath);
         });
 
@@ -47,8 +50,9 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public int deleteCartItem(CartItemVO cartItemVO){
-        return cartItemDAO.deleteCartItem(cartItemVO);
+    public int deleteCartItem(Long cartItemId) {
+        log.info("deleteCartItem 실행중...Service");
+        return cartItemDAO.deleteCartItem(cartItemId);
     }
 
 }

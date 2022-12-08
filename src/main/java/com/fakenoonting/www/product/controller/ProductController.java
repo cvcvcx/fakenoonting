@@ -68,8 +68,6 @@ public class ProductController {
         ProductVO productId = new ProductVO();
         productId.setId(id);
     	ProductVO product = productService.productDetail(productId);
-        
-        log.info("productDetail => " + product.getProductContentImgItems());
 
         ModelAndView mav = new ModelAndView();
 

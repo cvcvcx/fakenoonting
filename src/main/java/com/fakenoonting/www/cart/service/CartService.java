@@ -7,10 +7,9 @@ import java.util.List;
 
 public interface CartService {
 
-
     public int addCartItem(CartItemVO cartItemVO);
 
     List<CartItemVO> findCartItemsByMemberId(MemberVO memberVO);
 
-    int deleteCartItem(CartItemVO cartItemVO);
+    public int deleteCartItem(Long cartItemId);
 }

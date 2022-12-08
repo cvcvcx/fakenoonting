@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Repository
 public class CartItemDAO {
 
@@ -17,18 +16,16 @@ public class CartItemDAO {
 
     String nameSpace = "com.fakenoonting.cartItem";
 
-    public int addCartItem(CartItemVO cartItemVO){
-        return sqlSession.insert(nameSpace+".addCartItem",cartItemVO);
+    public int addCartItem(CartItemVO cartItemVO) {
+        return sqlSession.insert(nameSpace + ".addCartItem", cartItemVO);
     }
 
-    public List<CartItemVO> findCartItemsByMemberId(MemberVO memberVO){
-        return sqlSession.selectList(nameSpace+".findCartItemsByMemberId",memberVO);
+    public List<CartItemVO> findCartItemsByMemberId(MemberVO memberVO) {
+        return sqlSession.selectList(nameSpace + ".findCartItemsByMemberId", memberVO);
     }
 
-    public int deleteCartItem(CartItemVO cartItemVO){
-        return sqlSession.delete(nameSpace+".deleteCartItem",cartItemVO);
+    public int deleteCartItem(Long cartItemId) {
+        return sqlSession.delete(nameSpace + ".deleteCartItem", cartItemId);
     }
-
-
 
 }

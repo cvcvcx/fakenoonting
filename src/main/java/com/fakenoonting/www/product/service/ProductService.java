@@ -56,7 +56,7 @@ public class ProductService {
     
     // DB에 등록되어 있는 물품의 정보 추출
     public ProductVO productDetail(ProductVO productVO) {
-        log.info("productService productDetail 실행 중...");
+
         
         ProductVO result = productDAO.findById(productVO);
         result.setProductImgItems(productDAO.findImagesByProductId(productVO));
