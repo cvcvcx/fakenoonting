@@ -25,7 +25,7 @@ public class CartServiceImpl implements CartService{
     @Autowired
     private ProductService productService;
     @Override
-    public int addCart(CartItemVO cartItemVO) {
+    public int addCartItem(CartItemVO cartItemVO) {
         return cartItemDAO.addCartItem(cartItemVO);
     }
 
@@ -44,6 +44,11 @@ public class CartServiceImpl implements CartService{
         });
 
         return result;
+    }
+
+    @Override
+    public int deleteCartItem(CartItemVO cartItemVO){
+        return 0;
     }
 
 }

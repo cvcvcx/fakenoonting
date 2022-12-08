@@ -229,6 +229,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             >
                               확인
                             </button>
+
                           </div>
                         </div>
                       </div>

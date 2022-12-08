@@ -35,7 +35,7 @@ public class CartController {
     public String addCart(CartItemVO cartItemVO, HttpSession httpSession) {
         MemberVO member = (MemberVO) httpSession.getAttribute("member");
         cartItemVO.setMemberId(member.getId());
-        cartService.addCart(cartItemVO);
+        cartService.addCartItem(cartItemVO);
 
         return "redirect:/cart/list";
     }
@@ -45,6 +45,8 @@ public class CartController {
         MemberVO member = (MemberVO) httpSession.getAttribute("member");
         List<CartItemVO> cartList = cartService.findCartItemsByMemberId(member);
         log.info("cartList 불러오기 =>" + cartList);
+
+
         model.addAttribute("cartList", cartList);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/cart/cart");
