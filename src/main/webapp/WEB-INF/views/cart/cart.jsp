@@ -113,12 +113,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                               사이즈 : ${cartItem.productSize}
                             </p>
                             <p class="card-text">
+                              가격 :
                               <span id="resultPrice_${cartItem.id}"
-                                >가격 : ${cartItem.productVO.price} 원</span
-                              >
+                                >${cartItem.productVO.price} </span
+                              >원<br />(
                               <span id="resultQuantity_${cartItem.id}"
-                                >(${cartItem.productCount} 개)</span
+                                >${cartItem.productCount}</span
                               >
+                              개)
                             </p>
                           </div>
                         </div>
@@ -254,6 +256,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   >0원</span
                 >
                 <span
+                  id="calculateResultPrice"
                   class="col-4"
                   style="
                     font-size: 25px;
@@ -312,6 +315,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <!------------------- END body------------------------------------------------------------------------------------------------>
     <hr />
     <script>
+      // 이벤트 시작 ================================================================================================
       $("document").ready(function () {
         $("a[role='cancelBtn']").click(function (e) {
           let cancelCartItemId = e.target.getAttribute("value");
@@ -321,31 +325,34 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         });
         //체크박스가 체크되거나, 체크가 풀릴 때, 가격을 수정한다.
         $("input[role='cartItemCheckbox']").change(function () {
-          alert("체크박스 체크!");
+          checkedCalculatePrice();
         });
       });
 
       //동적으로 생성된 버튼(ajax이후 모달페이지가 새로 로딩되면서, 버튼이 동적으로 새로 생성된다.)
       $("button[data-function-type='plus']").on("click", function (e) {
-        alert("plus버튼 클릭!");
         fn_quantityIncrease($(this));
+        checkedCalculatePrice();
       });
       $("button[data-function-type='minus']").on("click", function (e) {
-        alert("minus버튼 클릭!");
         fn_quantityDecrease($(this));
+        checkedCalculatePrice();
       });
-      //개수 변경시에 발생하는 이벤트
+      //개수 변경시에 발생하는 이벤트 복사나, 값을 임의로 변경해도 다 일어나는 이벤트이다.
       $("input[data-input-value='quantity']").on(
         "propertychange change keyup paste input",
         function (e) {
           fn_quantityOnChange($(this));
+          checkedCalculatePrice();
         }
       );
+      // 이벤트 끝 ================================================================================================
 
       //모든 체크박스를 체크하는 함수
       function selectAll() {
         let checkboxes = $("input[role='cartItemCheckbox']");
         checkboxes.prop("checked", true);
+        checkedCalculatePrice();
       }
 
       //선택된 아이템을 삭제하는 함수
@@ -360,8 +367,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }
         fn_deleteCartItem(cartItemIdArr);
       }
-
-      function calculatePrice() {}
+      //체크된 상품 최종 가격 계산
+      function checkedCalculatePrice() {
+        let resultPrice = 0;
+        $("input[role='cartItemCheckbox']:checked").each(function () {
+          let cartItemId = $(this).val();
+          console.log($("#resultPrice_" + cartItemId).text());
+          let itemResultPrice = $("#resultPrice_" + cartItemId).text();
+          let itemResultPriceNum = Number(itemResultPrice);
+          resultPrice += itemResultPriceNum;
+        });
+        $("#calculateResultPrice").text(resultPrice);
+      }
 
       //ajax- cartItemId배열을 받아서 ajax요청으로 컨트롤러로 뿌려줌 CartController 참조
       function fn_deleteCartItem(cartItemIdArr) {
@@ -396,6 +413,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         let changedValue = quantityValue + 1;
         $("#" + quantity).attr("value", changedValue);
         $("#" + quantity).val(changedValue);
+        fn_quantityOnChange($("#" + quantity));
         return;
       }
 
@@ -406,13 +424,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         let changedValue = quantityValue - 1;
         $("#" + quantity).attr("value", changedValue);
         $("#" + quantity).val(changedValue);
+        fn_quantityOnChange($("#" + quantity));
         return;
       }
+
       //누른 버튼의 data-quantity-id 의 값을 가져오는 함수(String으로 반환됨)
       function fn_getQuantityId(e) {
         let quantity = $(e).data("quantityId");
         return quantity;
       }
+
       //버튼의 data-quantity-id를 가지고, 그 값의 아이디를 가진 인풋창의 밸류를 가져와서 반환하는 함수
       function fn_getQuantityValue(quantity) {
         let quantityValue = $("#" + quantity).val();
@@ -422,11 +443,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       //개수가 변경될 때 실행되는 함수
       function fn_quantityOnChange(e) {
         let changedValue = Number($(e).val());
+
         e.attr("value", changedValue);
+
         let resultPriceId = $(e).data("resultPriceId");
         let resultQuantityId = $(e).data("resultQuantityId");
-        console.log(resultPriceId);
-        console.log(resultQuantityId);
+        let itemPrice = $(e).data("price");
+        let itemPriceNum = Number(itemPrice);
+
+        let resultPriceValue = itemPrice * changedValue;
+        $("#" + resultPriceId).text(resultPriceValue);
+        $("#" + resultQuantityId).text(changedValue);
         return;
       }
 
