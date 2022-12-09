@@ -265,11 +265,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             장바구니에 상품이 정상적으로 담겼습니다.
                           </div>
                           <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-light"
-                              data-bs-dismiss="modal"
-                            >
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
                               쇼핑계속하기
                             </button>
                             <button type="button" class="btn btn-dark">
