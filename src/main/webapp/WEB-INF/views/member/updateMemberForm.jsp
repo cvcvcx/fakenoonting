@@ -214,7 +214,7 @@ ul {
 									class="btn ">다시쓰기</button>
 							</div>
 							<br>
-							<div class="form-group d-grid" id="loginbtn">
+							<div class="form-group d-flex justify-content-center" id="loginbtn">
 								<a href="${contextPath}/member/deleteMember.do">
 									<button type="button" class="btn btn-danger" >회원 탈퇴</button>
 								</a> 

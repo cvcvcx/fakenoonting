@@ -177,12 +177,14 @@
         }
 
         $.ajax({
-          url: contextPath + "/util/upload/uploadImage",
+          url:"/util/upload/uploadImage",
           processData: false,
           contentType: false,
           data: formData,
           type: "POST",
           dataType: "json",
+          async: false,
+      	  cache: false,
           success: function (result) {
             console.log(result);
             showThumbnailUploadImage(result);
@@ -201,8 +203,7 @@
         let thumbnailUploadResult = $("#thumbnailUploadResult");
         let str = "";
         $(uploadResultArr).each(function (i, obj) {
-          let fileCallPath =
-            obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName;
+		  let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName);
 
           str += "<li class='result_li' data-path='" + obj.uploadPath + "'";
           str +=
@@ -213,9 +214,8 @@
             "'>";
           str += "<div id='result_card'>";
           str +=
-            "<img src='" +
-            contextPath +
-            "/util/upload/display?fileName=" +
+            "<img src='" + 
+            "${contextPath}/util/upload/display?fileName=" +
             fileCallPath +
             "'>";
           str +=
@@ -239,12 +239,14 @@
         }
 
         $.ajax({
-          url: contextPath + "/util/upload/uploadImage",
+          url:  "${contextPath}/util/upload/uploadImage",
           processData: false,
           contentType: false,
           data: formData,
           type: "POST",
           dataType: "json",
+          async: false,
+      	  cache: false,
           success: function (result) {
             console.log(result);
             showContentUploadImage(result);
@@ -263,8 +265,7 @@
         let uploadResult = $("#contentUploadResult");
         let str = "";
         $(uploadResultArr).each(function (i, obj) {
-          let fileCallPath =
-            obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName;
+          let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName);
 
           str += "<li class='result_li' data-path='" + obj.uploadPath + "'";
           str +=
@@ -272,14 +273,14 @@
             obj.imgUUID +
             "' data-filename= '" +
             obj.orgImgName +
+       
             "'>";
           str += "<div id='result_card'>";
-          str +=
-            "<img src='" +
-            contextPath +
-            "/util/upload/display?fileName=" +
-            fileCallPath +
-            "'>";
+          str +=  
+              "<img src='" + 
+              "${contextPath}/util/upload/display?fileName=" +
+              fileCallPath +
+              "'>";
           str +=
             "<div class='imgDeleteBtn' data-file='" +
             fileCallPath +
@@ -316,7 +317,7 @@
         let targetDiv = $("#result_card");
 
         $.ajax({
-          url: contextPath + "/util/upload/deleteFile",
+          url:  "${contextPath}/util/upload/deleteFile",
           data: { fileName: targetFile },
           dataType: "text",
           type: "POST",
