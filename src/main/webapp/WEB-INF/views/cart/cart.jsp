@@ -93,10 +93,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             value="${cartItem.id}"
                           />
                         </div>
-                        <div class="col-3">
-                          <a href="">
+                        <div class="col-3 align-items-center">
+                          <a href="" class="align-self-center">
                             <div class="ratio ratio-1x1 align-self-center">
                               <img
+                                class="align-self-center"
                                 src="${contextPath}/util/upload/display?fileName=${cartItem.productImgPath}"
                                 alt=""
                               />
@@ -108,8 +109,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             <h5 class="card-title">
                               <a href="">${cartItem.productVO.productName}</a>
                             </h5>
+                            <p class="card-text mt-2">
+                              사이즈 : ${cartItem.productSize}
+                            </p>
                             <p class="card-text">
-                              가격 : ${cartItem.productVO.price} 원
+                              <span id="resultPrice_${cartItem.id}"
+                                >가격 : ${cartItem.productVO.price} 원</span
+                              >
+                              <span id="resultQuantity_${cartItem.id}"
+                                >(${cartItem.productCount} 개)</span
+                              >
                             </p>
                           </div>
                         </div>
@@ -128,10 +137,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 type="text"
                                 id="quantity_${cartItem.id}"
                                 class="form-control align-content-center"
-                                onchange="validateNumber(this)"
                                 size="2"
                                 maxlength="3"
                                 value="${cartItem.productCount}"
+                                data-price="${cartItem.productVO.price}"
+                                data-input-value="quantity"
+                                data-result-price-id="resultPrice_${cartItem.id}"
+                                data-result-quantity-id="resultQuantity_${cartItem.id}"
                               />
                               <br />
                               <div
@@ -141,20 +153,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 <button
                                   style="border: 0 solid black"
                                   type="button"
-                                  onclick="fn_quantityIncrease(this)"
                                   class="qty-plus qty-btn btn btn-light"
                                   data-quantity-id="quantity_${cartItem.id}"
-                                  data-field="quantity"
+                                  data-function-type="plus"
                                 >
                                   +
                                 </button>
                                 <button
                                   style="border: 0 solid black"
                                   type="button"
-                                  onclick="fn_quantityDecrease(this)"
                                   class="qty-minus qty-btn btn btn-light"
                                   data-quantity-id="quantity_${cartItem.id}"
-                                  data-field="quantity"
+                                  data-function-type="minus"
                                 >
                                   -
                                 </button>
@@ -279,7 +289,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             onclick="checkedItemDelete()"
             style="width: 120px; height: 50px"
           >
-            비우기
+            선택항목 비우기
           </button>
           <button
             type="button"
@@ -309,13 +319,36 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           cartItemIdArr.push(cancelCartItemId);
           fn_deleteCartItem(cartItemIdArr);
         });
+        //체크박스가 체크되거나, 체크가 풀릴 때, 가격을 수정한다.
+        $("input[role='cartItemCheckbox']").change(function () {
+          alert("체크박스 체크!");
+        });
       });
 
+      //동적으로 생성된 버튼(ajax이후 모달페이지가 새로 로딩되면서, 버튼이 동적으로 새로 생성된다.)
+      $("button[data-function-type='plus']").on("click", function (e) {
+        alert("plus버튼 클릭!");
+        fn_quantityIncrease($(this));
+      });
+      $("button[data-function-type='minus']").on("click", function (e) {
+        alert("minus버튼 클릭!");
+        fn_quantityDecrease($(this));
+      });
+      //개수 변경시에 발생하는 이벤트
+      $("input[data-input-value='quantity']").on(
+        "propertychange change keyup paste input",
+        function (e) {
+          fn_quantityOnChange($(this));
+        }
+      );
+
+      //모든 체크박스를 체크하는 함수
       function selectAll() {
         let checkboxes = $("input[role='cartItemCheckbox']");
         checkboxes.prop("checked", true);
       }
 
+      //선택된 아이템을 삭제하는 함수
       function checkedItemDelete() {
         let cartItemIdArr = new Array();
         $("input[role='cartItemCheckbox']:checked").each(function () {
@@ -327,6 +360,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }
         fn_deleteCartItem(cartItemIdArr);
       }
+
+      function calculatePrice() {}
+
       //ajax- cartItemId배열을 받아서 ajax요청으로 컨트롤러로 뿌려줌 CartController 참조
       function fn_deleteCartItem(cartItemIdArr) {
         $.ajax({
@@ -352,17 +388,25 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           },
         });
       }
-      //상품의 개수를 늘리는 함수
+
+      //상품의 개수를 늘리는 함수(+버튼 클릭시)
       function fn_quantityIncrease(e) {
         let quantity = fn_getQuantityId(e);
         let quantityValue = fn_getQuantityValue(quantity);
-        $("#" + quantity).attr("value", ++quantityValue);
+        let changedValue = quantityValue + 1;
+        $("#" + quantity).attr("value", changedValue);
+        $("#" + quantity).val(changedValue);
+        return;
       }
-      //상품의 개수를 줄이는 함수
+
+      //상품의 개수를 줄이는 함수(-버튼 클릭시)
       function fn_quantityDecrease(e) {
         let quantity = fn_getQuantityId(e);
         let quantityValue = fn_getQuantityValue(quantity);
-        $("#" + quantity).attr("value", --quantityValue);
+        let changedValue = quantityValue - 1;
+        $("#" + quantity).attr("value", changedValue);
+        $("#" + quantity).val(changedValue);
+        return;
       }
       //누른 버튼의 data-quantity-id 의 값을 가져오는 함수(String으로 반환됨)
       function fn_getQuantityId(e) {
@@ -375,12 +419,24 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         quantityValue = Number(quantityValue);
         return quantityValue;
       }
+      //개수가 변경될 때 실행되는 함수
+      function fn_quantityOnChange(e) {
+        let changedValue = Number($(e).val());
+        e.attr("value", changedValue);
+        let resultPriceId = $(e).data("resultPriceId");
+        let resultQuantityId = $(e).data("resultQuantityId");
+        console.log(resultPriceId);
+        console.log(resultQuantityId);
+        return;
+      }
+
       //인풋의 값이 변화할 때(입력되거나, 증가버튼 또는 감소버튼을 통해 바뀔때) 그 값이 음수가 되지는 않는지 검증하는 함수
       function validateNumber(e) {
         let numberValue = $(e).val();
         if (numberValue <= 0) {
           $(e).val(1);
         }
+        return;
       }
     </script>
   </body>
