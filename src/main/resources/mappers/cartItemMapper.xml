@@ -18,7 +18,19 @@
             insert into cart_item(member_id,product_id,item_count,item_size)
             values(#{memberId},#{productId},#{productCount},#{productSize})
         ]]>
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
+
+    <select id="findCartItemById" parameterType="com.fakenoonting.www.cart.vo.CartItemVO" resultMap="cartItem">
+        <![CDATA[
+            select *
+            from cart_item
+            where id = #{id}
+        ]]>
+    </select>
+
     <select id="findCartItemsByMemberId" parameterType="com.fakenoonting.www.member.vo.MemberVO" resultMap="cartItem">
         <![CDATA[
             select *
@@ -26,6 +38,7 @@
             where member_id = #{id}
         ]]>
     </select>
+
     <update id="updateCartItem" parameterType="com.fakenoonting.www.cart.vo.CartItemVO">
         <![CDATA[
             update cart_item

@@ -9,6 +9,8 @@ public interface CartService {
 
     public int addCartItem(CartItemVO cartItemVO);
 
+    CartItemVO findCartItemByCartId(CartItemVO cartItemVO);
+
     List<CartItemVO> findCartItemsByMemberId(MemberVO memberVO);
 
     //사용자는 카트에 올라간 상품의 개수를 조정할 수 있다.

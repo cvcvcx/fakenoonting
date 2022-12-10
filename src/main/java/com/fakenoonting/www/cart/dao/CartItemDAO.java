@@ -20,6 +20,10 @@ public class CartItemDAO {
         return sqlSession.insert(nameSpace + ".addCartItem", cartItemVO);
     }
 
+    public CartItemVO findCartItemById(CartItemVO cartItemId){
+        return sqlSession.selectOne(nameSpace+".findCartItemById",cartItemId);
+    }
+
     public List<CartItemVO> findCartItemsByMemberId(MemberVO memberVO) {
         return sqlSession.selectList(nameSpace + ".findCartItemsByMemberId", memberVO);
     }

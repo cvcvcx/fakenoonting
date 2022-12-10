@@ -373,149 +373,128 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     >
                       <div class="accordion-body">
                         <div>
-                          <div class="row align-items-center">
-                            <div class="col-12">
-                              <table
-                                class="table cart-products margin-60px-bottom md-margin-40px-bottom sm-no-margin-bottom"
-                              >
-                                <colgroup>
-                                  <col style="width: 5%" />
-                                  <col style="width: 15%" />
-                                  <col style="width: 15%" />
-                                  <col style="width: 15%" />
-                                  <col style="width: 15%" />
-                                  <col style="width: 15%" />
-                                  <col style="width: 15%" />
-                                </colgroup>
-                                <thead
-                                  class=""
-                                  style="
-                                    text-align: center;
-                                    vertical-align: middle;
-                                  "
-                                >
-                                  <tr>
-                                    <th scope="col" class="alt-font">
-                                      <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        value="selectall"
-                                        name="selectall"
-                                        onclick="selectAll(this)"
-                                        aria-label="..."
+                          <c:forEach items="${orderItemList}" var="cartItem">
+                            <div class="card mb-3">
+                              <div class="row g-0 justify-content-around">
+                                <div class="col-1 align-self-center">
+                                  <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    role="cartItemCheckbox"
+                                    value="${cartItem.id}"
+                                  />
+                                </div>
+                                <div class="col-3 align-items-center">
+                                  <a href="" class="align-self-center">
+                                    <div
+                                      class="ratio ratio-1x1 align-self-center"
+                                    >
+                                      <img
+                                        class="align-self-center"
+                                        src="${contextPath}/util/upload/display?fileName=${cartItem.productImgPath}"
+                                        alt=""
                                       />
-                                    </th>
-                                    <th scope="col"></th>
-                                    <th scope="col" class="alt-font">
-                                      products
-                                    </th>
-                                    <th scope="col" class="alt-font">price</th>
-                                    <th scope="col" class="alt-font">
-                                      quantity
-                                    </th>
-                                    <th scope="col" class="alt-font">total</th>
-                                    <th scope="col" class="alt-font">choice</th>
-                                  </tr>
-                                </thead>
-
-                                <tbody
-                                  style="
-                                    text-align: center;
-                                    vertical-align: middle;
-                                  "
-                                >
-                                  <tr>
-                                    <td scope="col" class="text-align:center">
-                                      <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        id="list"
-                                        name="list"
-                                        value=""
-                                        onclick="checkSelectAll()"
-                                        aria-label="..."
-                                      />
-                                    </td>
-                                    <td scope="col">
-                                      <a href="#"
-                                        ><img
-                                          src=""
-                                          alt=""
-                                          width="150"
-                                          height="100"
-                                      /></a>
-                                    </td>
-                                    <td scope="col">
-                                      <a href="">상품명</a> <br />
-                                      상세설명
-                                    </td>
-                                    <td scope="col" class="basketprice">
-                                      <input
-                                        type="hidden"
-                                        name="p_price"
-                                        id="p_price1"
-                                        class="p_price"
-                                        value=""
-                                      />
-                                    </td>
-
-                                    <td scope="col">
-                                      <div
-                                        class="d-flex justify-content-center align-items-center"
+                                    </div>
+                                  </a>
+                                </div>
+                                <div class="col-4 align-self-center">
+                                  <div class="card-body">
+                                    <h5 class="card-title">
+                                      <a href=""
+                                        >${cartItem.productVO.productName}</a
                                       >
-                                        <div
-                                          class="row d-flex justify-content-center"
-                                          id="quantity-checkbox"
-                                        >
-                                          <input
-                                            type="number"
-                                            id="p_num1"
-                                            name="p_num1"
-                                            value="1"
-                                            min="1"
-                                            max="100"
-                                            style="
-                                              border: 5 solid black;
-                                              width: 80%;
-                                              height: 50px;
-                                              border-radius: 15%;
-                                            "
-                                            class="col-6 input-text-qty-text productCost"
-                                          />
-                                        </div>
-                                      </div>
-                                    </td>
-
-                                    <td scope="col">
-                                      <label class="" for=""></label>
-                                    </td>
-
-                                    <td scope="col">
+                                    </h5>
+                                    <p class="card-text mt-2">
+                                      사이즈 :
+                                      <span id="size_${cartItem.id}"
+                                        >${cartItem.productSize}</span
+                                      >
+                                    </p>
+                                    <p class="card-text">
+                                      가격 :
+                                      <span id="resultPrice_${cartItem.id}"
+                                        >${cartItem.productVO.price} </span
+                                      >원<br />(
+                                      <span id="resultQuantity_${cartItem.id}"
+                                        >${cartItem.productCount}</span
+                                      >
+                                      개)
+                                    </p>
+                                  </div>
+                                </div>
+                                <div class="col-1 align-self-center">
+                                  <div class="card-body">
+                                    <div
+                                      class="d-flex input-group justify-content-center"
+                                    >
+                                      <input
+                                        style="
+                                          border: 0 solid black;
+                                          width: 100%;
+                                          min-width: max-content;
+                                          text-align: center;
+                                        "
+                                        type="text"
+                                        id="quantity_${cartItem.id}"
+                                        class="form-control align-content-center"
+                                        size="2"
+                                        maxlength="3"
+                                        value="${cartItem.productCount}"
+                                        data-price="${cartItem.productVO.price}"
+                                        data-input-value="quantity"
+                                        data-result-price-id="resultPrice_${cartItem.id}"
+                                        data-result-quantity-id="resultQuantity_${cartItem.id}"
+                                      />
+                                      <br />
                                       <div
+                                        id="quantity-check"
                                         class="btn-group-vertical"
-                                        role="group"
-                                        aria-label="Vertical button group"
                                       >
-                                        <a
+                                        <button
+                                          style="border: 0 solid black"
                                           type="button"
-                                          class="btn btn-light"
-                                          href="#"
-                                          >order</a
+                                          class="qty-plus qty-btn btn btn-light"
+                                          data-quantity-id="quantity_${cartItem.id}"
+                                          data-function-type="plus"
                                         >
-                                        <a
+                                          +
+                                        </button>
+                                        <button
+                                          style="border: 0 solid black"
                                           type="button"
-                                          class="btn btn-light doCancel"
-                                          href="javascript:void(0)"
-                                          onclick=""
-                                          >cancel</a
+                                          class="qty-minus qty-btn btn btn-light"
+                                          data-quantity-id="quantity_${cartItem.id}"
+                                          data-function-type="minus"
                                         >
+                                          -
+                                        </button>
                                       </div>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-2 align-self-center">
+                                  <div
+                                    class="btn-group-vertical"
+                                    role="group"
+                                    aria-label="Vertical button group"
+                                  >
+                                    <a type="button" class="btn btn-light"
+                                      >order</a
+                                    >
+
+                                    <a
+                                      type="button"
+                                      role="cancelBtn"
+                                      value="${cartItem.id}"
+                                      class="btn btn-light"
+                                      >cancel</a
+                                    >
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                          </div>
+                          </c:forEach>
                         </div>
                       </div>
                     </div>
