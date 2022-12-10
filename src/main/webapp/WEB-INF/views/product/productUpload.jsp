@@ -156,16 +156,6 @@
 
     <jsp:include page="../common/footer.jsp" flush="false" />
     <script>
-      let contextPath = getContextPath();
-
-      function getContextPath() {
-        var hostIndex =
-          location.href.indexOf(location.host) + location.host.length;
-        return location.href.substring(
-          hostIndex,
-          location.href.indexOf("/", hostIndex + 1)
-        );
-      }
 
       $("input[id='thumbnailInput']").on("change", function (e) {
         let formData = new FormData();
@@ -177,7 +167,7 @@
         }
 
         $.ajax({
-          url: contextPath + "/util/upload/uploadImage",
+          url: "${contextPath}/util/upload/uploadImage",
           processData: false,
           contentType: false,
           data: formData,
@@ -201,9 +191,8 @@
         let thumbnailUploadResult = $("#thumbnailUploadResult");
         let str = "";
         $(uploadResultArr).each(function (i, obj) {
-          let fileCallPath =
-            obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName;
-
+          let fileCallPath =encodeURIComponent(obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName);
+            console.log(fileCallPath);
           str += "<li class='result_li' data-path='" + obj.uploadPath + "'";
           str +=
             " data-uuid='" +
@@ -213,9 +202,8 @@
             "'>";
           str += "<div id='result_card'>";
           str +=
-            "<img src='" +
-            contextPath +
-            "/util/upload/display?fileName=" +
+            "<img src='"+
+            "${contextPath}/util/upload/display?fileName=" +
             fileCallPath +
             "'>";
           str +=
@@ -239,12 +227,14 @@
         }
 
         $.ajax({
-          url: contextPath + "/util/upload/uploadImage",
+          url: "${contextPath}/util/upload/uploadImage",
           processData: false,
           contentType: false,
           data: formData,
           type: "POST",
           dataType: "json",
+          async: false,
+          cache: false,
           success: function (result) {
             console.log(result);
             showContentUploadImage(result);
@@ -263,8 +253,7 @@
         let uploadResult = $("#contentUploadResult");
         let str = "";
         $(uploadResultArr).each(function (i, obj) {
-          let fileCallPath =
-            obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName;
+          let fileCallPath =encodeURIComponent(obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName);
 
           str += "<li class='result_li' data-path='" + obj.uploadPath + "'";
           str +=
@@ -276,8 +265,7 @@
           str += "<div id='result_card'>";
           str +=
             "<img src='" +
-            contextPath +
-            "/util/upload/display?fileName=" +
+            " ${contextPath}/util/upload/display?fileName=" +
             fileCallPath +
             "'>";
           str +=
@@ -316,10 +304,12 @@
         let targetDiv = $("#result_card");
 
         $.ajax({
-          url: contextPath + "/util/upload/deleteFile",
+          url:  "${contextPath}/util/upload/deleteFile",
           data: { fileName: targetFile },
           dataType: "text",
           type: "POST",
+          async: false,
+          cache: false,
           success: function (result) {
             console.log(result);
             targetDiv.unwrap();
@@ -368,6 +358,7 @@
 
       let formObj = $("form[role='form']");
       $("button[type='submit']").on("click", function (e) {
+
         e.preventDefault();
         console.log("submit clicked");
 

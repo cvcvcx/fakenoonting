@@ -449,8 +449,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <script>
 
+      $(function(){
         //총 상품금액을 구하는 함수
-      $("#productCount").on("change",function (e){
+        $("#productCount").on("change",function (e){
         let productCount = $("#productCount").val();
         productCount =  Number(productCount);
         let productPrice = "${product.price}";
@@ -488,6 +489,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         
         //.submit(); -- 주문페이지가 만들어지지 않았기 때문에 submit을 시키지 않음 
       });
+
       $("button[role='cartButton']").on("click", function (e) {
         console.log("cartButton clicked!");
         e.preventDefault();
@@ -524,6 +526,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         	}
         })
                
+      });
+        
       });
       //주문 정보가 담긴 폼을 만드는 함수
       function fn_makeNewForm(productSize){

@@ -12,29 +12,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>장바구니</title>
     <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!--  <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>-->
-
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://getbootstrap.com/docs/5.2/assets/css/docs.css"
-      rel="stylesheet"
-    />
-    <link
-      href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
-      rel="stylesheet"
-    />
-
-    <!-- 부가적인 테마 -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"
-    />
 
     <style>
       ul {
@@ -110,7 +87,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                               <a href="">${cartItem.productVO.productName}</a>
                             </h5>
                             <p class="card-text mt-2">
-                              사이즈 : ${cartItem.productSize}
+                              사이즈 :
+                              <span id="size_${cartItem.id}"
+                                >${cartItem.productSize}</span
+                              >
                             </p>
                             <p class="card-text">
                               가격 :
@@ -220,7 +200,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     text-align: center;
                     vertical-align: middle;
                   "
-                  >calculation</span
+                  >선택된 상품 개수</span
                 >
                 <span
                   class="col-4"
@@ -229,7 +209,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     text-align: center;
                     vertical-align: middle;
                   "
-                  >total</span
+                  >총 가격</span
                 >
               </div>
               <br />
@@ -247,13 +227,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   </svg>
                 </span>
                 <span
+                  id="calculateItemCount"
                   class="col-7"
                   style="
                     font-size: 25px;
                     text-align: center;
                     vertical-align: middle;
                   "
-                  >0원</span
+                  >0개</span
                 >
                 <span
                   id="calculateResultPrice"
@@ -273,14 +254,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <div class="d-flex justify-content-center" style="margin-top: 5%">
           <button
             type="button"
-            class="btn btn-outline-light btn-dark btn-sm"
+            class="btn btn-outline-light btn-dark btn-sm ml-2"
             style="width: 120px; height: 50px"
           >
             홈으로
           </button>
           <button
             type="button"
-            class="btn btn-outline-light btn-dark btn-sm"
+            class="btn btn-outline-light btn-dark btn-sm ml-2"
             onclick="selectAll(this)"
             style="width: 120px; height: 50px"
           >
@@ -288,22 +269,21 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           </button>
           <button
             type="button"
-            class="btn btn-outline-light btn-dark btn-sm"
+            class="btn btn-outline-light btn-danger ml-2"
             onclick="checkedItemDelete()"
-            style="width: 120px; height: 50px"
           >
             선택항목 비우기
           </button>
           <button
             type="button"
-            class="btn btn-warning btn-sm"
+            class="btn btn-warning btn-outline-light btn-sm btn-sm ml-2"
             style="width: 120px; height: 50px"
           >
             선택구매
           </button>
           <button
             type="button"
-            class="btn btn-warning btn-sm"
+            class="btn btn-warning btn-outline-light btn-sm ml-2"
             style="width: 120px; height: 50px"
           >
             전체구매
@@ -317,23 +297,28 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <script>
       // 이벤트 시작 ================================================================================================
       $("document").ready(function () {
+        //cancel 취소 버튼이 눌렸을 때
         $("a[role='cancelBtn']").click(function (e) {
           let cancelCartItemId = e.target.getAttribute("value");
           let cartItemIdArr = new Array();
           cartItemIdArr.push(cancelCartItemId);
           fn_deleteCartItem(cartItemIdArr);
         });
-        //체크박스가 체크되거나, 체크가 풀릴 때, 가격을 수정한다.
+        //체크박스가 체크되거나, 체크가 풀릴 때, 계산된 가격을 수정한다.
         $("input[role='cartItemCheckbox']").change(function () {
           checkedCalculatePrice();
+          fn_checkedItemCount();
         });
       });
 
-      //동적으로 생성된 버튼(ajax이후 모달페이지가 새로 로딩되면서, 버튼이 동적으로 새로 생성된다.)
+      //플러스버튼 클릭
+      //계산된 가격을 수정해야한다.
+
       $("button[data-function-type='plus']").on("click", function (e) {
         fn_quantityIncrease($(this));
         checkedCalculatePrice();
       });
+      //마이너스 버튼 클릭
       $("button[data-function-type='minus']").on("click", function (e) {
         fn_quantityDecrease($(this));
         checkedCalculatePrice();
@@ -346,6 +331,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           checkedCalculatePrice();
         }
       );
+
       // 이벤트 끝 ================================================================================================
 
       //모든 체크박스를 체크하는 함수
@@ -377,7 +363,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           let itemResultPriceNum = Number(itemResultPrice);
           resultPrice += itemResultPriceNum;
         });
-        $("#calculateResultPrice").text(resultPrice);
+        $("#calculateResultPrice").text(resultPrice + "원");
+      }
+
+      function fn_checkedItemCount() {
+        let count = 0;
+        $("input[role='cartItemCheckbox']:checked").each(function () {
+          count++;
+        });
+        $("#calculateItemCount").text(count + "개");
       }
 
       //ajax- cartItemId배열을 받아서 ajax요청으로 컨트롤러로 뿌려줌 CartController 참조
@@ -464,6 +458,29 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           $(e).val(1);
         }
         return;
+      }
+
+      function fn_buySelectedItem() {
+        let dataArray = new Array();
+        $("input[role='cartItemCheckbox']:checked").each(function () {
+          //보낼 리스트를 저장할 맵 생성
+          let cartItemListMap = new Map();
+
+          //카트아이템을 인풋에 저장된 밸류를 통해서 가져옴
+          let cartItemId = $(this).val();
+          //가져온 카트 아이템 아이디로 개수와 사이즈를 가져옴
+          let itemSize = $("#size_" + cartItemId).text();
+
+          let itemCount = $("#quantity_" + cartItemId).text();
+          let itemCountNum = Number(itemResultPrice);
+
+          cartItemListMap.set("id", cartItemId);
+          cartItemListMap.set("productSize", itemSize);
+          cartItemListMap.set("productCount", itemCount);
+
+          dataArray.push(Object.fromEntries(cartItemListMap));
+        });
+        $.ajax({});
       }
     </script>
   </body>

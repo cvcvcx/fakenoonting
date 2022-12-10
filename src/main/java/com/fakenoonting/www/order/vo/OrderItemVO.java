@@ -17,10 +17,4 @@ public class OrderItemVO {
     private Long productId;//(name = "product_id,fk)
 
     private Integer orderItemCount;
-
-    public OrderItemVO(Long orderId, Long productId, Integer orderItemCount) {
-        this.orderId = orderId;
-        this.productId = productId;
-        this.orderItemCount = orderItemCount;
-    }
 }

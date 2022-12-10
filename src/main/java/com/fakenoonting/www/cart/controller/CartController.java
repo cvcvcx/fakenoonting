@@ -49,6 +49,7 @@ public class CartController implements CartControllerInterface {
         return "redirect:/cart/list";
     }
 
+
     @GetMapping("/list")
     public ModelAndView cartList(Model model, HttpSession httpSession) {
         MemberVO member = (MemberVO) httpSession.getAttribute("member");
