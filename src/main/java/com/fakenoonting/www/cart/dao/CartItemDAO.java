@@ -24,6 +24,10 @@ public class CartItemDAO {
         return sqlSession.selectList(nameSpace + ".findCartItemsByMemberId", memberVO);
     }
 
+    public int updateCartItem(CartItemVO cartItemVO){
+        return sqlSession.update(nameSpace+".updateCartItem",cartItemVO);
+    }
+
     public int deleteCartItem(Long cartItemId) {
         return sqlSession.delete(nameSpace + ".deleteCartItem", cartItemId);
     }

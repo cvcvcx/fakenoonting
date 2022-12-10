@@ -11,5 +11,10 @@ public interface CartService {
 
     List<CartItemVO> findCartItemsByMemberId(MemberVO memberVO);
 
+    //사용자는 카트에 올라간 상품의 개수를 조정할 수 있다.
+    //상품이 결제화면을 올라갔을 때, 상품의 개수를 장바구니에 저장한다.
+    public void updateCartItem(List<CartItemVO> cartItems);
+
     public int deleteCartItem(Long cartItemId);
+
 }

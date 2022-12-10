@@ -26,6 +26,13 @@
             where member_id = #{id}
         ]]>
     </select>
+    <update id="updateCartItem" parameterType="com.fakenoonting.www.cart.vo.CartItemVO">
+        <![CDATA[
+            update cart_item
+            set item_count = #{productCount}
+            where id = #{id}
+        ]]>
+    </update>
     <delete id="deleteCartItem" parameterType="long">
         <![CDATA[
             delete

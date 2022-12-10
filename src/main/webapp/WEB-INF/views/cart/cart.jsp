@@ -278,6 +278,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             type="button"
             class="btn btn-warning btn-outline-light btn-sm btn-sm ml-2"
             style="width: 120px; height: 50px"
+            onclick="fn_buySelectedItem()"
           >
             선택구매
           </button>
@@ -313,7 +314,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       //플러스버튼 클릭
       //계산된 가격을 수정해야한다.
-
       $("button[data-function-type='plus']").on("click", function (e) {
         fn_quantityIncrease($(this));
         checkedCalculatePrice();
@@ -459,28 +459,57 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }
         return;
       }
+      //상품 단일로 버튼으로 구매할 경우
 
+      //OrderForm으로 보내야 하기때문에, orderController에서 처리함
+      //선택된 상품을 리스트로 만들어서 orderController의 postOrder에서 처리하게 됨
       function fn_buySelectedItem() {
-        let dataArray = new Array();
-        $("input[role='cartItemCheckbox']:checked").each(function () {
-          //보낼 리스트를 저장할 맵 생성
-          let cartItemListMap = new Map();
+        //post요청을 보낼 form 생성
+        let newForm = document.createElement("form");
+        newForm.setAttribute("method", "Post");
+        newForm.setAttribute("action", "${contextPath}/order/newOrder");
+        newForm.setAttribute("enctype", "application/x-www-form-urlencoded");
 
+        $("input[role='cartItemCheckbox']:checked").each(function (index) {
+          let hiddenInputId = document.createElement("input");
+          let hiddenInputSize = document.createElement("input");
+          let hiddenInputCount = document.createElement("input");
           //카트아이템을 인풋에 저장된 밸류를 통해서 가져옴
           let cartItemId = $(this).val();
           //가져온 카트 아이템 아이디로 개수와 사이즈를 가져옴
           let itemSize = $("#size_" + cartItemId).text();
+          let itemCount = $("#resultQuantity_" + cartItemId).text();
+          let itemCountNum = Number(itemCount);
+          //cartId를 cartItemVOList의 변수로 넘겨줌
+          hiddenInputId.setAttribute("type", "hidden");
+          hiddenInputId.setAttribute(
+            "name",
+            "cartItemVOList[" + index + "].id"
+          );
+          hiddenInputId.setAttribute("value", cartItemId);
 
-          let itemCount = $("#quantity_" + cartItemId).text();
-          let itemCountNum = Number(itemResultPrice);
+          newForm.append(hiddenInputId);
 
-          cartItemListMap.set("id", cartItemId);
-          cartItemListMap.set("productSize", itemSize);
-          cartItemListMap.set("productCount", itemCount);
+          hiddenInputSize.setAttribute("type", "hidden");
+          hiddenInputSize.setAttribute(
+            "name",
+            "cartItemVOList[" + index + "].productSize"
+          );
+          hiddenInputSize.setAttribute("value", itemSize);
 
-          dataArray.push(Object.fromEntries(cartItemListMap));
+          newForm.append(hiddenInputSize);
+
+          hiddenInputCount.setAttribute("type", "hidden");
+          hiddenInputCount.setAttribute(
+            "name",
+            "cartItemVOList[" + index + "].productCount"
+          );
+          hiddenInputCount.setAttribute("value", itemCount);
+
+          newForm.append(hiddenInputCount);
         });
-        $.ajax({});
+        document.body.append(newForm);
+        newForm.submit();
       }
     </script>
   </body>

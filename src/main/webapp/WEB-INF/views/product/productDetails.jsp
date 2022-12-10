@@ -486,7 +486,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }   
         //주문 정보가 들어간 폼을 만드는 함수
         let newForm = fn_makeNewForm(productSize);
-        
+        newForm.attr("action", "${contextPath}/order/newOrder")
+        $("body").append(newForm);
+        newForm.submit();
         //.submit(); -- 주문페이지가 만들어지지 않았기 때문에 submit을 시키지 않음 
       });
 
