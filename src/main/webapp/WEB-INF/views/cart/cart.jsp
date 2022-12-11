@@ -48,8 +48,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <!------ body----------------------------------------->
 
     <div id="modalChangeDiv">
-      <br />
-      <br />
       <!---------------------------------------------------------------------------------------->
       <div class="container">
         <div class="contents d-flex flex-column mb-2">
@@ -60,7 +58,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               <div>
                 <div class="row align-items-center">
                   <c:forEach items="${cartList}" var="cartItem">
-                    <div class="card mb-3">
+                    <div class="card mb-3" id="card_${cartItem.id}">
                       <div class="row g-0 justify-content-around">
                         <div class="col-1 align-self-center">
                           <input
@@ -303,7 +301,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           let cancelCartItemId = e.target.getAttribute("value");
           let cartItemIdArr = new Array();
           cartItemIdArr.push(cancelCartItemId);
-          fn_deleteCartItem(cartItemIdArr);
+          fn_deleteCartItem(cartItemIdArr, cancelCartItemId);
         });
         //체크박스가 체크되거나, 체크가 풀릴 때, 계산된 가격을 수정한다.
         $("input[role='cartItemCheckbox']").change(function () {
@@ -375,7 +373,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       }
 
       //ajax- cartItemId배열을 받아서 ajax요청으로 컨트롤러로 뿌려줌 CartController 참조
-      function fn_deleteCartItem(cartItemIdArr) {
+      function fn_deleteCartItem(cartItemIdArr, cancelCartItemId) {
         $.ajax({
           url: "${contextPath}/cart/delete",
           type: "post",
@@ -383,7 +381,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           contentType: "application/json; charset:UTF-8",
           data: JSON.stringify(cartItemIdArr),
           success: function (result) {
-            $("#modalChangeDiv").html(result);
+            alert("상품삭제 성공");
+            //상품을 삭제할때 일어나는 애니메이션
+            $("#card_" + cancelCartItemId).slideUp(400, function () {
+              $("#card_" + cancelCartItemId).remove();
+            });
           },
           error: function (request, status, error) {
             alert(
