@@ -43,7 +43,7 @@
     </update>
 
     <!-- 리뷰 삭제하기 -->
-    <delete id="delete" parameterType="int">
+    <delete id="delete" parameterType="Long">
         <![CDATA[
             DELETE FROM review
             WHERE id = #{reviewId}
@@ -51,7 +51,7 @@
     </delete>
 
     <!-- 리뷰 1개 찾기(고유번호 사용) -->
-    <select id="findById" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+    <select id="findById" parameterType="Long" resultType="com.fakenoonting.www.reviews.domain.Review">
         <![CDATA[
             SELECT *
             FROM review
@@ -95,7 +95,7 @@
     <!-- 특정 상품의 모든 리뷰 찾기 -->
     <select id="findAllByProductId" parameterType="HashMap" resultType="com.fakenoonting.www.reviews.domain.Review" resultMap="reviewResult">
         <![CDATA[
-            SELECT id, content, create_date, grade
+            SELECT *
             FROM review
             WHERE product_id = #{productId}
             ORDER BY create_date DESC
@@ -115,7 +115,7 @@
     </select>
 
     <!-- 특정 상품의 리뷰 평균 평점 구하기 -->
-    <select id="getAvgGrade" parameterType="int" resultType="double">
+    <select id="getAvgGrade" parameterType="Long" resultType="double">
         <![CDATA[
             SELECT ifnull(AVG(grade), 0)
             FROM review
@@ -123,8 +123,18 @@
         ]]>
     </select>
 
+    <!-- 특정 상품의 평점별 리뷰 개수 리스트 -->
+    <select id="getReviewCountListByGrade" parameterType="HashMap" resultType="int">
+        <![CDATA[
+            SELECT COUNT(*)
+            FROM review
+            WHERE product_id = #{productId}
+            AND grade = #{grade}
+        ]]>
+    </select>
+
     <!-- 특정 상품의 모든 리뷰 개수 -->
-    <select id="productReviewCount" parameterType="int" resultType="int">
+    <select id="productReviewCount" parameterType="Long" resultType="int">
         <![CDATA[
             SELECT COUNT(*)
             FROM review

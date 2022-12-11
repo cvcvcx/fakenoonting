@@ -50,46 +50,12 @@ public class ProductController {
     }
 
     @RequestMapping("/detail")
-    public ModelAndView productDetail(long id,Model model
-            , @RequestParam(defaultValue = "1") int page
-            , @RequestParam(defaultValue = "1") int range
-//            , @RequestParam(defaultValue = "1") Integer sort
-    ) throws Exception {
+    public ModelAndView productDetail(long id,Model model){
         ModelAndView mav = new ModelAndView();
-
         ProductVO productId = new ProductVO();
         productId.setId(id);
         ProductVO product = productService.productDetail(productId);
         log.info("productDetail => "+product.getProductContentImgItems());
-
-        model.addAttribute("productReviewCount", reviewService.productReviewCount(productId.getId().intValue()));
-        model.addAttribute("avgGrade", reviewService.getAvgGrade(productId.getId().intValue()));
-
-        Pagination pagination = new Pagination();
-        pagination.pageInfo(page, range, reviewService.productReviewCount(productId.getId().intValue()));
-        model.addAttribute("pagination", pagination);
-
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("productId", productId.getId().intValue());
-        result.put("startList", pagination.getStartList());
-        result.put("listSize", pagination.getListSize());
-
-        model.addAttribute("boardList", reviewService.findAllByProductId(result));
-
-//        log.info("sortNum : " + sort);
-//        model.addAttribute("sort", sort);
-//        if (sort == 1) {
-//            log.info("날짜순정렬1");
-//            model.addAttribute("boardList", reviewService.findAllByProductId(result));
-//        } else if (sort == 2) {
-//            log.info("평점순정렬");
-//            model.addAttribute("boardList", reviewService.findAllByGrade(result));
-//        } else {
-//            log.info("날짜순정렬else");
-//            model.addAttribute("boardList", reviewService.findAllByProductId(result));
-//        }
-
-
         model.addAttribute("product",product);
         mav.setViewName("/product/productDetails");
         return mav;

@@ -77,13 +77,19 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     // 특정 상품의 리뷰 평균 평점 구하기
     @Override
-    public double getAvgGrade(int productId) throws Exception {
+    public double getAvgGrade(Long productId) throws Exception {
         return sqlSession.selectOne(namespace + ".getAvgGrade", productId);
+    }
+
+    // 특정 상품의 평점별 리뷰 개수 리스트
+    @Override
+    public int getReviewCountListByGrade(Map<String, Object> map) throws Exception {
+        return sqlSession.selectOne(namespace + ".getReviewCountListByGrade", map);
     }
 
     // 특정 상품의 모든 리뷰 개수
     @Override
-    public int productReviewCount(int productId) throws Exception {
+    public int productReviewCount(Long productId) throws Exception {
         return sqlSession.selectOne(namespace + ".productReviewCount", productId);
     }
 

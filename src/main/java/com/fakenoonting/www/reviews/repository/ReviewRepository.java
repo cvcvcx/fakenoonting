@@ -36,10 +36,13 @@ public interface ReviewRepository {
     public List<Review> findAllByGrade(Map<String, Object> map) throws Exception;
 
     // 특정 상품의 리뷰 평균 평점 구하기
-    public double getAvgGrade(int productId) throws Exception;
+    public double getAvgGrade(Long productId) throws Exception;
+
+    // 특정 상품의 평점별 리뷰 개수트 리스트
+    public int getReviewCountListByGrade(Map<String, Object> map) throws Exception;
 
     // 모든 상품의 모든 리뷰 개수
-    public int productReviewCount(int productId) throws Exception;
+    public int productReviewCount(Long productId) throws Exception;
 
     // 특정 유저의 모든 리뷰 찾기
     public List<Review> findAllByMemberId(int memberId) throws Exception;

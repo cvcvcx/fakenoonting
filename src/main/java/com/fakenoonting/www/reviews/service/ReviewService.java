@@ -71,12 +71,17 @@ public class ReviewService {
     }
 
     // 특정 상품의 리뷰 평균 평점 구하기
-    public double getAvgGrade(int productId) throws Exception {
+    public double getAvgGrade(Long productId) throws Exception {
         return reviewRepository.getAvgGrade(productId);
     }
 
+    //특정 상품의 평점별 리뷰 개수트 리스트
+    public int getReviewCountListByGrade(Map<String, Object> map) throws Exception {
+        return reviewRepository.getReviewCountListByGrade(map);
+    }
+
     // 모든 상품의 모든 리뷰 개수
-    public int productReviewCount(int productId) throws Exception {
+    public int productReviewCount(Long productId) throws Exception {
         return reviewRepository.productReviewCount(productId);
     }
 
