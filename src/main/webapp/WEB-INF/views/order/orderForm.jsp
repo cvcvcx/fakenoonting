@@ -169,514 +169,508 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               </div>
             </div>
             <div class="form-group" id="login-margin">
-              <div class="input-group" style="margin-bottom: 0%">
-                <input type="checkbox" /><label
-                  for=""
-                  style="margin: 10px; color: #ededed"
+              <div
+                class="form-check form-check-inline"
+                style="margin-bottom: 0%"
+              >
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="addressInfo"
+                  id="memberAddress"
+                  checked
+                />
+                <label
+                  for="memberAddress"
+                  class="form-check-label"
+                  style="color: #ededed"
                   >회원정보와 동일</label
                 >
-                <input type="checkbox" /><label
-                  for=""
-                  style="margin: 10px; color: #ededed"
+              </div>
+              <div
+                class="form-check form-check-inline"
+                style="margin-bottom: 0%"
+              >
+                <input
+                  type="radio"
+                  name="addressInfo"
+                  id="newAddress"
+                  class="form-check-input"
+                /><label
+                  for="newAddress"
+                  class="form-check-label"
+                  style="color: #ededed"
                   >새로운 배송정보</label
                 >
               </div>
+            </div>
+
+            <div class="input-group col-mb-3" name="name">
+              <input
+                type="tel"
+                class="form-control"
+                id="name"
+                name="name"
+                aria-label=""
+                placeholder="받는 사람 이름"
+              />
+
+              <select
+                class="form-select"
+                id="gender"
+                name="gender"
+                aria-label="Default select example"
+              >
+                <option selected>성별</option>
+                <option value="">남성</option>
+                <option value="">여성</option>
+              </select>
+            </div>
+
+            <div class="col-m-3">
+              <input
+                type="text"
+                class="form-control"
+                width="50px"
+                height="30"
+                id="nick"
+                name="nick"
+                maxlength=""
+                placeholder="닉네임"
+              />
+            </div>
+
+            <div class="input-group col-mb-3" name="phone">
+              <select
+                class="form-select"
+                id="phone1"
+                aria-label="Default select example"
+              >
+                <option selected>010</option>
+
+                <option value="2">011</option>
+                <option value="3">017</option>
+                <option value="3">019</option>
+              </select>
+
+              <span class="input-group-text">-</span>
+              <input
+                type="tel"
+                class="form-control"
+                id="phone2"
+                placeholder=""
+                aria-label=""
+              />
+              <span class="input-group-text">-</span>
+              <input
+                type="tel"
+                class="form-control"
+                id="phone3"
+                placeholder=""
+                aria-label=""
+              />
+            </div>
+
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="zipcode"
+                name="zipcode"
+                placeholder="우편번호"
+              />
+
+              <div class="form-group d-grid" id="loginbtn">
+                <button
+                  class="btn btn btn-outline-warning"
+                  style="color: rgb(255, 255, 253)"
+                  type="button"
+                  onclick=" daumZipCode()"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                >
+                  우편번호찾기
+                </button>
+              </div>
+
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="주소"
+                  id="address1"
+                  name="address1"
+                />
+              </div>
 
               <div class="input-group col-mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  width="30px"
-                  id="email"
-                  name="email"
-                  placeholder="이메일"
-                  aria-label="Username"
-                />
-              </div>
-
-              <div class="col-m-3">
-                <input
-                  type="password"
-                  class="form-control"
-                  width="50px"
-                  height="30"
-                  id="pwd"
-                  name="pwd"
-                  maxlength=""
-                  placeholder="비밀번호"
-                />
-              </div>
-
-              <div class="input-group col-mb-3" name="name">
-                <input
-                  type="tel"
-                  class="form-control"
-                  id="name"
-                  name="name"
-                  aria-label=""
-                  placeholder="이름"
-                />
-
-                <select
-                  class="form-select"
-                  id="gender"
-                  name="gender"
-                  aria-label="Default select example"
-                >
-                  <option selected>성별</option>
-                  <option value="">남성</option>
-                  <option value="">여성</option>
-                </select>
-              </div>
-
-              <div class="col-m-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  width="50px"
-                  height="30"
-                  id="nick"
-                  name="nick"
-                  maxlength=""
-                  placeholder="닉네임"
-                />
-              </div>
-
-              <div class="input-group col-mb-3" name="phone">
-                <select
-                  class="form-select"
-                  id="phone1"
-                  aria-label="Default select example"
-                >
-                  <option selected>010</option>
-
-                  <option value="2">011</option>
-                  <option value="3">017</option>
-                  <option value="3">019</option>
-                </select>
-
-                <span class="input-group-text">-</span>
-                <input
-                  type="tel"
-                  class="form-control"
-                  id="phone2"
-                  placeholder=""
-                  aria-label=""
-                />
-                <span class="input-group-text">-</span>
-                <input
-                  type="tel"
-                  class="form-control"
-                  id="phone3"
-                  placeholder=""
-                  aria-label=""
-                />
-              </div>
-
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="zipcode"
-                  name="zipcode"
-                  placeholder="우편번호"
-                />
-
-                <div class="form-group d-grid" id="loginbtn">
-                  <button
-                    class="btn btn btn-outline-warning"
-                    style="color: rgb(255, 255, 253)"
-                    type="button"
-                    onclick=" daumZipCode()"
-                    data-bs-toggle="modal"
-                    data-bs-target="#staticBackdrop"
-                  >
-                    우편번호찾기
-                  </button>
-                </div>
-
-                <div class="input-group">
-                  <input
-                    type="text"
+                <div class="form-floating">
+                  <textarea
                     class="form-control"
-                    placeholder="주소"
-                    id="address1"
-                    name="address1"
-                  />
-                </div>
-
-                <div class="input-group col-mb-3">
-                  <div class="form-floating">
-                    <textarea
-                      class="form-control"
-                      style="width: 100%"
-                      placeholder="Leave a comment here"
-                      id="address2"
-                      name="address2"
-                    ></textarea>
-                    <label for="floatingTextarea">상세주소</label>
-                  </div>
-                </div>
-
-                <div class="input-group col-mb-3">
-                  <div class="form-floating">
-                    <textarea
-                      class="form-control"
-                      style="width: 100%"
-                      placeholder="Leave a comment here"
-                      id="deliveryReq"
-                      name="deliveryReq"
-                    ></textarea>
-                    <label for="floatingTextarea">배송요청사항</label>
-                  </div>
-                </div>
-
-                <div class="input-group" style="margin-bottom: 0%">
-                  <input type="checkbox" style="margin-right: 5px" /><label
-                    for=""
-                    style="margin: 10px; color: #ededed"
-                    >기본배송지로 저장</label
-                  >
-                  <button
-                    type="reset"
-                    style="margin-left: 59%; border-radius: 5px; color: #ededed"
-                    class="btn"
-                  >
-                    다시작성
-                  </button>
+                    style="width: 100%"
+                    placeholder="Leave a comment here"
+                    id="address2"
+                    name="address2"
+                  ></textarea>
+                  <label for="floatingTextarea">상세주소</label>
                 </div>
               </div>
 
-              <!-------------------------------------------------------------------------------->
-              <div style="width: 100%; border-radius: 5%">
-                <div
-                  class="accordion input-group d-grid"
-                  id="accordionPanelsStayOpenExample"
-                >
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                      <button
-                        class="accordion-button"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#panelsStayOpen-collapseOne"
-                        aria-expanded="true"
-                        aria-controls="panelsStayOpen-collapseOne"
-                      >
-                        주문상품
-                      </button>
-                    </h2>
-                    <div
-                      id="panelsStayOpen-collapseOne"
-                      class="accordion-collapse collapse show"
-                      aria-labelledby="panelsStayOpen-headingOne"
-                    >
-                      <div class="accordion-body">
-                        <div>
-                          <c:forEach items="${orderItemList}" var="cartItem">
-                            <div class="card mb-3" id="card_${cartItem.id}">
-                              <div class="row g-0 justify-content-around">
-                                <div class="col-1 align-self-center">
-                                  <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    role="cartItemCheckbox"
-                                    value="${cartItem.id}"
-                                  />
-                                </div>
-                                <div class="col-3 align-items-center">
-                                  <a href="" class="align-self-center">
-                                    <div
-                                      class="ratio ratio-1x1 align-self-center"
-                                    >
-                                      <img
-                                        class="align-self-center"
-                                        src="${contextPath}/util/upload/display?fileName=${cartItem.productImgPath}"
-                                        alt=""
-                                      />
-                                    </div>
-                                  </a>
-                                </div>
-                                <div class="col-4 align-self-center">
-                                  <div class="card-body">
-                                    <h5 class="card-title">
-                                      <a href=""
-                                        >${cartItem.productVO.productName}</a
-                                      >
-                                    </h5>
-                                    <p class="card-text mt-2">
-                                      사이즈 :
-                                      <span id="size_${cartItem.id}"
-                                        >${cartItem.productSize}</span
-                                      >
-                                    </p>
-                                    <p class="card-text">
-                                      가격 :
-                                      <span id="resultPrice_${cartItem.id}"
-                                        >${cartItem.productVO.price} </span
-                                      >원<br />(
-                                      <span id="resultQuantity_${cartItem.id}"
-                                        >${cartItem.productCount}</span
-                                      >
-                                      개)
-                                    </p>
-                                  </div>
-                                </div>
-                                <div class="col-1 align-self-center">
-                                  <div class="card-body">
-                                    <div
-                                      class="d-flex input-group justify-content-center"
-                                    >
-                                      <input
-                                        style="
-                                          border: 0 solid black;
-                                          width: 100%;
-                                          min-width: max-content;
-                                          text-align: center;
-                                        "
-                                        type="text"
-                                        id="quantity_${cartItem.id}"
-                                        class="form-control align-content-center"
-                                        size="2"
-                                        maxlength="3"
-                                        value="${cartItem.productCount}"
-                                        data-price="${cartItem.productVO.price}"
-                                        data-input-value="quantity"
-                                        data-result-price-id="resultPrice_${cartItem.id}"
-                                        data-result-quantity-id="resultQuantity_${cartItem.id}"
-                                      />
-                                      <br />
-                                      <div
-                                        id="quantity-check"
-                                        class="btn-group-vertical"
-                                      >
-                                        <button
-                                          style="border: 0 solid black"
-                                          type="button"
-                                          class="qty-plus qty-btn btn btn-light"
-                                          data-quantity-id="quantity_${cartItem.id}"
-                                          data-function-type="plus"
-                                        >
-                                          +
-                                        </button>
-                                        <button
-                                          style="border: 0 solid black"
-                                          type="button"
-                                          class="qty-minus qty-btn btn btn-light"
-                                          data-quantity-id="quantity_${cartItem.id}"
-                                          data-function-type="minus"
-                                        >
-                                          -
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+              <div class="input-group col-mb-3">
+                <div class="form-floating">
+                  <textarea
+                    class="form-control"
+                    style="width: 100%"
+                    placeholder="Leave a comment here"
+                    id="deliveryReq"
+                    name="deliveryReq"
+                  ></textarea>
+                  <label for="floatingTextarea">배송요청사항</label>
+                </div>
+              </div>
 
-                                <div class="col-2 align-self-center">
+              <div class="input-group" style="margin-bottom: 0%">
+                <input type="checkbox" style="margin-right: 5px" /><label
+                  for=""
+                  style="margin: 10px; color: #ededed"
+                  >기본배송지로 저장</label
+                >
+                <button
+                  type="reset"
+                  style="margin-left: 59%; border-radius: 5px; color: #ededed"
+                  class="btn"
+                >
+                  다시작성
+                </button>
+              </div>
+            </div>
+
+            <!-------------------------------------------------------------------------------->
+            <div style="width: 100%; border-radius: 5%">
+              <div
+                class="accordion input-group d-grid"
+                id="accordionPanelsStayOpenExample"
+              >
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#panelsStayOpen-collapseOne"
+                      aria-expanded="true"
+                      aria-controls="panelsStayOpen-collapseOne"
+                    >
+                      주문상품
+                    </button>
+                  </h2>
+                  <div
+                    id="panelsStayOpen-collapseOne"
+                    class="accordion-collapse collapse show"
+                    aria-labelledby="panelsStayOpen-headingOne"
+                  >
+                    <div class="accordion-body">
+                      <div>
+                        <c:forEach items="${orderItemList}" var="cartItem">
+                          <div class="card mb-3" id="card_${cartItem.id}">
+                            <div class="row g-0 justify-content-around">
+                              <div class="col-1 align-self-center">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  role="cartItemCheckbox"
+                                  value="${cartItem.id}"
+                                />
+                              </div>
+                              <div class="col-3 align-items-center">
+                                <a href="" class="align-self-center">
                                   <div
-                                    class="btn-group-vertical"
-                                    role="group"
-                                    aria-label="Vertical button group"
+                                    class="ratio ratio-1x1 align-self-center"
                                   >
-                                    <a
-                                      type="button"
-                                      role="cancelBtn"
-                                      value="${cartItem.id}"
-                                      class="btn btn-light"
-                                      >cancel</a
+                                    <img
+                                      class="align-self-center"
+                                      src="${contextPath}/util/upload/display?fileName=${cartItem.productImgPath}"
+                                      alt=""
+                                    />
+                                  </div>
+                                </a>
+                              </div>
+                              <div class="col-4 align-self-center">
+                                <div class="card-body">
+                                  <h5 class="card-title">
+                                    <a href=""
+                                      >${cartItem.productVO.productName}</a
                                     >
+                                  </h5>
+                                  <p class="card-text mt-2">
+                                    사이즈 :
+                                    <span id="size_${cartItem.id}"
+                                      >${cartItem.productSize}</span
+                                    >
+                                  </p>
+                                  <p class="card-text">
+                                    가격 :
+                                    <span id="resultPrice_${cartItem.id}"
+                                      >${cartItem.productVO.price} </span
+                                    >원<br />(
+                                    <span id="resultQuantity_${cartItem.id}"
+                                      >${cartItem.productCount}</span
+                                    >
+                                    개)
+                                  </p>
+                                </div>
+                              </div>
+                              <div class="col-1 align-self-center">
+                                <div class="card-body">
+                                  <div
+                                    class="d-flex input-group justify-content-center"
+                                  >
+                                    <input
+                                      style="
+                                        border: 0 solid black;
+                                        width: 100%;
+                                        min-width: max-content;
+                                        text-align: center;
+                                      "
+                                      type="text"
+                                      id="quantity_${cartItem.id}"
+                                      class="form-control align-content-center"
+                                      size="2"
+                                      maxlength="3"
+                                      value="${cartItem.productCount}"
+                                      data-price="${cartItem.productVO.price}"
+                                      data-input-value="quantity"
+                                      data-result-price-id="resultPrice_${cartItem.id}"
+                                      data-result-quantity-id="resultQuantity_${cartItem.id}"
+                                    />
+                                    <br />
+                                    <div
+                                      id="quantity-check"
+                                      class="btn-group-vertical"
+                                    >
+                                      <button
+                                        style="border: 0 solid black"
+                                        type="button"
+                                        class="qty-plus qty-btn btn btn-light"
+                                        data-quantity-id="quantity_${cartItem.id}"
+                                        data-function-type="plus"
+                                      >
+                                        +
+                                      </button>
+                                      <button
+                                        style="border: 0 solid black"
+                                        type="button"
+                                        class="qty-minus qty-btn btn btn-light"
+                                        data-quantity-id="quantity_${cartItem.id}"
+                                        data-function-type="minus"
+                                      >
+                                        -
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
+
+                              <div class="col-2 align-self-center">
+                                <div
+                                  class="btn-group-vertical"
+                                  role="group"
+                                  aria-label="Vertical button group"
+                                >
+                                  <a
+                                    type="button"
+                                    role="cancelBtn"
+                                    value="${cartItem.id}"
+                                    class="btn btn-light"
+                                    >cancel</a
+                                  >
+                                </div>
+                              </div>
                             </div>
-                          </c:forEach>
-                        </div>
+                          </div>
+                        </c:forEach>
                       </div>
                     </div>
-                    <div class="accordion-item">
-                      <h2
-                        class="accordion-header"
-                        id="panelsStayOpen-headingTwo"
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseTwo"
                       >
-                        <button
-                          class="accordion-button collapsed"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#panelsStayOpen-collapseTwo"
-                          aria-expanded="false"
-                          aria-controls="panelsStayOpen-collapseTwo"
+                        결제금액
+                      </button>
+                    </h2>
+                    <div
+                      id="panelsStayOpen-collapseTwo"
+                      class="accordion-collapse collapse"
+                      aria-labelledby="panelsStayOpen-headingTwo"
+                    >
+                      <div class="accordion-body">
+                        <div
+                          class="bg-secondary p-5"
+                          style="--bs-bg-opacity: 0.2; border-radius: 5px"
                         >
-                          결제금액
-                        </button>
-                      </h2>
-                      <div
-                        id="panelsStayOpen-collapseTwo"
-                        class="accordion-collapse collapse"
-                        aria-labelledby="panelsStayOpen-headingTwo"
-                      >
-                        <div class="accordion-body">
+                          <div class="row">
+                            <span
+                              class="col-1"
+                              style="
+                                font-size: 20px;
+                                text-align: center;
+                                vertical-align: middle;
+                              "
+                              >CART</span
+                            >
+                            <span
+                              class="col-7"
+                              style="
+                                font-size: 20px;
+                                text-align: right;
+                                vertical-align: middle;
+                              "
+                              >선택된 상품의 개수</span
+                            >
+                            <span
+                              class="col-4"
+                              style="
+                                font-size: 20px;
+                                text-align: center;
+                                vertical-align: middle;
+                              "
+                              >총 가격</span
+                            >
+                          </div>
+                          <br />
+                          <div class="row">
+                            <span class="col-1">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="50px"
+                                viewBox="10 0 576 512"
+                              >
+                                <path
+                                  d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM252 160c0 11 9 20 20 20h44v44c0 11 9 20 20 20s20-9 20-20V180h44c11 0 20-9 20-20s-9-20-20-20H356V96c0-11-9-20-20-20s-20 9-20 20v44H272c-11 0-20 9-20 20z"
+                                />
+                              </svg>
+                            </span>
+                            <span
+                              id="calculateItemCount"
+                              class="col-6"
+                              style="
+                                font-size: 25px;
+                                text-align: right;
+                                vertical-align: middle;
+                              "
+                              >0개</span
+                            >
+                            <span
+                              id="calculateResultPrice"
+                              class="col-4"
+                              style="
+                                font-size: 25px;
+                                text-align: right;
+                                vertical-align: middle;
+                              "
+                              >0원</span
+                            >
+                          </div>
+
+                          <hr />
+                          <br />
                           <div
                             class="bg-secondary p-5"
                             style="--bs-bg-opacity: 0.2; border-radius: 5px"
                           >
                             <div class="row">
                               <span
-                                class="col-1"
+                                class="col-4"
                                 style="
-                                  font-size: 20px;
+                                  font-size: 15px;
                                   text-align: center;
                                   vertical-align: middle;
                                 "
-                                >CART</span
-                              >
-                              <span
-                                class="col-7"
-                                style="
-                                  font-size: 20px;
-                                  text-align: right;
-                                  vertical-align: middle;
-                                "
-                                >선택된 상품의 개수</span
+                                >마이 포인트</span
                               >
                               <span
                                 class="col-4"
                                 style="
-                                  font-size: 20px;
+                                  font-size: 15px;
                                   text-align: center;
                                   vertical-align: middle;
                                 "
-                                >총 가격</span
+                                >사용 포인트</span
+                              >
+                              <span
+                                class="col-4"
+                                style="
+                                  font-size: 15px;
+                                  text-align: center;
+                                  vertical-align: middle;
+                                "
+                                >남은 포인트</span
                               >
                             </div>
+
                             <br />
                             <div class="row">
-                              <span class="col-1">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="50px"
-                                  viewBox="10 0 576 512"
-                                >
-                                  <path
-                                    d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM252 160c0 11 9 20 20 20h44v44c0 11 9 20 20 20s20-9 20-20V180h44c11 0 20-9 20-20s-9-20-20-20H356V96c0-11-9-20-20-20s-20 9-20 20v44H272c-11 0-20 9-20 20z"
-                                  />
-                                </svg>
-                              </span>
                               <span
-                                id="calculateItemCount"
-                                class="col-6"
-                                style="
-                                  font-size: 25px;
-                                  text-align: right;
-                                  vertical-align: middle;
-                                "
-                                >0개</span
-                              >
-                              <span
-                                id="calculateResultPrice"
                                 class="col-4"
                                 style="
                                   font-size: 25px;
-                                  text-align: right;
+                                  text-align: center;
                                   vertical-align: middle;
                                 "
-                                >0원</span
+                                >0</span
                               >
-                            </div>
-
-                            <hr />
-                            <br />
-                            <div
-                              class="bg-secondary p-5"
-                              style="--bs-bg-opacity: 0.2; border-radius: 5px"
-                            >
-                              <div class="row">
-                                <span
-                                  class="col-4"
-                                  style="
-                                    font-size: 15px;
-                                    text-align: center;
-                                    vertical-align: middle;
-                                  "
-                                  >마이 포인트</span
-                                >
-                                <span
-                                  class="col-4"
-                                  style="
-                                    font-size: 15px;
-                                    text-align: center;
-                                    vertical-align: middle;
-                                  "
-                                  >사용 포인트</span
-                                >
-                                <span
-                                  class="col-4"
-                                  style="
-                                    font-size: 15px;
-                                    text-align: center;
-                                    vertical-align: middle;
-                                  "
-                                  >남은 포인트</span
-                                >
-                              </div>
-
-                              <br />
-                              <div class="row">
-                                <span
-                                  class="col-4"
-                                  style="
-                                    font-size: 25px;
-                                    text-align: center;
-                                    vertical-align: middle;
-                                  "
-                                  >0</span
-                                >
-                                <span
-                                  class="col-4"
-                                  style="
-                                    font-size: 25px;
-                                    text-align: center;
-                                    vertical-align: middle;
-                                  "
-                                  >0</span
-                                >
-                                <span
-                                  class="col-4"
-                                  style="
-                                    font-size: 25px;
-                                    text-align: center;
-                                    vertical-align: middle;
-                                  "
-                                  >0</span
-                                >
-                              </div>
+                              <span
+                                class="col-4"
+                                style="
+                                  font-size: 25px;
+                                  text-align: center;
+                                  vertical-align: middle;
+                                "
+                                >0</span
+                              >
+                              <span
+                                class="col-4"
+                                style="
+                                  font-size: 25px;
+                                  text-align: center;
+                                  vertical-align: middle;
+                                "
+                                >0</span
+                              >
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  <div class="input-group d-grid" id="loginbtn">
-                    <a
-                      class="btn btn-outline-warning btn-dark btn-lg"
-                      type="button"
-                      >ORDER</a
-                    >
-                  </div>
+                <div class="input-group d-grid" id="loginbtn">
+                  <a
+                    class="btn btn-outline-warning btn-dark btn-lg"
+                    type="button"
+                    >ORDER</a
+                  >
+                </div>
 
-                  <br />
-                  <div class="form-group d-grid" id="loginbtn">
-                    <a
-                      class="btn"
-                      style="color: aliceblue"
-                      type="button"
-                      data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop"
-                    >
-                      back to the cart</a
-                    >
-                  </div>
+                <br />
+                <div class="form-group d-grid" id="loginbtn">
+                  <a
+                    class="btn"
+                    style="color: aliceblue"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                  >
+                    back to the cart</a
+                  >
                 </div>
               </div>
             </div>
