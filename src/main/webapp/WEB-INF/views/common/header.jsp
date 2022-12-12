@@ -86,7 +86,7 @@
 										class="material-icons-outlined"> favorite_border </span></a>
 								</div>
 								<div class="">
-									<a href="#" class="cart_icon"> <span
+									<a href=""${contextPath}/cart/list" class="cart_icon"> <span
 										class="material-icons-outlined"> shopping_cart </span></a>
 								</div>
 							</form>
