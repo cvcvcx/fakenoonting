@@ -91,64 +91,64 @@
 
 </article>
 
-<script>
-    $("#registerQuestion").on("click", function(e) {
-        e.preventDefault();
-        location.href="${contextPath}/questionForm";
-    });
+<%--<script>--%>
+<%--    $("#registerQuestion").on("click", function(e) {--%>
+<%--        e.preventDefault();--%>
+<%--        location.href="${contextPath}/questionForm";--%>
+<%--    });--%>
 
-    $(function checkSuccess() {
-        let result = "${result}";
+<%--    $(function checkSuccess() {--%>
+<%--        let result = "${result}";--%>
 
-        if(result === '') {
-            return;
-        }
+<%--        if(result === '') {--%>
+<%--            return;--%>
+<%--        }--%>
 
-        if(result === "success") {
-            alert("문의가 등록되었습니다.");
-        }
-    });
+<%--        if(result === "success") {--%>
+<%--            alert("문의가 등록되었습니다.");--%>
+<%--        }--%>
+<%--    });--%>
 
-    $("#btnProductDetails").on("click", function(e) {
-        e.preventDefault();
-        location.href="/product/detail";
-    });
-</script>
+<%--    $("#btnProductDetails").on("click", function(e) {--%>
+<%--        e.preventDefault();--%>
+<%--        location.href="/product/detail";--%>
+<%--    });--%>
+<%--</script>--%>
 
-<script>
-    // 이전 버튼 이벤트
-    function fn_prev(page, range, rangeSize) {
-        var page = ((range - 2) * rangeSize) + 1;
-        var range = range - 1;
+<%--<script>--%>
+<%--    // 이전 버튼 이벤트--%>
+<%--    function fn_prev(page, range, rangeSize) {--%>
+<%--        var page = ((range - 2) * rangeSize) + 1;--%>
+<%--        var range = range - 1;--%>
 
-        var url = "${pageContext.request.contextPath}/questionTest";
-        url = url + "?page=" + page;
-        url = url + "&range=" + range;
+<%--        var url = "${pageContext.request.contextPath}/questionTest";--%>
+<%--        url = url + "?page=" + page;--%>
+<%--        url = url + "&range=" + range;--%>
 
-        location.href = url;
-    }
+<%--        location.href = url;--%>
+<%--    }--%>
 
-    // 페이지 번호 클릭
-    function fn_pagination(page, range) {
-        var url = "${pageContext.request.contextPath}/questionTest";
-        url = url + "?page=" + page;
-        url = url + "&range=" + range;
+<%--    // 페이지 번호 클릭--%>
+<%--    function fn_pagination(page, range) {--%>
+<%--        var url = "${pageContext.request.contextPath}/questionTest";--%>
+<%--        url = url + "?page=" + page;--%>
+<%--        url = url + "&range=" + range;--%>
 
-        location.href = url;
-    }
+<%--        location.href = url;--%>
+<%--    }--%>
 
-    // 다음 버튼 이벤트
-    function fn_next(page, range, rangeSize) {
-        var page = parseInt((range * rangeSize)) + 1;
-        var range = parseInt(range) + 1;
+<%--    // 다음 버튼 이벤트--%>
+<%--    function fn_next(page, range, rangeSize) {--%>
+<%--        var page = parseInt((range * rangeSize)) + 1;--%>
+<%--        var range = parseInt(range) + 1;--%>
 
-        var url = "${pageContext.request.contextPath}/questionTest";
-        url = url + "?page=" + page;
-        url = url + "&range=" + range;
+<%--        var url = "${pageContext.request.contextPath}/questionTest";--%>
+<%--        url = url + "?page=" + page;--%>
+<%--        url = url + "&range=" + range;--%>
 
-        location.href = url;
-    }
-</script>
+<%--        location.href = url;--%>
+<%--    }--%>
+<%--</script>--%>
 
 </body>
 </html>

@@ -71,7 +71,6 @@
 
         $("#uploadResult li").each(function(i,obj){
         let jobj = $(obj);
-        console.log(jobj)
         str +=
                   "<input type='text' name='reviewImgItems[" +
                   i +

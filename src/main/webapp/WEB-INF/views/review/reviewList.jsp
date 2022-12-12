@@ -4,38 +4,6 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%  request.setCharacterEncoding("UTF-8"); %>
 
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Sharp|Material+Icons+Two+Tone|Material+Icons+Outlined|Material+Icons+Round" rel="stylesheet">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-          crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-            crossorigin="anonymous">
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
-            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-            crossorigin="anonymous">
-    </script>
-    <style>
-        footer {
-            background-color: rgb(249, 249, 249);
-        }
-        a {
-            text-decoration: none;
-        }
-    </style>
-    <title>kikerday</title>
-</head>
-<body>
-
-
 <article>
     <div class="container" id="reviewListForm">
         <div>
@@ -105,11 +73,11 @@
                         </span>
                         <span style="font-size:5em;">
                             <c:choose>
-                                <c:when test="${avgGrade == 0}">
+                                <c:when test="${avgGrade == 0.0}">
                                     <c:out value="0" />
                                 </c:when>
-                                <c:when test="${avgGrade != 0}">
-                                    <span id="getAvgGrade" />
+                                <c:when test="${avgGrade != 0.0}">
+                                    <c:out value="${avgGrade}" />
                                 </c:when>
                             </c:choose>
                         </span>
@@ -178,13 +146,13 @@
             <div class="row">
                 <div class="col">
                     <a href="#"><img src="images/cat1.jpg" width="142" height="157"></a>
-                    <a href="#"><img src="images/cat10.jpg" width="142" height="157"></a>
-                    <a href="#"><img src="images/cat11.png" width="142" height="157"></a>
-                    <a href="#"><img src="images/cat12.png" width="142" height="157"></a>
-                    <a href="#"><img src="images/cat13.png" width="142" height="157"></a>
-                    <a href="#"><img src="images/cat14.jpg" width="142" height="157"></a>
-                    <a href="#"><img src="images/cat15.jpg" width="142" height="157"></a>
-                    <a href="#"><img src="images/cat16.png" width="142" height="157"></a>
+<%--                    <a href="#"><img src="images/cat10.jpg" width="142" height="157"></a>--%>
+<%--                    <a href="#"><img src="images/cat11.png" width="142" height="157"></a>--%>
+<%--                    <a href="#"><img src="images/cat12.png" width="142" height="157"></a>--%>
+<%--                    <a href="#"><img src="images/cat13.png" width="142" height="157"></a>--%>
+<%--                    <a href="#"><img src="images/cat14.jpg" width="142" height="157"></a>--%>
+<%--                    <a href="#"><img src="images/cat15.jpg" width="142" height="157"></a>--%>
+<%--                    <a href="#"><img src="images/cat16.png" width="142" height="157"></a>--%>
                 </div>
             </div>
             <hr class="mb-0"/>
@@ -204,10 +172,10 @@
                 <div class="col">
                     <div class="input-group">
                         <div class="form-floating">
-                            <input type="search" class="form-control" id="ReviewSearch" placeholder="search">
-                            <label for="ReviewSearch">리뷰 키워드 검색</label>
+                            <input type="search" name="q" class="form-control" id="searchKeyword" placeholder="search" value="${keyword}">
+                            <label for="searchKeyword">리뷰 키워드 검색</label>
                         </div>
-                        <button type="button" class="btn btn-secondary">
+                        <button type="button" class="btn btn-secondary" id="searchBtn">
                             <span class="material-icons-round">
                                 search
                             </span>
@@ -314,9 +282,10 @@
                             <div class="col-12 mt-2">
                                 <td><p><c:out value="${list.contents}"/></p></td>
                                 <div class="col-12 mt-3">
-                                    <a href="#"><img src="images/cat22.jpg" width="142" height="157"></a>
-                                    <a href="#"><img src="images/cat21.jpg" width="142" height="157"></a>
-                                    <a href="#"><img src="images/cat20.jpg" width="142" height="157"></a>
+                                    사진 사진 사진
+<%--                                    <a href="#"><img src="images/cat22.jpg" width="142" height="157"></a>--%>
+<%--                                    <a href="#"><img src="images/cat21.jpg" width="142" height="157"></a>--%>
+<%--                                    <a href="#"><img src="images/cat20.jpg" width="142" height="157"></a>--%>
                                 </div>
                             </div>
                             <div class="col-12 mt-2">
@@ -364,26 +333,28 @@
                             <li class="page-item">
                                 <a class="page-link link-dark"
                                    href="javascript:void(0);"
-                                   onclick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${param.productId}', '${param.sortNum}')"
+                                   onclick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${param.productId}', '${param.sortNum}', '${keyword}')"
                                    aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                         </c:if>
+
                         <c:forEach var="idx" begin="${pagination.startPage}" end="${pagination.endPage}">
                             <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
                                 <a class="page-link link-dark"
                                    href="javascript:void(0);"
-                                   onclick="fn_pagination('${idx}', '${pagination.range}', '${param.productId}', '${param.sortNum}')">
+                                   onclick="fn_pagination('${idx}', '${pagination.range}', '${param.productId}', '${param.sortNum}', '${keyword}')">
                                     ${idx}
                                 </a>
                             </li>
                         </c:forEach>
+
                         <c:if test="${pagination.next}">
                             <li class="page-item">
                                 <a class="page-link link-dark"
                                    href="javascript:void(0);"
-                                   onclick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}', '${param.productId}', '${param.sortNum}')"
+                                   onclick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}', '${param.productId}', '${param.sortNum}', '${keyword}')"
                                    aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -411,11 +382,6 @@
         }
     });
 
-    let avgGrade = ${avgGrade}.toFixed(1);
-    let elementById = document.getElementById("getAvgGrade");
-    elementById.innerText = avgGrade;
-
-    // 정렬
     function fn_sortCommon(page, range, productId, sortNum) {
         $.ajax({
             type: "get",
@@ -462,7 +428,7 @@
         fn_sortCommon(page, range, productId, sortNum);
     }
 
-    function fn_pagingCommon(page, range, productId, sortNum) {
+    function fn_pagingCommon(page, range, productId, sortNum, contents) {
         $.ajax({
             type: "get",
             url: "${contextPath}/reviewList",
@@ -470,7 +436,8 @@
                 page: page,
                 range: range,
                 productId: productId,
-                sortNum: sortNum
+                sortNum: sortNum,
+                keyword: contents
             },
             success: function(result){
                 $("#reviewListForm").html(result);
@@ -490,28 +457,77 @@
         });
     }
 
-    // 이전 버튼 이벤트
-    function fn_prev(page, range, rangeSize, productId, sortNum) {
+    function fn_prev(page, range, rangeSize, productId, sortNum, contents) {
         var page = ((range - 2) * rangeSize) + 1;
         var range = range - 1;
-        fn_pagingCommon(page, range, productId, sortNum);
+        fn_pagingCommon(page, range, productId, sortNum, contents);
     }
 
-    // 페이지 번호 클릭
-    function fn_pagination(page, range, productId, sortNum) {
-        fn_pagingCommon(page, range, productId, sortNum);
+    function fn_pagination(page, range, productId, sortNum, contents) {
+        fn_pagingCommon(page, range, productId, sortNum, contents);
     }
 
-    // 다음 버튼 이벤트
-    function fn_next(page, range, rangeSize, productId, sortNum) {
+    function fn_next(page, range, rangeSize, productId, sortNum, contents) {
         var page = parseInt((range * rangeSize)) + 1;
         var range = parseInt(range) + 1;
-        fn_pagingCommon(page, range, productId, sortNum);
+        fn_pagingCommon(page, range, productId, sortNum, contents);
     }
+
+    $(function(e){
+        $("input[id='keyword']").on(
+            "propertychange changer keyup paste input",
+            function(e) {
+                fn_keywordOnChange($(this));
+            }
+        );
+
+        $('#searchBtn').on('click', function(e){
+            e.preventDefault();
+
+            $.ajax({
+                type: "get",
+                url: "${contextPath}/reviewList",
+                data: {
+                    productId: ${review.productId},
+                    page: 1,
+                    range: 1,
+                    sortNum: ${sortNum},
+                    keyword: $("#searchKeyword").val()
+                },
+                success: function(result){
+                    $("#reviewListForm").html(result);
+                },
+                error: function(request, error){
+                    alert(
+                        "code:" +
+                        request.status +
+                        "\n" +
+                        "message:" +
+                        request.responseText +
+                        "\n" +
+                        "error:" +
+                        error
+                    );
+                }
+            });
+        });
+    });
+
+    function fn_keywordOnChange(e) {
+        let changedValue = $(e).val();
+        e.attr("value", changedValue);
+    }
+
 </script>
 
-</body>
-</html>
+
+
+
+
+
+
+
+
 
 
 

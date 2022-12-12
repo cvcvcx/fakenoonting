@@ -63,12 +63,6 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         return sqlSession.selectList(namespace + ".findAllPaging", pagination);
     }
 
-    // 특정 상품의 모든 리뷰 찾기
-    @Override
-    public List<Review> findAllByProductId(Map<String, Object> map) throws Exception {
-        return sqlSession.selectList(namespace + ".findAllByProductId", map);
-    }
-
     // 특정 상품의 모든 리뷰 평점순으로 찾기
     @Override
     public List<Review> findAllByGrade(Map<String, Object> map) throws Exception {
@@ -87,15 +81,22 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         return sqlSession.selectOne(namespace + ".getReviewCountListByGrade", map);
     }
 
-    // 특정 상품의 모든 리뷰 개수
-    @Override
-    public int productReviewCount(Long productId) throws Exception {
-        return sqlSession.selectOne(namespace + ".productReviewCount", productId);
-    }
-
     // 특정 유저의 모든 리뷰 찾기
     @Override
     public List<Review> findAllByMemberId(int memberId) throws Exception {
         return sqlSession.selectList(namespace + ".findAllReviewsByMemberId");
     }
+
+    // 특정 상품의 모든 리뷰 개수
+    @Override
+    public int productReviewCount(Map<String, Object> map) throws Exception {
+        return sqlSession.selectOne(namespace + ".productReviewCount", map);
+    }
+
+    // 특정 상품의 모든 리뷰 찾기
+    @Override
+    public List<Review> findAllByProductId(Map<String, Object> map) throws Exception {
+        return sqlSession.selectList(namespace + ".findAllByProductId", map);
+    }
+
 }

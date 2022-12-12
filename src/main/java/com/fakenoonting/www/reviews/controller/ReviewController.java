@@ -3,6 +3,7 @@ package com.fakenoonting.www.reviews.controller;
 import com.fakenoonting.www.reviews.domain.Review;
 import com.fakenoonting.www.reviews.service.ReviewService;
 import com.fakenoonting.www.util.paging.Pagination;
+import com.fakenoonting.www.util.search.Search;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,28 +31,51 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    // 리뷰 리스트 불러오기
+    // 리뷰 뷰 불러오기
     @RequestMapping(value = "/reviewList", method = RequestMethod.GET)
     public String reviewList(Model model
             , @RequestParam(defaultValue = "1") int page
             , @RequestParam(defaultValue = "1") int range
             , Review review
             , @RequestParam(defaultValue = "2") int sortNum
+            , @RequestParam(required = false) String keyword
     ) throws Exception {
 
-        model.addAttribute("productReviewCount", reviewService.productReviewCount(review.getProductId()));
-        model.addAttribute("avgGrade", reviewService.getAvgGrade(review.getProductId()));
+        model.addAttribute("sortNum", sortNum);
+        model.addAttribute("keyword", keyword);
 
-        Pagination pagination = new Pagination();
-        pagination.pageInfo(page, range, reviewService.productReviewCount(review.getProductId()));
-        model.addAttribute("pagination", pagination);
+        Search search = new Search();
+        search.setKeyword(keyword);
+
+//        Map<String, Object> cntMap = new HashMap<>();
+//        cntMap.put("productId", review.getProductId());
+//        model.addAttribute("productReviewCount", reviewService.productReviewCount(cntMap));
+//        cntMap.put("contents", search.getKeyword());
+//        model.addAttribute("productReviewCount2", reviewService.productReviewCount(cntMap));
+//
+//        search.pageInfo(page, range, reviewService.productReviewCount(cntMap));
+//        model.addAttribute("pagination", search);
+
+        double avgGrade = reviewService.getAvgGrade(review.getProductId());
+        String format = String.format("%.1f", avgGrade);
+        double v = Double.parseDouble(format);
+        model.addAttribute("avgGrade", v);
 
         Map<String, Object> result = new HashMap<>();
         result.put("productId", review.getProductId());
-        result.put("startList", pagination.getStartList());
-        result.put("listSize", pagination.getListSize());
+        model.addAttribute("productReviewCount", reviewService.productReviewCount(result));
+        result.put("contents", search.getKeyword());
+        model.addAttribute("productReviewCount2", reviewService.productReviewCount(result));
+//        result.put("startList", search.getStartList());
+//        result.put("listSize", search.getListSize());
 
-        // 추천1, 최신2, 평점3순으로 정렬
+        search.pageInfo(page, range, reviewService.productReviewCount(result));
+        model.addAttribute("pagination", search);
+
+        result.put("startList", search.getStartList());
+        result.put("listSize", search.getListSize());
+
+        // 1:추천, 2:최신, 3:평점
         if (sortNum == 1) {
             model.addAttribute("dataList", reviewService.findAllByProductId(result));
         } else if (sortNum == 2) {
@@ -62,26 +86,29 @@ public class ReviewController {
             model.addAttribute("dataList", reviewService.findAllByProductId(result));
         }
 
-        // 평점별 리뷰수
-        Map<String, Object> result2 = new HashMap<>();
 
-        List<Integer> gradeCountList = new ArrayList<>();
-        List<Double> gradeList = new ArrayList<>();
-
-        for (int i = 0; i <= 4; ++i) {
-            result2.put("productId", review.getProductId());
-            result2.put("grade", 5-i);
-            gradeCountList.add(i, reviewService.getReviewCountListByGrade(result2));
-            gradeList.add(i, ((double) (reviewService.getReviewCountListByGrade(result2))
-                    / (double) reviewService.productReviewCount(review.getProductId())) * 100);
-        }
-
-        model.addAttribute("getReviewCountListByGrade", gradeCountList);
-        model.addAttribute("gradeRate", gradeList);
-
-        double peopleLikeCount = ((double)(gradeCountList.get(0) + gradeCountList.get(1))
-                / (double)reviewService.productReviewCount(review.getProductId()) * 100.00);
-        model.addAttribute("peopleLikeCount", String.format("%.0f", peopleLikeCount));
+//        // 평점별 리뷰수
+//        Map<String, Object> result2 = new HashMap<>();
+//
+//        List<Integer> gradeCountList = new ArrayList<>();
+//        List<Double> gradeList = new ArrayList<>();
+//
+//        for (int i = 0; i <= 4; ++i) {
+//            result2.put("productId", review.getProductId());
+//            result2.put("grade", 5-i);
+//            result2.put("contents", search.getKeyword());
+//
+//            gradeCountList.add(i, reviewService.getReviewCountListByGrade(result2));
+//            gradeList.add(i, ((double) (reviewService.getReviewCountListByGrade(result2))
+//                    / (double) reviewService.productReviewCount(review) * 100));
+//        }
+//
+//        model.addAttribute("getReviewCountListByGrade", gradeCountList);
+//        model.addAttribute("gradeRate", gradeList);
+//
+//        double peopleLikeCount = ((double)(gradeCountList.get(0) + gradeCountList.get(1))
+//                / (double)reviewService.productReviewCount(review) * 100.00);
+//        model.addAttribute("peopleLikeCount", String.format("%.0f", peopleLikeCount));
 
         return "review/reviewList";
     }

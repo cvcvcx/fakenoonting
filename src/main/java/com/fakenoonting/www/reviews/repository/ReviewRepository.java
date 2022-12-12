@@ -29,9 +29,6 @@ public interface ReviewRepository {
     // 모든 상품의 모든 리뷰 찾기 + 페이징적용
     public List<Review> findAllPaging(Pagination pagination) throws Exception;
 
-    // 특정 상품의 모든 리뷰 찾기
-    public List<Review> findAllByProductId(Map<String, Object> map) throws Exception;
-
     // 특정 상품의 모든 리뷰 평점순으로 찾기
     public List<Review> findAllByGrade(Map<String, Object> map) throws Exception;
 
@@ -41,9 +38,12 @@ public interface ReviewRepository {
     // 특정 상품의 평점별 리뷰 개수트 리스트
     public int getReviewCountListByGrade(Map<String, Object> map) throws Exception;
 
-    // 모든 상품의 모든 리뷰 개수
-    public int productReviewCount(Long productId) throws Exception;
-
     // 특정 유저의 모든 리뷰 찾기
     public List<Review> findAllByMemberId(int memberId) throws Exception;
+
+    // 모든 상품의 모든 리뷰 개수
+    public int productReviewCount(Map<String, Object> map) throws Exception;
+
+    // 특정 상품의 모든 리뷰 찾기
+    public List<Review> findAllByProductId(Map<String, Object> map) throws Exception;
 }
