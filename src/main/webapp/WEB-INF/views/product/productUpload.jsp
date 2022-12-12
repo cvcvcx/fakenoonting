@@ -173,6 +173,8 @@
           data: formData,
           type: "POST",
           dataType: "json",
+          async: false,
+      	  cache: false,
           success: function (result) {
             console.log(result);
             showThumbnailUploadImage(result);
@@ -261,6 +263,7 @@
             obj.imgUUID +
             "' data-filename= '" +
             obj.orgImgName +
+       
             "'>";
           str += "<div id='result_card'>";
           str +=

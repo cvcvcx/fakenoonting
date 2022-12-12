@@ -31,7 +31,29 @@ public class ProductController {
 
     
     
-    // 물품 특정 카테고리(TOP) 전체 리스트 추출
+    // 물품 등록 페이지로 이동
+    @GetMapping(value = "/upload")
+    public ModelAndView productUpload() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/product/productUpload");
+        return mav;
+    }
+    
+    
+    
+    // 물품 등록 처리
+    @PostMapping("/upload")
+    public ModelAndView uploadProduct(ProductVO productVO){
+        log.info("uploadPost요청 진행중 productVO=>" +productVO);
+        ModelAndView mav = new ModelAndView();
+        productService.productUpload(productVO);
+        mav.setViewName("redirect:list");
+        return mav;
+    }
+    
+    
+    
+    // 특정 카테고리(TOP) 물품 전체 리스트 추출
     @GetMapping("/list")
     public ModelAndView productList(Model model){
         List<ProductVO> list = productService.productList();
@@ -59,6 +81,7 @@ public class ProductController {
 
     
     
+    // 추가 주석 달아야 함.
     // 상세 페이지 
     @GetMapping("/detail")
     public ModelAndView productDetail(long id, Model model
@@ -86,29 +109,7 @@ public class ProductController {
 
     
     
-    //
-    @GetMapping(value = "/upload")
-    public ModelAndView productUpload() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("/product/productUpload");
-        return mav;
-    }
-    
-    
-    
-    // 
-    @PostMapping("/upload")
-    public ModelAndView uploadProduct(ProductVO productVO){
-        log.info("uploadPost요청 진행중 productVO=>" +productVO);
-        ModelAndView mav = new ModelAndView();
-        productService.productUpload(productVO);
-        mav.setViewName("redirect:list");
-        return mav;
-    }
-
-    
-    
-    // 
+    // 등록된 물품 삭제
     @GetMapping("/delete")
     public String deleteProduct(ProductVO productVO){
         log.info("deleteProduct 요청 진행중");

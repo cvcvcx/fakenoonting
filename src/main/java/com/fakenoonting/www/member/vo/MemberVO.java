@@ -19,7 +19,7 @@ public class MemberVO {
 	private String nick; // 사용자 닉네임
 	private String name; // 사용자 이름
 	private Character gender;
-	private Integer phone;
+	private String phone;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birth;
 	private String address1; // 상위 주소

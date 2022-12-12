@@ -45,16 +45,19 @@
 								</c:otherwise>
 							</c:choose>
 
-							<a href="${contextPath}/member/regiMemberForm.do"><button type="button" class="btn btn-default">JOIN
-									US</button></a>
+							<a href="${contextPath}/member/regiMemberForm.do"><button
+									type="button" class="btn btn-default">JOIN US</button></a>
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default dropdown-toggle"
 									data-bs-toggle="dropdown" aria-expanded="false">MY
 									PAGE</button>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="${contextPath}/member/myPage.do">마이 페이지</a></li>
-									<li><a class="dropdown-item" href="${contextPath}/order/orderLookup">주문조회</a></li>
-									<li><a class="dropdown-item" href="${contextPath}/member/updateMemberForm.do">회원정보수정</a></li>
+									<li><a class="dropdown-item"
+										href="${contextPath}/member/myPage.do">마이 페이지</a></li>
+									<li><a class="dropdown-item"
+										href="${contextPath}/order/orderLookup">주문조회</a></li>
+									<li><a class="dropdown-item"
+										href="${contextPath}/member/updateMemberForm.do">회원정보수정</a></li>
 									<li><a class="dropdown-item" href="#">최근본상품</a></li>
 									<li><a class="dropdown-item" href="#">관심상품</a></li>
 									<li><a class="dropdown-item" href="#">나의리뷰</a></li>
@@ -125,7 +128,8 @@
 													<button type="submit" class="btn btn-black">Login</button>
 												</form>
 												<form class="form-horizontal" method="get"
-													name="hamLoginForm" action="${contextPath}/member/regiMemberForm.do">
+													name="hamLoginForm"
+													action="${contextPath}/member/regiMemberForm.do">
 													<button type="button" class="btn btn-black">Join
 														Us</button>
 												</form>
@@ -178,8 +182,8 @@
 		<div class="nav-scroller py-1 mb-2 col-lg-8 align-self-center"
 			id="top_menu_list">
 			<nav class="nav d-flex justify-content-between" id="top_menu_bar">
-				<a class="p-2 link-secondary" href="${contextPath}/product/list">TOP</a> <a
-					class="p-2 link-secondary" href="#">PANTS</a> <a
+				<a class="p-2 link-secondary" href="${contextPath}/product/list">TOP</a>
+				<a class="p-2 link-secondary" href="#">PANTS</a> <a
 					class="p-2 link-secondary" href="#">OUTER</a> <a
 					class="p-2 link-secondary" href="#">SHOES</a> <a
 					class="p-2 link-secondary" href="#">BAG</a> <a
@@ -197,8 +201,16 @@
 				<ul class="dropdown-menu">
 					<li><a class="dropdown-item" href="#">QandA</a></li>
 					<li><a class="dropdown-item" href="#">REVIEW</a></li>
-					<li><a class="dropdown-item" href="${contextPath}/product/adminList">adminList</a></li>
-					<li><a class="dropdown-item" href="${contextPath}/product/upload">adminProductUpload</a></li>
+
+					<c:choose>
+						<c:when test="${isLogOn == true && member != null}">
+							<li><a class="dropdown-item"
+								href="${contextPath}/product/adminList">adminList</a></li>
+							<li><a class="dropdown-item"
+								href="${contextPath}/product/upload">adminProductUpload</a></li>
+						</c:when>
+					</c:choose>
+
 				</ul>
 			</div>
 		</div>

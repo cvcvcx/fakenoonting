@@ -152,8 +152,8 @@ ul {
 						<div class="input-group col-mb-3">
 							<input type="text" class="form-control" width="30px" id="email"
 								name="email" placeholder="이메일" aria-label="Username">
-							<button class="btn btn-secondary" type="button"
-								id="emailCheckId" onclick="emailCheck()" value="N">이메일 중복확인</button>
+							<button class="btn btn-secondary" type="button" id="emailCheckId"
+								onclick="emailCheck()" value="N">이메일 중복확인</button>
 						</div>
 
 						<div class="form-group col-m-3">
@@ -243,8 +243,8 @@ ul {
 							참조바랍니다.
 							<div class="checkbox" align="center">
 								<label> <input type="checkbox" id="agreement"
-									name="agreement"  /> kikerDay의 개인정보 수집 및 이용에 동의합니다.
-								</label> 
+									name="agreement" /> kikerDay의 개인정보 수집 및 이용에 동의합니다.
+								</label>
 							</div>
 						</div>
 
@@ -376,8 +376,15 @@ ul {
 											}
 
 											// 폰번호2 공란 판단
-											if ($("#phone2").val() == "") {
+											if ($("#phone2").val() == "" ) {
 												alert("핸드폰 번호를 입력하셔야 합니다.");
+												$("#phone2").focus();
+												return false;
+											}
+											
+											// 폰번호2 갯수 판단
+											if ($("#phone2").val().length >= 5 ) {
+												alert("핸드폰 번호 형식을 맞춰주세요");
 												$("#phone2").focus();
 												return false;
 											}
@@ -385,6 +392,13 @@ ul {
 											// 폰번호3 공란 판단
 											if ($("#phone3").val() == "") {
 												alert("핸드폰 번호를 입력하셔야 합니다.");
+												$("#phone3").focus();
+												return false;
+											}
+											
+											// 폰번호3 갯수 판단
+											if ($("#phone3").val().length >= 5 ) {
+												alert("핸드폰 번호 형식을 맞춰주세요");
 												$("#phone3").focus();
 												return false;
 											}
@@ -437,10 +451,12 @@ ul {
 												let phone = $(
 														'select[id=phone1]')
 														.val()
+														+ "-"
 														+ $('input[id=phone2]')
-																.val()
+														.val()
+														+ "-"
 														+ $('input[id=phone3]')
-																.val();
+														.val();
 												str += "<input type='hidden' name=phone value= ' " + phone + " ' >";
 
 												phoneObj.append(str);
