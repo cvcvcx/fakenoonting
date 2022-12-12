@@ -47,7 +47,7 @@ public class OrderController {
         ModelAndView mav = new ModelAndView("/order/orderForm");
         List<CartItemVO> cartItemVOList = new ArrayList<>();
         MemberVO memberVO = (MemberVO)httpSession.getAttribute("member");
-        // 만약 구매하기 버튼으로 요청이와서 VO List가 없다면 새로 카트 데이터베이스에 등록
+        // 만약 구매하기 버튼으로 요청이와서 VOList가 없다면 새로 카트 데이터베이스에 등록
         if (cartItemVO.getCartItemVOList() == null) {
             cartItemVO.setMemberId(memberVO.getId());
             cartService.addCartItem(cartItemVO);
@@ -66,7 +66,7 @@ public class OrderController {
             cartItemVOList1.forEach(cartItemVO1 -> {
                 result.add(cartService.findCartItemByCartId(cartItemVO1));
             });
-            mav.addObject("member",memberVO);
+
             mav.addObject("orderItemList", result);
 
         }

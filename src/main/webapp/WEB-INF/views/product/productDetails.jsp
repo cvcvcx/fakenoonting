@@ -92,8 +92,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               </div>
               <hr />
               <div class="row mb-3">
-                <div class="col-8">판매가</div>
-                <div class="col-4">${product.price} 원</div>
+                <div class="col-6 col-md-5">판매가</div>
+                <div class="col-6 col-md-7">${product.price} 원</div>
               </div>
 
               <div class="row">
@@ -123,7 +123,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </div>
                 <div class="col-4 col-md-7">
                   <input
-                    class="input-text qty-text form-control"
+                    class="input-text qty-text"
                     type="number"
                     id="productCount"
                     value="1"
@@ -447,125 +447,124 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <!-- end section -->
     </article>
 
+    <script>
+
+      $(function(){
+        //총 상품금액을 구하는 함수
+        $("#productCount").on("change",function (e){
+        let productCount = $("#productCount").val();
+        productCount =  Number(productCount);
+        let productPrice = "${product.price}";
+        productPrice = Number(productPrice);
+        let resultPrice = (productCount*productPrice);
+
+        $("#resultPrice").text(resultPrice+"  ");
+        $("#resultCount").text("  "+productCount+"개");
+      })
+      //사이즈 옵션이 바뀔때, 아래에 있는 상품 옵션을 바꾸는 함수
+      $("#size").on("change",function(){
+        let productSize = $("select[id=size]").val();
+        $("#sizeSpan").text(productSize);
+      })
+
+      //구매 버튼을 눌렀을 때
+      $("button[role='buyButton']").on("click", function (e) {
+        e.preventDefault();
+
+        //로그인이 되었는지 체크
+        let member = "${member}";
+        if(member == null||member == ''){
+            alert("로그인이 필요합니다.");
+            location.href = "${contextPath}/member/loginForm.do";
+            return;
+        }
+        //사이즈 옵션이 만약 선택되지 않았을 때라면 필수옵션을 선택해 달라는 모달을 띄우고 리턴
+        let productSize = $("select[id=size]").val();
+        if(productSize==$("option[id=notSelected]").val()){
+            $("#selectRequiredOptionModal").modal('show');
+            return;
+        }   
+        //주문 정보가 들어간 폼을 만드는 함수
+        let newForm = fn_makeNewForm(productSize);
+        newForm.attr("action", "${contextPath}/order/newOrder")
+        $("body").append(newForm);
+        newForm.submit();
+        //.submit(); -- 주문페이지가 만들어지지 않았기 때문에 submit을 시키지 않음 
+      });
+
+      $("button[role='cartButton']").on("click", function (e) {
+        console.log("cartButton clicked!");
+        e.preventDefault();
+        //꼭 member를 "" 로 감싸야 오류가 발생하지 않음(만약 감싸지 않으면 공백이 들어가기 때문)
+        //로그인 상태 체크
+        let member = "${member}";
+        if(member == null||member == ''){
+            alert("로그인이 필요합니다.");
+            location.href = "${contextPath}/member/loginForm.do";
+            return;
+        }
+        //필수옵션 선택 체크
+        let productSize = $("select[id=size]").val();
+        if(productSize==$("option[id=notSelected]").val()){
+            $("#selectRequiredOptionModal").modal('show');
+            return;
+        }   
+        //주문 정보가 들어간 폼을 새로 만들어서 newForm이라는 지역변수에 저장
+        let newForm = fn_makeNewForm(productSize);
+
+        //폼에 담긴 정보를 json형태로 보낼 수 있게 바꿔주는 함수 (serialize)
+        let formData = newForm.serialize();
+        $.ajax({
+            type : 'post',
+            url : '${contextPath}/cart/addCart',
+            data : formData,
+            success: function(result){
+              
+              $("#cartModal .modal-body").html(result);
+              $("#cartModal").modal("show");
+            },
+            error:function(request, status, error){
+        		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        	}
+        })
+               
+      });
+        
+      });
+      //주문 정보가 담긴 폼을 만드는 함수
+      function fn_makeNewForm(productSize){
+        let newForm = $("<form></form>");
+            newForm.attr("action", "${contextPath}/cart/addCart");
+            newForm.attr("method", "post");
+            newForm.append(
+            $("<input />", {
+                type: "text",
+                name: "productId",
+                value: "${product.id}",
+            })
+            );
+            let productCount = $("#productCount").val();
+            newForm.append(
+            $("<input />", {
+                type: "text",
+                name: "productCount",
+                value: productCount,
+            })
+            );
+              
+            newForm.append(
+            $("<input />", {
+                type: "text",
+                name: "productSize",
+                value: productSize,
+            })
+        );
+        
+       return newForm;
+      }
+    </script>
     <!-- footer -->
     <hr />
     <jsp:include page="../common/footer.jsp" flush="false" />
   </body>
-
-  <script>
-
-    $(function(){
-      //총 상품금액을 구하는 함수
-      $("#productCount").on("change",function (e){
-      let productCount = $("#productCount").val();
-      productCount =  Number(productCount);
-      let productPrice = "${product.price}";
-      productPrice = Number(productPrice);
-      let resultPrice = (productCount*productPrice);
-
-      $("#resultPrice").text(resultPrice+"  ");
-      $("#resultCount").text("  "+productCount+"개");
-    })
-    //사이즈 옵션이 바뀔때, 아래에 있는 상품 옵션을 바꾸는 함수
-    $("#size").on("change",function(){
-      let productSize = $("select[id=size]").val();
-      $("#sizeSpan").text(productSize);
-    })
-
-    //구매 버튼을 눌렀을 때
-    $("button[role='buyButton']").on("click", function (e) {
-      e.preventDefault();
-
-      //로그인이 되었는지 체크
-      let member = "${member}";
-      if(member == null||member == ''){
-          alert("로그인이 필요합니다.");
-          location.href = "${contextPath}/member/loginForm.do";
-          return;
-      }
-      //사이즈 옵션이 만약 선택되지 않았을 때라면 필수옵션을 선택해 달라는 모달을 띄우고 리턴
-      let productSize = $("select[id=size]").val();
-      if(productSize==$("option[id=notSelected]").val()){
-          $("#selectRequiredOptionModal").modal('show');
-          return;
-      }   
-      //주문 정보가 들어간 폼을 만드는 함수
-      let newForm = fn_makeNewForm(productSize);
-      newForm.attr("action", "${contextPath}/order/newOrder")
-      $("body").append(newForm);
-      newForm.submit();
-      //.submit(); -- 주문페이지가 만들어지지 않았기 때문에 submit을 시키지 않음 
-    });
-
-    $("button[role='cartButton']").on("click", function (e) {
-      console.log("cartButton clicked!");
-      e.preventDefault();
-      //꼭 member를 "" 로 감싸야 오류가 발생하지 않음(만약 감싸지 않으면 공백이 들어가기 때문)
-      //로그인 상태 체크
-      let member = "${member}";
-      if(member == null||member == ''){
-          alert("로그인이 필요합니다.");
-          location.href = "${contextPath}/member/loginForm.do";
-          return;
-      }
-      //필수옵션 선택 체크
-      let productSize = $("select[id=size]").val();
-      if(productSize==$("option[id=notSelected]").val()){
-          $("#selectRequiredOptionModal").modal('show');
-          return;
-      }   
-      //주문 정보가 들어간 폼을 새로 만들어서 newForm이라는 지역변수에 저장
-      let newForm = fn_makeNewForm(productSize);
-
-      //폼에 담긴 정보를 json형태로 보낼 수 있게 바꿔주는 함수 (serialize)
-      let formData = newForm.serialize();
-      $.ajax({
-          type : 'post',
-          url : '${contextPath}/cart/addCart',
-          data : formData,
-          success: function(result){
-            
-            $("#cartModal .modal-body").html(result);
-            $("#cartModal").modal("show");
-          },
-          error:function(request, status, error){
-          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
-      })
-             
-    });
-      
-    });
-    //주문 정보가 담긴 폼을 만드는 함수
-    function fn_makeNewForm(productSize){
-      let newForm = $("<form></form>");
-          newForm.attr("action", "${contextPath}/cart/addCart");
-          newForm.attr("method", "post");
-          newForm.append(
-          $("<input />", {
-              type: "text",
-              name: "productId",
-              value: "${product.id}",
-          })
-          );
-          let productCount = $("#productCount").val();
-          newForm.append(
-          $("<input />", {
-              type: "text",
-              name: "productCount",
-              value: productCount,
-          })
-          );
-            
-          newForm.append(
-          $("<input />", {
-              type: "text",
-              name: "productSize",
-              value: productSize,
-          })
-      );
-      
-     return newForm;
-    }
-  </script>
 </html>
