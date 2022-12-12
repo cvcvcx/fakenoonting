@@ -35,7 +35,7 @@ public class CartController implements CartControllerInterface {
         cartItemVO.setMemberId(member.getId());
         cartService.addCartItem(cartItemVO);
 
-        return "redirect:/cart/list";
+        return "redirect:/cart/modalList";
 }
 
     // 선택된 카트 상품 여러개를 받아와야 하기 때문에 List로 id를 여러개 받아온 뒤, 리스트에 담겨있는 아이디를 통해 데이터베이스에 있는
@@ -46,18 +46,18 @@ public class CartController implements CartControllerInterface {
         for (Long cartItemId : cartItemIdArr) {
             cartService.deleteCartItem(cartItemId);
         }
-        return "redirect:/cart/list";
+        return "redirect:/cart/modalList";
     }
 
 
-    @GetMapping("/list")
-    public ModelAndView cartList(Model model, HttpSession httpSession) {
+    @GetMapping("/modalList")
+    public ModelAndView cartListModal(Model model, HttpSession httpSession) {
         MemberVO member = (MemberVO) httpSession.getAttribute("member");
         List<CartItemVO> cartList = cartService.findCartItemsByMemberId(member);
         log.info("cartList 진행중...");
         model.addAttribute("cartList", cartList);
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/cart/cart");
+        mav.setViewName("/cart/modalCart");
         return mav;
     }
 
