@@ -229,6 +229,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             >
                               확인
                             </button>
+
                           </div>
                         </div>
                       </div>
@@ -264,11 +265,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             장바구니에 상품이 정상적으로 담겼습니다.
                           </div>
                           <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-light"
-                              data-bs-dismiss="modal"
-                            >
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
                               쇼핑계속하기
                             </button>
                             <button type="button" class="btn btn-dark">
@@ -452,8 +449,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <script>
 
+      $(function(){
         //총 상품금액을 구하는 함수
-      $("#productCount").on("change",function (e){
+        $("#productCount").on("change",function (e){
         let productCount = $("#productCount").val();
         productCount =  Number(productCount);
         let productPrice = "${product.price}";
@@ -476,7 +474,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         //로그인이 되었는지 체크
         let member = "${member}";
         if(member == null||member == ''){
-            alert("로그인이 필요합니다.")
+            alert("로그인이 필요합니다.");
+
             return;
         }
         //사이즈 옵션이 만약 선택되지 않았을 때라면 필수옵션을 선택해 달라는 모달을 띄우고 리턴
@@ -487,9 +486,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }   
         //주문 정보가 들어간 폼을 만드는 함수
         let newForm = fn_makeNewForm(productSize);
-        
+        newForm.attr("action", "${contextPath}/order/newOrder")
+        $("body").append(newForm);
+        newForm.submit();
         //.submit(); -- 주문페이지가 만들어지지 않았기 때문에 submit을 시키지 않음 
       });
+
       $("button[role='cartButton']").on("click", function (e) {
         console.log("cartButton clicked!");
         e.preventDefault();
@@ -497,7 +499,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         //로그인 상태 체크
         let member = "${member}";
         if(member == null||member == ''){
-            alert("로그인이 필요합니다.")
+            alert("로그인이 필요합니다.");
+            location.href = "${contextPath}/member/loginForm.do";
             return;
         }
         //필수옵션 선택 체크
@@ -525,6 +528,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         	}
         })
                
+      });
+        
       });
       //주문 정보가 담긴 폼을 만드는 함수
       function fn_makeNewForm(productSize){
