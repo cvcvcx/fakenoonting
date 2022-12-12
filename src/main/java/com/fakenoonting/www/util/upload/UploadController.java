@@ -58,7 +58,7 @@ public class UploadController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String str = sdf.format(date);
-        String datePath = str.replace("-", File.separator);
+        String datePath = str.replace("-", "/");
 
         File savePath = new File(uploadFolder, datePath);
 

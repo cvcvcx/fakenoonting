@@ -214,17 +214,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 aria-label=""
                 placeholder="받는 사람 이름"
               />
-
-              <select
-                class="form-select"
-                id="gender"
-                name="gender"
-                aria-label="Default select example"
-              >
-                <option selected>성별</option>
-                <option value="">남성</option>
-                <option value="">여성</option>
-              </select>
             </div>
 
             <div class="col-m-3">
