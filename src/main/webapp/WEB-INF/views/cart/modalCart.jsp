@@ -351,6 +351,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }
         fn_deleteCartItem(cartItemIdArr);
       }
+      
       //체크된 상품 최종 가격 계산
       function checkedCalculatePrice() {
         let resultPrice = 0;
