@@ -385,6 +385,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               $("#card_" + cancelCartItemId).slideUp(400, function () {
                 $("#card_" + cancelCartItemId).remove();
                 checkedCalculatePrice();
+                fn_checkedItemCount();
               });
             });
           },
