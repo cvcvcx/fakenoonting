@@ -466,7 +466,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         $.ajax({
           type: "get",
           url: "${contextPath}/reviewList",
-          data: {productId: ${product.id}},
+          data: {productId: "${product.id}"},
           success: function(result) {
             $("#reviewList").html(result);
           },
@@ -489,7 +489,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           $.ajax({
             type: "get",
             url: "${contextPath}/questionList",
-            data: {productId: ${product.id}},
+            data: {productId: "${product.id}"},
             success: function(result) {
               $("#questionList").html(result);
             },

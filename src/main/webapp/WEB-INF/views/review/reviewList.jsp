@@ -115,7 +115,7 @@
                                             </c:choose>
                                         </div>
                                         <div class="progress m-2 col-9">
-                                            <div class="progress-bar bg-dark" role="progressbar" aria-label="progressbar label" style="width: ${item2}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-dark" role="progressbar" aria-label="progressbar label" style="width: '${item2}%';" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <div class="col-1">
                                             ${item1}
@@ -145,7 +145,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="#"><img src="images/cat1.jpg" width="142" height="157"></a>
+                    <a href="#"><img src="${contextPath}/resources/images/cat1.jpg" width="142" height="157"></a>
 <%--                    <a href="#"><img src="images/cat10.jpg" width="142" height="157"></a>--%>
 <%--                    <a href="#"><img src="images/cat11.png" width="142" height="157"></a>--%>
 <%--                    <a href="#"><img src="images/cat12.png" width="142" height="157"></a>--%>
@@ -488,10 +488,10 @@
                 type: "get",
                 url: "${contextPath}/reviewList",
                 data: {
-                    productId: ${review.productId},
+                    productId: "${review.productId}",
                     page: 1,
                     range: 1,
-                    sortNum: ${sortNum},
+                    sortNum: "${sortNum}",
                     keyword: $("#searchKeyword").val()
                 },
                 success: function(result){
