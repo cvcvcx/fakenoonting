@@ -60,33 +60,33 @@ public class ReviewService {
         return reviewRepository.findAllPaging(pagination);
     }
 
-    // 특정 상품의 모든 리뷰 평점순으로 찾기
-    public List<Review> findAllByGrade(Map<String, Object> map) throws Exception {
-        return reviewRepository.findAllByGrade(map);
-    }
-
     // 특정 상품의 리뷰 평균 평점 구하기
-    public double getAvgGrade(Long productId) throws Exception {
-        return reviewRepository.getAvgGrade(productId);
+    public double getProdRvAvgGrade(Long productId) throws Exception {
+        return reviewRepository.getProdRvAvgGrade(productId);
     }
 
-    //특정 상품의 평점별 리뷰 개수 리스
-    public int getReviewCountListByGrade(Map<String, Object> map) throws Exception {
-        return reviewRepository.getReviewCountListByGrade(map);
-    }
-
-    // 특정 유저의 모든 리뷰 찾기
-    public List<Review> findAllByMemberId(int memberId) throws Exception {
-        return reviewRepository.findAllByMemberId(memberId);
-    }
-
-    // 모든 상품의 모든 리뷰 개수
-    public int productReviewCount(Map<String, Object> map) throws Exception {
-        return reviewRepository.productReviewCount(map);
+    // 특정 상품의 모든 리뷰 개수
+    public int getProdRvCnt(Map<String, Object> map) throws Exception {
+        return reviewRepository.getProdRvCnt(map);
     }
 
     // 특정 상품의 모든 리뷰 찾기
-    public List<Review> findAllByProductId(Map<String, Object> map) throws Exception {
-        return reviewRepository.findAllByProductId(map);
+    public List<Review> findAllProdRvByProductId(Map<String, Object> map) throws Exception {
+        return reviewRepository.findAllProdRvByProductId(map);
+    }
+
+    // 특정 상품의 평점별 리뷰 개수
+    public int getProdRvCntByGrade(Map<String, Object> map) throws Exception {
+        return reviewRepository.getProdRvCntByGrade(map);
+    }
+
+    // 특정 상품의 모든 리뷰 평점순으로 찾기
+    public List<Review> findAllProdRvByGrade(Map<String, Object> map) throws Exception {
+        return reviewRepository.findAllProdRvByGrade(map);
+    }
+
+    // 특정 유저의 모든 리뷰 찾기
+    public List<Review> findAllProdRvByMemberId(int memberId) throws Exception {
+        return reviewRepository.findAllProdRvByMemberId(memberId);
     }
 }

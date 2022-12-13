@@ -63,40 +63,39 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         return sqlSession.selectList(namespace + ".findAllPaging", pagination);
     }
 
-    // 특정 상품의 모든 리뷰 평점순으로 찾기
-    @Override
-    public List<Review> findAllByGrade(Map<String, Object> map) throws Exception {
-        return sqlSession.selectList(namespace + ".findAllByGrade", map);
-    }
-
     // 특정 상품의 리뷰 평균 평점 구하기
     @Override
-    public double getAvgGrade(Long productId) throws Exception {
-        return sqlSession.selectOne(namespace + ".getAvgGrade", productId);
-    }
-
-    // 특정 상품의 평점별 리뷰 개수 리스트
-    @Override
-    public int getReviewCountListByGrade(Map<String, Object> map) throws Exception {
-        return sqlSession.selectOne(namespace + ".getReviewCountListByGrade", map);
-    }
-
-    // 특정 유저의 모든 리뷰 찾기
-    @Override
-    public List<Review> findAllByMemberId(int memberId) throws Exception {
-        return sqlSession.selectList(namespace + ".findAllReviewsByMemberId");
+    public double getProdRvAvgGrade(Long productId) throws Exception {
+        return sqlSession.selectOne(namespace + ".getProdRvAvgGrade", productId);
     }
 
     // 특정 상품의 모든 리뷰 개수
     @Override
-    public int productReviewCount(Map<String, Object> map) throws Exception {
-        return sqlSession.selectOne(namespace + ".productReviewCount", map);
+    public int getProdRvCnt(Map<String, Object> map) throws Exception {
+        return sqlSession.selectOne(namespace + ".getProdRvCnt", map);
     }
 
     // 특정 상품의 모든 리뷰 찾기
     @Override
-    public List<Review> findAllByProductId(Map<String, Object> map) throws Exception {
-        return sqlSession.selectList(namespace + ".findAllByProductId", map);
+    public List<Review> findAllProdRvByProductId(Map<String, Object> map) throws Exception {
+        return sqlSession.selectList(namespace + ".findAllProdRvByProductId", map);
     }
 
+    // 특정 상품의 평점별 리뷰 개수
+    @Override
+    public int getProdRvCntByGrade(Map<String, Object> map) throws Exception {
+        return sqlSession.selectOne(namespace + ".getProdRvCntByGrade", map);
+    }
+
+    // 특정 상품의 모든 리뷰 평점순으로 찾기
+    @Override
+    public List<Review> findAllProdRvByGrade(Map<String, Object> map) throws Exception {
+        return sqlSession.selectList(namespace + ".findAllProdRvByGrade", map);
+    }
+
+    // 특정 유저의 모든 리뷰 찾기
+    @Override
+    public List<Review> findAllProdRvByMemberId(int memberId) throws Exception {
+        return sqlSession.selectList(namespace + ".findAllProdRvByMemberId");
+    }
 }
