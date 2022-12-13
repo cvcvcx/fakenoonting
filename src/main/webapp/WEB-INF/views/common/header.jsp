@@ -86,7 +86,7 @@
 										class="material-icons-outlined"> favorite_border </span></a>
 								</div>
 								<div class="">
-									<a href="" ${contextPath}/cart/list" class="cart_icon"> <span
+									<a href=" ${contextPath}/cart/list" class="cart_icon"> <span
 										class="material-icons-outlined"> shopping_cart </span></a>
 								</div>
 							</form>
@@ -200,9 +200,9 @@
 					<c:choose>
 						<c:when test="${isLogOn == true && member != null}">
 							<li><a class="dropdown-item"
-								href="${contextPath}/product/adminList">adminList</a></li>
+								href="${contextPath}/product/adminList">admin 물품 리스트</a></li>
 							<li><a class="dropdown-item"
-								href="${contextPath}/product/upload">adminProductUpload</a></li>
+								href="${contextPath}/product/upload">admin 물품 등록</a></li>
 						</c:when>
 					</c:choose>
 
