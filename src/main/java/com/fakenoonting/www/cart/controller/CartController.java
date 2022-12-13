@@ -22,8 +22,6 @@ public class CartController implements CartControllerInterface {
 	@Autowired
 	private CartService cartService;
 
-	
-	
 	// Cart List 연결 및 memberVO과 해당 사람의 CartList 추출
 	@GetMapping("/list")
 	public ModelAndView cartList(Model model, HttpSession httpSession) {
@@ -43,15 +41,15 @@ public class CartController implements CartControllerInterface {
 	public ModelAndView cartListModal(Model model, HttpSession httpSession) {
 		MemberVO member = (MemberVO) httpSession.getAttribute("member");
 		List<CartItemVO> cartList = cartService.findCartItemsByMemberId(member);
-		
+
 		log.info("cartList(modal) 진행 중...");
-		
+
 		model.addAttribute("cartList", cartList);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/cart/modalCart");
 		return mav;
 	}
-	
+
 	// Cart 물품 추가. (물품 상세 페이지에서만 담을 수 있음)
 	@PostMapping("/addCart")
 	public String addCart(CartItemVO cartItemVO, HttpSession httpSession) {
