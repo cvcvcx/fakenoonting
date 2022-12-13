@@ -94,7 +94,7 @@
 
 
     <!-- 특정 상품의 리뷰 평균 평점 구하기 -->
-    <select id="getAvgGrade" parameterType="Long" resultType="double">
+    <select id="getProdRvAvgGrade" parameterType="Long" resultType="double">
         <![CDATA[
             SELECT ifnull(AVG(grade), 0)
             FROM review
@@ -103,7 +103,7 @@
     </select>
 
     <!-- 특정 상품의 모든 리뷰 개수 -->
-    <select id="productReviewCount" parameterType="HashMap" resultType="int">
+    <select id="getProdRvCnt" parameterType="HashMap" resultType="int">
         <![CDATA[
             SELECT COUNT(*)
             FROM review
@@ -117,7 +117,7 @@
     </select>
 
     <!-- 특정 상품의 모든 리뷰 찾기 -->
-    <select id="findAllByProductId" parameterType="HashMap" resultMap="reviewResult">
+    <select id="findAllProdRvByProductId" parameterType="HashMap" resultMap="reviewResult">
         <![CDATA[
             SELECT *
             FROM review
@@ -134,51 +134,43 @@
         ]]>
     </select>
 
-    <!-- 특정 상품의 평점별 리뷰 개수 리스트 -->
-    <select id="getReviewCountListByGrade" parameterType="HashMap" resultType="int">
+    <!-- 특정 상품의 평점별 리뷰 개수 -->
+    <select id="getProdRvCntByGrade" parameterType="HashMap" resultType="int">
         <![CDATA[
             SELECT COUNT(*)
             FROM review
             WHERE product_id = #{productId}
         ]]>
-<!--        <if test="contents != null and contents != '' ">-->
-<!--            <![CDATA[-->
-<!--                AND content LIKE CONCAT('%', #{contents}, '%')-->
-<!--            ]]>-->
-<!--        </if>-->
+        <if test="contents != null and contents != '' ">
+            <![CDATA[
+                AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
         <![CDATA[
             AND grade = #{grade}
         ]]>
     </select>
 
     <!-- 특정 상품의 모든 리뷰 평점순으로 찾기 -->
-    <select id="findAllByGrade" parameterType="HashMap" resultMap="reviewResult">
+    <select id="findAllProdRvByGrade" parameterType="HashMap" resultMap="reviewResult">
         <![CDATA[
             SELECT *
             FROM review
             WHERE product_id = #{productId}
         ]]>
-<!--        <if test="contents != null and contents != '' ">-->
-<!--            <![CDATA[-->
-<!--                AND content LIKE CONCAT('%', #{contents}, '%')-->
-<!--            ]]>-->
-<!--        </if>-->
+        <if test="contents != null and contents != '' ">
+            <![CDATA[
+                AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
         <![CDATA[
             ORDER BY grade DESC, create_date DESC
             LIMIT #{startList}, #{listSize}
         ]]>
     </select>
 
-
-
-
-
-
-
-
-
     <!-- 특정 유저의 모든 리뷰 찾기 -->
-    <select id="findAllByMemberId" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+    <select id="findAllProdRvByMemberId" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
         <![CDATA[
             SELECT *
             FROM review
@@ -186,32 +178,5 @@
             ORDER BY create_date DESC
         ]]>
     </select>
-
-
-
-
-
-
-<!--    &lt;!&ndash; 특정 상품의 모든 리뷰중 검색된 리뷰들의 개수 &ndash;&gt;-->
-<!--    <select id="getSearchCount" parameterType="HashMap" resultType="int">-->
-<!--        <![CDATA[-->
-<!--            SELECT COUNT(*)-->
-<!--            FROM review-->
-<!--            WHERE product_id = #{productId}-->
-<!--            AND content LIKE CONCAT('%', #{contents}, '%')-->
-<!--        ]]>-->
-<!--    </select>-->
-
-<!--    &lt;!&ndash; 특정 상품의 검색된 모든 리뷰 찾기 &ndash;&gt;-->
-<!--    <select id="findAllBySearch" parameterType="HashMap" resultType="com.fakenoonting.www.reviews.domain.Review" resultMap="reviewResult">-->
-<!--        <![CDATA[-->
-<!--            SELECT *-->
-<!--            FROM review-->
-<!--            WHERE product_id = #{productId}-->
-<!--            AND content LIKE CONCAT('%', #{contents}, '%')-->
-<!--            ORDER BY create_date DESC-->
-<!--            LIMIT #{startList}, #{listSize}-->
-<!--        ]]>-->
-<!--    </select>-->
 
 </mapper>

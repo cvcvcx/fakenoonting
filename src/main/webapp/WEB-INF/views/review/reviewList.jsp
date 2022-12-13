@@ -158,9 +158,9 @@
             <hr class="mb-0"/>
             <div class="row">
                 <div class="col my-auto" style="font-size:20px;">
-                    <a href="javascript:void(0);" data-sort="1" onclick="fn_sortRecommend('${pagination.page}', '${pagination.range}', '${param.productId}')" class="link-secondary" id="recommend" style="text-decoration: none">추천순</a>
-                    <a href="javascript:void(0);" data-sort="2" onclick="fn_sortRecently('${pagination.page}', '${pagination.range}', '${param.productId}')" class="link-secondary" id="recently" style="text-decoration: none">최신순</a>
-                    <a href="javascript:void(0);" data-sort="3" onclick="fn_sortGrade('${pagination.page}', '${pagination.range}', '${param.productId}')" class="link-secondary" id="grade" style="text-decoration: none">평점순</a>
+                    <a href="javascript:void(0);" data-sort="1" onclick="fn_sortRecommend('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="recommend" style="text-decoration: none">추천순</a>
+                    <a href="javascript:void(0);" data-sort="2" onclick="fn_sortRecently('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="recently" style="text-decoration: none">최신순</a>
+                    <a href="javascript:void(0);" data-sort="3" onclick="fn_sortGrade('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="grade" style="text-decoration: none">평점순</a>
                 </div>
                 <div class="col my-auto" style="font-size:20px;">
                     <a href="#" class="link-secondary d-flex justify-content-end" style="text-decoration: none">
@@ -333,7 +333,7 @@
                             <li class="page-item">
                                 <a class="page-link link-dark"
                                    href="javascript:void(0);"
-                                   onclick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${param.productId}', '${param.sortNum}', '${keyword}')"
+                                   onclick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${review.productId}', '${sortNum}', '${keyword}')"
                                    aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -344,7 +344,7 @@
                             <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
                                 <a class="page-link link-dark"
                                    href="javascript:void(0);"
-                                   onclick="fn_pagination('${idx}', '${pagination.range}', '${param.productId}', '${param.sortNum}', '${keyword}')">
+                                   onclick="fn_pagination('${idx}', '${pagination.range}', '${review.productId}', '${sortNum}', '${keyword}')">
                                     ${idx}
                                 </a>
                             </li>
@@ -354,7 +354,7 @@
                             <li class="page-item">
                                 <a class="page-link link-dark"
                                    href="javascript:void(0);"
-                                   onclick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}', '${param.productId}', '${param.sortNum}', '${keyword}')"
+                                   onclick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}', '${review.productId}', '${sortNum}', '${keyword}')"
                                    aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
@@ -382,7 +382,7 @@
         }
     });
 
-    function fn_sortCommon(page, range, productId, sortNum) {
+    function fn_sortCommon(page, range, productId, sortNum, contents) {
         $.ajax({
             type: "get",
             url: "${contextPath}/reviewList",
@@ -390,7 +390,8 @@
                 productId: productId,
                 page: page,
                 range: range,
-                sortNum: sortNum
+                sortNum: sortNum,
+                keyword: contents
             },
             success: function(result){
                 $("#reviewListForm").html(result);
@@ -410,22 +411,22 @@
         });
     }
 
-    function fn_sortRecommend(page, range, productId) {
+    function fn_sortRecommend(page, range, productId, contents) {
         var element = document.getElementById("recommend");
         var sortNum = element.dataset.sort;
-        fn_sortCommon(page, range, productId, sortNum);
+        fn_sortCommon(page, range, productId, sortNum, contents);
     }
 
-    function fn_sortRecently(page, range, productId) {
+    function fn_sortRecently(page, range, productId, contents) {
         var element = document.getElementById("recently");
         var sortNum = element.dataset.sort;
-        fn_sortCommon(page, range, productId, sortNum);
+        fn_sortCommon(page, range, productId, sortNum, contents);
     }
 
-    function fn_sortGrade(page, range, productId) {
+    function fn_sortGrade(page, range, productId, contents) {
         var element = document.getElementById("grade");
         var sortNum = element.dataset.sort;
-        fn_sortCommon(page, range, productId, sortNum);
+        fn_sortCommon(page, range, productId, sortNum, contents);
     }
 
     function fn_pagingCommon(page, range, productId, sortNum, contents) {
