@@ -13,7 +13,7 @@ public class Review {
 
     private int reviewId;
     private int memberId;
-    private int productId;
+    private Long productId;
     private String contents;
     private Timestamp regDate;
     private int grade;

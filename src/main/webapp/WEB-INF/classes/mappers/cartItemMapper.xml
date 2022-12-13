@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fakenoonting.cartItem">
+    <resultMap id="cartItem" type="com.fakenoonting.www.cart.vo.CartItemVO">
+        <result column="id" property="id" />
+        <result column="member_id" property="memberId" />
+        <result column="product_id" property="productId" />
+        <result column="content" property="content" />
+        <result column="product_size" property="productSize" />
+        <result column="product_count" property="productCount" />
+        <result column="create_date" property="createDate" />
+    </resultMap>
+
+    <insert id="addCartItem" parameterType="com.fakenoonting.www.cart.vo.CartItemVO">
+        <![CDATA[
+            insert into cart_item(member_id,product_id,item_count,item_size)
+            values(#{memberId},#{productId},#{productCount},#{productSize})
+        ]]>
+    </insert>
+    <select id="findCartItemsByMemberId" parameterType="com.fakenoonting.www.member.vo.MemberVO" resultMap="cartItem">
+        <![CDATA[
+            select *
+            from cart_item
+            where member_id = #{id}
+        ]]>
+    </select>
+</mapper>

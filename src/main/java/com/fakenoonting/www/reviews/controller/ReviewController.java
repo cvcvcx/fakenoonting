@@ -3,6 +3,7 @@ package com.fakenoonting.www.reviews.controller;
 import com.fakenoonting.www.reviews.domain.Review;
 import com.fakenoonting.www.reviews.service.ReviewService;
 import com.fakenoonting.www.util.paging.Pagination;
+import com.fakenoonting.www.util.search.Search;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Controller
 public class ReviewController {
 
-//    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
     private final ReviewService reviewService;
 
     @Autowired
@@ -25,19 +31,84 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    // 아작스로 추가전까지 임시페이지 만들어서 사용
-    @RequestMapping(value = "reviewTest", method = RequestMethod.GET)
-    public String reviewTest(Model model
-            , @RequestParam(required = false, defaultValue = "1") int page
-            , @RequestParam(required = false, defaultValue = "1") int range) throws Exception {
+    // 리뷰 뷰 불러오기
+    @RequestMapping(value = "/reviewList", method = RequestMethod.GET)
+    public String reviewList(Model model
+            , @RequestParam(defaultValue = "1") int page
+            , @RequestParam(defaultValue = "1") int range
+            , Review review
+            , @RequestParam(defaultValue = "2") int sortNum
+            , @RequestParam(required = false) String keyword
+    ) throws Exception {
 
-        model.addAttribute("allReviewCount", reviewService.allReviewCount());
-        model.addAttribute("avgGrade", reviewService.getAvgGrade(10)); // product_id랑 연동될때까지 10 넣어둠
+        model.addAttribute("sortNum", sortNum);
+        model.addAttribute("keyword", keyword);
 
-        Pagination pagination = new Pagination();
-        pagination.pageInfo(page, range, reviewService.allReviewCount());
-        model.addAttribute("pagination", pagination);
-        model.addAttribute("boardList", reviewService.findAllPaging(pagination));
+        Search search = new Search();
+        search.setKeyword(keyword);
+
+//        Map<String, Object> cntMap = new HashMap<>();
+//        cntMap.put("productId", review.getProductId());
+//        model.addAttribute("productReviewCount", reviewService.productReviewCount(cntMap));
+//        cntMap.put("contents", search.getKeyword());
+//        model.addAttribute("productReviewCount2", reviewService.productReviewCount(cntMap));
+//
+//        search.pageInfo(page, range, reviewService.productReviewCount(cntMap));
+//        model.addAttribute("pagination", search);
+
+        double avgGrade = reviewService.getAvgGrade(review.getProductId());
+        String format = String.format("%.1f", avgGrade);
+        double v = Double.parseDouble(format);
+        model.addAttribute("avgGrade", v);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("productId", review.getProductId());
+        model.addAttribute("productReviewCount", reviewService.productReviewCount(result));
+        result.put("contents", search.getKeyword());
+        model.addAttribute("productReviewCount2", reviewService.productReviewCount(result));
+//        result.put("startList", search.getStartList());
+//        result.put("listSize", search.getListSize());
+
+        search.pageInfo(page, range, reviewService.productReviewCount(result));
+        model.addAttribute("pagination", search);
+
+        result.put("startList", search.getStartList());
+        result.put("listSize", search.getListSize());
+
+        // 1:추천, 2:최신, 3:평점
+        if (sortNum == 1) {
+            model.addAttribute("dataList", reviewService.findAllByProductId(result));
+        } else if (sortNum == 2) {
+            model.addAttribute("dataList", reviewService.findAllByProductId(result));
+        } else if (sortNum == 3) {
+            model.addAttribute("dataList", reviewService.findAllByGrade(result));
+        } else {
+            model.addAttribute("dataList", reviewService.findAllByProductId(result));
+        }
+
+
+//        // 평점별 리뷰수
+//        Map<String, Object> result2 = new HashMap<>();
+//
+//        List<Integer> gradeCountList = new ArrayList<>();
+//        List<Double> gradeList = new ArrayList<>();
+//
+//        for (int i = 0; i <= 4; ++i) {
+//            result2.put("productId", review.getProductId());
+//            result2.put("grade", 5-i);
+//            result2.put("contents", search.getKeyword());
+//
+//            gradeCountList.add(i, reviewService.getReviewCountListByGrade(result2));
+//            gradeList.add(i, ((double) (reviewService.getReviewCountListByGrade(result2))
+//                    / (double) reviewService.productReviewCount(review) * 100));
+//        }
+//
+//        model.addAttribute("getReviewCountListByGrade", gradeCountList);
+//        model.addAttribute("gradeRate", gradeList);
+//
+//        double peopleLikeCount = ((double)(gradeCountList.get(0) + gradeCountList.get(1))
+//                / (double)reviewService.productReviewCount(review) * 100.00);
+//        model.addAttribute("peopleLikeCount", String.format("%.0f", peopleLikeCount));
 
         return "review/reviewList";
     }
@@ -50,17 +121,16 @@ public class ReviewController {
 
     // 리뷰 등록하기
     @RequestMapping(value = "/registerReview", method = RequestMethod.POST)
-    public String registerReview(Review review, RedirectAttributes rttr) throws Exception {
+    public String registerReview(Review review, RedirectAttributes rttr, int productId) throws Exception {
         reviewService.register(review);
         rttr.addFlashAttribute("result", "success");
-        return "redirect:reviewTest";
+        return "redirect:/product/detail?id=" + productId;
     }
 
 
 
 
 
-//
 //    // 리뷰 존재 여부 확인
 //    @RequestMapping(value = "/isExist", method = RequestMethod.POST)
 //    public String isExist(Review review) throws Exception {

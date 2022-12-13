@@ -304,145 +304,44 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <!-- end 제품 상세 이미지, 텍스트 -->
 
       <!-- start section -->
-      <section
-        class="border-top border-width-1px border-color-medium-gray pt-0 wow animate__fadeIn mt-4"
-      >
-        <div class="container-fluid mt-4">
-          <div class="row">
-            <div class="col-12 p-0 tab-style-07">
-              <ul
-                class="nav nav-tabs justify-content-center text-center alt-font font-weight-500 text-uppercase margin-9-rem-bottom border-bottom border-color-medium-gray md-margin-50px-bottom sm-margin-35px-bottom"
-              >
-                <li class="nav-item">
-                  <a
-                    data-bs-toggle="tab"
-                    href="#description"
-                    class="nav-link active"
-                  >
-                    제품설명
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    data-bs-toggle="tab"
-                    href="#additionalinformation"
-                  >
-                    추가정보
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="tab-content">
-            <!-- start tab item -->
-            <div id="description" class="tab-pane fade in active show">
-              <div class="row align-items-center">
-                <div class="col-12 col-xl-5 col-lg-6 md-margin-50px-bottom">
-                    <p>
-                        ${product.content}
-                    </p>
-                </div>
-                <div class="col-12 col-lg-6 offset-xl-1">
-                  <img
-                    src="${contextPath}/resources/images/cat1.jpg"
-                    alt="제품"
-                    class="w-50"
-                  />
-                </div>
-              </div>
-            </div>
-            <!-- end tab item -->
-            <!-- start tab item -->
-            <div id="additionalinformation" class="tab-pane fade">
-              <div class="row align-items-center">
-                <div class="col-12">
-                  <table class="table-style-02">
-                    <tbody>
-                      <tr>
-                        <th class="text-extra-dark-gray font-weight-500">
-                          색상
-                        </th>
-                        <td>
-                          블랙, 그레이, 네이비, 다크베이지, 아이보리,
-                          라이트베이지, 인디블루
-                        </td>
-                      </tr>
-                      <tr class="bg-light-gray">
-                        <th class="text-extra-dark-gray font-weight-500">
-                          사이즈
-                        </th>
-                        <td> S, M, L, XL</td>
-                      </tr>
-                      <tr>
-                        <th class="text-extra-dark-gray font-weight-500">
-                          소재
-                        </th>
-                        <td>면 100%</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <!-- end tab item -->
-          </div>
-        </div>
-
         <%-- 리뷰관련 --%>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12 p-0 tab-style-07">
-              <ul
-                class="nav nav-tabs justify-content-center text-center alt-font font-weight-500 text-uppercase margin-9-rem-bottom border-bottom border-color-medium-gray md-margin-50px-bottom sm-margin-35px-bottom"
-              >
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#reviews">
-                    구매후기 (<%-- ${allReviewCount} --%>)
-                  </a>
-                </li>
-              </ul>
+        <section class="border-top border-width-1px border-color-medium-gray pt-0">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="justify-content-center text-center">
+                  <a class="btn btn-dark btn-sm" href="#reviews" id="reviews">구매후기 (5)</a>
+                  <a class="btn btn-light btn-sm" href="#qanda">상품문의 (2)</a>
+                </div>
+              </div>
+              <hr />
             </div>
           </div>
-        </div>
-        <div class="container">
-          <div class="tab-content">
-            <%-- 아작스 추가전까지 봉인--%>
-
-            <jsp:include page="../review/reviewList.jsp" flush="false" />
-            <a href="${contextPath}/reviewTest">
-              <button>리뷰확인하러가기</button>
-            </a>
+          <div class="container">
+            <div class="tab-content" id="reviewList">
+              <jsp:include page="../review/reviewList.jsp" flush="false" />
+            </div>
           </div>
-        </div>
 
         <%-- 문의관련 --%>
-        <div class="container-fluid">
+          <div class="container-fluid"></div>
           <div class="row">
-            <div class="col-12 p-0 tab-style-07">
-              <ul
-                class="nav nav-tabs justify-content-center text-center alt-font font-weight-500 text-uppercase margin-9-rem-bottom border-bottom border-color-medium-gray md-margin-50px-bottom sm-margin-35px-bottom"
-              >
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#reviews">
-                    Q&A
-                  </a>
-                </li>
-              </ul>
+            <div class="col-12">
+              <div class="justify-content-center text-center">
+                <a class="btn btn-light btn-sm" href="#reviews">구매후기 (5)</a>
+                <a class="btn btn-dark btn-sm" href="#qanda" id="qanda">상품문의 (2)</a>
+              </div>
+            </div>
+            <hr />
+          </div>
+          </div>
+          <div>
+            <div class="container">
+              <div class="tab-content" id="questionList">
+                <jsp:include page="../question/questionList.jsp" />
+              </div>
             </div>
           </div>
-        </div>
-        <div class="container">
-          <div class="tab-content">
-            <%-- 아작스 추가전까지 봉인--%> <%--
-            <jsp:include page="../question/questionList.jsp" />--%>
-            <a href="${contextPath}/questionTest">
-              <button>문의확인하러가기</button>
-            </a>
-          </div>
-        </div>
       </section>
       <!-- end section -->
     </article>
@@ -562,6 +461,53 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         
        return newForm;
       }
+
+      $(document).ready(function(){
+        $.ajax({
+          type: "get",
+          url: "${contextPath}/reviewList",
+          data: {productId: ${product.id}},
+          success: function(result) {
+            $("#reviewList").html(result);
+          },
+          error: function(request, error) {
+              alert(
+                      "code:" +
+                      request.status +
+                      "\n" +
+                      "message:" +
+                      request.responseText +
+                      "\n" +
+                      "error:" +
+                      error
+              );
+          }
+        });
+      });
+
+        $(document).ready(function(){
+          $.ajax({
+            type: "get",
+            url: "${contextPath}/questionList",
+            data: {productId: ${product.id}},
+            success: function(result) {
+              $("#questionList").html(result);
+            },
+            error: function(request, error) {
+              alert(
+                      "code:" +
+                      request.status +
+                      "\n" +
+                      "message:" +
+                      request.responseText +
+                      "\n" +
+                      "error:" +
+                      error
+              );
+            }
+          });
+        });
+
     </script>
     <!-- footer -->
     <hr />

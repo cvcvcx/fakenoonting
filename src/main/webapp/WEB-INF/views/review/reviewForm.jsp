@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt"	uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%	request.setCharacterEncoding("UTF-8"); %>
-
 <!doctype html>
 <html lang="ko">
 <head>
@@ -26,8 +25,13 @@
 
 <article>
 	<div class="container" role="main">
+		<h2>상품번호: ${param.productId} </h2>
+		<br>
 		<h2>리뷰작성</h2>
 		<form name="form" id="form" role="form" method="post" action="/registerReview">
+
+			<input type="hidden" name="productId" value="${param.productId}">
+
 			<div class="mb-3">
 				<label for="contents">리뷰내용</label>
 				<textarea class="form-control" rows="5" name="contents" id="contents" placeholder="내용을 입력해 주세요"></textarea>
@@ -36,14 +40,15 @@
 				<label for="grade">평점</label>
 				<input type="number" class="form-control" name="grade" id="grade" placeholder="평점을 선택해 주세요">
 			</div>
-		<jsp:include page="../util/upload/uploadAjax.jsp" flush="false"/>
+			<jsp:include page="../util/upload/uploadAjax.jsp" flush="false"/>
 		</form>
 		<div>
 			<button type="button" class="btn btn-sm btn-primary" id="btnSave">저장하기</button>
-			<button type="button" class="btn btn-sm btn-primary" id="btnList">뒤로가기</button>
+			<button type="button" class="btn btn-sm btn-primary" id="btnBack">뒤로가기</button>
 		</div>
 	</div>
 </article>
+
 <script src="${contextPath}/resources/js/upload.js"></script>
 <script>
 	$("#btnSave").on("click", function(e) {
@@ -60,12 +65,12 @@
 			$("#grade").focus();
 			return false;
 		}
+
         let formObj = $("form[role='form']");
-         let str = "";
+		let str = "";
 
         $("#uploadResult li").each(function(i,obj){
         let jobj = $(obj);
-        console.log(jobj)
         str +=
                   "<input type='text' name='reviewImgItems[" +
                   i +
@@ -85,14 +90,16 @@
                   jobj.data("path") +
                   "'>";
         });
-    formObj.append(str);
-    //.submit();
-    //데이터가 어떻게 추가되는지 확인하기 위해 submit을 주석처리
+		formObj.append(str);
+		//.submit();
+		//데이터가 어떻게 추가되는지 확인하기 위해 submit을 주석처리
+
+		$("#form").submit();
 	});
 
-	$("#btnList").on("click", function(e) {
+	$("#btnBack").on("click", function(e) {
 		e.preventDefault();
-		location.href="/reviewTest";
+		location.href="${contextPath}/product/detail?id=" + ${param.productId};
 	});
 </script>
 

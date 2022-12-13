@@ -225,8 +225,7 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
-<<<<<<< HEAD
+
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,intellij,maven
-=======
-# End of https://www.toptal.com/developers/gitignore/api/java,eclipse,maven,intellij
->>>>>>> 69b5bbb7be6440d13b8a60fbe6662ba9c70a4f59
+
+# End of https://www.toptal.com/developers/gitignore/api/java,intellij,maven,eclipse
