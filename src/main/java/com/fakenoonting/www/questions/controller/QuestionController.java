@@ -22,9 +22,8 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-    // 아작스로 추가전까지 임시페이지 만들어서 사용
-    @RequestMapping(value = "/questionTest", method = RequestMethod.GET)
-    public String questionTest(Model model
+    @RequestMapping(value = "/questionList", method = RequestMethod.GET)
+    public String questionList(Model model
             , @RequestParam(required = false, defaultValue = "1") int page
             , @RequestParam(required = false, defaultValue = "1") int range) throws Exception {
 

@@ -29,4 +29,22 @@ public class MemberVO {
 	private Date delete_date; // ID 삭제 날짜
 	private int money_point; // 포인트
 
+
+	//database에 존재하지 않는 변수들
+	//010
+	private String phoneNum1;
+	//0000
+	private String phoneNum2;
+	//0000
+	private String phoneNum3;
+
+	public void changePhoneNumberForm(){
+
+
+		String[] splitPhoneNumber = phone.split("-");
+		setPhoneNum1(splitPhoneNumber[0]);
+		setPhoneNum2(splitPhoneNumber[1]);
+		setPhoneNum3(splitPhoneNumber[2]);
+	}
+
 }

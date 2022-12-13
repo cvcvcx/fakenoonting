@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReviewService {
@@ -59,9 +60,19 @@ public class ReviewService {
         return reviewRepository.findAllPaging(pagination);
     }
 
-    // 특정 상품의 모든 리뷰 찾기
-    public List<Review> findAllByProductId(int productId) throws Exception {
-        return reviewRepository.findAllByProductId(productId);
+    // 특정 상품의 모든 리뷰 평점순으로 찾기
+    public List<Review> findAllByGrade(Map<String, Object> map) throws Exception {
+        return reviewRepository.findAllByGrade(map);
+    }
+
+    // 특정 상품의 리뷰 평균 평점 구하기
+    public double getAvgGrade(Long productId) throws Exception {
+        return reviewRepository.getAvgGrade(productId);
+    }
+
+    //특정 상품의 평점별 리뷰 개수 리스
+    public int getReviewCountListByGrade(Map<String, Object> map) throws Exception {
+        return reviewRepository.getReviewCountListByGrade(map);
     }
 
     // 특정 유저의 모든 리뷰 찾기
@@ -69,19 +80,13 @@ public class ReviewService {
         return reviewRepository.findAllByMemberId(memberId);
     }
 
-    // 특정 상품의 모든 리뷰 평점순으로 찾기
-    public List<Review> findAllByGrade(int productId) throws Exception {
-        return reviewRepository.findAllByGrade(productId);
-    }
-
-    // 특정 상품의 리뷰 평균 평점 구하기
-    public double getAvgGrade(int productId) throws Exception {
-        return reviewRepository.getAvgGrade(productId);
-    }
-
     // 모든 상품의 모든 리뷰 개수
-    public int allReviewCount() throws Exception {
-        return reviewRepository.allReviewCount();
+    public int productReviewCount(Map<String, Object> map) throws Exception {
+        return reviewRepository.productReviewCount(map);
     }
 
+    // 특정 상품의 모든 리뷰 찾기
+    public List<Review> findAllByProductId(Map<String, Object> map) throws Exception {
+        return reviewRepository.findAllByProductId(map);
+    }
 }
