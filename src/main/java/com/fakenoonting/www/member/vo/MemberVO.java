@@ -19,7 +19,7 @@ public class MemberVO {
 	private String nick; // 사용자 닉네임
 	private String name; // 사용자 이름
 	private Character gender;
-	private Integer phone;
+	private String phone;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birth;
 	private String address1; // 상위 주소
@@ -39,11 +39,12 @@ public class MemberVO {
 	private String phoneNum3;
 
 	public void changePhoneNumberForm(){
-		Integer oriPhoneNum = getPhone();
-		String stringPhoneNum =  oriPhoneNum.toString();
-		phoneNum1 = stringPhoneNum.substring(0,3);
-		phoneNum2 = stringPhoneNum.substring(3,7);
-		phoneNum3 = stringPhoneNum.substring(7);
+
+
+		String[] splitPhoneNumber = phone.split("-");
+		setPhoneNum1(splitPhoneNumber[0]);
+		setPhoneNum2(splitPhoneNumber[1]);
+		setPhoneNum3(splitPhoneNumber[2]);
 	}
 
 }
