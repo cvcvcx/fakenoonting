@@ -29,9 +29,7 @@
 		<br>
 		<h2>리뷰작성</h2>
 		<form name="form" id="form" role="form" method="post" action="/registerReview">
-
 			<input type="hidden" name="productId" value="${param.productId}">
-
 			<div class="mb-3">
 				<label for="contents">리뷰내용</label>
 				<textarea class="form-control" rows="5" name="contents" id="contents" placeholder="내용을 입력해 주세요"></textarea>
@@ -72,23 +70,23 @@
         $("#uploadResult li").each(function(i,obj){
         let jobj = $(obj);
         str +=
-                  "<input type='text' name='reviewImgItems[" +
-                  i +
-                  "].orgImgName' value='" +
-                  jobj.data("filename") +
-                  "'>";
-                str +=
-                  "<input type='text' name='reviewImgItems[" +
-                  i +
-                  "].imgUUID' value='" +
-                  jobj.data("uuid") +
-                  "'>";
-                str +=
-                  "<input type='text' name='reviewImgItems[" +
-                  i +
-                  "].uploadPath' value='" +
-                  jobj.data("path") +
-                  "'>";
+			  "<input type='text' name='reviewImgItems[" +
+			  i +
+			  "].orgImgName' value='" +
+			  jobj.data("filename") +
+			  "'>";
+		str +=
+			  "<input type='text' name='reviewImgItems[" +
+			  i +
+			  "].imgUUID' value='" +
+			  jobj.data("uuid") +
+			  "'>";
+		str +=
+			  "<input type='text' name='reviewImgItems[" +
+			  i +
+			  "].uploadPath' value='" +
+			  jobj.data("path") +
+			  "'>";
         });
 		formObj.append(str);
 		//.submit();

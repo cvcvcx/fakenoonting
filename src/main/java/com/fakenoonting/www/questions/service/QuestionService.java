@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class QuestionService {
@@ -43,11 +44,6 @@ public class QuestionService {
         return questionRepository.findAllPaging(pagination);
     }
 
-    // 특정 상품의 모든 문의글 찾기
-    public List<Question> findAllByProductId(int productId) throws Exception {
-        return questionRepository.findAllByProductId(productId);
-    }
-
     // 특정 유저의 모든 문의글 찾기
     public List<Question> findAllByMemberId(int memberId) throws Exception {
         return questionRepository.findAllByMemberId(memberId);
@@ -63,10 +59,17 @@ public class QuestionService {
         return questionRepository.allQuestionCount();
     }
 
+
+
+
     // 특정 상품의 모든 문의글 개수
-    public int productQuestionCount(int productId) throws Exception {
-        return questionRepository.productQuestionCount(productId);
+    public int getProdQuesCnt(int productId) throws Exception {
+        return questionRepository.getProdQuesCnt(productId);
     }
 
+    // 특정 상품의 모든 문의글 찾기
+    public List<Question> findAllProdQuesByProductId(Map<String, Object> map) throws Exception {
+        return questionRepository.findAllProdQuesByProductId(map);
+    }
 
 }

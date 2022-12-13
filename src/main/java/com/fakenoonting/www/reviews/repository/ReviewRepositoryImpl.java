@@ -96,6 +96,6 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     // 특정 유저의 모든 리뷰 찾기
     @Override
     public List<Review> findAllProdRvByMemberId(int memberId) throws Exception {
-        return sqlSession.selectList(namespace + ".findAllProdRvByMemberId");
+        return sqlSession.selectList(namespace + ".findAllProdRvByMemberId", memberId);
     }
 }

@@ -25,6 +25,9 @@
 <body>
 
 <article>
+
+	<div>상품고유번호: ${param.productId}</div>
+
 	<div class="container" role="main">
 		<h2>문의작성</h2>
 		<form name="form" id="form" role="form" method="post" action="/registerQuestion">

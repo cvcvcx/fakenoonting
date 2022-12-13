@@ -30,7 +30,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    // 리뷰 뷰 불러오기
+    // 상품상세창의 리뷰 불러오기
     @RequestMapping(value = "/reviewList", method = RequestMethod.GET)
     public String reviewList(Model model
             , @RequestParam(defaultValue = "1") int page
@@ -105,7 +105,7 @@ public class ReviewController {
     @RequestMapping(value = "/registerReview", method = RequestMethod.POST)
     public String registerReview(Review review, RedirectAttributes rttr, int productId) throws Exception {
         reviewService.register(review);
-        rttr.addFlashAttribute("result", "success");
+        rttr.addFlashAttribute("result", "register success");
         return "redirect:/product/detail?id=" + productId;
     }
 

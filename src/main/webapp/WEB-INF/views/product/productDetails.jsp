@@ -349,7 +349,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <div>
             <div class="container">
               <div class="tab-content" id="questionList">
-                <jsp:include page="../question/questionList.jsp" />
+                <jsp:include page="../question/questionList.jsp" flush="false" />
               </div>
             </div>
           </div>
@@ -486,28 +486,28 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         });
       });
 
-        $(document).ready(function(){
-          $.ajax({
-            type: "get",
-            url: "${contextPath}/questionList",
-            data: {productId: ${product.id}},
-            success: function(result) {
-              $("#questionList").html(result);
-            },
-            error: function(request, error) {
-              alert(
-                      "code:" +
-                      request.status +
-                      "\n" +
-                      "message:" +
-                      request.responseText +
-                      "\n" +
-                      "error:" +
-                      error
-              );
-            }
-          });
+      $(document).ready(function(){
+        $.ajax({
+          type: "get",
+          url: "${contextPath}/questionList",
+          data: {productId: ${product.id}},
+          success: function(result) {
+            $("#questionList").html(result);
+          },
+          error: function(request, error) {
+            alert(
+                    "code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" +
+                    "error:" +
+                    error
+            );
+          }
         });
+      });
 
     </script>
     <!-- footer -->
