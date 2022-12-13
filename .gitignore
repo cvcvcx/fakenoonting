@@ -227,6 +227,7 @@ buildNumber.properties
 
 # user input ignoreFile and Folder
 classes/
+.idea
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,intellij,maven
 
