@@ -304,7 +304,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <!-- end 제품 상세 이미지, 텍스트 -->
 
       <!-- start section -->
-        <%-- 리뷰관련 --%>
+        <!-- 리뷰관련 -->
         <section class="border-top border-width-1px border-color-medium-gray pt-0">
           <div class="container-fluid">
             <div class="row">
@@ -323,7 +323,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </div>
           </div>
 
-        <%-- 문의관련 --%>
+        <!-- 문의관련 -->
           <div class="container-fluid"></div>
           <div class="row">
             <div class="col-12">
