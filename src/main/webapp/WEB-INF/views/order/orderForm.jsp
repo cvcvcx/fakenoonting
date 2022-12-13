@@ -212,7 +212,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 id="name"
                 name="name"
                 aria-label=""
+                value="${member.name}"
                 placeholder="받는 사람 이름"
+                readonly
               />
             </div>
 
@@ -222,10 +224,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 class="form-control"
                 width="50px"
                 height="30"
+                value="${member.nick}"
                 id="nick"
                 name="nick"
                 maxlength=""
                 placeholder="닉네임"
+                readonly
               />
             </div>
 
@@ -248,7 +252,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 class="form-control"
                 id="phone2"
                 placeholder=""
+                value="${member.phoneNum2}"
                 aria-label=""
+                readonly
               />
               <span class="input-group-text">-</span>
               <input
@@ -256,7 +262,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 class="form-control"
                 id="phone3"
                 placeholder=""
+                value="${member.phoneNum3}"
                 aria-label=""
+                readonly
               />
             </div>
 
@@ -266,7 +274,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 class="form-control"
                 id="zipcode"
                 name="zipcode"
+                value="${member.zipcode}"
                 placeholder="우편번호"
+                readonly
               />
 
               <div class="form-group d-grid" id="loginbtn">
@@ -289,6 +299,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   placeholder="주소"
                   id="address1"
                   name="address1"
+                  value="${member.address1}"
+                  readonly
                 />
               </div>
 
@@ -300,7 +312,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     placeholder="Leave a comment here"
                     id="address2"
                     name="address2"
-                  ></textarea>
+                    readonly
+                  >
+${member.address2}</textarea
+                  >
                   <label for="floatingTextarea">상세주소</label>
                 </div>
               </div>
@@ -763,6 +778,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           checkedCalculatePrice();
         }
       );
+      //라디오 버튼에 따라 멤버의 주소를 보여주던가, 아니면 내가 입력할 수 있게 바꿈
+      $("input[name='addressInfo']").on("click", function (e) {
+        fn_changeAddressInfo(e);
+      });
 
       // 이벤트 끝 ================================================================================================
 
@@ -896,7 +915,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       //OrderForm으로 보내야 하기때문에, orderController에서 처리함
       //선택된 상품을 리스트로 만들어서 orderController의 postOrder에서 처리하게 됨
-      function fn_buySelectedItem() {
+      function fn_makeOrderSelectedItem() {
         //post요청을 보낼 form 생성
         let newForm = document.createElement("form");
         newForm.setAttribute("method", "Post");
@@ -943,6 +962,45 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         });
         document.body.append(newForm);
         newForm.submit();
+      }
+      //배송 정보를 라디오 버튼의 아이디에 따라서 수정하는 함수
+      function fn_changeAddressInfo(e) {
+        if (e.target.id === "newAddress") {
+          //readonly 속성을 제거
+          $("#name").removeAttr("readonly");
+          $("#nick").removeAttr("readonly");
+          $("#zipcode").removeAttr("readonly");
+          $("#address1").removeAttr("readonly");
+          $("#address2").removeAttr("readonly");
+          $("#phone2").removeAttr("readonly");
+          $("#phone3").removeAttr("readonly");
+          //각 항목을 빈칸으로 만듬
+          $("#name").val("");
+          $("#nick").val("");
+          $("#zipcode").val("");
+          $("#address1").val("");
+          $("#address2").val("");
+          $("#phone2").val("");
+          $("#phone3").val("");
+          return;
+        }
+        //각 항목을 입력 불가능으로 바꿈
+        $("#name").attr("readonly", "true");
+        $("#nick").attr("readonly", "true");
+        $("#zipcode").attr("readonly", "true");
+        $("#address1").attr("readonly", "true");
+        $("#address2").attr("readonly", "true");
+        $("#phone2").attr("readonly", "true");
+        $("#phone3").attr("readonly", "true");
+        //각 항목의 값을 저장된 값으로 변경함
+        $("#name").val("${member.name}");
+        $("#nick").val("${member.nick}");
+        $("#zipcode").val("${member.zipcode}");
+        $("#address1").val("${member.address1}");
+        $("#address2").val("${member.address2}");
+        $("#phone2").val("${member.phoneNum2}");
+        $("#phone3").val("${member.phoneNum3}");
+        return;
       }
     </script>
   </body>
