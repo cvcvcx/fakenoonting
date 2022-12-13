@@ -123,7 +123,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </div>
                 <div class="col-4 col-md-7">
                   <input
-                    class="input-text qty-text"
+                    class="input-text form-control qty-text"
                     type="number"
                     id="productCount"
                     value="1"
