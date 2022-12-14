@@ -119,6 +119,11 @@ request.setCharacterEncoding("UTF-8");
 	<!-- ============================================================================ -->
 	<script>
 
+	// =================================================================================//
+	// 이미지(thumnail, content) 업로드 script																	//
+	// =================================================================================//
+
+	// thumnail 이미지 업로드
       $("input[id='thumbnailInput']").on("change", function (e) {
         let formData = new FormData();
         let inputFile = $('input[id="thumbnailInput"]');
@@ -147,17 +152,22 @@ request.setCharacterEncoding("UTF-8");
         });
       });
       
+	// thumnail 업로드 한 이미지 보이게 하기
       function showThumbnailUploadImage(uploadResultArr) {
-        /* 전달받은 데이터 검증 */
+        /* 업로드 한 파일 검증 */
         if (!uploadResultArr || uploadResultArr.length == 0) {
           return;
         }
 
         let thumbnailUploadResult = $("#thumbnailUploadResult");
         let str = "";
+        
+        // 받은 result 이미지가 여러개일 수 있으므로 each로 각각 썸네일을 보이게 할 수 있는 태그 생성
         $(uploadResultArr).each(function (i, obj) {
-          let fileCallPath =encodeURIComponent(obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName);
-            console.log(fileCallPath);
+        	// result 의  uploadPath, imgUUID, orgImgName 들을 하나의 String으로 합친다
+          let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName);
+          console.log(fileCallPath);
+          
           str += "<li class='result_li' data-path='" + obj.uploadPath + "'";
           str +=
             " data-uuid='" +
@@ -179,9 +189,11 @@ request.setCharacterEncoding("UTF-8");
           str += "</div>";
           str += "</li>";
         });
+        
         thumbnailUploadResult.append(str);
       }
 
+  	// content 이미지 업로드
       $("input[id='contentInput']").on("change", function (e) {
         let formData = new FormData();
         let inputFile = $('input[id="contentInput"]');
@@ -210,6 +222,7 @@ request.setCharacterEncoding("UTF-8");
         });
       });
       
+  	// content 업로드 한 이미지 보이게 하기
       function showContentUploadImage(uploadResultArr) {
         /* 전달받은 데이터 검증 */
         if (!uploadResultArr || uploadResultArr.length == 0) {
@@ -227,7 +240,6 @@ request.setCharacterEncoding("UTF-8");
             obj.imgUUID +
             "' data-filename= '" +
             obj.orgImgName +
-       
             "'>";
           str += "<div id='result_card'>";
           str +=
@@ -243,31 +255,18 @@ request.setCharacterEncoding("UTF-8");
           str += "</div>";
           str += "</li>";
         });
+        
         uploadResult.append(str);
       }
-      let maxSize = 1048576; //1MB
-
-      function fileCheck(fileName, fileSize) {
-        if (fileSize >= maxSize) {
-          alert("파일 사이즈 초과");
-          return false;
-        }
-
-        if (!regex.test(fileName)) {
-          alert("해당 종류의 파일은 업로드할 수 없습니다.");
-          return false;
-        }
-
-        return true;
-      }
-      /* 이미지 삭제 버튼 동작 */
-      $("#uploadResult").on("click", ".imgDeleteBtn", function (e) {
+      
+      // 업로드 후 보여지는 이미지 삭제 버튼 동작
+      $("#contentUploadResult").on("click", ".imgDeleteBtn", function (e) {
+		// 바로 아래에 함수 있음
         deleteFile();
       });
 
       function deleteFile() {
         let targetFile = $(".imgDeleteBtn").data("file");
-
         let targetDiv = $("#result_card");
 
         $.ajax({
@@ -285,12 +284,18 @@ request.setCharacterEncoding("UTF-8");
           },
           error: function (result) {
             console.log(result);
-
             alert("파일을 삭제하지 못하였습니다.");
           },
         });
       }
 
+  	// =================================================================================//
+  	// End - 이미지(thumnail, content) 업로드 script																	//
+  	// =================================================================================//
+
+  	
+  	
+  	
       let sizeDiv = $("#size-div");
       let sizeListCount = 0;
       $("button[id='addSize']").on("click", function (e) {

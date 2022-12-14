@@ -30,51 +30,57 @@ import java.util.UUID;
 @RequestMapping("util/upload")
 public class UploadController {
 
-    //servlet context에 설정되어있음(빈 객체 등록)
+    // 업로드 시킨 파일 저장 경로 - servlet context에서 같은 name으로 설정(빈 객체 등록)
     @Resource(name = "uploadPath")
     String uploadPath;
-    //Post 요청이 왔을때 여러 파일이여도 모두 처리할 수 있게끔 배열처리
-    //현재 업로드 요청이 있었을 때를 폴더로 삼아서 저장하도록 한다.
-
-    //만약, 프로필 같은 사진을 업로드 한다고 해도, 여기로 요청만 보내진다면 서버로 저장할 수 있음
-    //상품 후기 글도 마찬가지
+    
+    // 이미지, 영상 파일 업로드(Ajax)  
+    // 여러 개의 이미지 파일 처리가능 (배열)
+    // 사이트에서 사용하는 모든 곳에서 사용 되는 사진 업로드 가능 / 상품 후기 글도 마찬가지
     @PostMapping(value = "/uploadImage", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<ImgItemVO>> uploadAjax(MultipartFile[] uploadFile) throws IOException {
 
-        for(MultipartFile multipartFile: uploadFile){
+        log.info("uploadAjaxPost 요청 진행 중...");
+
+    	// 올린 사진들이 이미지 사진인지를 각각 체크
+    	for(MultipartFile multipartFile: uploadFile){
             File checkfile = new File(multipartFile.getOriginalFilename());
             String type = null;
-
             type = Files.probeContentType(checkfile.toPath());
+            
+            // 이미지 타입이 아니면 나가리 시킴
             if(!type.startsWith("image")){
                 List<ImgItemVO> imgs = null;
                 return new ResponseEntity<>(imgs, HttpStatus.BAD_REQUEST);
             }
         }
 
-        log.info("uploadAjaxPost요청 진행중...");
-        String uploadFolder = uploadPath;
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String str = sdf.format(date);
         String datePath = str.replace("-", "/");
 
+        String uploadFolder = uploadPath;
+
+        // File 객체에 파일이 들어있는 디렉토리 / 파일 이름 을 넣는다.
         File savePath = new File(uploadFolder, datePath);
 
+        // File 객체가 존재하지 않으면 새로운 폴더를 생성해준다.
         if(savePath.exists() == false){
             savePath.mkdirs();
         }
 
+        
+        
         List<ImgItemVO> productImgs = new ArrayList<>();
 
-
-
+        // ImageVO에 값 세팅 및 업로드 시 보이는 작은 이미지 생성
         for(MultipartFile multipartFile: uploadFile){
 
             ImgItemVO img = new ImgItemVO();
 
             String uploadFileName = multipartFile.getOriginalFilename();
+            log.info("multipartFile.getName" + multipartFile.getOriginalFilename());
 
             img.setOrgImgName(uploadFileName);
             img.setUploadPath("/"+datePath);
@@ -83,10 +89,10 @@ public class UploadController {
             img.setImgUUID(uuid);
 
             uploadFileName = uuid+"_"+uploadFileName;
-            log.info("multipartFile.getName" + multipartFile.getOriginalFilename());
 
             File saveFile = new File(savePath,uploadFileName);
 
+            // 업로드 시 보이는 작은 이미지 생성
             try {
                 multipartFile.transferTo(saveFile);
                 File thumbnailFile = new File(savePath,"s_"+uploadFileName);
@@ -96,13 +102,18 @@ public class UploadController {
             }catch (Exception e){
                 e.printStackTrace();
             }
+            
+            // ImgItemVO List에 하나씩 넣는다
             productImgs.add(img);
         }
+        
         ResponseEntity<List<ImgItemVO>> result = new ResponseEntity<>(productImgs, HttpStatus.OK);
+        
         return result;
 
     }
 
+    // 업로드 후 결과물 디스플레이
     @GetMapping("/display")
     public ResponseEntity<byte[]> getImage(String fileName) throws IOException {
         File file = new File(uploadPath+fileName);
@@ -113,6 +124,7 @@ public class UploadController {
         return result;
     }
     
+    //
     @PostMapping("/deleteFile")
     public ResponseEntity<String> deleteFile(String fileName){
         File file = null;
