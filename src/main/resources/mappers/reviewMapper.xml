@@ -13,14 +13,14 @@
         <result column="create_date" property="regDate"/>
         <result column="grade" property="grade"/>
         <result column="isExist" property="isExist"/>
+        <result column="nickname" property="nickname"/>
     </resultMap>
 
-    <!-- 리뷰 등록하기    멤버아이디 수정하기!! -->
+    <!-- 리뷰 등록하기 -->
     <insert id="register" parameterType="com.fakenoonting.www.reviews.domain.Review">
         <![CDATA[
-			INSERT INTO review (id, member_id, product_id, content, create_date, grade, isExist)
-			SELECT IFNULL(MAX(id), 0)+1, 111, #{productId}, #{contents}, now(), #{grade}, 1
-            FROM review
+			INSERT INTO review (member_id, product_id, content, create_date, grade, isExist, nickname)
+            values (#{memberId}, #{productId}, #{contents}, now(), #{grade}, 1, #{nickname})
 		]]>
     </insert>
 

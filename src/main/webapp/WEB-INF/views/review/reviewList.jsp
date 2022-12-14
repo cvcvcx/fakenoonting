@@ -82,7 +82,16 @@
                             </c:choose>
                         </span>
                     </div>
-                    ${peopleLikeCount}%의 구매자가 이 상품을 좋아합니다.
+
+                    <c:choose>
+                        <c:when test="${peopleLikeCount == 'NaN'}">
+                            0%의 구매자가 이 상품을 좋아합니다.
+                        </c:when>
+                        <c:when test="${peopleLikeCount != NaN}">
+                            <c:out value="${peopleLikeCount}" />%의 구매자가 이 상품을 좋아합니다.
+                        </c:when>
+                    </c:choose>
+
                     <form action="${contextPath}/reviewForm">
                         <input type="hidden" name="productId" value="${param.productId}">
                         <button type="submit" class="btn btn-secondary mt-4" id="registerReview">상품 리뷰 작성하기</button>
@@ -115,7 +124,7 @@
                                             </c:choose>
                                         </div>
                                         <div class="progress m-2 col-9">
-                                            <div class="progress-bar bg-dark" role="progressbar" aria-label="progressbar label" style="width: ${item2}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-dark" role="progressbar" aria-label="progressbar label" style="width: ${item2/productReviewCount*100}%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0"></div>
                                         </div>
                                         <div class="col-1">
                                             ${item1}
@@ -261,7 +270,7 @@
                 <tbody>
                 <c:choose>
                     <c:when test="${empty dataList}" >
-                        <tr><td colspan="5" align-text="center">검색결과가 없습니다.</td></tr>
+                        <tr><td colspan="5" align-text="center">리뷰가 없습니다.</td></tr>
                     </c:when>
                     <c:when test="${!empty dataList}">
                         <c:forEach var="list" items="${dataList}">
@@ -306,7 +315,7 @@
                         </div>
                         <div class="col-4">
                             <div class="col-12 mb-1">
-                                <div><span class="fw-bold"><c:out value="${list.memberId}"/>(멤버아이디 닉네임으로수정??)</span>님의 리뷰입니다.</div>
+                                <div><span class="fw-bold"><c:out value="${list.nickname}"/></span>님의 리뷰입니다.</div>
                             </div>
                             <div class="row text-secondary">
                                 <div>키 : <span class="mx-1">160cm</span></div>

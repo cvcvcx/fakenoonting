@@ -1,5 +1,7 @@
 package com.fakenoonting.www.reviews.controller;
 
+import com.fakenoonting.www.member.service.MemberServiceInterface;
+import com.fakenoonting.www.member.vo.MemberVO;
 import com.fakenoonting.www.reviews.domain.Review;
 import com.fakenoonting.www.reviews.service.ReviewService;
 import com.fakenoonting.www.util.search.Search;
@@ -13,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,6 +65,7 @@ public class ReviewController {
         }
         model.addAttribute("getReviewCountListByGrade", gradeCountList);
         model.addAttribute("gradeRate", gradeCountList);
+        logger.info(gradeCountList.toString());
 
         double peopleLikeCount = ((double)(gradeCountList.get(0) + gradeCountList.get(1))
                 / (double)reviewService.getProdRvCnt(result) * 100.00);
@@ -98,14 +104,37 @@ public class ReviewController {
 
     // 리뷰 작성 폼으로 이동
     @RequestMapping(value = "/reviewForm", method = RequestMethod.GET)
-    public String reviewForm() throws Exception {
-        return "review/reviewForm";
+    public String reviewForm(HttpServletRequest request) throws Exception {
+
+        HttpSession session = request.getSession();
+        MemberVO memberVO = (MemberVO)session.getAttribute("member");
+        Object isLoginOn = session.getAttribute("isLogOn");
+
+
+        if (memberVO == null || isLoginOn == null) {
+            logger.info("로그인해라 알림창 띄워줘야할듯");
+            return "redirect:/member/loginForm.do";
+        } else {
+            logger.info(memberVO.toString());
+            logger.info(isLoginOn.toString());
+
+            return "review/reviewForm";
+        }
     }
 
     // 리뷰 등록하기
     @RequestMapping(value = "/registerReview", method = RequestMethod.POST)
-    public String registerReview(Review review, RedirectAttributes rttr, int productId) throws Exception {
+    public String registerReview(Review review, RedirectAttributes rttr, int productId, HttpServletRequest request) throws Exception {
+
+        HttpSession session = request.getSession();
+        MemberVO memberVO = (MemberVO)session.getAttribute("member");
+
+        review.setMemberId(memberVO.getId());
+        review.setNickname(memberVO.getNick());
+
         reviewService.register(review);
+        logger.info(review.toString());
+
         rttr.addFlashAttribute("result", "register success");
         return "redirect:/product/detail?id=" + productId;
     }
