@@ -120,7 +120,7 @@
 											<ul class="navbar-nav justify-content-end flex-grow-1 pe-1">
 												<li class="nav-item"><b>MEMBER LOGIN</b></li>
 												<li class="nav-item"><input class="form-control "
-													type="text" id="email" name="email" placeholder="E-MAIL"></li>
+													type="text" id="emailsub" name="emailsub" placeholder="E-MAIL"></li>
 												<li class="nav-item"><input class="form-control "
 													type="password" id="pwd" name="pwd" placeholder="Password"></li>
 												<div class="" 	>

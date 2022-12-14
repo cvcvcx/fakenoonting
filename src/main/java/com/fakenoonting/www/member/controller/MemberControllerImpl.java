@@ -18,17 +18,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fakenoonting.www.member.dao.MemberDAOImpl;
 import com.fakenoonting.www.member.service.MemberServiceImpl;
 import com.fakenoonting.www.member.vo.MemberVO;
 
+import lombok.extern.slf4j.Slf4j;
 
 
+
+@Slf4j
 @Controller("memberController")
 @RequestMapping("/member") // /member 라고 들어오는 모든 URI 는 다 여기서 처리
 public class MemberControllerImpl implements MemberControllerInterface {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MemberControllerImpl.class);
-
 	@Autowired
 	private MemberVO member;
 	
@@ -75,7 +77,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	public ModelAndView updateMemberForm(HttpSession httpSession, HttpServletRequest request, HttpServletResponse response) {
 		
 		MemberVO memberVO = (MemberVO)httpSession.getAttribute("member");
-		logger.info("MemberController 회원 정보 추출 memberVO ==> " + memberVO);
+		log.info("MemberController 회원 정보 추출 memberVO ==> " + memberVO);
 		
 		// birth 생년 월일 모양 변환
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -101,14 +103,14 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	public ModelAndView login(@ModelAttribute("memberVO") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		logger.info("MemberControllerImpl login() 실행 시작...");
+		log.info("login() 실행 시작...");
 		System.out.println("로그인 정보 => " + memberVO.getEmail() + " : " + memberVO.getPwd());
 		
 		ModelAndView mav = new ModelAndView();
 				
 		// 객체 하나를 만들어서 매칭 결과 저장 (로그인한 정보가 일단 DB에 있는지 확인을 위해)
 		member = memberService.loginByID(memberVO);
-		System.out.println("로그인 정보 결과 => " + member);
+		log.info("로그인 정보 결과 => " + member);
 		
 		// 로그인한 정보가 DB에 있는지 확인
 		if(member != null) {	// 로그인 정보에 해당하는 자료가 있으면
@@ -139,7 +141,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response)
 	throws Exception{
 	
-		System.out.println("MemberController logout() 실행... ");
+		log.info("logout() 실행... ");
 
 		HttpSession session = request.getSession();		
 		session.removeAttribute("member");
@@ -184,7 +186,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 	@RequestMapping(value = "/emailCheck", method = RequestMethod.POST)
 	public int emailCheck(MemberVO memberVO) throws Exception {
 
-		System.out.println("MemberController 아이디(email) 중복 검사 (AJAX) email ==> " + memberVO.getEmail());
+		log.info("아이디(email) 중복 검사 (AJAX) email ==> " + memberVO.getEmail());
 		
 		int result = memberService.emailCheck(memberVO);
 		System.out.println("result : " + result);
@@ -221,7 +223,7 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		
 		MemberVO memberVO = (MemberVO)httpSession.getAttribute("member");
 		String email = memberVO.getEmail();
-		logger.info("MemberController 회원 정보 삭제 전 정보 확인 email ==> " + email);
+		log.info("회원 정보 삭제 전 정보 확인 email ==> " + email);
 		
 		request.setCharacterEncoding("UTF-8");
 		int result = memberService.deleteMember(email);

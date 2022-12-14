@@ -364,7 +364,7 @@ ul {
 											// 성별 공란 판단
 											if ( $("#gender").val() == "") {
 												alert("성별을 고르셔야 합니다.");
-												$("#email").focus();
+												$("#gender").focus();
 												return false;
 											} 
 
