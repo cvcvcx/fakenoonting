@@ -2,55 +2,31 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fakenoonting.cartItem">
-    <resultMap id="cartItem" type="com.fakenoonting.www.cart.vo.CartItemVO">
+<mapper namespace="com.fakenoonting.order">
+
+    <resultMap id="order" type="com.fakenoonting.www.order.vo.OrdersVO">
         <result column="id" property="id" />
         <result column="member_id" property="memberId" />
-        <result column="product_id" property="productId" />
-        <result column="item_size" property="productSize" />
-        <result column="item_count" property="productCount" />
-        <result column="create_date" property="createDate" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="address1" property="address1" />
+        <result column="address2" property="address2" />
+        <result column="status" property="status" />
+        <result column="shipping_request" property="shippingRequest" />
+        <result column="pay_point" property="payPoint" />
     </resultMap>
 
-    <insert id="addCartItem" parameterType="com.fakenoonting.www.cart.vo.CartItemVO">
+
+
+    <insert id="saveOrder" parameterType="com.fakenoonting.www.order.vo.OrdersVO">
         <![CDATA[
-            insert into cart_item(member_id,product_id,item_count,item_size)
-            values(#{memberId},#{productId},#{productCount},#{productSize})
+            insert into orders(member_id,name,phone,address1,address2,zipcode,shipping_request,pay_point)
+            values(#{memberId},#{name},#{phone},#{address1},#{address2},#{zipcode},#{shippingRequest},#{payPoint})
         ]]>
         <selectKey resultType="long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
 
-    <select id="findCartItemById" parameterType="com.fakenoonting.www.cart.vo.CartItemVO" resultMap="cartItem">
-        <![CDATA[
-            select *
-            from cart_item
-            where id = #{id}
-        ]]>
-    </select>
 
-    <select id="findCartItemsByMemberId" parameterType="com.fakenoonting.www.member.vo.MemberVO" resultMap="cartItem">
-        <![CDATA[
-            select *
-            from cart_item
-            where member_id = #{id}
-        ]]>
-    </select>
-
-    <update id="updateCartItem" parameterType="com.fakenoonting.www.cart.vo.CartItemVO">
-        <![CDATA[
-            update cart_item
-            set item_count = #{productCount}
-            where id = #{id}
-        ]]>
-    </update>
-
-    <delete id="deleteCartItem" parameterType="long">
-        <![CDATA[
-            delete
-            from cart_item
-            where id = #{id}
-        ]]>
-    </delete>
 </mapper>

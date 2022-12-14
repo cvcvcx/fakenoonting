@@ -239,11 +239,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 id="phone1"
                 aria-label="Default select example"
               >
-                <option value="1" selected>010</option>
+                <option value="010" selected>010</option>
 
-                <option value="2">011</option>
-                <option value="3">017</option>
-                <option value="4">019</option>
+                <option value="011">011</option>
+                <option value="017">017</option>
+                <option value="019">019</option>
               </select>
 
               <span class="input-group-text">-</span>
@@ -384,6 +384,7 @@ ${member.address2}</textarea
                                   type="checkbox"
                                   role="cartItemCheckbox"
                                   value="${cartItem.id}"
+                                  checked
                                 />
                               </div>
                               <div class="col-3 align-items-center">
@@ -638,6 +639,7 @@ ${member.address2}</textarea
                                   text-align: center;
                                   vertical-align: middle;
                                 "
+                                id="usePoint"
                                 >0</span
                               >
                               <span
@@ -647,6 +649,7 @@ ${member.address2}</textarea
                                   text-align: center;
                                   vertical-align: middle;
                                 "
+                                id="resultPoint"
                                 >0</span
                               >
                             </div>
@@ -658,11 +661,8 @@ ${member.address2}</textarea
                 </div>
 
                 <div class="input-group d-grid" id="loginbtn">
-                  <a
-                    class="btn btn-outline-warning btn-dark btn-lg"
-                    type="button"
-                    >ORDER</a
-                  >
+                  <input class="btn btn-outline-warning btn-dark btn-lg"
+                  type="button" id="orderBtn" value="ORDER" / >
                 </div>
 
                 <br />
@@ -745,6 +745,8 @@ ${member.address2}</textarea
       // cart 쪽의 script를 긁어와서 수정시작
       // 이벤트 시작 ================================================================================================
       $("document").ready(function () {
+        fn_checkedItemCount();
+        checkedCalculatePrice();
         //cancel 취소 버튼이 눌렸을 때
         $("a[role='cancelBtn']").click(function (e) {
           let cancelCartItemId = e.target.getAttribute("value");
@@ -784,6 +786,11 @@ ${member.address2}</textarea
         fn_changeAddressInfo(e);
       });
 
+      $("#orderBtn").on("click", function () {
+        alert("ORDER btn clicked!");
+        fn_makeOrderSelectedItem();
+      });
+
       // 이벤트 끝 ================================================================================================
 
       //모든 체크박스를 체크하는 함수
@@ -816,6 +823,11 @@ ${member.address2}</textarea
           resultPrice += itemResultPriceNum;
         });
         $("#calculateResultPrice").text(resultPrice + "원");
+        $("#usePoint").text(resultPrice);
+        let myPoint = Number($("#myPoint").text());
+        let usePoint = Number($("#usePoint").text());
+
+        $("#resultPoint").text(myPoint - resultPrice);
       }
 
       function fn_checkedItemCount() {
@@ -920,8 +932,56 @@ ${member.address2}</textarea
         //post요청을 보낼 form 생성
         let newForm = document.createElement("form");
         newForm.setAttribute("method", "Post");
-        newForm.setAttribute("action", "${contextPath}/order/newOrder");
+        newForm.setAttribute("action", "${contextPath}/order/saveOrder");
         newForm.setAttribute("enctype", "application/x-www-form-urlencoded");
+
+        let hiddenInputName = document.createElement("input");
+        let hiddenInputPhone = document.createElement("input");
+        let hiddenInputAddress1 = document.createElement("input");
+        let hiddenInputAddress2 = document.createElement("input");
+        let hiddenInputZipcode = document.createElement("input");
+        let hiddenInputShippingRequest = document.createElement("input");
+        let hiddenInputPayPoint = document.createElement("input");
+
+        let phoneNumber =
+          $("#phone1").val() +
+          "-" +
+          $("#phone2").val() +
+          "-" +
+          $("#phone3").val();
+
+        fn_makeInput(newForm, hiddenInputName, "name", $("#name").val());
+        fn_makeInput(newForm, hiddenInputPhone, "phone", phoneNumber);
+        fn_makeInput(
+          newForm,
+          hiddenInputAddress1,
+          "address1",
+          $("#address1").val()
+        );
+        fn_makeInput(
+          newForm,
+          hiddenInputAddress2,
+          "address2",
+          $("#address2").val()
+        );
+        fn_makeInput(
+          newForm,
+          hiddenInputZipcode,
+          "zipcode",
+          $("#zipcode").val()
+        );
+        fn_makeInput(
+          newForm,
+          hiddenInputShippingRequest,
+          "shippingRequest",
+          $("#deliveryReq").val()
+        );
+        fn_makeInput(
+          newForm,
+          hiddenInputPayPoint,
+          "payPoint",
+          $("#usePoint").text()
+        );
 
         $("input[role='cartItemCheckbox']:checked").each(function (index) {
           let hiddenInputId = document.createElement("input");
@@ -935,10 +995,7 @@ ${member.address2}</textarea
           let itemCountNum = Number(itemCount);
           //cartId를 cartItemVOList의 변수로 넘겨줌
           hiddenInputId.setAttribute("type", "hidden");
-          hiddenInputId.setAttribute(
-            "name",
-            "cartItemVOList[" + index + "].id"
-          );
+          hiddenInputId.setAttribute("name", "cartItems[" + index + "].id");
           hiddenInputId.setAttribute("value", cartItemId);
 
           newForm.append(hiddenInputId);
@@ -946,7 +1003,7 @@ ${member.address2}</textarea
           hiddenInputSize.setAttribute("type", "hidden");
           hiddenInputSize.setAttribute(
             "name",
-            "cartItemVOList[" + index + "].productSize"
+            "cartItems[" + index + "].productSize"
           );
           hiddenInputSize.setAttribute("value", itemSize);
 
@@ -955,7 +1012,7 @@ ${member.address2}</textarea
           hiddenInputCount.setAttribute("type", "hidden");
           hiddenInputCount.setAttribute(
             "name",
-            "cartItemVOList[" + index + "].productCount"
+            "cartItems[" + index + "].productCount"
           );
           hiddenInputCount.setAttribute("value", itemCount);
 
@@ -964,17 +1021,26 @@ ${member.address2}</textarea
         document.body.append(newForm);
         newForm.submit();
       }
+
+      function fn_makeInput(formElement, inputElement, name, value) {
+        inputElement.setAttribute("type", "hidden");
+        inputElement.setAttribute("name", name);
+        inputElement.setAttribute("value", value);
+
+        formElement.append(inputElement);
+      }
+
       //배송 정보를 라디오 버튼의 아이디에 따라서 수정하는 함수
       function fn_changeAddressInfo(e) {
+        document.querySelector("#name").toggleAttribute("readonly");
+        document.querySelector("#nick").toggleAttribute("readonly");
+        document.querySelector("#zipcode").toggleAttribute("readonly");
+        document.querySelector("#address1").toggleAttribute("readonly");
+        document.querySelector("#address2").toggleAttribute("readonly");
+        document.querySelector("#phone2").toggleAttribute("readonly");
+        document.querySelector("#phone3").toggleAttribute("readonly");
         if (e.target.id === "newAddress") {
           //readonly 속성을 제거
-          $("#name").removeAttr("readonly");
-          $("#nick").removeAttr("readonly");
-          $("#zipcode").removeAttr("readonly");
-          $("#address1").removeAttr("readonly");
-          $("#address2").removeAttr("readonly");
-          $("#phone2").removeAttr("readonly");
-          $("#phone3").removeAttr("readonly");
           //각 항목을 빈칸으로 만듬
           $("#name").val("");
           $("#nick").val("");
@@ -985,14 +1051,7 @@ ${member.address2}</textarea
           $("#phone3").val("");
           return;
         }
-        //각 항목을 입력 불가능으로 바꿈
-        $("#name").attr("readonly", "true");
-        $("#nick").attr("readonly", "true");
-        $("#zipcode").attr("readonly", "true");
-        $("#address1").attr("readonly", "true");
-        $("#address2").attr("readonly", "true");
-        $("#phone2").attr("readonly", "true");
-        $("#phone3").attr("readonly", "true");
+
         //각 항목의 값을 저장된 값으로 변경함
         $("#name").val("${member.name}");
         $("#nick").val("${member.nick}");

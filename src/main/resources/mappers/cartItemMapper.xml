@@ -7,9 +7,11 @@
         <result column="id" property="id" />
         <result column="member_id" property="memberId" />
         <result column="product_id" property="productId" />
+        <result column="order_id" property="orderId" />
         <result column="item_size" property="productSize" />
         <result column="item_count" property="productCount" />
         <result column="create_date" property="createDate" />
+        <result column="status" property="status" />
     </resultMap>
 
     <insert id="addCartItem" parameterType="com.fakenoonting.www.cart.vo.CartItemVO">
@@ -34,14 +36,23 @@
         <![CDATA[
             select *
             from cart_item
-            where member_id = #{id}
+            where member_id = #{id} and status= 'C'
+        ]]>
+    </select>
+
+
+    <select id="findCartItemsByOrderId" parameterType="com.fakenoonting.www.order.vo.OrdersVO" resultMap="cartItem">
+        <![CDATA[
+            select *
+            from cart_item
+            where order_id = #{id}
         ]]>
     </select>
 
     <update id="updateCartItem" parameterType="com.fakenoonting.www.cart.vo.CartItemVO">
         <![CDATA[
             update cart_item
-            set item_count = #{productCount}
+            set item_count = #{productCount}, status = #{status},order_id = #{orderId}
             where id = #{id}
         ]]>
     </update>

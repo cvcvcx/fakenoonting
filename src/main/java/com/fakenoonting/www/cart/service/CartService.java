@@ -17,6 +17,8 @@ public interface CartService {
     //상품이 결제화면을 올라갔을 때, 상품의 개수를 장바구니에 저장한다.
     public void updateCartItem(List<CartItemVO> cartItems);
 
+    void updateCartItemToOrder(List<CartItemVO> cartItems);
+
     public int deleteCartItem(Long cartItemId);
 
 }

@@ -4,6 +4,7 @@ import com.fakenoonting.www.cart.service.CartService;
 import com.fakenoonting.www.cart.vo.CartItemVO;
 import com.fakenoonting.www.member.vo.MemberVO;
 import com.fakenoonting.www.order.service.OrderService;
+import com.fakenoonting.www.order.vo.OrdersVO;
 import com.fakenoonting.www.product.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,14 +55,16 @@ public class OrderController {
         List<CartItemVO> cartItemVOList = orderService.makeNewOrderByCartListOrderBtn(cartItemVO);
         return mav.addObject("orderItemList", cartItemVOList);
 
-
-
-
     }
 
     @PostMapping("/saveOrder")
-    public ModelAndView saveNewOrder() {
-        ModelAndView result = new ModelAndView();
+    public ModelAndView saveNewOrder(OrdersVO ordersVO,HttpSession httpSession) {
+        log.info(ordersVO.toString());
+        MemberVO member = (MemberVO)httpSession.getAttribute("member");
+        ordersVO.setMemberId(member.getId());
+        orderService.saveOrder(ordersVO);
+
+        ModelAndView result = new ModelAndView("/order/orderLookup");
         return result;
     }
 

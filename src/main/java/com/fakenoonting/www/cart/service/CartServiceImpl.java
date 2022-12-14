@@ -68,6 +68,16 @@ public class CartServiceImpl implements CartService {
     @Override
     public void updateCartItem(List<CartItemVO> cartItems) {
         cartItems.forEach(cartItemVO -> {
+            cartItemVO.setStatus('C');
+            cartItemDAO.updateCartItem(cartItemVO);
+        });
+
+    }
+    @Override
+    public void updateCartItemToOrder(List<CartItemVO> cartItems) {
+        cartItems.forEach(cartItemVO -> {
+            cartItemVO.setStatus('O');
+            log.info("cartItemUpdate중..."+cartItemVO);
             cartItemDAO.updateCartItem(cartItemVO);
         });
 
