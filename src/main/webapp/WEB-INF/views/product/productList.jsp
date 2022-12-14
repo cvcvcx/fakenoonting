@@ -63,7 +63,7 @@
                                         <img src="${contextPath}/util/upload/display?fileName=${imgItem.uploadPath}/s_${imgItem.imgUUID}_${imgItem.orgImgName}"
                                          class="card-img-top w-100" alt="상품">
                                     </a>
-                                <div class="card-body">
+                          		    <div class="card-body">
                                     <p class="card-title">${list.productName}</p>
                                      <hr/>
                                     <p class="card-text">${list.price}</p>

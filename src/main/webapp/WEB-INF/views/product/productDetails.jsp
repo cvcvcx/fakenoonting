@@ -95,14 +95,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <div class="col-6 col-md-5">판매가</div>
                 <div class="col-6 col-md-7">${product.price} 원</div>
               </div>
-              <div class="row mb-3">
-                <div class="col-8 col-md-5">색상</div>
-                <div class="col-4 col-md-7">
-                  <select class="form-select" aria-label="select color">
-                    <option selected>색상을 선택해 주세요.</option>
-                  </select>
-                </div>
-              </div>
+
               <div class="row">
                 <div class="col-8 col-md-5">
                   사이즈
@@ -130,7 +123,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </div>
                 <div class="col-4 col-md-7">
                   <input
-                    class="input-text qty-text"
+                    class="input-text form-control qty-text"
                     type="number"
                     id="productCount"
                     value="1"
@@ -170,7 +163,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         <div class="modal-content">
                           <div class="modal-header">
                             <h1 class="modal-title fs-5" id="buyNowLabel">
-                              kikerday.com 내용
                             </h1>
                             <button
                               type="button"
@@ -180,7 +172,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             ></button>
                           </div>
                           <div class="modal-body">
-                            필수 옵션을 선택해주세요.
+                            필수 옵션을 선택해주세요. ${product.productName}
                           </div>
                           <div class="modal-footer">
                             <button
@@ -237,6 +229,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             >
                               확인
                             </button>
+
                           </div>
                         </div>
                       </div>
@@ -255,7 +248,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       aria-labelledby="cartbuttonLabel"
                       aria-hidden="true"
                     >
-                      <div class="modal-dialog">
+                      <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                           <div class="modal-header">
                             <h1 class="modal-title fs-5" id="cartbuttonLabel">
@@ -272,11 +265,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             장바구니에 상품이 정상적으로 담겼습니다.
                           </div>
                           <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-light"
-                              data-bs-dismiss="modal"
-                            >
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
                               쇼핑계속하기
                             </button>
                             <button type="button" class="btn btn-dark">
@@ -315,7 +304,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <!-- end 제품 상세 이미지, 텍스트 -->
 
       <!-- start section -->
-        <%-- 리뷰관련 --%>
+        <!-- 리뷰관련 -->
         <section class="border-top border-width-1px border-color-medium-gray pt-0">
           <div class="container-fluid">
             <div class="row">
@@ -334,7 +323,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </div>
           </div>
 
-        <%-- 문의관련 --%>
+        <!-- 문의관련 -->
           <div class="container-fluid"></div>
           <div class="row">
             <div class="col-12">
@@ -349,7 +338,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <div>
             <div class="container">
               <div class="tab-content" id="questionList">
-                <jsp:include page="../question/questionList.jsp" flush="false" />
+                <jsp:include page="../question/questionList.jsp" />
               </div>
             </div>
           </div>
@@ -359,8 +348,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <script>
 
+      $(function(){
         //총 상품금액을 구하는 함수
-      $("#productCount").on("change",function (e){
+        $("#productCount").on("change",function (e){
         let productCount = $("#productCount").val();
         productCount =  Number(productCount);
         let productPrice = "${product.price}";
@@ -383,7 +373,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         //로그인이 되었는지 체크
         let member = "${member}";
         if(member == null||member == ''){
-            alert("로그인이 필요합니다.")
+            alert("로그인이 필요합니다.");
+            location.href = "${contextPath}/member/loginForm.do";
             return;
         }
         //사이즈 옵션이 만약 선택되지 않았을 때라면 필수옵션을 선택해 달라는 모달을 띄우고 리턴
@@ -394,9 +385,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }   
         //주문 정보가 들어간 폼을 만드는 함수
         let newForm = fn_makeNewForm(productSize);
-        
+        newForm.attr("action", "${contextPath}/order/newOrder")
+        $("body").append(newForm);
+        newForm.submit();
         //.submit(); -- 주문페이지가 만들어지지 않았기 때문에 submit을 시키지 않음 
       });
+
       $("button[role='cartButton']").on("click", function (e) {
         console.log("cartButton clicked!");
         e.preventDefault();
@@ -404,7 +398,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         //로그인 상태 체크
         let member = "${member}";
         if(member == null||member == ''){
-            alert("로그인이 필요합니다.")
+            alert("로그인이 필요합니다.");
+            location.href = "${contextPath}/member/loginForm.do";
             return;
         }
         //필수옵션 선택 체크
@@ -422,14 +417,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             type : 'post',
             url : '${contextPath}/cart/addCart',
             data : formData,
-            success: function(){
-                $("#cartModal").modal('show');
+            success: function(result){
+              
+              $("#cartModal .modal-body").html(result);
+              $("#cartModal").modal("show");
             },
             error:function(request, status, error){
         		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
         	}
         })
                
+      });
+        
       });
       //주문 정보가 담긴 폼을 만드는 함수
       function fn_makeNewForm(productSize){
@@ -467,7 +466,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         $.ajax({
           type: "get",
           url: "${contextPath}/reviewList",
-          data: {productId: ${product.id}},
+          data: {productId: "${product.id}"},
           success: function(result) {
             $("#reviewList").html(result);
           },
@@ -486,28 +485,28 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         });
       });
 
-      $(document).ready(function(){
-        $.ajax({
-          type: "get",
-          url: "${contextPath}/questionList",
-          data: {productId: ${product.id}},
-          success: function(result) {
-            $("#questionList").html(result);
-          },
-          error: function(request, error) {
-            alert(
-                    "code:" +
-                    request.status +
-                    "\n" +
-                    "message:" +
-                    request.responseText +
-                    "\n" +
-                    "error:" +
-                    error
-            );
-          }
+        $(document).ready(function(){
+          $.ajax({
+            type: "get",
+            url: "${contextPath}/questionList",
+            data: {productId: "${product.id}"},
+            success: function(result) {
+              $("#questionList").html(result);
+            },
+            error: function(request, error) {
+              alert(
+                      "code:" +
+                      request.status +
+                      "\n" +
+                      "message:" +
+                      request.responseText +
+                      "\n" +
+                      "error:" +
+                      error
+              );
+            }
+          });
         });
-      });
 
     </script>
     <!-- footer -->

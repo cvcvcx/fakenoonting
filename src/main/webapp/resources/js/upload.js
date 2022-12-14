@@ -17,7 +17,7 @@ $("input[type='file']").on("change", function (e) {
     }
 
     $.ajax({
-      url: contextPath + "/util/upload/uploadImage",
+      url: "/util/upload/uploadImage",
       processData: false,
       contentType: false,
       data: formData,

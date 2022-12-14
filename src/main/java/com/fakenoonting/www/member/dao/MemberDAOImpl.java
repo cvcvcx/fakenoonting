@@ -1,6 +1,10 @@
 package com.fakenoonting.www.member.dao;
 
 import com.fakenoonting.www.member.vo.MemberVO;
+import com.fakenoonting.www.product.dao.ProductDAOImpl;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashMap;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 
+@Slf4j
 @Repository("memberDAO")
 public class MemberDAOImpl implements MemberDAOInterface{
 	
@@ -23,8 +28,6 @@ public class MemberDAOImpl implements MemberDAOInterface{
 	@Autowired
 	private SqlSession sqlSession;
 	private static final String Namespace = "com.fakenoonting.www.member";
-	private static final Logger logger = LoggerFactory.getLogger(MemberDAOImpl.class);
-	private static Map<String, MemberVO> store = new HashMap<>();
 	
 	
 	
@@ -42,7 +45,7 @@ public class MemberDAOImpl implements MemberDAOInterface{
 	@Override
 	public int registerMember(MemberVO memberVO) throws DataAccessException {
 		
-		logger.info("MemberDAOImpl 회원가입 처리 시작..." + memberVO);		
+		log.info("MemberDAOImpl 회원가입 처리 시작..." + memberVO);		
 
 		// sqlSession.insert(사용할 mapper의 id, 저장할 값)
 		// insert 한 행의 결과 갯수를 반환
@@ -57,7 +60,7 @@ public class MemberDAOImpl implements MemberDAOInterface{
 	@Override
 	public int emailCheck(MemberVO memberVO) throws DataAccessException {
 		
-		logger.info("MemberDAOImpl 아이디(email) 중복 검사() 시작..." + memberVO.getEmail());
+		log.info("MemberDAOImpl 아이디(email) 중복 검사() 시작..." + memberVO.getEmail());
 		
 		return sqlSession.selectOne(Namespace + ".emailCheck", memberVO);
 	}
@@ -71,13 +74,13 @@ public class MemberDAOImpl implements MemberDAOInterface{
 		
 		return memberVO;
 	}
-
+	
 	
 	
 	// 아이디(email)에 해당하는 회원 정보 수정
 	@Override
 	public int updateMember(MemberVO memberVO) throws DataAccessException {
-		logger.info("MemberDAOImpl 회원정보 수정 시작..." + memberVO);		
+		log.info("MemberDAOImpl 회원정보 수정 시작..." + memberVO);		
 
 		// update 한 행의 결과 갯수를 반환
 		int result = sqlSession.update(Namespace + ".updateMember", memberVO);
@@ -90,7 +93,7 @@ public class MemberDAOImpl implements MemberDAOInterface{
 	// 아이디(email)에 해당하는 회원 정보 삭제
 	@Override
 	public int deleteMember(String email) throws DataAccessException {
-		logger.info("MemberDAOImpl 회원정보 삭제 시작..." + email);	
+		log.info("MemberDAOImpl 회원정보 삭제 시작..." + email);	
 
 		// delete 한 행의 결과 갯수를 반환
 		int result = sqlSession.delete(Namespace + ".deleteMember", email);
