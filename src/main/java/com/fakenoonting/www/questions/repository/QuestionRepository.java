@@ -35,7 +35,7 @@ public interface QuestionRepository {
 
 
     // 특정 상품의 모든 문의글 개수
-    public int getProdQuesCnt(int productId) throws Exception;
+    public int getProdQuesCnt(Map<String, Object> map) throws Exception;
 
     // 특정 상품의 모든 문의글 찾기
     public List<Question> findAllProdQuesByProductId(Map<String, Object> map) throws Exception;

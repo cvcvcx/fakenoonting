@@ -5,7 +5,7 @@
 <%  request.setCharacterEncoding("UTF-8"); %>
 
 <article>
-    <div class="container" id="reviewListForm">
+    <div class="container">
         <div>
             <div class="row mt-4">
                 <div class="col mb-3">
@@ -21,7 +21,7 @@
                     </h4>
                 </div>
                 <div class="col">
-                    <div><a href="#" class="link-secondary">전체 상품 리뷰 보기</a><div class="vr mx-1"></div>
+                    <div><a href="${contextPath}/allReviewList" class="link-secondary">전체 상품 리뷰 보기</a><div class="vr mx-1"></div>
                         <div class="modal fade" id="textModal" aria-hidden="true" aria-labelledby="textModalLabel" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
@@ -261,7 +261,7 @@
                 <tbody>
                 <c:choose>
                     <c:when test="${empty dataList}" >
-                        <tr><td colspan="5" align-text="center">리뷰가 없습니다.</td></tr>
+                        <tr><td colspan="5" align-text="center">검색결과가 없습니다.</td></tr>
                     </c:when>
                     <c:when test="${!empty dataList}">
                         <c:forEach var="list" items="${dataList}">
@@ -282,10 +282,9 @@
                             <div class="col-12 mt-2">
                                 <td><p><c:out value="${list.contents}"/></p></td>
                                 <div class="col-12 mt-3">
-                                    사진 사진 사진
-<%--                                    <a href="#"><img src="images/cat22.jpg" width="142" height="157"></a>--%>
-<%--                                    <a href="#"><img src="images/cat21.jpg" width="142" height="157"></a>--%>
-<%--                                    <a href="#"><img src="images/cat20.jpg" width="142" height="157"></a>--%>
+                                    <a href="#"><img src="images/cat22.jpg" width="142" height="157"></a>
+                                    <a href="#"><img src="images/cat21.jpg" width="142" height="157"></a>
+                                    <a href="#"><img src="images/cat20.jpg" width="142" height="157"></a>
                                 </div>
                             </div>
                             <div class="col-12 mt-2">
@@ -382,7 +381,7 @@
                 keyword: contents
             },
             success: function(result){
-                $("#reviewListForm").html(result);
+                $("#reviewList").html(result);
             },
             error: function(request, error){
                 alert(
@@ -429,7 +428,7 @@
                 keyword: contents
             },
             success: function(result){
-                $("#reviewListForm").html(result);
+                $("#reviewList").html(result);
             },
             error: function(request, error){
                 alert(
@@ -486,7 +485,7 @@
                 keyword: $("#searchKeyword").val()
             },
             success: function(result){
-                $("#reviewListForm").html(result);
+                $("#reviewList").html(result);
             },
             error: function(request, error){
                 alert(

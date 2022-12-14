@@ -63,8 +63,8 @@ public class QuestionService {
 
 
     // 특정 상품의 모든 문의글 개수
-    public int getProdQuesCnt(int productId) throws Exception {
-        return questionRepository.getProdQuesCnt(productId);
+    public int getProdQuesCnt(Map<String, Object> map) throws Exception {
+        return questionRepository.getProdQuesCnt(map);
     }
 
     // 특정 상품의 모든 문의글 찾기

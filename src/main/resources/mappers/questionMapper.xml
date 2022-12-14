@@ -96,12 +96,17 @@
 
 
     <!-- 특정 상품의 모든 문의글 개수 -->
-    <select id="getProdQuesCnt" parameterType="int" resultType="int">
+    <select id="getProdQuesCnt" parameterType="HashMap" resultType="int">
         <![CDATA[
             SELECT COUNT(*)
             FROM question
             WHERE product_id = #{productId}
         ]]>
+        <if test="contents != null and contents != '' ">
+            <![CDATA[
+                AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
     </select>
 
     <!-- 특정 상품의 모든 문의글 찾기 -->
@@ -110,6 +115,13 @@
             SELECT *
             FROM question
             WHERE product_id = #{productId}
+        ]]>
+        <if test="contents != null and contents != '' ">
+            <![CDATA[
+                AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
+        <![CDATA[
             ORDER BY create_date DESC
             LIMIT #{startList}, #{listSize}
         ]]>

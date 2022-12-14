@@ -74,8 +74,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
     // 특정 상품의 모든 문의글 개수
     @Override
-    public int getProdQuesCnt(int productId) throws Exception {
-        return sqlSession.selectOne(namespace + ".getProdQuesCnt", productId);
+    public int getProdQuesCnt(Map<String, Object> map) throws Exception {
+        return sqlSession.selectOne(namespace + ".getProdQuesCnt", map);
     }
 
     // 특정 상품의 모든 문의글 찾기

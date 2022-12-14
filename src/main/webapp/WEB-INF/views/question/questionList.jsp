@@ -6,7 +6,7 @@
 
 
 <article>
-    <div id="questionListForm">
+    <div>
         <div class="row align-items-center justify-content-center">
             <div class="col-12 text-center mt-4 mb-4">
                 <h4>Q and A</h4>
@@ -32,7 +32,7 @@
                         <c:when test="${!empty quesList}">
                             <c:forEach var="list" items="${quesList}" varStatus="status">
                                 <tr>
-                                    <th scope="row">${list.questionId}</th>
+                                    <th scope="row">${prodQuesCnt - status.index - pagination.startList}</th>
                                     <td>
                                         <c:if test="${list.category == '1'.charAt(0)}">
                                             상품문의

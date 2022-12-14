@@ -37,17 +37,18 @@ public class QuestionController {
             , Question question
     ) throws Exception {
 
-        Pagination pagination = new Pagination();
-        pagination.pageInfo(page, range, questionService.getProdQuesCnt(question.getProductId()));
-        model.addAttribute("pagination", pagination);
-
         Map<String, Object> result4 = new HashMap<>();
         result4.put("productId", question.getProductId());
+        result4.put("contents", null);
+
+        Pagination pagination = new Pagination();
+        pagination.pageInfo(page, range, questionService.getProdQuesCnt(result4));
+        model.addAttribute("pagination", pagination);
+
         result4.put("startList", pagination.getStartList());
         result4.put("listSize", pagination.getListSize());
-        model.addAttribute("prodQuesCnt", questionService.getProdQuesCnt(question.getProductId()));
+        model.addAttribute("prodQuesCnt", questionService.getProdQuesCnt(result4));
         model.addAttribute("quesList", questionService.findAllProdQuesByProductId(result4));
-
 
         return "question/questionList";
     }
