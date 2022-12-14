@@ -628,7 +628,8 @@ ${member.address2}</textarea
                                   text-align: center;
                                   vertical-align: middle;
                                 "
-                                >0</span
+                                id="myPoint"
+                                >${member.money_point}</span
                               >
                               <span
                                 class="col-4"

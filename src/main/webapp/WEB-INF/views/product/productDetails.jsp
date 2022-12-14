@@ -235,7 +235,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       </div>
                     </div>
                     <!-- Button trigger modal -->
-                    <button type="button" role="cartButton" class="btn btn-light">
+                    <button type="button" role="cartButton" class="btn btn-light" id="detailProductId" value="${product.id}">
                       CART
                     </button>
                     <!-- Modal -->
@@ -410,9 +410,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }   
         //주문 정보가 들어간 폼을 새로 만들어서 newForm이라는 지역변수에 저장
         let newForm = fn_makeNewForm(productSize);
-
+        
         //폼에 담긴 정보를 json형태로 보낼 수 있게 바꿔주는 함수 (serialize)
         let formData = newForm.serialize();
+        
         $.ajax({
             type : 'post',
             url : '${contextPath}/cart/addCart',
@@ -432,14 +433,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       });
       //주문 정보가 담긴 폼을 만드는 함수
       function fn_makeNewForm(productSize){
+        
+        
         let newForm = $("<form></form>");
             newForm.attr("action", "${contextPath}/cart/addCart");
             newForm.attr("method", "post");
+            let detailProductId = $("#detailProductId").val();
             newForm.append(
             $("<input />", {
                 type: "text",
                 name: "productId",
-                value: "${product.id}",
+                value: detailProductId,
             })
             );
             let productCount = $("#productCount").val();
