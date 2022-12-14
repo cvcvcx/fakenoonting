@@ -120,9 +120,9 @@
 											<ul class="navbar-nav justify-content-end flex-grow-1 pe-1">
 												<li class="nav-item"><b>MEMBER LOGIN</b></li>
 												<li class="nav-item"><input class="form-control "
-													type="text" id="emailsub" name="emailsub" placeholder="E-MAIL"></li>
+													type="text" id="emailSub" name="emailSub" placeholder="E-MAIL"></li>
 												<li class="nav-item"><input class="form-control "
-													type="password" id="pwd" name="pwd" placeholder="Password"></li>
+													type="password" id="pwdSub" name="pwdSub" placeholder="Password"></li>
 												<div class="" 	>
 													<button type="submit" class="btn btn-black">Login</button>
 													<a  href="${contextPath}/member/regiMemberForm.do">
