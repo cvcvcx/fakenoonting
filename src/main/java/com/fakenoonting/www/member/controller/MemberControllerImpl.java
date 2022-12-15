@@ -173,13 +173,13 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		return mav;
 	}
 
-	// 4. 아이디(email) 중복 검사 (AJAX)
+	// 4. 아이디(email) 존재 여부 체크 (AJAX)
 	@Override
 	@ResponseBody
 	@RequestMapping(value = "/emailCheck", method = RequestMethod.POST)
 	public int emailCheck(MemberVO memberVO) throws Exception {
 
-		log.info("아이디(email) 중복 검사 (AJAX) email ==> " + memberVO.getEmail());
+		log.info("아이디(email) 존재 여부 체크 (AJAX) email ==> " + memberVO.getEmail());
 
 		int result = memberService.emailCheck(memberVO);
 		System.out.println("result : " + result);

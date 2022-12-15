@@ -41,7 +41,7 @@
 		]]>
 	</insert>
 
-	<!-- 아이디 중복 검사 : 입력한 아이디가 존재하는지 알아낸다. -->
+	<!-- 아이디 존재 여부 체크 -->
 	<select id="emailCheck"
 		parameterType="com.fakenoonting.www.member.vo.MemberVO"
 		resultType="int">
