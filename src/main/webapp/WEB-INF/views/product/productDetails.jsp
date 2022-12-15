@@ -408,7 +408,7 @@ request.setCharacterEncoding("UTF-8");
         });
       });
 
-		});
+		
 		//주문 정보가 담긴 폼을 만드는 함수
 		function fn_makeNewForm(productSize) {
 			let newForm = $("<form></form>");
