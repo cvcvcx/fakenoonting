@@ -337,6 +337,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     $("input[data-input-value='quantity']").on(
       "propertychange change keyup paste input",
       function (e) {
+        validateNumber($(this));
         fn_quantityOnChange($(this));
         checkedCalculatePrice();
       }
@@ -432,7 +433,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     function fn_quantityDecrease(e) {
       let quantity = fn_getQuantityId(e);
       let quantityValue = fn_getQuantityValue(quantity);
-      let changedValue = quantityValue - 1;
+      let changedValue = quantityValue > 1 ? quantityValue - 1 : 1;
       $("#" + quantity).attr("value", changedValue);
       $("#" + quantity).val(changedValue);
       fn_quantityOnChange($("#" + quantity));

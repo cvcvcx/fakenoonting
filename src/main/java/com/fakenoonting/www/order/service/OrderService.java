@@ -1,6 +1,7 @@
 package com.fakenoonting.www.order.service;
 
 import com.fakenoonting.www.cart.vo.CartItemVO;
+import com.fakenoonting.www.member.vo.MemberVO;
 import com.fakenoonting.www.order.vo.OrdersVO;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface OrderService {
     // 카트에서 항목을 선택해서 여러개의 카트아이템을 구매하는 경우
     // 세가지 경우에 해당하는 서비스를 만들어야 한다.
     //
-    // 리턴 타입이 List인 이유는 OrderForm.jsp뷰에서 아이템을 받아 뿌려주는 타입이
+    // 리턴 타입이 List인 이유는 OrderForm.jsp뷰에서 아이템을 받아 뿌려주는 타입이기 때문이다.
     public List<CartItemVO> makeNewOrderByCartItemOrderBtn(CartItemVO cartItemVO);
 
     public List<CartItemVO> makeNewOrderByProductDetailOrderBtn(CartItemVO cartItemVO);
@@ -21,4 +22,8 @@ public interface OrderService {
     public List<CartItemVO> makeNewOrderByCartListOrderBtn(CartItemVO cartItemVO);
 
     public int saveOrder(OrdersVO ordersVO);
+
+    List<CartItemVO> findCartItemListByOrderId(OrdersVO OrdersVO);
+
+    public List<CartItemVO> findOrderListByMemberId(MemberVO memberVO);
 }

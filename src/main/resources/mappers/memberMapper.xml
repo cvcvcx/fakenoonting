@@ -21,6 +21,7 @@
 		<result property="zipcode" column="zipcode" />
 		<result property="create_date" column="create_date" />
 		<result property="delete_date" column="delete_date" />
+		<result property="money_point" column="money_point" />
 	</resultMap>
 
 	<!-- 로그인 처리 -->
@@ -53,11 +54,20 @@
 	</select>
 
 	<!-- 아이디에 해당하는 회원 정보 가져오기 -->
+	<select id="selectMemberById" parameterType="long" resultType="com.fakenoonting.www.member.vo.MemberVO">
+		<![CDATA[
+		SELECT * FROM member WHERE id = #{id}
+		]]>
+	</select>
+
+	<!-- 이메일에 해당하는 회원 정보 가져오기 -->
 	<select id="selectMember" parameterType="String" resultType="com.fakenoonting.www.member.vo.MemberVO">
 		<![CDATA[
 		SELECT * FROM member WHERE email = #{email}
 		]]>
 	</select>
+
+
 
 	<!-- 아이디에 해당하는 회원 정보 수정하기 -->
 	<update id="updateMember"
@@ -66,6 +76,14 @@
 		UPDATE 	member
 		SET		pwd = #{pwd}, nick = #{nick}, name = #{name}, gender = #{gender}, phone = #{phone}, birth = #{birth}, address1 = #{address1}, address2 = #{address2}, zipcode = #{zipcode}
 		WHERE	email = #{email}
+		]]>
+	</update>
+
+	<update id="updateMemberMoneyPoint" parameterType="com.fakenoonting.www.member.vo.MemberVO">
+		<![CDATA[
+		UPDATE 	member
+		SET		money_point = #{money_point}
+		WHERE	id = #{id}
 		]]>
 	</update>
 

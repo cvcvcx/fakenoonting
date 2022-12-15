@@ -27,6 +27,14 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
+    
+    <select id="findOrderListByMemberId" parameterType="com.fakenoonting.www.member.vo.MemberVO" resultMap="order">
+        <![CDATA[
+            select *
+            from orders
+            where member_id = #{id}
+        ]]>
+    </select>
 
 
 </mapper>

@@ -33,7 +33,9 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    //cartId만 가지고 모든 값을 가지고 있는 CartItemVO를 반환하는 함수
+    /**
+     * cartId만 가지고 모든 값을 가지고 있는 CartItemVO를 반환하는 함수
+     */
     @Override
     public CartItemVO findCartItemByCartId(CartItemVO cartItemId){
         ProductVO productVO = new ProductVO();
@@ -54,6 +56,18 @@ public class CartServiceImpl implements CartService {
     public List<CartItemVO> findCartItemsByMemberId(MemberVO memberVO) {
 
         List<CartItemVO> cartItemVOList = cartItemDAO.findCartItemsByMemberId(memberVO);
+        ArrayList<CartItemVO> result = new ArrayList<>();
+        cartItemVOList.forEach(cartItemVO -> {
+            result.add(findCartItemByCartId(cartItemVO));
+        });
+
+        return result;
+    }
+
+    @Override
+    public List<CartItemVO> findCartItemsByMemberIdForOrder(MemberVO memberVO) {
+
+        List<CartItemVO> cartItemVOList = cartItemDAO.findCartItemsByMemberIdForOrder(memberVO);
         ArrayList<CartItemVO> result = new ArrayList<>();
         cartItemVOList.forEach(cartItemVO -> {
             result.add(findCartItemByCartId(cartItemVO));

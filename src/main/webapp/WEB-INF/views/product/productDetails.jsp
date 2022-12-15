@@ -419,7 +419,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             url : '${contextPath}/cart/addCart',
             data : formData,
             success: function(result){
-              
+              alert("선택된 항목이 카트에 담겼습니다.");
               $("#cartModal .modal-body").html(result);
               $("#cartModal").modal("show");
             },
@@ -472,6 +472,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           url: "${contextPath}/reviewList",
           data: {productId: "${product.id}"},
           success: function(result) {
+            
             $("#reviewList").html(result);
           },
           error: function(request, error) {

@@ -83,6 +83,105 @@
                                     </div>
                                 </div>
                             </div>
+                            <c:forEach items="${cartList}" var="cartItem">
+                                <div class="card mb-3" id="card_${cartItem.id}">
+                                  <div class="row g-0 justify-content-around">
+                                    <div class="col-1 align-self-center">
+                                      <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        role="cartItemCheckbox"
+                                        value="${cartItem.id}"
+                                      />
+                                    </div>
+                                    <div class="col-3 align-items-center">
+                                      <a href="" class="align-self-center">
+                                        <div class="ratio ratio-1x1 align-self-center">
+                                          <img
+                                            class="align-self-center"
+                                            src="${contextPath}/util/upload/display?fileName=${cartItem.productImgPath}"
+                                            alt=""
+                                          />
+                                        </div>
+                                      </a>
+                                    </div>
+                                    <div class="col-4 align-self-center">
+                                      <div class="card-body">
+                                        <h5 class="card-title">
+                                          <a href="">${cartItem.productVO.productName}</a>
+                                        </h5>
+                                        <p class="card-text mt-2">
+                                          사이즈 :
+                                          <span id="size_${cartItem.id}"
+                                            >${cartItem.productSize}</span
+                                          >
+                                        </p>
+                                        <p class="card-text">
+                                          가격 :
+                                          <span id="resultPrice_${cartItem.id}"
+                                            >${cartItem.productVO.price} </span
+                                          >원<br />(
+                                          <span id="resultQuantity_${cartItem.id}"
+                                            >상품개수 : ${cartItem.productCount}</span
+                                          >
+                                          개)
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div class="col-1 align-self-center">
+                                      <div class="card-body">
+                                        <div class="d-flex input-group justify-content-center">
+                                          <input
+                                            style="
+                                              border: 0 solid black;
+                                              width: 100%;
+                                              min-width: max-content;
+                                              text-align: center;
+                                            "
+                                            type="text"
+                                            id="quantity_${cartItem.id}"
+                                            class="form-control align-content-center"
+                                            size="2"
+                                            maxlength="3"
+                                            value="${cartItem.productCount}"
+                                            data-price="${cartItem.productVO.price}"
+                                            data-input-value="quantity"
+                                            data-result-price-id="resultPrice_${cartItem.id}"
+                                            data-result-quantity-id="resultQuantity_${cartItem.id}"
+                                          />
+                                          <br />
+
+                                        </div>
+                                      </div>
+                                    </div>
+                
+                                    <div class="col-2 align-self-center">
+                                      <div
+                                        class="btn-group-vertical"
+                                        role="group"
+                                        aria-label="Vertical button group"
+                                      >
+                                        <a
+                                          type="button"
+                                          class="btn btn-light"
+                                          role="orderBtn"
+                                          value="${cartItem.id}"
+                                          >order</a
+                                        >
+                
+                                        <a
+                                          type="button"
+                                          role="cancelBtn"
+                                          value="${cartItem.id}"
+                                          class="btn btn-light"
+                                          >cancel</a
+                                        >
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </c:forEach>
+
                             <div>
                                 <h5>주문 상품 정보</h5>
                                 <div class="text-center">
@@ -98,6 +197,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+
                                             <tr>
                                                 <td>20221127</td>
                                                 <td>떼껄룩 프린팅 맨투맨</td>

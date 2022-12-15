@@ -69,11 +69,12 @@ public class OrderController {
     }
 
     @GetMapping
-    public ModelAndView getOrderList() {
-
+    public ModelAndView getOrderList(HttpSession httpSession) {
+        MemberVO member = (MemberVO)httpSession.getAttribute("member");
+        List<CartItemVO> orderCartListByMemberId = orderService.findOrderListByMemberId(member);
         ModelAndView mav = new ModelAndView("/order/orderLookup");
+        mav.addObject("cartList",orderCartListByMemberId);
         return mav;
-
     }
 
     @GetMapping("/form")

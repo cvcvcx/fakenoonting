@@ -44,6 +44,15 @@ public class MemberServiceImpl implements MemberServiceInterface {
 		return result;
 	}
 
+	@Override
+	public MemberVO selectMemberById(Long id)  {
+		logger.info("MemberServiceImpl 회원정보 추출 시작..." + id);
+
+		MemberVO memberVO = memberDAO.selectMemberById(id);
+		return memberVO;
+	}
+
+
 	// 아이디(email)에 해당하는 회원 정보 추출
 	@Override
 	public MemberVO selectMember(String email) throws DataAccessException {
@@ -59,6 +68,12 @@ public class MemberServiceImpl implements MemberServiceInterface {
 		logger.info("MemberServiceImpl 회원정보 수정 시작..." + memberVO);
 
 		return memberDAO.updateMember(memberVO);
+	}
+
+	@Override
+	public int updateMemberMoneyPoint(MemberVO memberVO){
+		logger.info("MemberServiceImpl 머니포인트 수정 시작..." +memberVO);
+		return memberDAO.updateMemberMoneyPoint(memberVO);
 	}
 
 	// 아이디(email)에 해당하는 회원 정보 삭제

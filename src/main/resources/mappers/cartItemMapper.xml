@@ -40,6 +40,13 @@
         ]]>
     </select>
 
+    <select id="findCartItemsByMemberIdForOrder" parameterType="com.fakenoonting.www.member.vo.MemberVO" resultMap="cartItem">
+        <![CDATA[
+            select *
+            from cart_item
+            where member_id = #{id} and status= 'O'
+        ]]>
+    </select>
 
     <select id="findCartItemsByOrderId" parameterType="com.fakenoonting.www.order.vo.OrdersVO" resultMap="cartItem">
         <![CDATA[

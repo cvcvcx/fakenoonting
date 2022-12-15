@@ -1,9 +1,13 @@
 package com.fakenoonting.www.order.service;
 
+import com.fakenoonting.www.cart.dao.CartItemDAO;
 import com.fakenoonting.www.cart.service.CartService;
 import com.fakenoonting.www.cart.vo.CartItemVO;
+import com.fakenoonting.www.member.service.MemberServiceInterface;
+import com.fakenoonting.www.member.vo.MemberVO;
 import com.fakenoonting.www.order.dao.OrderDAO;
 import com.fakenoonting.www.order.vo.OrdersVO;
+import com.fakenoonting.www.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private MemberServiceInterface memberService;
+
+    @Autowired
+    private CartItemDAO cartItemDAO;
 
     @Autowired
     private OrderDAO orderDAO;
@@ -84,12 +97,39 @@ public class OrderServiceImpl implements OrderService {
 
         log.info("saveOrder 실행중...");
 
+        //카트아이템의 상태를 바꾸고, orderId를 추가한다.
         List<CartItemVO> cartItems = ordersVO.getCartItems();
         cartItems.forEach(cartItemVO -> {
             cartItemVO.setOrderId(ordersVO.getId());
         });
         cartService.updateCartItemToOrder(cartItems);
+        //member의 소지 포인트를 조정한다.
+        MemberVO memberVO = memberService.selectMemberById(ordersVO.getMemberId());
+        memberVO.setMoney_point(memberVO.getMoney_point()-ordersVO.getPayPoint());
+
+        memberService.updateMemberMoneyPoint(memberVO);
 
         return result;
+    }
+
+    @Override
+    public List<CartItemVO> findCartItemListByOrderId(OrdersVO OrdersVO) {
+
+        List<CartItemVO> result = new ArrayList<>();
+        List<CartItemVO> cartItemVOList = cartItemDAO.findCartItemsByOrderId(OrdersVO);
+        cartItemVOList.forEach(cartItemVO -> {
+            CartItemVO cartItemByCartId = cartService.findCartItemByCartId(cartItemVO);
+            result.add(cartItemByCartId);
+        });
+
+        return result;
+    }
+
+
+    @Override
+    public List<CartItemVO> findOrderListByMemberId(MemberVO memberVO){
+
+        return cartService.findCartItemsByMemberIdForOrder(memberVO);
+
     }
 }
