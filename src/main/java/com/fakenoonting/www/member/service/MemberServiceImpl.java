@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberServiceInterface {
 	// 로그인 처리
 	@Override
 	public MemberVO loginByID(MemberVO memberVO) throws DataAccessException {
-		logger.info("MemberServiceImpl login() 실행...");
+		logger.info("login() 실행...");
 		MemberVO resultMember = memberDAO.loginByID(memberVO);
 		resultMember.changePhoneNumberForm();
 		return resultMember;
@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberServiceInterface {
 	// 회원가입 처리
 	@Override
 	public int registerMember(MemberVO memberVO) throws DataAccessException {
-		logger.info("MemberServiceImpl 회원가입 처리() 시작..." + memberVO);
+		logger.info("회원가입 처리() 시작..." + memberVO);
 
 		return memberDAO.registerMember(memberVO);
 	}
@@ -38,7 +38,7 @@ public class MemberServiceImpl implements MemberServiceInterface {
 	@Override
 	public int emailCheck(MemberVO memberVO) throws Exception {
 
-		logger.info("MemberServiceImpl 아이디(email) 중복 검사() 시작...");
+		logger.info("아이디(email) 중복 검사() 시작...");
 
 		int result = memberDAO.emailCheck(memberVO);
 		return result;
@@ -47,7 +47,7 @@ public class MemberServiceImpl implements MemberServiceInterface {
 	// 아이디(email)에 해당하는 회원 정보 추출
 	@Override
 	public MemberVO selectMember(String email) throws DataAccessException {
-		logger.info("MemberServiceImpl 회원정보 추출 시작..." + email);
+		logger.info("회원정보 추출 시작..." + email);
 
 		MemberVO memberVO = memberDAO.selectMember(email);
 		return memberVO;
@@ -56,7 +56,7 @@ public class MemberServiceImpl implements MemberServiceInterface {
 	// 아이디(email)에 해당하는 회원 정보 수정
 	@Override
 	public int updateMember(MemberVO memberVO) throws DataAccessException {
-		logger.info("MemberServiceImpl 회원정보 수정 시작..." + memberVO);
+		logger.info("회원정보 수정 시작..." + memberVO);
 
 		return memberDAO.updateMember(memberVO);
 	}
@@ -64,7 +64,7 @@ public class MemberServiceImpl implements MemberServiceInterface {
 	// 아이디(email)에 해당하는 회원 정보 삭제
 	@Override
 	public int deleteMember(String email) throws DataAccessException {
-		logger.info("MemberServiceImpl 회원정보 삭제 시작..." + email);
+		logger.info("회원정보 삭제 시작..." + email);
 
 		return memberDAO.deleteMember(email);
 	}

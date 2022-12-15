@@ -40,7 +40,6 @@ public class MemberVO {
 
 	public void changePhoneNumberForm(){
 
-
 		String[] splitPhoneNumber = phone.split("-");
 		setPhoneNum1(splitPhoneNumber[0]);
 		setPhoneNum2(splitPhoneNumber[1]);
