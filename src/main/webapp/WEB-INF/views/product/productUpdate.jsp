@@ -120,7 +120,7 @@ request.setCharacterEncoding("UTF-8");
 	<script>
 
 	// =================================================================================//
-	// 이미지(thumnail, content) 업로드 script																	//
+	// 이미지(thumnail, content) 업로드 script												//
 	// =================================================================================//
 
 	// thumnail 이미지 업로드
@@ -130,7 +130,13 @@ request.setCharacterEncoding("UTF-8");
         let files = inputFile[0].files;
 
         for (let i = 0; i < files.length; i++) {
-          formData.append("uploadFile", files[i]);
+        	
+        	// 파일 확장자 및 개별 사이즈 검사
+        	if(checkExtAndSize(files[i].name, files[i].size)){
+        		return false;
+        	}
+        	
+        	formData.append("uploadFile", files[i]);
         }
 
         $.ajax({
@@ -193,6 +199,8 @@ request.setCharacterEncoding("UTF-8");
         thumbnailUploadResult.append(str);
       }
 
+	
+	
   	// content 이미지 업로드
       $("input[id='contentInput']").on("change", function (e) {
         let formData = new FormData();
@@ -200,7 +208,13 @@ request.setCharacterEncoding("UTF-8");
         let files = inputFile[0].files;
 
         for (let i = 0; i < files.length; i++) {
-          formData.append("uploadFile", files[i]);
+        	
+        	// 파일 확장자 및 개별 사이즈 검사
+        	if(checkExtAndSize(files[i].name, files[i].size)){
+        		return false;
+        	}
+        	
+        	formData.append("uploadFile", files[i]);
         }
 
         $.ajax({
@@ -258,14 +272,37 @@ request.setCharacterEncoding("UTF-8");
         
         uploadResult.append(str);
       }
-      
-      // 업로드 후 보여지는 이미지 삭제 버튼 동작
-      $("#contentUploadResult").on("click", ".imgDeleteBtn", function (e) {
-		// 바로 아래에 함수 있음
-        deleteFile();
-      });
 
-      function deleteFile() {
+
+
+  	// 파일 확장자 및 크기 검사 함수
+  	let resFileExt = new RegExp("(.*?)\.(exe|sh|zip|alz)"); // 제한을 걸 확장자
+  	let maxSizePerFile = 10485760; // 10MB
+  	
+  	function checkExtAndSize(fileName, fileSize){
+  		
+  		if(fileSize >= maxSizePerFile ){
+  			alert("올린 파일 중 사이즈가 10MB가 넘는 파일이 있습니다.");
+  			return true;
+  		}
+  		
+  		if(resFileExt.test(fileName) ){
+  			alert("해당 확장자의 파일은 올릴 수 없습니다.");
+  			return true;
+  		}
+  		
+  		return false;
+  	}
+  	
+  	
+  	
+    // 업로드 후 보여지는 이미지 삭제 버튼 동작
+    $("#thumbnailUploadResult").on("click", ".imgDeleteBtn", function (e) {
+		// 바로 아래에 함수 있음
+    	deleteFile();
+    });
+
+    function deleteFile() {
         let targetFile = $(".imgDeleteBtn").data("file");
         let targetDiv = $("#result_card");
 
@@ -287,7 +324,7 @@ request.setCharacterEncoding("UTF-8");
             alert("파일을 삭제하지 못하였습니다.");
           },
         });
-      }
+    }
 
   	// =================================================================================//
   	// End - 이미지(thumnail, content) 업로드 script																	//

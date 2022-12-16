@@ -46,9 +46,10 @@ public class UploadController {
     	for(MultipartFile multipartFile: uploadFile){
             File checkfile = new File(multipartFile.getOriginalFilename());
             String type = null;
-            type = Files.probeContentType(checkfile.toPath());
+            // probeContentType는 MimeType을 얻어내는 메소드
+            type = Files.probeContentType(checkfile.toPath());            
             
-            // 이미지 타입이 아니면 나가리 시킴
+            // startsWith(문자, position) : 해당 위치부터 괄호 안의 문자로 시작하지 않으면 false 반환
             if(!type.startsWith("image")){
                 List<ImgItemVO> imgs = null;
                 return new ResponseEntity<>(imgs, HttpStatus.BAD_REQUEST);
@@ -62,7 +63,7 @@ public class UploadController {
 
         String uploadFolder = uploadPath;
 
-        // File 객체에 파일이 들어있는 디렉토리 / 파일 이름 을 넣는다.
+        // File 객체에 파일이 들어갈 디렉토리 / 파일 이름 을 넣는다.
         File savePath = new File(uploadFolder, datePath);
 
         // File 객체가 존재하지 않으면 새로운 폴더를 생성해준다.

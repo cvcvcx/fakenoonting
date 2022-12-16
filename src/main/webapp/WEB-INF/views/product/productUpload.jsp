@@ -1,169 +1,140 @@
 <!--  prettier-ignore -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!--  prettier-ignore -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--  prettier-ignore -->
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!--  prettier-ignore -->
-<% request.setCharacterEncoding("UTF-8"); %>
+<%
+request.setCharacterEncoding("UTF-8");
+%>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  </head>
-  <body>
-    <jsp:include page="../common/header.jsp" flush="false" />
+<head>
+<meta charset="UTF-8" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+	<jsp:include page="../common/header.jsp" flush="false" />
 
-    <div class="container">
-      <form action="${contextPath}/product/upload" method="post" role="form">
-        <div class="form-group">
-          <div class="col-sm-12">
-            <h2 align="center">상품 등록</h2>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">상품명</label>
-          <div class="col-sm-12">
-            <input
-              type="text"
-              class="form-control"
-              id="productName"
-              name="productName"
-              maxlength="200"
-              required
-              placeholder="상품이름을 입력하세요"
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">상품사이즈</label>
-          <div class="col-sm-12 row" id="size-div">
-            <div class="col-sm-6">
-              <input
-                type="text"
-                class="form-control"
-                id="productSizeList[0].size"
-                name="productSizeList[0].size"
-                maxlength="200"
-                required
-                placeholder="상품사이즈를 입력하세요"
-              />
-            </div>
-            <div class="col-sm-6">
-              <input
-                type="text"
-                class="form-control"
-                id="productSizeList[0].productCount"
-                name="productSizeList[0].productCount"
-                maxlength="200"
-                required
-                placeholder="상품개수를 입력하세요"
-              />
-            </div>
-          </div>
-          <div class="col-sm-3 mt-2">
-            <button class="btn btn-primary" id="addSize">사이즈 추가</button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">상품가격</label>
-          <div class="col-sm-3">
-            <input
-              type="text"
-              class="form-control"
-              id="price"
-              name="price"
-              maxlength="20"
-              required
-              placeholder="상품가격"
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">상품상세설명</label>
-          <div class="col-sm-12 mb-2">
-            <textarea
-              class="form-control"
-              id="content"
-              name="content"
-              rows="30"
-              maxlength="1000"
-              required
-              placeholder="내용"
-            ></textarea>
-          </div>
-          <div id="productThumbnailImg">
-            <label class="col-sm-2 control-label">썸네일용 이미지 업로드</label>
-            <div class="container">
-              <form
-                class="form-horizontal"
-                action="${contextPath}/util/upload/uploadImage"
-                method="post"
-                enctype="multipart/form-data"
-              >
-                <!-- file의 변수명(name)과 upload컨트롤러의 MultipartFile file이 일치해야 한다. -->
-                <div class="col-sm-8">
-                  <input
-                    type="file"
-                    name="uploadFile"
-                    class="form-control"
-                    id="thumbnailInput"
-                    multiple
-                  />
-                </div>
-                <div class="form-group">
-                  <div class="col-sm-12" id="thumbnailUploadResult"></div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div id="productContentImg">
-            <label class="col-sm-2 control-label">내용 이미지 업로드</label>
-            <div class="container">
-              <form
-                class="form-horizontal"
-                action="${contextPath}/util/upload/uploadImage"
-                method="post"
-                enctype="multipart/form-data"
-              >
-                <!-- file의 변수명(name)과 upload컨트롤러의 MultipartFile file이 일치해야 한다. -->
-                <div class="col-sm-8">
-                  <input
-                    type="file"
-                    name="uploadFile"
-                    class="form-control"
-                    id="contentInput"
-                    multiple
-                  />
-                </div>
-                <div class="form-group">
-                  <div class="col-sm-12" id="contentUploadResult"></div>
-                </div>
-              </form>
-            </div>
-            <div></div>
-          </div>
-          <button
-            type="submit"
-            class="col-sm-2 offset-md-5 btn btn-primary mt-2"
-          >
-            상품 등록
-          </button>
-        </div>
-      </form>
-    </div>
+	<div class="container">
+		<form action="${contextPath}/product/upload" method="post" role="form">
+			<div class="form-group">
+				<div class="col-sm-12">
+					<h2 align="center">상품 등록</h2>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">상품명</label>
+				<div class="col-sm-12">
+					<input type="text" class="form-control" id="productName"
+						name="productName" maxlength="200" required
+						placeholder="상품이름을 입력하세요" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">상품사이즈</label>
+				<div class="col-sm-12 row" id="size-div">
+					<div class="col-sm-6">
+						<input type="text" class="form-control"
+							id="productSizeList[0].size" name="productSizeList[0].size"
+							maxlength="200" required placeholder="상품사이즈를 입력하세요" />
+					</div>
+					<div class="col-sm-6">
+						<input type="text" class="form-control"
+							id="productSizeList[0].productCount"
+							name="productSizeList[0].productCount" maxlength="200" required
+							placeholder="상품개수를 입력하세요" />
+					</div>
+				</div>
+				<div class="col-sm-3 mt-2">
+					<button class="btn btn-primary" id="addSize">사이즈 추가</button>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">상품가격</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" id="price" name="price"
+						maxlength="20" required placeholder="상품가격" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">상품상세설명</label>
+				<div class="col-sm-12 mb-2">
+					<textarea class="form-control" id="content" name="content"
+						rows="30" maxlength="1000" required placeholder="내용"></textarea>
+				</div>
+				<div id="productThumbnailImg">
+					<label class="col-sm-2 control-label">썸네일용 이미지 업로드</label>
+					<div class="container">
+						<form class="form-horizontal"
+							action="${contextPath}/util/upload/uploadImage" method="post"
+							enctype="multipart/form-data">
+							<!-- file의 변수명(name)과 upload컨트롤러의 MultipartFile file이 일치해야 한다. -->
+							<div class="col-sm-8">
+								<input type="file" name="uploadFile" class="form-control"
+									id="thumbnailInput" multiple />
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12" id="thumbnailUploadResult"></div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div id="productContentImg">
+					<label class="col-sm-2 control-label">내용 이미지 업로드</label>
+					<div class="container">
+						<form class="form-horizontal"
+							action="${contextPath}/util/upload/uploadImage" method="post"
+							enctype="multipart/form-data">
+							<!-- file의 변수명(name)과 upload컨트롤러의 MultipartFile file이 일치해야 한다. -->
+							<div class="col-sm-8">
+								<input type="file" name="uploadFile" class="form-control"
+									id="contentInput" multiple />
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12" id="contentUploadResult"></div>
+							</div>
+						</form>
+					</div>
+					<div></div>
+				</div>
+				<button type="submit"
+					class="col-sm-2 offset-md-5 btn btn-primary mt-2">
+					상품 등록</button>
+			</div>
+		</form>
+	</div>
 
-    <jsp:include page="../common/footer.jsp" flush="false" />
-    <script>
+	<jsp:include page="../common/footer.jsp" flush="false" />
+	
+	
+	
+	<!-- ============================================================================ -->
+	<!-- script -->
+	<!-- ============================================================================ -->
+	<script>
 
+	// =================================================================================//
+	// 이미지(thumnail, content) 업로드 script												//
+	// =================================================================================//
+
+	// thumnail 이미지 업로드
       $("input[id='thumbnailInput']").on("change", function (e) {
         let formData = new FormData();
         let inputFile = $('input[id="thumbnailInput"]');
         let files = inputFile[0].files;
 
         for (let i = 0; i < files.length; i++) {
-          formData.append("uploadFile", files[i]);
+        	
+        	// 파일 확장자 및 개별 사이즈 검사
+        	if(checkExtAndSize(files[i].name, files[i].size)){
+        		return false;
+        	}
+        	
+        	formData.append("uploadFile", files[i]);
         }
 
         $.ajax({
@@ -184,17 +155,23 @@
           },
         });
       });
+      
+	// thumnail 업로드 한 이미지 보이게 하기
       function showThumbnailUploadImage(uploadResultArr) {
-        /* 전달받은 데이터 검증 */
+        /* 업로드 한 파일 검증 */
         if (!uploadResultArr || uploadResultArr.length == 0) {
           return;
         }
 
         let thumbnailUploadResult = $("#thumbnailUploadResult");
         let str = "";
+        
+        // 받은 result 이미지가 여러개일 수 있으므로 each로 각각 썸네일을 보이게 할 수 있는 태그 생성
         $(uploadResultArr).each(function (i, obj) {
-          let fileCallPath =encodeURIComponent(obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName);
-            console.log(fileCallPath);
+        	// result 의  uploadPath, imgUUID, orgImgName 들을 하나의 String으로 합친다
+          let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName);
+          console.log(fileCallPath);
+          
           str += "<li class='result_li' data-path='" + obj.uploadPath + "'";
           str +=
             " data-uuid='" +
@@ -216,16 +193,26 @@
           str += "</div>";
           str += "</li>";
         });
+        
         thumbnailUploadResult.append(str);
       }
 
+	
+	
+  	// content 이미지 업로드
       $("input[id='contentInput']").on("change", function (e) {
         let formData = new FormData();
         let inputFile = $('input[id="contentInput"]');
         let files = inputFile[0].files;
 
         for (let i = 0; i < files.length; i++) {
-          formData.append("uploadFile", files[i]);
+        	
+        	// 파일 확장자 및 개별 사이즈 검사
+        	if(checkExtAndSize(files[i].name, files[i].size)){
+        		return false;
+        	}
+        	
+        	formData.append("uploadFile", files[i]);
         }
 
         $.ajax({
@@ -246,6 +233,8 @@
           },
         });
       });
+      
+  	// content 업로드 한 이미지 보이게 하기
       function showContentUploadImage(uploadResultArr) {
         /* 전달받은 데이터 검증 */
         if (!uploadResultArr || uploadResultArr.length == 0) {
@@ -263,7 +252,6 @@
             obj.imgUUID +
             "' data-filename= '" +
             obj.orgImgName +
-       
             "'>";
           str += "<div id='result_card'>";
           str +=
@@ -279,31 +267,41 @@
           str += "</div>";
           str += "</li>";
         });
+        
         uploadResult.append(str);
       }
-      let maxSize = 1048576; //1MB
 
-      function fileCheck(fileName, fileSize) {
-        if (fileSize >= maxSize) {
-          alert("파일 사이즈 초과");
-          return false;
-        }
 
-        if (!regex.test(fileName)) {
-          alert("해당 종류의 파일은 업로드할 수 없습니다.");
-          return false;
-        }
 
-        return true;
-      }
-      /* 이미지 삭제 버튼 동작 */
-      $("#uploadResult").on("click", ".imgDeleteBtn", function (e) {
-        deleteFile();
-      });
+  	// 파일 확장자 및 크기 검사 함수
+  	let resFileExt = new RegExp("(.*?)\.(exe|sh|zip|alz)"); // 제한을 걸 확장자
+  	let maxSizePerFile = 10485760; // 10MB
+  	
+  	function checkExtAndSize(fileName, fileSize){
+  		
+  		if(fileSize >= maxSizePerFile ){
+  			alert("올린 파일 중 사이즈가 10MB가 넘는 파일이 있습니다.");
+  			return true;
+  		}
+  		
+  		if(resFileExt.test(fileName) ){
+  			alert("해당 확장자의 파일은 올릴 수 없습니다.");
+  			return true;
+  		}
+  		
+  		return false;
+  	}
+  	
+  	
+  	
+    // 업로드 후 보여지는 이미지 삭제 버튼 동작
+    $("#thumbnailUploadResult").on("click", ".imgDeleteBtn", function (e) {
+		// 바로 아래에 함수 있음
+    	deleteFile();
+    });
 
-      function deleteFile() {
+    function deleteFile() {
         let targetFile = $(".imgDeleteBtn").data("file");
-
         let targetDiv = $("#result_card");
 
         $.ajax({
@@ -321,12 +319,18 @@
           },
           error: function (result) {
             console.log(result);
-
             alert("파일을 삭제하지 못하였습니다.");
           },
         });
-      }
+    }
 
+  	// =================================================================================//
+  	// End - 이미지(thumnail, content) 업로드 script																	//
+  	// =================================================================================//
+
+  	
+  	
+  	
       let sizeDiv = $("#size-div");
       let sizeListCount = 0;
       $("button[id='addSize']").on("click", function (e) {
@@ -412,5 +416,10 @@
         formObj.append(str).submit();
       });
     </script>
-  </body>
+    <!-- ============================================================================ -->
+	<!-- End - script -->
+	<!-- ============================================================================ -->
+
+</body>
+
 </html>
