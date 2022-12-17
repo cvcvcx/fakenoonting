@@ -106,30 +106,30 @@ public class MemberControllerImpl implements MemberControllerInterface {
 		// 로그인한 정보가 DB에 있는지 확인을 위한 변수
 		int emailCheck = memberService.emailCheck(memberVO);
 		// 로그인 이메일이 존재하지 않으면
-		if( emailCheck == 0) {
+		if (emailCheck == 0) {
 			// 로그인 실패 메시지를 가지고 로그인 화면으로 이동한다.
 			rAttr.addAttribute("result", "loginFailed");
 			mav.setViewName("redirect:/member/loginForm.do");
-			
+
 			return mav;
 		}
-		
-		// 로그인 정보에 해당하는 자료가 있으면 
+
+		// 로그인 정보에 해당하는 자료가 있으면
 		// 객체 하나를 만들어서 매칭 결과 저장 (로그인한 정보가 일단 DB에 있는지 확인을 위해)
 		member = memberService.loginByID(memberVO);
 		log.info("로그인 정보 결과 => " + member);
 
 		// 로그인한 정보가 DB에 있는지 확인
-		if(member.getPwd().equals(memberVO.getPwd())) { // 이메일과 비밀번호가 일치하면 세션을 발급.
+		if (member.getPwd().equals(memberVO.getPwd())) { // 이메일과 비밀번호가 일치하면 세션을 발급.
 			HttpSession session = request.getSession();
 			session.setAttribute("member", member);
 			session.setAttribute("isLogOn", true);
 			mav.setViewName("redirect:/"); // 메인화면으로 이동
-		} else { // 아이디는 있는데 비밀번호가 틀린 경우 
-				rAttr.addAttribute("result", "PasswordFailed");
-				mav.setViewName("redirect:/member/loginForm.do");
+		} else { // 아이디는 있는데 비밀번호가 틀린 경우
+			rAttr.addAttribute("result", "PasswordFailed");
+			mav.setViewName("redirect:/member/loginForm.do");
 		}
-		 
+
 		return mav;
 	}
 

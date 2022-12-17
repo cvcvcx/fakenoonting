@@ -511,9 +511,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     newForm.setAttribute("enctype", "application/x-www-form-urlencoded");
 
     $("input[role='cartItemCheckbox']:checked").each(function (index) {
-      let hiddenInputId = document.createElement("input");
-      let hiddenInputSize = document.createElement("input");
-      let hiddenInputCount = document.createElement("input");
       //카트아이템을 체크박스에 저장된 밸류를 통해서 가져옴
       let cartItemId = $(this).val();
       //가져온 카트 아이템 아이디로 개수와 사이즈를 가져옴
@@ -521,29 +518,27 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       let itemCount = $("#resultQuantity_" + cartItemId).text();
       let itemCountNum = Number(itemCount);
       //cartId를 cartItemVOList의 변수로 넘겨줌
-      hiddenInputId.setAttribute("type", "hidden");
-      hiddenInputId.setAttribute("name", "cartItemVOList[" + index + "].id");
-      hiddenInputId.setAttribute("value", cartItemId);
+      let hiddenInputId = $("<input/>", {
+        type: "hidden",
+        name: "cartItemVOList[" + index + "].id",
+        value: cartItemId,
+      });
 
-      newForm.append(hiddenInputId);
+      hiddenInputId.appendTo(newForm);
 
-      hiddenInputSize.setAttribute("type", "hidden");
-      hiddenInputSize.setAttribute(
-        "name",
-        "cartItemVOList[" + index + "].productSize"
-      );
-      hiddenInputSize.setAttribute("value", itemSize);
+      let hiddenInputSize = $("<input/>", {
+        type: "hidden",
+        name: "cartItemVOList[" + index + "].productSize",
+        value: itemSize,
+      });
+      hiddenInputSize.appendTo(newForm);
 
-      newForm.append(hiddenInputSize);
-
-      hiddenInputCount.setAttribute("type", "hidden");
-      hiddenInputCount.setAttribute(
-        "name",
-        "cartItemVOList[" + index + "].productCount"
-      );
-      hiddenInputCount.setAttribute("value", itemCount);
-
-      newForm.append(hiddenInputCount);
+      let hiddenInputCount = $("<input/>", {
+        type: "hidden",
+        name: "cartItemVOList[" + index + "].productCount",
+        value: itemCount,
+      });
+      hiddenInputCount.appendTo(newForm);
     });
     document.body.append(newForm);
     newForm.submit();

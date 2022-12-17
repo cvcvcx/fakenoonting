@@ -1,10 +1,8 @@
 package com.fakenoonting.www.product.controller;
 
-import com.fakenoonting.www.member.vo.MemberVO;
 import com.fakenoonting.www.product.service.ProductService;
 import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.reviews.service.ReviewService;
-import com.fakenoonting.www.util.paging.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Slf4j
@@ -28,11 +25,9 @@ public class ProductController {
     @Autowired
     private ReviewService reviewService;
 
-    
-
-	// =============================================================================//
-	// 페이지 이동																		//
-	// =============================================================================//
+    // =============================================================================//
+    // 페이지 이동 //
+    // =============================================================================//
 
     // 물품 등록 페이지로 이동
     @GetMapping(value = "/upload")
@@ -41,7 +36,7 @@ public class ProductController {
         mav.setViewName("/product/productUpload");
         return mav;
     }
-    
+
     // 물품 상세 페이지 이동
     @GetMapping("/detail")
     public ModelAndView productDetail(long id, Model model) {
@@ -52,30 +47,30 @@ public class ProductController {
 
         model.addAttribute("product", product);
         mav.setViewName("/product/productDetails");
-        
+
         return mav;
     }
-    
+
     // 물품 수정 페이지로 이동
     @GetMapping(value = "/update")
     public ModelAndView productUpdate(long id, Model model) {
-    	
+
         ProductVO productId = new ProductVO();
         productId.setId(id);
         ProductVO productVO = productService.productDetail(productId);
 
-		log.info("ProductController 물품 정보 추출 productVO ==> " + productVO);
-				
-		// 찾아온 데이터를 가지고 물품 수정화면으로 넘어간다.
-		ModelAndView mav = new ModelAndView("/product/productUpdate");
-		mav.addObject("product", productVO);
-		
+        log.info("ProductController 물품 정보 추출 productVO ==> " + productVO);
+
+        // 찾아온 데이터를 가지고 물품 수정화면으로 넘어간다.
+        ModelAndView mav = new ModelAndView("/product/productUpdate");
+        mav.addObject("product", productVO);
+
         return mav;
     }
 
-	// =============================================================================//
-	// 물품 등록																		//
-	// =============================================================================//
+    // =============================================================================//
+    // 물품 등록 //
+    // =============================================================================//
 
     // 물품 등록 처리
     @PostMapping("/upload")
@@ -87,9 +82,9 @@ public class ProductController {
         return mav;
     }
 
-	// =============================================================================//
-	// 물품 추출																		//
-	// =============================================================================//
+    // =============================================================================//
+    // 물품 추출 //
+    // =============================================================================//
 
     // 특정 카테고리(TOP) 물품 전체 리스트 추출
     @GetMapping("/list")
@@ -115,14 +110,13 @@ public class ProductController {
         return mav;
     }
 
-	// =============================================================================//
-	// 물품 수정																		//
-	// =============================================================================//
+    // =============================================================================//
+    // 물품 수정 //
+    // =============================================================================//
 
-    
-	// =============================================================================//
-	// 물품 삭제																		//
-	// =============================================================================//
+    // =============================================================================//
+    // 물품 삭제 //
+    // =============================================================================//
 
     // 등록된 물품 삭제
     @GetMapping("/delete")

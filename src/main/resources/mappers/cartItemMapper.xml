@@ -11,6 +11,7 @@
         <result column="item_size" property="productSize" />
         <result column="item_count" property="productCount" />
         <result column="create_date" property="createDate" />
+        <result column="modify_date" property="modifyDate" />
         <result column="status" property="status" />
     </resultMap>
 
@@ -45,6 +46,7 @@
             select *
             from cart_item
             where member_id = #{id} and status= 'O'
+            Order by modify_date desc
         ]]>
     </select>
 

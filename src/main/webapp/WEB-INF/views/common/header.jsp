@@ -55,7 +55,7 @@
 									<li><a class="dropdown-item"
 										href="${contextPath}/member/myPage.do">마이 페이지</a></li>
 									<li><a class="dropdown-item"
-										href="${contextPath}/order/orderLookup">주문조회</a></li>
+										href="${contextPath}/order">주문조회</a></li>
 									<li><a class="dropdown-item"
 										href="${contextPath}/member/updateMemberForm.do">회원정보수정</a></li>
 									<li><a class="dropdown-item" href="#">최근본상품</a></li>
