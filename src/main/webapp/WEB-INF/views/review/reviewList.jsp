@@ -5,7 +5,7 @@
 <%  request.setCharacterEncoding("UTF-8"); %>
 
 <article>
-    <div class="container" id="reviewListForm">
+    <div class="container">
         <div>
             <div class="row mt-4">
                 <div class="col mb-3">
@@ -21,7 +21,7 @@
                     </h4>
                 </div>
                 <div class="col">
-                    <div><a href="#" class="link-secondary">전체 상품 리뷰 보기</a><div class="vr mx-1"></div>
+                    <div><a href="${contextPath}/allReviewList" class="link-secondary">전체 상품 리뷰 보기</a><div class="vr mx-1"></div>
                         <div class="modal fade" id="textModal" aria-hidden="true" aria-labelledby="textModalLabel" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
@@ -82,7 +82,16 @@
                             </c:choose>
                         </span>
                     </div>
-                    ${peopleLikeCount}%의 구매자가 이 상품을 좋아합니다.
+
+                    <c:choose>
+                        <c:when test="${peopleLikeCount == 'NaN'}">
+                            0%의 구매자가 이 상품을 좋아합니다.
+                        </c:when>
+                        <c:when test="${peopleLikeCount != NaN}">
+                            <c:out value="${peopleLikeCount}" />%의 구매자가 이 상품을 좋아합니다.
+                        </c:when>
+                    </c:choose>
+
                     <form action="${contextPath}/reviewForm">
                         <input type="hidden" name="productId" value="${param.productId}">
                         <button type="submit" class="btn btn-secondary mt-4" id="registerReview">상품 리뷰 작성하기</button>
@@ -115,7 +124,7 @@
                                             </c:choose>
                                         </div>
                                         <div class="progress m-2 col-9">
-                                            <div class="progress-bar bg-dark" role="progressbar" aria-label="progressbar label" style="width: '${item2}%';" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-dark" role="progressbar" aria-label="progressbar label" style="width: ${item2/productReviewCount*100}%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0"></div>
                                         </div>
                                         <div class="col-1">
                                             ${item1}
@@ -145,7 +154,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="#"><img src="${contextPath}/resources/images/cat1.jpg" width="142" height="157"></a>
+                    <a href="#"><img src="images/cat1.jpg" width="142" height="157"></a>
 <%--                    <a href="#"><img src="images/cat10.jpg" width="142" height="157"></a>--%>
 <%--                    <a href="#"><img src="images/cat11.png" width="142" height="157"></a>--%>
 <%--                    <a href="#"><img src="images/cat12.png" width="142" height="157"></a>--%>
@@ -158,9 +167,9 @@
             <hr class="mb-0"/>
             <div class="row">
                 <div class="col my-auto" style="font-size:20px;">
-                    <a href="javascript:void(0);" data-sort="1" onclick="fn_sortRecommend('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="recommend" style="text-decoration: none">추천순</a>
-                    <a href="javascript:void(0);" data-sort="2" onclick="fn_sortRecently('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="recently" style="text-decoration: none">최신순</a>
-                    <a href="javascript:void(0);" data-sort="3" onclick="fn_sortGrade('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="grade" style="text-decoration: none">평점순</a>
+                    <a href="#reviews" data-sort="1" onclick="fn_sortRecommend('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="recommend" style="text-decoration: none">추천순</a>
+                    <a href="#reviews" data-sort="2" onclick="fn_sortRecently('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="recently" style="text-decoration: none">최신순</a>
+                    <a href="#reviews" data-sort="3" onclick="fn_sortGrade('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="grade" style="text-decoration: none">평점순</a>
                 </div>
                 <div class="col my-auto" style="font-size:20px;">
                     <a href="#" class="link-secondary d-flex justify-content-end" style="text-decoration: none">
@@ -175,11 +184,11 @@
                             <input type="search" name="q" class="form-control" id="searchKeyword" placeholder="search" value="${keyword}">
                             <label for="searchKeyword">리뷰 키워드 검색</label>
                         </div>
-                        <button type="button" class="btn btn-secondary" id="searchBtn">
+                        <a type="button" class="btn btn-secondary" id="searchBtn" href="#reviews" onclick="fn_searchBtn(${review.productId}, ${sortNum})">
                             <span class="material-icons-round">
                                 search
                             </span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -282,10 +291,9 @@
                             <div class="col-12 mt-2">
                                 <td><p><c:out value="${list.contents}"/></p></td>
                                 <div class="col-12 mt-3">
-                                    사진 사진 사진
-<%--                                    <a href="#"><img src="images/cat22.jpg" width="142" height="157"></a>--%>
-<%--                                    <a href="#"><img src="images/cat21.jpg" width="142" height="157"></a>--%>
-<%--                                    <a href="#"><img src="images/cat20.jpg" width="142" height="157"></a>--%>
+                                    <a href="#"><img src="images/cat22.jpg" width="142" height="157"></a>
+                                    <a href="#"><img src="images/cat21.jpg" width="142" height="157"></a>
+                                    <a href="#"><img src="images/cat20.jpg" width="142" height="157"></a>
                                 </div>
                             </div>
                             <div class="col-12 mt-2">
@@ -307,7 +315,7 @@
                         </div>
                         <div class="col-4">
                             <div class="col-12 mb-1">
-                                <div><span class="fw-bold"><c:out value="${list.memberId}"/>(멤버아이디 닉네임으로수정??)</span>님의 리뷰입니다.</div>
+                                <div><span class="fw-bold"><c:out value="${list.nickname}"/></span>님의 리뷰입니다.</div>
                             </div>
                             <div class="row text-secondary">
                                 <div>키 : <span class="mx-1">160cm</span></div>
@@ -332,7 +340,7 @@
                         <c:if test="${pagination.prev}">
                             <li class="page-item">
                                 <a class="page-link link-dark"
-                                   href="javascript:void(0);"
+                                   href="#reviews"
                                    onclick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${review.productId}', '${sortNum}', '${keyword}')"
                                    aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
@@ -343,7 +351,7 @@
                         <c:forEach var="idx" begin="${pagination.startPage}" end="${pagination.endPage}">
                             <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
                                 <a class="page-link link-dark"
-                                   href="javascript:void(0);"
+                                   href="#reviews"
                                    onclick="fn_pagination('${idx}', '${pagination.range}', '${review.productId}', '${sortNum}', '${keyword}')">
                                     ${idx}
                                 </a>
@@ -353,7 +361,7 @@
                         <c:if test="${pagination.next}">
                             <li class="page-item">
                                 <a class="page-link link-dark"
-                                   href="javascript:void(0);"
+                                   href="#reviews"
                                    onclick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}', '${review.productId}', '${sortNum}', '${keyword}')"
                                    aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
@@ -370,18 +378,6 @@
 
 
 <script>
-    $(function checkSuccess() {
-        let result = "${result}";
-
-        if(result === '') {
-            return;
-        }
-
-        if(result === "success") {
-            alert("리뷰가 등록되었습니다.");
-        }
-    });
-
     function fn_sortCommon(page, range, productId, sortNum, contents) {
         $.ajax({
             type: "get",
@@ -394,7 +390,7 @@
                 keyword: contents
             },
             success: function(result){
-                $("#reviewListForm").html(result);
+                $("#reviewList").html(result);
             },
             error: function(request, error){
                 alert(
@@ -441,7 +437,7 @@
                 keyword: contents
             },
             success: function(result){
-                $("#reviewListForm").html(result);
+                $("#reviewList").html(result);
             },
             error: function(request, error){
                 alert(
@@ -474,166 +470,90 @@
         fn_pagingCommon(page, range, productId, sortNum, contents);
     }
 
-    $(function(e){
-        $("input[id='keyword']").on(
-            "propertychange changer keyup paste input",
-            function(e) {
-                fn_keywordOnChange($(this));
-            }
-        );
+    $(function checkSuccess() {
+        let result = '<c:out value="${result}"/>';
 
-        $('#searchBtn').on('click', function(e){
-            e.preventDefault();
+        if (result === '') {
+            return;
+        }
 
-            $.ajax({
-                type: "get",
-                url: "${contextPath}/reviewList",
-                data: {
-                    productId: "${review.productId}",
-                    page: 1,
-                    range: 1,
-                    sortNum: "${sortNum}",
-                    keyword: $("#searchKeyword").val()
-                },
-                success: function(result){
-                    $("#reviewListForm").html(result);
-                },
-                error: function(request, error){
-                    alert(
-                        "code:" +
-                        request.status +
-                        "\n" +
-                        "message:" +
-                        request.responseText +
-                        "\n" +
-                        "error:" +
-                        error
-                    );
-                }
-            });
-        });
+        if (result === "register success") {
+            alert("리뷰가 등록되었습니다.");
+        }
     });
 
-    function fn_keywordOnChange(e) {
-        let changedValue = $(e).val();
-        e.attr("value", changedValue);
+    function fn_searchBtn(productId, sortNum) {
+        $.ajax({
+            type: "get",
+            url: "${contextPath}/reviewList",
+            data: {
+                productId: productId,
+                page: 1,
+                range: 1,
+                sortNum: sortNum,
+                keyword: $("#searchKeyword").val()
+            },
+            success: function(result){
+                $("#reviewList").html(result);
+            },
+            error: function(request, error){
+                alert(
+                    "code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" +
+                    "error:" +
+                    error
+                );
+            }
+        });
     }
-
 </script>
 
+    <%--$(function(e){--%>
+    <%--    $("input[id='keyword']").on(--%>
+    <%--        "propertychange changer keyup paste input",--%>
+    <%--        function(e) {--%>
+    <%--            fn_keywordOnChange($(this));--%>
+    <%--        }--%>
+    <%--    );--%>
 
+    <%--    $('#searchBtn').on('click', function(e){--%>
+    <%--        alert(${review.productId});--%>
+    <%--        e.preventDefault();--%>
 
+    <%--        $.ajax({--%>
+    <%--            type: "get",--%>
+    <%--            url: "${contextPath}/reviewList",--%>
+    <%--            data: {--%>
+    <%--                productId: ${review.productId},--%>
+    <%--                page: 1,--%>
+    <%--                range: 1,--%>
+    <%--                sortNum: ${sortNum},--%>
+    <%--                keyword: $("#searchKeyword").val()--%>
+    <%--            },--%>
+    <%--            success: function(result){--%>
+    <%--                $("#reviewListForm").html(result);--%>
+    <%--            },--%>
+    <%--            error: function(request, error){--%>
+    <%--                alert(--%>
+    <%--                    "code:" +--%>
+    <%--                    request.status +--%>
+    <%--                    "\n" +--%>
+    <%--                    "message:" +--%>
+    <%--                    request.responseText +--%>
+    <%--                    "\n" +--%>
+    <%--                    "error:" +--%>
+    <%--                    error--%>
+    <%--                );--%>
+    <%--            }--%>
+    <%--        });--%>
+    <%--    });--%>
+    <%--});--%>
 
-
-
-
-
-
-
-
-
-
-<%--    <div class="container" id="reviewListForm">--%>
-
-<%--        <br>--%>
-<%--        <h2>아이템번호 ${param.productId}</h2>--%>
-<%--        <h2>평점 ★--%>
-<%--            <c:choose>--%>
-<%--                <c:when test="${avgGrade == 0}">--%>
-<%--                    <c:out value="0" />--%>
-<%--                </c:when>--%>
-<%--                <c:when test="${avgGrade != 0}">--%>
-<%--                    <c:out value="${avgGrade}" />--%>
-<%--                </c:when>--%>
-<%--            </c:choose>--%>
-<%--        </h2>--%>
-<%--        <h2>리뷰개수--%>
-<%--            <c:choose>--%>
-<%--                <c:when test="${productReviewCount == null}">--%>
-<%--                    <div>리뷰가 없습니다.</div>--%>
-<%--                </c:when>--%>
-<%--                <c:when test="${productReviewCount != null}">--%>
-<%--                    <c:out value="${productReviewCount}" />--%>
-<%--                </c:when>--%>
-<%--            </c:choose>--%>
-<%--        </h2>--%>
-<%--        <br>--%>
-
-<%--        <div class="col my-auto" style="font-size:20px;">--%>
-<%--            <a href="javascript:void(0);" data-sort="1" onclick="fn_sortRecommend('${pagination.page}', '${pagination.range}', '${param.productId}')" class="link-secondary" id="recommend">추천순</a>--%>
-<%--            <a href="javascript:void(0);" data-sort="2" onclick="fn_sortRecently('${pagination.page}', '${pagination.range}', '${param.productId}')" class="link-secondary" id="recently">최신순</a>--%>
-<%--            <a href="javascript:void(0);" data-sort="3" onclick="fn_sortGrade('${pagination.page}', '${pagination.range}', '${param.productId}')" class="link-secondary" id="grade">평점순</a>--%>
-<%--        </div>--%>
-<%--        <br>--%>
-
-<%--        <div class="table-responsive">--%>
-<%--            <table class="table table-striped table-sm">--%>
-<%--                <colgroup>--%>
-<%--                    <col style="width:10%;" />--%>
-<%--                    <col style="width:auto;" />--%>
-<%--                    <col style="width:10%;" />--%>
-<%--                    <col style="width:10%;" />--%>
-<%--                </colgroup>--%>
-<%--                <thead>--%>
-<%--                <tr>--%>
-<%--                    <th>NO</th>--%>
-<%--                    <th>리뷰내용</th>--%>
-<%--                    <th>평점</th>--%>
-<%--                    <th>작성일</th>--%>
-<%--                </tr>--%>
-<%--                </thead>--%>
-<%--                <tbody>--%>
-<%--                <c:choose>--%>
-<%--                    <c:when test="${empty dataList}" >--%>
-<%--                        <tr><td colspan="5" align="center">데이터가 없습니다.</td></tr>--%>
-<%--                    </c:when>--%>
-<%--                    <c:when test="${!empty dataList}">--%>
-<%--                        <c:forEach var="list" items="${dataList}">--%>
-<%--                            <tr>--%>
-<%--                                <td><c:out value="${list.reviewId}"/></td>--%>
-<%--                                <td><c:out value="${list.contents}"/></td>--%>
-<%--                                <td><c:out value="${list.grade}"/></td>--%>
-<%--                                <td><fmt:formatDate value="${list.regDate}" pattern="yyyy.MM.dd"/></td>--%>
-<%--                            </tr>--%>
-<%--                        </c:forEach>--%>
-<%--                    </c:when>--%>
-<%--                </c:choose>--%>
-<%--                </tbody>--%>
-<%--            </table>--%>
-
-<%--            <form action="${contextPath}/reviewForm">--%>
-<%--                <input type="hidden" name="productId" value="${param.productId}">--%>
-<%--                <button type="submit" class="btn btn-sm btn-primary" id="registerReview">리뷰쓰기</button>--%>
-<%--            </form>--%>
-<%--            <br>--%>
-
-<%--            <div id="paginationBox">--%>
-<%--                <ul class="pagination">--%>
-<%--                    <c:if test="${pagination.prev}">--%>
-<%--                        <li class="page-item">--%>
-<%--                            <a class="page-link"--%>
-<%--                               href="javascript:void(0);"--%>
-<%--                               onclick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${param.productId}', '${param.sortNum}')">Previous</a>--%>
-<%--                        </li>--%>
-<%--                    </c:if>--%>
-
-<%--                    <c:forEach var="idx" begin="${pagination.startPage}" end="${pagination.endPage}">--%>
-<%--                        <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">--%>
-<%--                            <a class="page-link"--%>
-<%--                               href="javascript:void(0);"--%>
-<%--                               onclick="fn_pagination('${idx}', '${pagination.range}', '${param.productId}', '${param.sortNum}')"> ${idx} </a>--%>
-<%--                        </li>--%>
-<%--                    </c:forEach>--%>
-
-<%--                    <c:if test="${pagination.next}">--%>
-<%--                        <li class="page-item">--%>
-<%--                            <a class="page-link"--%>
-<%--                               href="javascript:void(0);"--%>
-<%--                               onclick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}', '${param.productId}', '${param.sortNum}')">Next</a>--%>
-<%--                        </li>--%>
-<%--                    </c:if>--%>
-<%--                </ul>--%>
-<%--            </div>--%>
-
-<%--        </div>--%>
-<%--    </div>--%>
+    <%--function fn_keywordOnChange(e) {--%>
+    <%--    let changedValue = $(e).val();--%>
+    <%--    e.attr("value", changedValue);--%>
+    <%--}--%>
