@@ -1,11 +1,14 @@
 <!--  prettier-ignore -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!--  prettier-ignore -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--  prettier-ignore -->
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!--  prettier-ignore -->
-<% request.setCharacterEncoding("UTF-8"); %>
+<%
+request.setCharacterEncoding("UTF-8");
+%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -155,13 +158,27 @@
     </div>
 
     <jsp:include page="../common/footer.jsp" flush="false" />
+
+    <!-- ============================================================================ -->
+    <!-- script -->
+    <!-- ============================================================================ -->
     <script>
+      // =================================================================================//
+      // 이미지(thumnail, content) 업로드 script												//
+      // =================================================================================//
+
+      // thumnail 이미지 업로드
       $("input[id='thumbnailInput']").on("change", function (e) {
         let formData = new FormData();
         let inputFile = $('input[id="thumbnailInput"]');
         let files = inputFile[0].files;
 
         for (let i = 0; i < files.length; i++) {
+          // 파일 확장자 및 개별 사이즈 검사
+          if (checkExtAndSize(files[i].name, files[i].size)) {
+            return false;
+          }
+
           formData.append("uploadFile", files[i]);
         }
 
@@ -183,19 +200,25 @@
           },
         });
       });
+
+      // thumnail 업로드 한 이미지 보이게 하기
       function showThumbnailUploadImage(uploadResultArr) {
-        /* 전달받은 데이터 검증 */
+        /* 업로드 한 파일 검증 */
         if (!uploadResultArr || uploadResultArr.length == 0) {
           return;
         }
 
         let thumbnailUploadResult = $("#thumbnailUploadResult");
         let str = "";
+
+        // 받은 result 이미지가 여러개일 수 있으므로 each로 각각 썸네일을 보이게 할 수 있는 태그 생성
         $(uploadResultArr).each(function (i, obj) {
+          // result 의  uploadPath, imgUUID, orgImgName 들을 하나의 String으로 합친다
           let fileCallPath = encodeURIComponent(
             obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName
           );
           console.log(fileCallPath);
+
           str += "<li class='result_li' data-path='" + obj.uploadPath + "'";
           str +=
             " data-uuid='" +
@@ -217,15 +240,22 @@
           str += "</div>";
           str += "</li>";
         });
+
         thumbnailUploadResult.append(str);
       }
 
+      // content 이미지 업로드
       $("input[id='contentInput']").on("change", function (e) {
         let formData = new FormData();
         let inputFile = $('input[id="contentInput"]');
         let files = inputFile[0].files;
 
         for (let i = 0; i < files.length; i++) {
+          // 파일 확장자 및 개별 사이즈 검사
+          if (checkExtAndSize(files[i].name, files[i].size)) {
+            return false;
+          }
+
           formData.append("uploadFile", files[i]);
         }
 
@@ -247,6 +277,8 @@
           },
         });
       });
+
+      // content 업로드 한 이미지 보이게 하기
       function showContentUploadImage(uploadResultArr) {
         /* 전달받은 데이터 검증 */
         if (!uploadResultArr || uploadResultArr.length == 0) {
@@ -281,31 +313,36 @@
           str += "</div>";
           str += "</li>";
         });
+
         uploadResult.append(str);
       }
-      let maxSize = 1048576; //1MB
 
-      function fileCheck(fileName, fileSize) {
-        if (fileSize >= maxSize) {
-          alert("파일 사이즈 초과");
-          return false;
+      // 파일 확장자 및 크기 검사 함수
+      let resFileExt = new RegExp("(.*?)\.(exe|sh|zip|alz)"); // 제한을 걸 확장자
+      let maxSizePerFile = 10485760; // 10MB
+
+      function checkExtAndSize(fileName, fileSize) {
+        if (fileSize >= maxSizePerFile) {
+          alert("올린 파일 중 사이즈가 10MB가 넘는 파일이 있습니다.");
+          return true;
         }
 
-        if (!regex.test(fileName)) {
-          alert("해당 종류의 파일은 업로드할 수 없습니다.");
-          return false;
+        if (resFileExt.test(fileName)) {
+          alert("해당 확장자의 파일은 올릴 수 없습니다.");
+          return true;
         }
 
-        return true;
+        return false;
       }
-      /* 이미지 삭제 버튼 동작 */
-      $("#uploadResult").on("click", ".imgDeleteBtn", function (e) {
+
+      // 업로드 후 보여지는 이미지 삭제 버튼 동작
+      $("#thumbnailUploadResult").on("click", ".imgDeleteBtn", function (e) {
+        // 바로 아래에 함수 있음
         deleteFile();
       });
 
       function deleteFile() {
         let targetFile = $(".imgDeleteBtn").data("file");
-
         let targetDiv = $("#result_card");
 
         $.ajax({
@@ -323,11 +360,14 @@
           },
           error: function (result) {
             console.log(result);
-
             alert("파일을 삭제하지 못하였습니다.");
           },
         });
       }
+
+      // =================================================================================//
+      // End - 이미지(thumnail, content) 업로드 script																	//
+      // =================================================================================//
 
       let sizeDiv = $("#size-div");
       let sizeListCount = 0;
@@ -413,5 +453,8 @@
         formObj.append(str).submit();
       });
     </script>
+    <!-- ============================================================================ -->
+    <!-- End - script -->
+    <!-- ============================================================================ -->
   </body>
 </html>

@@ -47,11 +47,11 @@ public class MemberDAOImpl implements MemberDAOInterface{
 
 	
 	
-	// 아이디(email) 중복 검사 (AJAX)
+	// 아이디(email) 존재 여부 체크 (AJAX)
 	@Override
 	public int emailCheck(MemberVO memberVO) throws DataAccessException {
 		
-		log.info("MemberDAOImpl 아이디(email) 중복 검사() 시작..." + memberVO.getEmail());
+		log.info("MemberDAOImpl 아이디(email) 존재 여부 체크 () 시작..." + memberVO.getEmail());
 		
 		return sqlSession.selectOne(Namespace + ".emailCheck", memberVO);
 	}
