@@ -93,21 +93,21 @@
             <hr class="m-0"/>
             <div class="row">
                 <div class="col my-auto" style="font-size:20px;">
-                    <a href="#" class="link-secondary">추천순</a>
-                    <a href="#" class="link-secondary">최신순</a>
-                    <a href="#" class="link-secondary">평점순</a>
+                    <a href="#" data-sort="1" onclick="fn_sortRecommend('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="recommend" style="text-decoration: none">추천순</a>
+                    <a href="#" data-sort="2" onclick="fn_sortRecently('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="recently" style="text-decoration: none">최신순</a>
+                    <a href="#" data-sort="3" onclick="fn_sortGrade('${pagination.page}', '${pagination.range}', '${review.productId}', '${keyword}')" class="link-secondary" id="grade" style="text-decoration: none">평점순</a>
                 </div>
                 <div class="col">
                     <div class="input-group">
                         <div class="form-floating">
-                            <input type="search" class="form-control" id="ReviewSearch" placeholder="search">
-                            <label for="ReviewSearch">리뷰 키워드 검색</label>
+                            <input type="search" name="q" class="form-control" id="searchKeyword" placeholder="search" value="${keyword}">
+                            <label for="searchKeyword">리뷰 키워드 검색</label>
                         </div>
-                        <button type="button" class="btn btn-secondary">
-                                    <span class="material-icons-round">
-                                        search
-                                    </span>
-                        </button>
+                        <a type="button" class="btn btn-secondary" id="searchBtn" href="#" onclick="fn_searchBtn(${sortNum})">
+                            <span class="material-icons-round">
+                                search
+                            </span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -139,211 +139,144 @@
                 </div>
             </div>
             <hr class="mt-2" />
-            <div class="row">
-                <div class="col-8">
-                    <div class="col-12">
-                                <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span>아주 좋아요</span>
-                        <div class="text-secondary">2022.11.11</div>
-                    </div>
-                    <div class="col-12 my-2">
-                        <a href="#" class="link-dark fw-bold"><img src="images/cat16.png" width="48" height="48"> 떼껄룩 기모 맨투맨 6color</a>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <p>소재가 너무 좋아요 두께감도 적당합니당.</p>
-                        <div class="col-12 mt-3">
-                            <a href="#"><img src="images/cat22.jpg" width="142" height="157"></a>
-                            <a href="#"><img src="images/cat21.jpg" width="142" height="157"></a>
-                            <a href="#"><img src="images/cat20.jpg" width="142" height="157"></a>
+            <c:choose>
+                <c:when test="${empty dataList}" >
+                    <tr><td colspan="5" align-text="center">리뷰가 없습니다.</td></tr>
+                </c:when>
+                <c:when test="${!empty dataList}">
+                    <c:forEach var="list" items="${dataList}">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="col-12">
+                                <c:forEach var="star" begin="1" end="${list.grade}">
+                                    <span class="material-icons-round" style="color: yellow; font-size: 2em;">
+                                        star
+                                    </span>
+                                </c:forEach>
+                                <c:forEach var="star" begin="1" end="${5-list.grade}">
+                                    <span class="material-icons-round" style="color: gray; font-size: 2em;">
+                                        star
+                                    </span>
+                                </c:forEach>
+                                <c:choose>
+                                    <c:when test="${list.grade == 1}">
+                                        <span>별로에요</span>
+                                    </c:when>
+                                    <c:when test="${list.grade == 2}">
+                                        <span>그냥 그래요</span>
+                                    </c:when>
+                                    <c:when test="${list.grade == 3}">
+                                        <span>보통이에요</span>
+                                    </c:when>
+                                    <c:when test="${list.grade == 4}">
+                                        <span>맘에 들어요</span>
+                                    </c:when>
+                                    <c:when test="${list.grade == 5}">
+                                        <span>아주 좋아요</span>
+                                    </c:when>
+                                </c:choose>
+                                <div class="text-secondary"><td><fmt:formatDate value="${list.regDate}" pattern="yyyy.MM.dd"/></td></div>
+                            </div>
+                            <div class="col-12 my-2">
+                                <c:forEach items="${productImg}" var="pImg">
+                                    <c:if test="${list.productId eq pImg.foreignId}">
+                                        <a href="${contextPath}/product/detail?id=${pImg.foreignId}">
+                                            <img src="${contextPath}/util/upload/display?fileName=${pImg.uploadPath}/s_${pImg.imgUUID}_${pImg.orgImgName}"
+                                                 class="link-dark fw-bold" width="48" height="48" alt="상품사진">
+                                                    <c:forEach items="${productName}" var="pName">
+                                                        <c:if test="${list.productId eq pName.id}">
+                                                            ${pName.productName}
+                                                        </c:if>
+                                                    </c:forEach>
+                                        </a>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <td>
+                                    <p><c:out value="${list.contents}"/></p>
+                                </td>
+                                <div class="col-12 mt-3">
+                                    <c:forEach items="${reviewImg}" var="img">
+                                        <c:if test="${list.reviewId eq img.reviewId}">
+                                            <a href="#">
+                                                <img src="${contextPath}/util/upload/display?fileName=${img.uploadPath}/s_${img.imgUUID}_${img.orgImgName}"
+                                                     class="card-img-top" style="width:142px; height:157px" alt="리뷰사진">
+                                            </a>
+                                        </c:if>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <a href="#" class="link-secondary">
+                                            <span class="material-icons-outlined">
+                                                thumb_up
+                                            </span>도움돼요 3
+                                </a>
+                                <a href="#" class="link-secondary mx-2">
+                                            <span class="material-icons-outlined">
+                                                thumb_down
+                                            </span>
+                                    도움안돼요 1
+                                </a>
+                                <div class="vr"></div>
+                                <a href="#" class="link-secondary mx-2">댓글 0</a>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="col-12 mb-1">
+                                <div><span class="fw-bold"><c:out value="${list.nickname}"/></span>님의 리뷰입니다.</div>
+                            </div>
+                            <div class="row text-secondary">
+                                <div>키 : <span class="mx-1">160cm</span></div>
+                                <div>몸무게 : <span class="mx-1">40kg</span></div>
+                                <div>평소사이즈-상의 : <span class="mx-1">S</span></div>
+                                <div>평소사이즈-하의 : <span class="mx-1">25</span></div>
+                                <div>색상 : <span class="mx-1">블랙</span></div>
+                                <div>사이즈 : <span class="mx-1">S</span></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-12 mt-2">
-                        <a href="#" class="link-secondary">
-                                    <span class="material-icons-outlined">
-                                        thumb_up
-                                    </span>도움돼요 3
-                        </a>
-                        <a href="#" class="link-secondary mx-2">
-                                    <span class="material-icons-outlined">
-                                        thumb_down
-                                    </span>
-                            도움안돼요 1
-                        </a>
-                        <div class="vr"></div>
-                        <a href="#" class="link-secondary mx-2">댓글 0</a>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="col-12 mb-1">
-                        <div><span class="fw-bold">조**</span>님의 리뷰입니다.</div>
-                    </div>
-                    <div class="row text-secondary">
-                        <div>키 : <span class="mx-1">160cm</span></div>
-                        <div>몸무게 : <span class="mx-1">40kg</span></div>
-                        <div>평소사이즈-상의 : <span class="mx-1">S</span></div>
-                        <div>평소사이즈-하의 : <span class="mx-1">25</span></div>
-                        <div>색상 : <span class="mx-1">블랙</span></div>
-                        <div>사이즈 : <span class="mx-1">S</span></div>
-                    </div>
-                </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col-8">
-                    <div class="col-12">
-                                <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: lightgray; font-size: 2em;">
-                                    star
-                                </span>
-                        <span>맘에 들어요</span>
-                        <div class="text-secondary">2022.11.10</div>
-                    </div>
-                    <div class="col-12 my-2">
-                        <a href="#" class="link-dark fw-bold"><img src="images/cat11.png" width="48" height="48"> 냥냥펀치 기모 맨투맨 6color</a>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <p>보들보들 좋아요</p>
-                        <div class="col-12 mt-3">
-                            <a href="#"><img src="images/cat12.png" width="142" height="157"></a>
-                            <a href="#"><img src="images/cat13.png" width="142" height="157"></a>
-                            <a href="#"><img src="images/cat14.jpg" width="142" height="157"></a>
-                        </div>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <a href="#" class="link-secondary">
-                                    <span class="material-icons-outlined">
-                                        thumb_up
-                                    </span>도움돼요 1
-                        </a>
-                        <a href="#" class="link-secondary mx-2">
-                                    <span class="material-icons-outlined">
-                                        thumb_down
-                                    </span>
-                            도움안돼요 0
-                        </a>
-                        <div class="vr"></div>
-                        <a href="#" class="link-secondary mx-2">댓글 0</a>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="col-12 mb-1">
-                        <div><span class="fw-bold">박**</span>님의 리뷰입니다.</div>
-                    </div>
-                    <div class="row text-secondary">
-                        <div>키 : <span class="mx-1">170cm</span></div>
-                        <div>몸무게 : <span class="mx-1">60kg</span></div>
-                        <div>평소사이즈-상의 : <span class="mx-1">M</span></div>
-                        <div>평소사이즈-하의 : <span class="mx-1">30</span></div>
-                        <div>색상 : <span class="mx-1">블랙</span></div>
-                        <div>사이즈 : <span class="mx-1">M</span></div>
-                    </div>
-                </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col-8">
-                    <div class="col-12">
-                                <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: yellow; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: lightgray; font-size: 2em;">
-                                    star
-                                </span>
-                        <span class="material-icons-round" style="color: lightgray; font-size: 2em;">
-                                    star
-                                </span>
-                        <span>보통이에요</span>
-                        <div class="text-secondary">2022.11.09</div>
-                    </div>
-                    <div class="col-12 my-2">
-                        <a href="#" class="link-dark fw-bold"><img src="images/cat11.png" width="48" height="48"> 야옹이 맨투맨 3color</a>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <p>배송이 너무 늦어요 ㅠㅠ</p>
-                        <div class="col-12 mt-3">
-                            <a href="#"><img src="images/cat3.jpg" width="142" height="157"></a>
-                            <a href="#"><img src="images/cat5.jpg" width="142" height="157"></a>
-                            <a href="#"><img src="images/cat7.jpg" width="142" height="157"></a>
-                        </div>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <a href="#" class="link-secondary">
-                                    <span class="material-icons-outlined">
-                                        thumb_up
-                                    </span>도움돼요 2
-                        </a>
-                        <a href="#" class="link-secondary mx-2">
-                                    <span class="material-icons-outlined">
-                                        thumb_down
-                                    </span>
-                            도움안돼요 0
-                        </a>
-                        <div class="vr"></div>
-                        <a href="#" class="link-secondary mx-2">댓글 0</a>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="col-12 mb-1">
-                        <div><span class="fw-bold">이**</span>님의 리뷰입니다.</div>
-                    </div>
-                    <div class="row text-secondary">
-                        <div>키 : <span class="mx-1">170cm</span></div>
-                        <div>몸무게 : <span class="mx-1">65kg</span></div>
-                        <div>평소사이즈-상의 : <span class="mx-1">L</span></div>
-                        <div>평소사이즈-하의 : <span class="mx-1">31</span></div>
-                        <div>색상 : <span class="mx-1">그레이</span></div>
-                        <div>사이즈 : <span class="mx-1">L</span></div>
-                    </div>
-                </div>
-            </div>
-            <hr />
+                    <hr />
+                    </c:forEach>
+                </c:when>
+            </c:choose>
+
+
             <div class="m-3">
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link link-dark" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link link-dark" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link link-dark" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link link-dark" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link link-dark" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                        <c:if test="${pagination.prev}">
+                            <li class="page-item">
+                                <a class="page-link link-dark"
+                                   href="#"
+                                   onclick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${review.productId}', '${sortNum}', '${keyword}')"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+
+                        <c:forEach var="idx" begin="${pagination.startPage}" end="${pagination.endPage}">
+                            <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
+                                <a class="page-link link-dark"
+                                   href="#"
+                                   onclick="fn_pagination('${idx}', '${pagination.range}', '${review.productId}', '${sortNum}', '${keyword}')">
+                                        ${idx}
+                                </a>
+                            </li>
+                        </c:forEach>
+
+                        <c:if test="${pagination.next}">
+                            <li class="page-item">
+                                <a class="page-link link-dark"
+                                   href="#"
+                                   onclick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}', '${review.productId}', '${sortNum}', '${keyword}')"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
                     </ul>
                 </nav>
             </div>
@@ -354,5 +287,128 @@
 <!-- footer -->
 <hr />
 <jsp:include page="../common/footer.jsp" flush="false" />
+
+<script>
+    function fn_sortCommon(page, range, productId, sortNum, contents) {
+        $.ajax({
+            type: "get",
+            url: "${contextPath}/allReviewList",
+            data: {
+                productId: productId,
+                page: page,
+                range: range,
+                sortNum: sortNum,
+                keyword: contents
+            },
+            success: function(result){
+                $("body").html(result);
+            },
+            error: function(request, error){
+                alert(
+                    "code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" +
+                    "error:" +
+                    error
+                );
+            }
+        });
+    }
+
+    function fn_sortRecommend(page, range, productId, contents) {
+        var element = document.getElementById("recommend");
+        var sortNum = element.dataset.sort;
+        fn_sortCommon(page, range, productId, sortNum, contents);
+    }
+
+    function fn_sortRecently(page, range, productId, contents) {
+        var element = document.getElementById("recently");
+        var sortNum = element.dataset.sort;
+        fn_sortCommon(page, range, productId, sortNum, contents);
+    }
+
+    function fn_sortGrade(page, range, productId, contents) {
+        var element = document.getElementById("grade");
+        var sortNum = element.dataset.sort;
+        fn_sortCommon(page, range, productId, sortNum, contents);
+    }
+
+    function fn_pagingCommon(page, range, productId, sortNum, contents) {
+        $.ajax({
+            type: "get",
+            url: "${contextPath}/allReviewList",
+            data: {
+                page: page,
+                range: range,
+                productId: productId,
+                sortNum: sortNum,
+                keyword: contents
+            },
+            success: function(result){
+                $("body").html(result);
+            },
+            error: function(request, error){
+                alert(
+                    "code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" +
+                    "error:" +
+                    error
+                );
+            }
+        });
+    }
+
+    function fn_prev(page, range, rangeSize, productId, sortNum, contents) {
+        var page = ((range - 2) * rangeSize) + 1;
+        var range = range - 1;
+        fn_pagingCommon(page, range, productId, sortNum, contents);
+    }
+
+    function fn_pagination(page, range, productId, sortNum, contents) {
+        fn_pagingCommon(page, range, productId, sortNum, contents);
+    }
+
+    function fn_next(page, range, rangeSize, productId, sortNum, contents) {
+        var page = parseInt((range * rangeSize)) + 1;
+        var range = parseInt(range) + 1;
+        fn_pagingCommon(page, range, productId, sortNum, contents);
+    }
+
+    function fn_searchBtn(sortNum) {
+        $.ajax({
+            type: "get",
+            url: "${contextPath}/allReviewList",
+            data: {
+                page: 1,
+                range: 1,
+                sortNum: sortNum,
+                keyword: $("#searchKeyword").val()
+            },
+            success: function(result){
+                $("body").html(result);
+            },
+            error: function(request, error){
+                alert(
+                    "code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" +
+                    "error:" +
+                    error
+                );
+            }
+        });
+    }
+</script>
+
 </body>
 </html>

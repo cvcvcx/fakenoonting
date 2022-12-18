@@ -67,32 +67,29 @@
         let formObj = $("form[role='form']");
 		let str = "";
 
-        $("#uploadResult li").each(function(i,obj){
-        let jobj = $(obj);
-        str +=
-			  "<input type='text' name='reviewImgItems[" +
-			  i +
-			  "].orgImgName' value='" +
-			  jobj.data("filename") +
-			  "'>";
-		str +=
-			  "<input type='text' name='reviewImgItems[" +
-			  i +
-			  "].imgUUID' value='" +
-			  jobj.data("uuid") +
-			  "'>";
-		str +=
-			  "<input type='text' name='reviewImgItems[" +
-			  i +
-			  "].uploadPath' value='" +
-			  jobj.data("path") +
-			  "'>";
+        $("#uploadResult li").each(function(i, obj) {
+			let jobj = $(obj);
+			str +=
+				  "<input type='text' name='reviewImgItems[" +
+				  i +
+				  "].orgImgName' value='" +
+				  jobj.data("filename") +
+				  "'>";
+			str +=
+				  "<input type='text' name='reviewImgItems[" +
+				  i +
+				  "].imgUUID' value='" +
+				  jobj.data("uuid") +
+				  "'>";
+			str +=
+				  "<input type='text' name='reviewImgItems[" +
+				  i +
+				  "].uploadPath' value='" +
+				  jobj.data("path") +
+				  "'>";
         });
-		formObj.append(str);
-		//.submit();
-		//데이터가 어떻게 추가되는지 확인하기 위해 submit을 주석처리
 
-		$("#form").submit();
+		formObj.append(str).submit();
 	});
 
 	$("#btnBack").on("click", function(e) {
