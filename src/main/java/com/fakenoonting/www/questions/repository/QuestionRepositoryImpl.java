@@ -1,13 +1,15 @@
 package com.fakenoonting.www.questions.repository;
 
+import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.questions.domain.Question;
-import com.fakenoonting.www.reviews.domain.Review;
 import com.fakenoonting.www.util.paging.Pagination;
+import com.fakenoonting.www.util.upload.vo.ImgItemVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class QuestionRepositoryImpl implements QuestionRepository {
@@ -50,11 +52,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         return sqlSession.selectList(namespace + ".findAllPaging", pagination);
     }
 
-    // 특정 상품의 모든 문의글 찾기
-    @Override
-    public List<Question> findAllByProductId(int productId) throws Exception {
-        return sqlSession.selectList(namespace + ".findAllByProductId");
-    }
+
 
     // 특정 유저의 모든 문의글 찾기
     @Override
@@ -76,7 +74,23 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
     // 특정 상품의 모든 문의글 개수
     @Override
-    public int productQuestionCount(int productId) throws Exception {
-        return sqlSession.selectOne(namespace + ".productQuestionCount");
+    public int getProdQuesCnt(Map<String, Object> map) throws Exception {
+        return sqlSession.selectOne(namespace + ".getProdQuesCnt", map);
+    }
+
+    // 특정 상품의 모든 문의글 찾기
+    @Override
+    public List<Question> findAllProdQuesByProductId(Map<String, Object> map) throws Exception {
+        return sqlSession.selectList(namespace + ".findAllProdQuesByProductId", map);
+    }
+
+    @Override
+    public List<ImgItemVO> getProductImg(Long productId) {
+        return sqlSession.selectList(namespace + ".getProductImg", productId);
+    }
+
+    @Override
+    public List<ProductVO> getProductName(Long productId) {
+        return sqlSession.selectList(namespace + ".getProductName", productId);
     }
 }

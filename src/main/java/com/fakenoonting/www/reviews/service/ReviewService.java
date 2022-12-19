@@ -1,12 +1,17 @@
 package com.fakenoonting.www.reviews.service;
 
+import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.reviews.domain.Review;
 import com.fakenoonting.www.reviews.repository.ReviewRepository;
 import com.fakenoonting.www.util.paging.Pagination;
+import com.fakenoonting.www.util.upload.vo.ImgItemVO;
+import com.fakenoonting.www.util.upload.vo.ImgReviewItemVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReviewService {
@@ -44,8 +49,8 @@ public class ReviewService {
         return reviewRepository.delete(reviewId);
     }
 
-    // 리뷰 1개 찾기(고유번호 사용)
-    public Review findById(int reviewId) throws Exception {
+    // 리뷰 1개 찾기
+    public Review findById(Long reviewId) throws Exception {
         return reviewRepository.findById(reviewId);
     }
 
@@ -54,34 +59,60 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
-    // 모든 상품의 모든 리뷰 찾기 + 페이징적용
-    public List<Review> findAllPaging(Pagination pagination) throws Exception {
-        return reviewRepository.findAllPaging(pagination);
+    // 특정 상품의 리뷰 평균 평점 구하기
+    public double getProdRvAvgGrade(Long productId) throws Exception {
+        return reviewRepository.getProdRvAvgGrade(productId);
+    }
+
+    // 특정 상품의 모든 리뷰 개수
+    public int getProdRvCnt(Map<String, Object> map) throws Exception {
+        return reviewRepository.getProdRvCnt(map);
     }
 
     // 특정 상품의 모든 리뷰 찾기
-    public List<Review> findAllByProductId(int productId) throws Exception {
-        return reviewRepository.findAllByProductId(productId);
+    public List<Review> findAllProdRvByProductId(Map<String, Object> map) throws Exception {
+        return reviewRepository.findAllProdRvByProductId(map);
     }
 
-    // 특정 유저의 모든 리뷰 찾기
-    public List<Review> findAllByMemberId(int memberId) throws Exception {
-        return reviewRepository.findAllByMemberId(memberId);
+    // 특정 상품의 평점별 리뷰 개수
+    public int getProdRvCntByGrade(Map<String, Object> map) throws Exception {
+        return reviewRepository.getProdRvCntByGrade(map);
     }
 
     // 특정 상품의 모든 리뷰 평점순으로 찾기
-    public List<Review> findAllByGrade(int productId) throws Exception {
-        return reviewRepository.findAllByGrade(productId);
+    public List<Review> findAllProdRvByGrade(Map<String, Object> map) throws Exception {
+        return reviewRepository.findAllProdRvByGrade(map);
     }
 
-    // 특정 상품의 리뷰 평균 평점 구하기
-    public double getAvgGrade(int productId) throws Exception {
-        return reviewRepository.getAvgGrade(productId);
+    // 리뷰 상품 사진 업로드
+    public void uploadRvImg(Review review) {
+        List<ImgReviewItemVo> reviewImgItems = review.getReviewImgItems();
+        if (reviewImgItems != null) {
+            reviewImgItems.forEach(imgItem -> {
+                imgItem.setReviewId(review.getReviewId());
+                imgItem.setProductId(review.getProductId());
+                reviewRepository.uploadRvImg(imgItem);
+            });
+        }
     }
 
-    // 모든 상품의 모든 리뷰 개수
-    public int productReviewCount(int productId) throws Exception {
-        return reviewRepository.productReviewCount(productId);
+    public List<ImgReviewItemVo> getAllReviewImg(Long productId) {
+        return reviewRepository.getAllReviewImg(productId);
     }
 
+    public List<ImgReviewItemVo> getReviewImg(Long productId) throws Exception {
+        return reviewRepository.getReviewImg(productId);
+    }
+
+    public int getRvImgCnt(Long productId) {
+        return reviewRepository.getRvImgCnt(productId);
+    }
+
+    public List<ImgItemVO> getProductImg(Long productId) {
+        return reviewRepository.getProductImg(productId);
+    }
+
+    public List<ProductVO> getProductName(Long productId) {
+        return reviewRepository.getProductName(productId);
+    }
 }

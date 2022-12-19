@@ -22,7 +22,7 @@ public interface MemberDAOInterface {
 	
 	// 아이디(email)에 해당하는 회원 정보 추출
 	public MemberVO selectMember(String email) throws DataAccessException;
-
+	
 	// 아이디(email)에 해당하는 회원 정보 수정
 	public int updateMember(MemberVO memberVO) throws DataAccessException;
 

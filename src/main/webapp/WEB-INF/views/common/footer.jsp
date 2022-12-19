@@ -65,13 +65,13 @@
                         <a href="#" class="text-reset">장바구니</a>
                     </p>
                     <p>
-                        <a href="#" class="text-reset">마이페이지</a>
+                        <a href="${contextPath}/member/myPage.do" class="text-reset">마이페이지</a>
                     </p>
                     <p>
-                        <a href="#" class="text-reset">주문조회</a>
+                        <a href="${contextPath}/order/orderLookup" class="text-reset">주문조회</a>
                     </p>
                     <p>
-                        <a href="#" class="text-reset">회원정보수정</a>
+                        <a href="${contextPath}/member/updateMemberForm.do" class="text-reset">회원정보수정</a>
                     </p>
                     <p>
                         <a href="#" class="text-reset">관심상품</a>
