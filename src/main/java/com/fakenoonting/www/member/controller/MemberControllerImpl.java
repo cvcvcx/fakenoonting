@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -223,6 +225,18 @@ public class MemberControllerImpl implements MemberControllerInterface {
 
 		ModelAndView mav = new ModelAndView("redirect:/");
 		return mav;
+	}
+
+	@Override
+	@PostMapping("/updatePoint")
+	@ResponseBody
+	public String updatePoint(@RequestBody MemberVO memberVO, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		log.info(member.getMoney_point() + "");
+		member.setMoney_point(memberVO.getMoney_point());
+		log.info(member.getMoney_point() + "");
+		memberService.updateMemberMoneyPoint(member);
+		return "Y";
 	}
 
 }

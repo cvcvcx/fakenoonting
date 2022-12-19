@@ -788,7 +788,37 @@ ${member.address2}</textarea
 
       $("#orderBtn").on("click", function () {
         alert("ORDER btn clicked!");
-        fn_makeOrderSelectedItem();
+
+        if (Number($("#resultPoint").text()) < 0) {
+          let chargeYN = confirm(
+            "주문에 필요한 포인트가 부족합니다! 포인트를 충전하시겠습니까?"
+          );
+          if (chargeYN) {
+            let chargeMoney = prompt(
+              "얼마를 충전하시겠습니까?",
+              "충전할 금액을 입력해주세요"
+            );
+            let myPoint = $("#myPoint").text();
+            let finalChargeMoney = Number(myPoint) + Number(chargeMoney);
+            alert(finalChargeMoney);
+            $.ajax({
+              url: "${contextPath}/member/updatePoint",
+              data: JSON.stringify({ money_point: finalChargeMoney }),
+              type: "post",
+              contentType: "application/json; charset:UTF-8",
+              success: function () {
+                $("#myPoint").text(finalChargeMoney);
+                checkedCalculatePrice();
+                return;
+              },
+            });
+          } else {
+            alert("주문이 취소되었습니다.");
+            location.replace("/");
+          }
+        } else {
+          fn_makeOrderSelectedItem();
+        }
       });
 
       // 이벤트 끝 ================================================================================================

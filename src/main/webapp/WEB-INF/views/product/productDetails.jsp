@@ -369,16 +369,7 @@ request.setCharacterEncoding("UTF-8");
             $("#reviewList").html(result);
           },
           error: function(request, error) {
-              alert(
-                      "code:" +
-                      request.status +
-                      "\n" +
-                      "message:" +
-                      request.responseText +
-                      "\n" +
-                      "error:" +
-                      error
-              );
+              
           }
         });
       });
@@ -422,9 +413,7 @@ request.setCharacterEncoding("UTF-8");
 							$("#reviewList").html(result);
 						},
 						error : function(request, error) {
-							alert("code:" + request.status + "\n" + "message:"
-									+ request.responseText + "\n" + "error:"
-									+ error);
+							
 						}
 					});
 				});
@@ -441,9 +430,7 @@ request.setCharacterEncoding("UTF-8");
 							$("#questionList").html(result);
 						},
 						error : function(request, error) {
-							alert("code:" + request.status + "\n" + "message:"
-									+ request.responseText + "\n" + "error:"
-									+ error);
+							
 						}
 					});
 				});
