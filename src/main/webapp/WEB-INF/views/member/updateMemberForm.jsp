@@ -148,7 +148,7 @@ ul {
 						<div class="form-group col-mb-3 ">
 							<select class="form-select " id="gender" name="gender"
 								aria-label="Default select example">
-								<option selected>성별</option>
+								<option selected value="">성별</option>
 								<option value="M">남성</option>
 								<option value="F">여성</option>
 							</select>
@@ -167,9 +167,9 @@ ul {
 								<option value="017">017</option>
 								<option value="019">019</option>
 							</select> <span class="input-group-text">-</span> <input type="tel"
-								class="form-control" id="phone2" placeholder="" aria-label="">
+								class="form-control" id="phone2" value="${member.phoneNum2}" aria-label="">
 							<span class="input-group-text">-</span> <input type="tel"
-								class="form-control" id="phone3" placeholder="" aria-label="">
+								class="form-control" id="phone3" value="${member.phoneNum3}" aria-label="">
 						</div>
 
 						<div class="input-group col-mb-3">
