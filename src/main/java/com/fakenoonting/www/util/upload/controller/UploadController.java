@@ -71,11 +71,20 @@ public class UploadController {
     // 업로드 후 결과물 디스플레이
     @GetMapping("/display")
     public ResponseEntity<byte[]> getImage(String fileName) throws IOException {
+    	
         File file = new File(uploadPath+fileName);
         ResponseEntity<byte[]> result = null;
+        
         HttpHeaders header = new HttpHeaders();
-        header.add("Content-type",Files.probeContentType(file.toPath()));
-        result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file),header,HttpStatus.OK);
+        
+        try {
+        	// 디스플레이를 위해 Http 헤더에 업로드 파일의 Mime 데이터를 추가
+            header.add("Content-type",Files.probeContentType(file.toPath()));
+            result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file),header,HttpStatus.OK);        	
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+        
         return result;
     }
     
