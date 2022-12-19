@@ -39,9 +39,9 @@ request.setCharacterEncoding("UTF-8");
 				<c:forEach items="${product.productSizeList}" var="productSizeList">
 					<div class="col-sm-12 row" id="size-div">
 						<div class="col-sm-6">
-							<input type="text" class="form-control"
-								id="productSizeList.size" name="productSizeList.size"
-								maxlength="200" required value="${productSizeList.size}" />
+							<input type="text" class="form-control" id="productSizeList.size"
+								name="productSizeList.size" maxlength="200" required
+								value="${productSizeList.size}" />
 						</div>
 						<div class="col-sm-6">
 							<input type="text" class="form-control"
@@ -66,7 +66,7 @@ request.setCharacterEncoding("UTF-8");
 				<label class="col-sm-2 control-label">상품상세설명</label>
 				<div class="col-sm-12 mb-2">
 					<textarea class="form-control" id="content" name="content"
-						rows="30" maxlength="1000" required >${product.content}</textarea>
+						rows="30" maxlength="1000" required>${product.content}</textarea>
 				</div>
 				<div id="productThumbnailImg">
 					<label class="col-sm-2 control-label">썸네일용 이미지 업로드</label>
@@ -75,7 +75,7 @@ request.setCharacterEncoding("UTF-8");
 							action="${contextPath}/util/upload/uploadImage" method="post"
 							enctype="multipart/form-data">
 							<!-- file의 변수명(name)과 upload컨트롤러의 MultipartFile file이 일치해야 한다. -->
-							<div class="col-sm-8">
+							<div class="thumbnailUploadDiv col-sm-8">
 								<input type="file" name="uploadFile" class="form-control"
 									id="thumbnailInput" multiple />
 							</div>
@@ -92,7 +92,7 @@ request.setCharacterEncoding("UTF-8");
 							action="${contextPath}/util/upload/uploadImage" method="post"
 							enctype="multipart/form-data">
 							<!-- file의 변수명(name)과 upload컨트롤러의 MultipartFile file이 일치해야 한다. -->
-							<div class="col-sm-8">
+							<div class="contentUploadDiv col-sm-8">
 								<input type="file" name="uploadFile" class="form-control"
 									id="contentInput" multiple />
 							</div>
@@ -104,16 +104,15 @@ request.setCharacterEncoding("UTF-8");
 					<div></div>
 				</div>
 				<button type="submit"
-					class="col-sm-2 offset-md-5 btn btn-primary mt-2">
-					상품 수정 완료</button>
+					class="col-sm-2 offset-md-5 btn btn-primary mt-2">상품 수정 완료</button>
 			</div>
 		</form>
 	</div>
 
 	<jsp:include page="../common/footer.jsp" flush="false" />
-	
-	
-	
+
+
+
 	<!-- ============================================================================ -->
 	<!-- script -->
 	<!-- ============================================================================ -->
@@ -123,8 +122,12 @@ request.setCharacterEncoding("UTF-8");
 	// 이미지(thumnail, content) 업로드 script												//
 	// =================================================================================//
 
+ 	// 파일 선택 후 파일명 보이는 부분 리셋을 위한 변수
+	let CloneObjThumb = $(".thumbnailUploadDiv").clone();
+	let CloneObjContent = $(".contentUploadDiv").clone();
+
 	// thumnail 이미지 업로드
-      $("input[id='thumbnailInput']").on("change", function (e) {
+	$("input[id='thumbnailInput']").on("change", function (e) {
         let formData = new FormData();
         let inputFile = $('input[id="thumbnailInput"]');
         let files = inputFile[0].files;
@@ -151,6 +154,7 @@ request.setCharacterEncoding("UTF-8");
           success: function (result) {
             console.log(result);
             showThumbnailUploadImage(result);
+            
           },
           error: function (result) {
             alert("이미지 파일이 아닙니다.");
@@ -159,9 +163,9 @@ request.setCharacterEncoding("UTF-8");
       });
       
 	// thumnail 업로드 한 이미지 보이게 하기
-      function showThumbnailUploadImage(uploadResultArr) {
+	function showThumbnailUploadImage(uploadResultArr) {
         /* 업로드 한 파일 검증 */
-        if (!uploadResultArr || uploadResultArr.length == 0) {
+		if (!uploadResultArr || uploadResultArr.length == 0) {
           return;
         }
 
@@ -202,7 +206,7 @@ request.setCharacterEncoding("UTF-8");
 	
 	
   	// content 이미지 업로드
-      $("input[id='contentInput']").on("change", function (e) {
+	$("input[id='contentInput']").on("change", function (e) {
         let formData = new FormData();
         let inputFile = $('input[id="contentInput"]');
         let files = inputFile[0].files;
@@ -237,7 +241,7 @@ request.setCharacterEncoding("UTF-8");
       });
       
   	// content 업로드 한 이미지 보이게 하기
-      function showContentUploadImage(uploadResultArr) {
+	function showContentUploadImage(uploadResultArr) {
         /* 전달받은 데이터 검증 */
         if (!uploadResultArr || uploadResultArr.length == 0) {
           return;
@@ -278,16 +282,25 @@ request.setCharacterEncoding("UTF-8");
   	// 파일 확장자 및 크기 검사 함수
   	let resFileExt = new RegExp("(.*?)\.(exe|sh|zip|alz)"); // 제한을 걸 확장자
   	let maxSizePerFile = 10485760; // 10MB
-  	
+  	// 잘못된 파일 선택 후 파일명 보이는 부분 리셋을 위한 변수
+	let errorCloneObjThumb = $(".thumbnailUploadDiv").clone();
+	let errorCloneObjContent = $(".contentUploadDiv").clone();
+
   	function checkExtAndSize(fileName, fileSize){
   		
   		if(fileSize >= maxSizePerFile ){
   			alert("올린 파일 중 사이즈가 10MB가 넘는 파일이 있습니다.");
+  			// 잘못된 파일 선택 후 파일명 보이는 부분 리셋
+  		    $(".thumbnailUploadDiv").html(errorCloneObjThumb.html());
+  		    $(".contentUploadDiv").html(errorCloneObjContent.html());
   			return true;
   		}
   		
   		if(resFileExt.test(fileName) ){
   			alert("해당 확장자의 파일은 올릴 수 없습니다.");
+  			// 잘못된 파일 선택 후 파일명 보이는 부분 리셋
+  		    $(".thumbnailUploadDiv").html(errorCloneObjThumb.html());
+  		    $(".contentUploadDiv").html(errorCloneObjContent.html());
   			return true;
   		}
   		
@@ -418,9 +431,9 @@ request.setCharacterEncoding("UTF-8");
         formObj.append(str).submit();
       });
     </script>
-    <!-- ============================================================================ -->
+	<!-- ============================================================================ -->
 	<!-- End - script -->
 	<!-- ============================================================================ -->
-    
+
 </body>
 </html>
