@@ -73,7 +73,7 @@ request.setCharacterEncoding("UTF-8");
 							action="${contextPath}/util/upload/uploadImage" method="post"
 							enctype="multipart/form-data">
 							<!-- file의 변수명(name)과 upload컨트롤러의 MultipartFile file이 일치해야 한다. -->
-							<div class="col-sm-8">
+							<div class="thumbnailUploadDiv col-sm-8">
 								<input type="file" name="uploadFile" class="form-control"
 									id="thumbnailInput" multiple />
 							</div>
@@ -90,7 +90,7 @@ request.setCharacterEncoding("UTF-8");
 							action="${contextPath}/util/upload/uploadImage" method="post"
 							enctype="multipart/form-data">
 							<!-- file의 변수명(name)과 upload컨트롤러의 MultipartFile file이 일치해야 한다. -->
-							<div class="col-sm-8">
+							<div class="contentUploadDiv col-sm-8">
 								<input type="file" name="uploadFile" class="form-control"
 									id="contentInput" multiple />
 							</div>
@@ -120,9 +120,9 @@ request.setCharacterEncoding("UTF-8");
 	// =================================================================================//
 	// 이미지(thumnail, content) 업로드 script												//
 	// =================================================================================//
-
+	
 	// thumnail 이미지 업로드
-      $("input[id='thumbnailInput']").on("change", function (e) {
+	$("input[id='thumbnailInput']").on("change", function (e) {
         let formData = new FormData();
         let inputFile = $('input[id="thumbnailInput"]');
         let files = inputFile[0].files;
@@ -157,9 +157,9 @@ request.setCharacterEncoding("UTF-8");
       });
       
 	// thumnail 업로드 한 이미지 보이게 하기
-      function showThumbnailUploadImage(uploadResultArr) {
+	function showThumbnailUploadImage(uploadResultArr) {
         /* 업로드 한 파일 검증 */
-        if (!uploadResultArr || uploadResultArr.length == 0) {
+		if (!uploadResultArr || uploadResultArr.length == 0) {
           return;
         }
 
@@ -169,8 +169,9 @@ request.setCharacterEncoding("UTF-8");
         // 받은 result 이미지가 여러개일 수 있으므로 each로 각각 썸네일을 보이게 할 수 있는 태그 생성
         $(uploadResultArr).each(function (i, obj) {
         	// result 의  uploadPath, imgUUID, orgImgName 들을 하나의 String으로 합친다
-          let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName);
-          console.log(fileCallPath);
+        	// URI에 적합한 문자열로 인코딩
+        	let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.imgUUID + "_" + obj.orgImgName);
+        	console.log(fileCallPath);
           
           str += "<li class='result_li' data-path='" + obj.uploadPath + "'";
           str +=
@@ -179,17 +180,16 @@ request.setCharacterEncoding("UTF-8");
             "' data-filename= '" +
             obj.orgImgName +
             "'>";
-          str += "<div id='result_card'>";
+          str += "<div id='result_cardThumb'>";
           str +=
             "<img src='"+
             "${contextPath}/util/upload/display?fileName=" +
             fileCallPath +
             "'>";
           str +=
-            "<div class='imgDeleteBtn' data-file='" +
+            "<div class='imgDeleteBtnThumb' data-file='" +
             fileCallPath +
-            "'>x</div>";
-
+            "' data-type='image'>x</div>";
           str += "</div>";
           str += "</li>";
         });
@@ -197,10 +197,10 @@ request.setCharacterEncoding("UTF-8");
         thumbnailUploadResult.append(str);
       }
 
-	
-	
+		
+
   	// content 이미지 업로드
-      $("input[id='contentInput']").on("change", function (e) {
+	$("input[id='contentInput']").on("change", function (e) {
         let formData = new FormData();
         let inputFile = $('input[id="contentInput"]');
         let files = inputFile[0].files;
@@ -235,7 +235,7 @@ request.setCharacterEncoding("UTF-8");
       });
       
   	// content 업로드 한 이미지 보이게 하기
-      function showContentUploadImage(uploadResultArr) {
+	function showContentUploadImage(uploadResultArr) {
         /* 전달받은 데이터 검증 */
         if (!uploadResultArr || uploadResultArr.length == 0) {
           return;
@@ -253,14 +253,14 @@ request.setCharacterEncoding("UTF-8");
             "' data-filename= '" +
             obj.orgImgName +
             "'>";
-          str += "<div id='result_card'>";
+          str += "<div id='result_cardContent'>";
           str +=
             "<img src='" +
             " ${contextPath}/util/upload/display?fileName=" +
             fileCallPath +
             "'>";
           str +=
-            "<div class='imgDeleteBtn' data-file='" +
+            "<div class='imgDeleteBtnContent' data-file='" +
             fileCallPath +
             "'>x</div>";
 
@@ -274,9 +274,9 @@ request.setCharacterEncoding("UTF-8");
 
 
   	// 파일 확장자 및 크기 검사 함수
-  	let resFileExt = new RegExp("(.*?)\.(exe|sh|zip|alz)"); // 제한을 걸 확장자
+  	let resFileExt = new RegExp("(.*?)\.(exe|sh|zip|alz|rar|apk|tar|jar)"); // 제한을 걸 확장자
   	let maxSizePerFile = 10485760; // 10MB
-  	
+
   	function checkExtAndSize(fileName, fileSize){
   		
   		if(fileSize >= maxSizePerFile ){
@@ -291,22 +291,41 @@ request.setCharacterEncoding("UTF-8");
   		
   		return false;
   	}
+
   	
   	
-  	
-    // 업로드 후 보여지는 이미지 삭제 버튼 동작
-    $("#thumbnailUploadResult").on("click", ".imgDeleteBtn", function (e) {
+    // 업로드 후 보여지는 이미지 삭제 버튼 동작 (thumbnail)
+    $("#thumbnailUploadResult").on("click", ".imgDeleteBtnThumb", function (e) {
+    	let a = 1;
 		// 바로 아래에 함수 있음
-    	deleteFile();
+    	deleteFile(a);
+    });
+    
+	// 업로드 후 보여지는 이미지 삭제 버튼 동작 (content)
+    $("#contentUploadResult").on("click", ".imgDeleteBtnContent", function (e) {
+    	let a = 2;
+		// 바로 아래에 함수 있음
+    	deleteFile(a);
     });
 
-    function deleteFile() {
-        let targetFile = $(".imgDeleteBtn").data("file");
-        let targetDiv = $("#result_card");
+    function deleteFile(a) {
+    	let targetFile;
+    	let targetDiv;
+    	let targetType;
+
+    	if(a == 1){
+            targetFile = $(".imgDeleteBtnThumb").data("file");
+            targetDiv = $("#result_cardThumb");
+            targetType = $(".imgDeleteBtnThumb").data("type");
+      	}else if( a == 2 ){
+            targetFile = $(".imgDeleteBtnContent").data("file");
+            targetDiv = $("#result_cardContent");
+            targetType = $(".imgDeleteBtnContent").data("type");
+      	}
 
         $.ajax({
           url:  "${contextPath}/util/upload/deleteFile",
-          data: { fileName: targetFile },
+          data: { fileName: targetFile, type : targetType},
           dataType: "text",
           type: "POST",
           async: false,
@@ -323,6 +342,8 @@ request.setCharacterEncoding("UTF-8");
           },
         });
     }
+    
+
 
   	// =================================================================================//
   	// End - 이미지(thumnail, content) 업로드 script																	//
@@ -416,7 +437,7 @@ request.setCharacterEncoding("UTF-8");
         formObj.append(str).submit();
       });
     </script>
-    <!-- ============================================================================ -->
+	<!-- ============================================================================ -->
 	<!-- End - script -->
 	<!-- ============================================================================ -->
 

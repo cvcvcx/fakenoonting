@@ -275,7 +275,7 @@ request.setCharacterEncoding("UTF-8");
 
 
   	// 파일 확장자 및 크기 검사 함수
-  	let resFileExt = new RegExp("(.*?)\.(exe|sh|zip|alz)"); // 제한을 걸 확장자
+  	let resFileExt = new RegExp("(.*?)\.(exe|sh|zip|alz|rar|apk|tar|jar)"); // 제한을 걸 확장자
   	let maxSizePerFile = 10485760; // 10MB
 
   	function checkExtAndSize(fileName, fileSize){
