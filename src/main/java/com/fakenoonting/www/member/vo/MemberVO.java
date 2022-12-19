@@ -24,10 +24,11 @@ public class MemberVO {
 	private Date birth;
 	private String address1; // 상위 주소
 	private String address2; // 상세 주소
-	private Integer zipcode; // 우편 번호
+	private String zipcode; // 우편 번호
 	private Date create_date; // ID 생성 날짜
 	private Date delete_date; // ID 삭제 날짜
 	private int money_point; // 포인트
+	private Character isAdmin;
 
 
 	//database에 존재하지 않는 변수들
@@ -39,7 +40,6 @@ public class MemberVO {
 	private String phoneNum3;
 
 	public void changePhoneNumberForm(){
-
 
 		String[] splitPhoneNumber = phone.split("-");
 		setPhoneNum1(splitPhoneNumber[0]);

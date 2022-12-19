@@ -1,23 +1,13 @@
 package com.fakenoonting.www.member.dao;
 
 import com.fakenoonting.www.member.vo.MemberVO;
-import com.fakenoonting.www.product.dao.ProductDAOImpl;
 
 import lombok.extern.slf4j.Slf4j;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
 
 @Slf4j
 @Repository("memberDAO")
@@ -39,7 +29,8 @@ public class MemberDAOImpl implements MemberDAOInterface{
 		
 		return memVO;
 	}
-
+	
+	
 	
 	// 회원가입 처리
 	@Override
@@ -56,22 +47,29 @@ public class MemberDAOImpl implements MemberDAOInterface{
 
 	
 	
-	// 아이디(email) 중복 검사 (AJAX)
+	// 아이디(email) 존재 여부 체크 (AJAX)
 	@Override
 	public int emailCheck(MemberVO memberVO) throws DataAccessException {
 		
-		log.info("MemberDAOImpl 아이디(email) 중복 검사() 시작..." + memberVO.getEmail());
+		log.info("MemberDAOImpl 아이디(email) 존재 여부 체크 () 시작..." + memberVO.getEmail());
 		
 		return sqlSession.selectOne(Namespace + ".emailCheck", memberVO);
 	}
 	
 	
 	
+	// pk(id)에 해당하는 회원 정보 추출
+	@Override
+	public MemberVO selectMemberById(Long id) throws DataAccessException {
+		MemberVO memberVO = sqlSession.selectOne(Namespace + ".selectMemberById", id);
+		
+		return memberVO;
+	}
 	// 아이디(email)에 해당하는 회원 정보 추출
 	@Override
 	public MemberVO selectMember(String email) throws DataAccessException {
 		MemberVO memberVO = sqlSession.selectOne(Namespace + ".selectMember", email);
-		
+
 		return memberVO;
 	}
 	
@@ -88,6 +86,10 @@ public class MemberDAOImpl implements MemberDAOInterface{
 		return result;
 	}
 
+	@Override
+	public int updateMemberMoneyPoint(MemberVO memberVO){
+		return sqlSession.update(Namespace+".updateMemberMoneyPoint",memberVO);
+	}
 	
 	
 	// 아이디(email)에 해당하는 회원 정보 삭제

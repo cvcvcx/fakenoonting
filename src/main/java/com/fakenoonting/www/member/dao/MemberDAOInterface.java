@@ -19,14 +19,20 @@ public interface MemberDAOInterface {
 
 	// 아이디(email) 중복 검사 (AJAX)
 	public int emailCheck(MemberVO memberVO) throws DataAccessException;
-	
+
+	// 아이디(email)에 해당하는 회원 정보 추출
+	public MemberVO selectMemberById(Long id) throws DataAccessException;
+
 	// 아이디(email)에 해당하는 회원 정보 추출
 	public MemberVO selectMember(String email) throws DataAccessException;
 	
 	// 아이디(email)에 해당하는 회원 정보 수정
 	public int updateMember(MemberVO memberVO) throws DataAccessException;
 
-	// 아이디(email)에 해당하는 회원 정보 삭제
+	//pk(id)에 해당하는 회원의 머니포인트 수정
+    public int updateMemberMoneyPoint(MemberVO memberVO);
+
+    // 아이디(email)에 해당하는 회원 정보 삭제
 	public int deleteMember(String email) throws DataAccessException;
 	
 }

@@ -3,6 +3,8 @@ package com.fakenoonting.www.order.controller;
 import com.fakenoonting.www.cart.service.CartService;
 import com.fakenoonting.www.cart.vo.CartItemVO;
 import com.fakenoonting.www.member.vo.MemberVO;
+import com.fakenoonting.www.order.service.OrderService;
+import com.fakenoonting.www.order.vo.OrdersVO;
 import com.fakenoonting.www.product.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,52 +26,55 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    private CartService cartService;
+    private OrderService orderService;
 
     @PostMapping("/newOrder")
     public ModelAndView postOrder(CartItemVO cartItemVO, HttpSession httpSession) {
         ModelAndView mav = new ModelAndView("/order/orderForm");
-        List<CartItemVO> cartItemVOList = new ArrayList<>();
         MemberVO memberVO = (MemberVO) httpSession.getAttribute("member");
         // 만약 구매하기 버튼으로 요청이와서 VOList가 없다면 새로 카트 데이터베이스에 등록
-        if (cartItemVO.getCartItemVOList() == null) {
-            cartItemVO.setMemberId(memberVO.getId());
-            cartService.addCartItem(cartItemVO);
-            CartItemVO cartItemByCartId = cartService.findCartItemByCartId(cartItemVO);
 
-            cartItemVOList.add(cartItemByCartId);
-            log.info("newOrder 호출..." + cartItemVOList);
-            mav.addObject("orderItemList", cartItemVOList);
-
-        } else {
-            List<CartItemVO> cartItemVOList1 = cartItemVO.getCartItemVOList();
-            ArrayList<CartItemVO> result = new ArrayList<>();
-            log.info(cartItemVOList1.toString());
-            // 장바구니에서 결제화면으로 넘어갈 때, 카트에 저장된 개수를 변경한다.
-            cartService.updateCartItem(cartItemVOList1);
-            cartItemVOList1.forEach(cartItemVO1 -> {
-                result.add(cartService.findCartItemByCartId(cartItemVO1));
-            });
-
-            mav.addObject("orderItemList", result);
-
+        // memberId는
+        cartItemVO.setMemberId(memberVO.getId());
+        // 카트아이템 아이디가 널이 아니라면
+        if (cartItemVO.getId() != null) {
+            // 카트아이템에 해당하는 상품 항목을 찾아온다. - 사이즈 변경 없음
+            List<CartItemVO> cartItemVOList = orderService.makeNewOrderByCartItemOrderBtn(cartItemVO);
+            return mav.addObject("orderItemList", cartItemVOList);
         }
 
-        return mav;
+        // 상품 디테일에 있는 Buy It Now 를 통해 구매했을 경우
+        // cartItemVoList가 null이다.
+        if (cartItemVO.getCartItemVOList() == null) {
+            //
+            List<CartItemVO> cartItemVOList = orderService.makeNewOrderByProductDetailOrderBtn(cartItemVO);
+            return mav.addObject("orderItemList", cartItemVOList);
+
+        }
+        // 카트에서 상품을 여러개 선택해서 오더폼으로 보낼경우
+        List<CartItemVO> cartItemVOList = orderService.makeNewOrderByCartListOrderBtn(cartItemVO);
+        return mav.addObject("orderItemList", cartItemVOList);
+
     }
 
     @PostMapping("/saveOrder")
-    public ModelAndView saveNewOrder() {
-        ModelAndView result = new ModelAndView();
+    public ModelAndView saveNewOrder(OrdersVO ordersVO, HttpSession httpSession) {
+        log.info(ordersVO.toString());
+        MemberVO member = (MemberVO) httpSession.getAttribute("member");
+        ordersVO.setMemberId(member.getId());
+        orderService.saveOrder(ordersVO);
+
+        ModelAndView result = new ModelAndView("redirect:/order");
         return result;
     }
 
     @GetMapping
-    public ModelAndView getOrderList() {
-
+    public ModelAndView getOrderList(HttpSession httpSession) {
+        MemberVO member = (MemberVO) httpSession.getAttribute("member");
+        List<CartItemVO> orderCartListByMemberId = orderService.findOrderListByMemberId(member);
         ModelAndView mav = new ModelAndView("/order/orderLookup");
+        mav.addObject("cartList", orderCartListByMemberId);
         return mav;
-
     }
 
     @GetMapping("/form")
