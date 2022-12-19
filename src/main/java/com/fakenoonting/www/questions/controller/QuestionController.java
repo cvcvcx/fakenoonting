@@ -108,6 +108,7 @@ public class QuestionController {
             , @RequestParam(required = false, defaultValue = "1") int page
             , @RequestParam(required = false, defaultValue = "1") int range
             , Question question
+            , @RequestParam(defaultValue = "5") int sortNum
     ) throws Exception {
 
         List<ImgItemVO> productImg = questionService.getProductImg(null);
@@ -116,10 +117,12 @@ public class QuestionController {
         Map<String, Object> result = new HashMap<>();
         result.put("contents", null);
 
+        // 1:상품, 2:배송, 3:교환반취소 4:기타 5:전체
+        model.addAttribute("sortNum", sortNum);
+        result.put("category", sortNum);
         Search search = new Search();
         search.pageInfo(page, range, questionService.getProdQuesCnt(result));
         model.addAttribute("pagination", search);
-
         result.put("startList", search.getStartList());
         result.put("listSize", search.getListSize());
         model.addAttribute("prodQuesCnt", questionService.getProdQuesCnt(result));

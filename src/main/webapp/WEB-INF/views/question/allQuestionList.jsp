@@ -38,7 +38,6 @@
 <body>
 <!-- header -->
 <jsp:include page="../common/header.jsp" flush="false" />
-<hr>
 
 <!-- article -->
 <article>
@@ -52,13 +51,14 @@
       </div>
       <div class="row">
         <div class="col mb-3 text-center">
-          <a href="#" class="btn btn-secondary">Q&amp;A전체보기</a>
-          <a href="#" class="btn btn-light">상품문의</a>
-          <a href="#" class="btn btn-light">배송문의</a>
-          <a href="#" class="btn btn-light">교환/반품/취소문의</a>
-          <a href="#" class="btn btn-light">기타문의</a>
+          <a href="#" data-sort="5" onclick="fn_sort5('${pagination.page}', '${pagination.range}', '${question.productId}', '${keyword}')" class="btn btn-secondary" id="sort5" style="text-decoration: none">Q&amp;A전체보기</a>
+          <a href="#" data-sort="1" onclick="fn_sort1('${pagination.page}', '${pagination.range}', '${question.productId}', '${keyword}')" class="btn btn-light" id="sort1" style="text-decoration: none">상품문의</a>
+          <a href="#" data-sort="2" onclick="fn_sort2('${pagination.page}', '${pagination.range}', '${question.productId}', '${keyword}')" class="btn btn-light" id="sort2" style="text-decoration: none">배송문의</a>
+          <a href="#" data-sort="3" onclick="fn_sort3('${pagination.page}', '${pagination.range}', '${question.productId}', '${keyword}')" class="btn btn-light" id="sort3" style="text-decoration: none">교환/반품/취소문의</a>
+          <a href="#" data-sort="4" onclick="fn_sort4('${pagination.page}', '${pagination.range}', '${question.productId}', '${keyword}')" class="btn btn-light" id="sort4" style="text-decoration: none">기타문의</a>
         </div>
       </div>
+
       <div class="row">
         <div class="col my-3">
           <div class="btn-group">
@@ -85,6 +85,7 @@
           </div>
         </div>
       </div>
+
       <div class="">
         <table class="table table-hover text-center align-middle">
           <thead class="table-light">
@@ -100,7 +101,7 @@
           <tbody>
             <c:choose>
               <c:when test="${empty quesList}" >
-                <tr><td colspan="5" align-text="center">문의내역이 없습니다.</td></tr>
+                <tr><td colspan="6" align-text="center">문의내역이 없습니다.</td></tr>
               </c:when>
               <c:when test="${!empty quesList}">
                 <c:forEach var="list" items="${quesList}" varStatus="status">
@@ -141,10 +142,10 @@
             </c:choose>
           </tbody>
         </table>
-        <div class="d-flex justify-content-end">
+<%--        <div class="d-flex justify-content-end">--%>
 <%--          <a href="#" class="btn btn-secondary m-1 btn-sm">상품문의하기</a>--%>
 <%--          <a href="#" class="btn btn-light m-1 btn-sm">모두보기</a>--%>
-        </div>
+<%--        </div>--%>
       </div>
       <!-- end tab item -->
       <div class="">
@@ -153,8 +154,8 @@
             <c:if test="${pagination.prev}">
               <li class="page-item">
                 <a class="page-link link-dark"
-                   href="#qanda"
-                   onclick="fn_quesPrev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${question.productId}')"
+                   href="#"
+                   onclick="fn_quesPrev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${question.productId}', '${sortNum}')"
                    aria-label="Previous">
                   <span aria-hidden="true">&laquo;</span>
                 </a>
@@ -163,8 +164,8 @@
             <c:forEach var="idx" begin="${pagination.startPage}" end="${pagination.endPage}">
               <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
                 <a class="page-link link-dark"
-                   href="#qanda"
-                   onclick="fn_quesNum('${idx}', '${pagination.range}', '${question.productId}')">
+                   href="#"
+                   onclick="fn_quesNum('${idx}', '${pagination.range}', '${question.productId}', '${sortNum}')">
                     ${idx}
                 </a>
               </li>
@@ -172,8 +173,8 @@
             <c:if test="${pagination.next}">
               <li class="page-item">
                 <a class="page-link link-dark"
-                   href="#qanda"
-                   onclick="fn_quesNext('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${question.productId}')"
+                   href="#"
+                   onclick="fn_quesNext('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${question.productId}', '${sortNum}')"
                    aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
                 </a>
@@ -188,11 +189,10 @@
 
 
 <!-- footer -->
-<hr>
 <jsp:include page="../common/footer.jsp" flush="false" />
 
 <script>
-  function fn_quesPrev(page, range, rangeSize, productId) {
+  function fn_quesPrev(page, range, rangeSize, productId, sortNum) {
     var page = ((range - 2) * rangeSize) + 1;
     var range = range - 1;
 
@@ -202,7 +202,8 @@
       data: {
         page: page,
         range: range,
-        productId: productId
+        productId: productId,
+        sortNum: sortNum
       },
       success: function (result) {
         $("body").html(result);
@@ -222,14 +223,15 @@
     });
   }
 
-  function fn_quesNum(page, range, productId) {
+  function fn_quesNum(page, range, productId, sortNum) {
     $.ajax({
       type: "get",
       url: "${contextPath}/allQuestionList",
       data: {
         page: page,
         range: range,
-        productId: productId
+        productId: productId,
+        sortNum: sortNum
       },
       success: function (result) {
         $("body").html(result);
@@ -249,7 +251,7 @@
     });
   }
 
-  function fn_quesNext(page, range, rangeSize, productId) {
+  function fn_quesNext(page, range, rangeSize, productId, sortNum) {
     var page = parseInt((range * rangeSize)) + 1;
     var range = parseInt(range) + 1;
 
@@ -259,7 +261,8 @@
       data: {
         page: page,
         range: range,
-        productId: productId
+        productId: productId,
+        sortNum: sortNum
       },
       success: function (result) {
         $("body").html(result);
@@ -277,6 +280,65 @@
         );
       }
     });
+  }
+
+  function fn_quesSortCommon(page, range, productId, sortNum, contents) {
+    $.ajax({
+      type: "get",
+      url: "${contextPath}/allQuestionList",
+      data: {
+        productId: productId,
+        page: 1,
+        range: 1,
+        sortNum: sortNum,
+        keyword: contents
+      },
+      success: function(result){
+        $("body").html(result);
+      },
+      error: function(request, error){
+        alert(
+                "code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" +
+                "error:" +
+                error
+        );
+      }
+    });
+  }
+
+  function fn_sort5(page, range, productId, contents) {
+    var element = document.getElementById("sort5");
+    var sortNum = element.dataset.sort;
+    fn_quesSortCommon(page, range, productId, sortNum, contents);
+  }
+
+  function fn_sort1(page, range, productId, contents) {
+    var element = document.getElementById("sort1");
+    var sortNum = element.dataset.sort;
+    fn_quesSortCommon(page, range, productId, sortNum, contents);
+  }
+
+  function fn_sort2(page, range, productId, contents) {
+    var element = document.getElementById("sort2");
+    var sortNum = element.dataset.sort;
+    fn_quesSortCommon(page, range, productId, sortNum, contents);
+  }
+
+  function fn_sort3(page, range, productId, contents) {
+    var element = document.getElementById("sort3");
+    var sortNum = element.dataset.sort;
+    fn_quesSortCommon(page, range, productId, sortNum, contents);
+  }
+
+  function fn_sort4(page, range, productId, contents) {
+    var element = document.getElementById("sort4");
+    var sortNum = element.dataset.sort;
+    fn_quesSortCommon(page, range, productId, sortNum, contents);
   }
 </script>
 </body>

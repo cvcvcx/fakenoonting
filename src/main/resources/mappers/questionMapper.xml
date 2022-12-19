@@ -130,6 +130,26 @@
                 AND content LIKE CONCAT('%', #{contents}, '%')
             ]]>
         </if>
+        <if test="category == 1">
+            <![CDATA[
+                AND category = 1
+            ]]>
+        </if>
+        <if test="category == 2">
+            <![CDATA[
+                AND category = 2
+            ]]>
+        </if>
+        <if test="category == 3">
+            <![CDATA[
+                AND category = 3
+            ]]>
+        </if>
+        <if test="category == 4">
+            <![CDATA[
+                AND category = 4
+            ]]>
+        </if>
     </select>
 
     <!-- 특정 상품의 모든 문의글 찾기 -->
@@ -147,6 +167,26 @@
         <if test="contents != null and contents != '' ">
             <![CDATA[
                 AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
+        <if test="category == 1">
+            <![CDATA[
+                AND category = 1
+            ]]>
+        </if>
+        <if test="category == 2">
+            <![CDATA[
+                AND category = 2
+            ]]>
+        </if>
+        <if test="category == 3">
+            <![CDATA[
+                AND category = 3
+            ]]>
+        </if>
+        <if test="category == 4">
+            <![CDATA[
+                AND category = 4
             ]]>
         </if>
         <![CDATA[
