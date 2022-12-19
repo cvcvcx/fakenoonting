@@ -6,6 +6,17 @@
 
 
 <article>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="justify-content-center text-center">
+                    <a class="btn btn-light btn-sm" href="#reviews">구매후기 (${productReviewCount})</a>
+                    <a class="btn btn-dark btn-sm" href="#qanda" id="qanda">상품문의 (${prodQuesCnt})</a>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
     <div>
         <div class="row align-items-center justify-content-center">
             <div class="col-12 text-center mt-4 mb-4">

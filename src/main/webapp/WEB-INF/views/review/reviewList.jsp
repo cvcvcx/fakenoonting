@@ -5,6 +5,17 @@
 <%  request.setCharacterEncoding("UTF-8"); %>
 
 <article>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="justify-content-center text-center">
+                    <a class="btn btn-dark btn-sm" href="#reviews" id="reviews">구매후기 (${productReviewCount})</a>
+                    <a class="btn btn-light btn-sm" href="#qanda">상품문의 (${prodQuesCnt})</a>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
     <div class="container">
         <div>
             <div class="row mt-4">

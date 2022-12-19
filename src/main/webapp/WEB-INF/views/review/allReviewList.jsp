@@ -38,7 +38,6 @@
 <body>
 <!-- header -->
 <jsp:include page="../common/header.jsp" flush="false" />
-<hr>
 
 <article>
     <section>
@@ -285,7 +284,6 @@
 </article>
 
 <!-- footer -->
-<hr />
 <jsp:include page="../common/footer.jsp" flush="false" />
 
 <script>

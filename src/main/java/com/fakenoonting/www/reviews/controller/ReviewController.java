@@ -2,6 +2,7 @@ package com.fakenoonting.www.reviews.controller;
 
 import com.fakenoonting.www.member.vo.MemberVO;
 import com.fakenoonting.www.product.vo.ProductVO;
+import com.fakenoonting.www.questions.service.QuestionService;
 import com.fakenoonting.www.reviews.domain.Review;
 import com.fakenoonting.www.reviews.service.ReviewService;
 import com.fakenoonting.www.util.search.Search;
@@ -30,10 +31,12 @@ public class ReviewController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
     private final ReviewService reviewService;
+    private final QuestionService questionService;
 
     @Autowired
-    public ReviewController(ReviewService reviewService) {
+    public ReviewController(ReviewService reviewService, QuestionService questionService) {
         this.reviewService = reviewService;
+        this.questionService = questionService;
     }
 
     // 상품상세창의 리뷰 불러오기
@@ -106,6 +109,8 @@ public class ReviewController {
         } else {
             model.addAttribute("dataList", reviewService.findAllProdRvByProductId(result));
         }
+
+        model.addAttribute("prodQuesCnt", questionService.getProdQuesCnt(result));
 
         return "review/reviewList";
     }

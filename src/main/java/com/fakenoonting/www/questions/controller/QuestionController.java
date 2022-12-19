@@ -4,6 +4,7 @@ import com.fakenoonting.www.member.vo.MemberVO;
 import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.questions.domain.Question;
 import com.fakenoonting.www.questions.service.QuestionService;
+import com.fakenoonting.www.reviews.service.ReviewService;
 import com.fakenoonting.www.util.paging.Pagination;
 import com.fakenoonting.www.util.search.Search;
 import com.fakenoonting.www.util.upload.vo.ImgItemVO;
@@ -28,10 +29,12 @@ public class QuestionController {
 
     private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
     private final QuestionService questionService;
+    private final ReviewService reviewService;
 
     @Autowired
-    public QuestionController(QuestionService questionService) {
+    public QuestionController(QuestionService questionService, ReviewService reviewService) {
         this.questionService = questionService;
+        this.reviewService = reviewService;
     }
 
     // 상품상세창의 문의 불러오기
@@ -54,6 +57,8 @@ public class QuestionController {
         result.put("listSize", pagination.getListSize());
         model.addAttribute("prodQuesCnt", questionService.getProdQuesCnt(result));
         model.addAttribute("quesList", questionService.findAllProdQuesByProductId(result));
+
+        model.addAttribute("productReviewCount", reviewService.getProdRvCnt(result));
 
         return "question/questionList";
     }
