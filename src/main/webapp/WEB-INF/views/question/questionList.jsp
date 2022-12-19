@@ -48,7 +48,7 @@
                                         </c:if>
                                     </td>
                                     <td>${list.title}</td>
-                                    <td>${list.memberId} 닉네임으로수정</td>
+                                    <td>${list.nickname}</td>
                                     <td><fmt:formatDate value="${list.regDate}" pattern="yyyy.MM.dd"/></td>
                                 </tr>
                             </c:forEach>
@@ -58,7 +58,7 @@
             </table>
             <div class="d-flex justify-content-end">
                 <a href="${contextPath}/questionForm?productId=${question.productId}" class="btn btn-secondary m-1 btn-sm">상품문의하기</a>
-                <a href="#" class="btn btn-light m-1 btn-sm">모두보기</a>
+                <a href="${contextPath}/allQuestionList" class="btn btn-light m-1 btn-sm">모두보기</a>
             </div>
         </div>
         <!-- end tab item -->
@@ -102,17 +102,17 @@
 
 
 <script>
-    <%--$(function checkSuccess() {--%>
-    <%--    let result = "${quesRegResult}";--%>
+    $(function checkSuccess() {
+        let result = '<c:out value="${result}"/>';
 
-    <%--    if(result === '') {--%>
-    <%--        return;--%>
-    <%--    }--%>
+        if(result === '') {
+            return;
+        }
 
-    <%--    if(result === "quesRegSuccess") {--%>
-    <%--        alert("문의가 등록되었습니다.");--%>
-    <%--    }--%>
-    <%--});--%>
+        if(result === "ques register success") {
+            alert("문의가 등록되었습니다.");
+        }
+    });
 
     function fn_quesPrev(page, range, rangeSize, productId) {
         var page = ((range - 2) * rangeSize) + 1;
@@ -201,114 +201,3 @@
         });
     }
 </script>
-
-        <%--$.ajax({--%>
-        <%--    type: "get",--%>
-        <%--    url: "${contextPath}/questionList",--%>
-        <%--    data: {--%>
-        <%--        page: ${pagination.page},--%>
-        <%--        range: ${pagination.range},--%>
-        <%--        productId: ${question.productId}--%>
-        <%--    },--%>
-        <%--    success: function (result) {--%>
-        <%--        alert("성공");--%>
-        <%--        $("#questionListForm").html(result);--%>
-        <%--    },--%>
-        <%--    error: function (request, error) {--%>
-        <%--        alert(--%>
-        <%--            "code:" +--%>
-        <%--            request.status +--%>
-        <%--            "\n" +--%>
-        <%--            "message:" +--%>
-        <%--            request.responseText +--%>
-        <%--            "\n" +--%>
-        <%--            "error:" +--%>
-        <%--            error--%>
-        <%--        );--%>
-        <%--    }--%>
-        <%--});--%>
-
-
-
-
-
-<%--    $("#btnProductDetails").on("click", function(e) {--%>
-<%--        e.preventDefault();--%>
-<%--        location.href="/product/detail";--%>
-<%--    });--%>
-
-
-
-
-<%--<div class="container">--%>
-<%--    <br>--%>
-<%--    <h2>문의개수 ${allQuestionCount}</h2>--%>
-<%--    <h2>문의조회, 수정, 삭제, 검색기능 추가필요</h2>--%>
-<%--    <br>--%>
-<%--    <div class="table-responsive">--%>
-<%--        <table class="table table-striped table-sm">--%>
-<%--            <colgroup>--%>
-<%--                <col style="width:10%;" />--%>
-<%--                <col style="width:10%;" />--%>
-<%--                <col style="width:auto;" />--%>
-<%--                <col style="width:10%;" />--%>
-<%--                <col style="width:10%;" />--%>
-<%--            </colgroup>--%>
-<%--            <thead>--%>
-<%--            <tr>--%>
-<%--                <th>NO</th>--%>
-<%--                <th>카테고리</th>--%>
-<%--                <th>제목</th>--%>
-<%--                <th>작성자</th>--%>
-<%--                <th>작성일</th>--%>
-<%--            </tr>--%>
-<%--            </thead>--%>
-<%--            <tbody>--%>
-<%--            <c:choose>--%>
-<%--                <c:when test="${empty boardList}" >--%>
-<%--                    <tr><td colspan="5" align="center">데이터가 없습니다.</td></tr>--%>
-<%--                </c:when>--%>
-<%--                <c:when test="${!empty boardList}">--%>
-<%--                    <c:forEach var="list" items="${boardList}">--%>
-<%--                        <tr>--%>
-<%--                            <td><c:out value="${list.questionId}"/></td>--%>
-<%--                            <td><c:out value="${list.category}"/></td>--%>
-<%--                            <td><c:out value="${list.title}"/></td>--%>
-<%--                            <td><c:out value="${list.memberId}"/></td>--%>
-<%--                            <td><fmt:formatDate value="${list.regDate}" pattern="yyyy.MM.dd"/></td>--%>
-<%--                        </tr>--%>
-<%--                    </c:forEach>--%>
-<%--                </c:when>--%>
-<%--            </c:choose>--%>
-<%--            </tbody>--%>
-<%--        </table>--%>
-
-<%--        <button type="button" class="btn btn-sm btn-primary" id="registerQuestion">문의하기</button>--%>
-<%--        <button type="button" class="btn btn-sm btn-primary" id="btnProductDetails">뒤로가기</button>--%>
-<%--        <br>--%>
-<%--        <br>--%>
-
-<%--        <div id="paginationBox">--%>
-<%--            <ul class="pagination">--%>
-<%--                <c:if test="${pagination.prev}">--%>
-<%--                    <li class="page-item">--%>
-<%--                        <a class="page-link" href="#" onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}')">Previous</a>--%>
-<%--                    </li>--%>
-<%--                </c:if>--%>
-
-<%--                <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="idx">--%>
-<%--                    <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">--%>
-<%--                        <a class="page-link" href="#" onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}')"> ${idx} </a>--%>
-<%--                    </li>--%>
-<%--                </c:forEach>--%>
-
-<%--                <c:if test="${pagination.next}">--%>
-<%--                    <li class="page-item">--%>
-<%--                        <a class="page-link" href="#" onClick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}')" >Next</a>--%>
-<%--                    </li>--%>
-<%--                </c:if>--%>
-<%--            </ul>--%>
-<%--        </div>--%>
-
-<%--    </div>--%>
-<%--</div>--%>

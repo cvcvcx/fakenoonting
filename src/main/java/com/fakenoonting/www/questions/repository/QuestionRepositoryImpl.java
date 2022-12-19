@@ -1,7 +1,9 @@
 package com.fakenoonting.www.questions.repository;
 
+import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.questions.domain.Question;
 import com.fakenoonting.www.util.paging.Pagination;
+import com.fakenoonting.www.util.upload.vo.ImgItemVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -70,8 +72,6 @@ public class QuestionRepositoryImpl implements QuestionRepository {
         return sqlSession.selectOne(namespace + ".allQuestionCount");
     }
 
-
-
     // 특정 상품의 모든 문의글 개수
     @Override
     public int getProdQuesCnt(Map<String, Object> map) throws Exception {
@@ -82,5 +82,15 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     @Override
     public List<Question> findAllProdQuesByProductId(Map<String, Object> map) throws Exception {
         return sqlSession.selectList(namespace + ".findAllProdQuesByProductId", map);
+    }
+
+    @Override
+    public List<ImgItemVO> getProductImg(Long productId) {
+        return sqlSession.selectList(namespace + ".getProductImg", productId);
+    }
+
+    @Override
+    public List<ProductVO> getProductName(Long productId) {
+        return sqlSession.selectList(namespace + ".getProductName", productId);
     }
 }

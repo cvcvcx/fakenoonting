@@ -1,3 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c"	uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%  request.setCharacterEncoding("UTF-8"); %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -79,10 +85,6 @@
           </div>
         </div>
       </div>
-      <!--
-                        <h2>문의개수 ${allQuestionCount}</h2>
-                        <h2>문의조회, 수정, 삭제, 검색기능 추가필요</h2>
-                        -->
       <div class="">
         <table class="table table-hover text-center align-middle">
           <thead class="table-light">
@@ -96,50 +98,87 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td scope="row">1</td>
-            <td>
-              <a href="#"><img src="images/cat11.png" style="width: 46px; height: 46px;"></a>
-            </td>
-            <td>배송문의</td>
-            <td>옷 언제와요</td>
-            <td>조**</td>
-            <td>2022-12-07</td>
-          </tr>
-          <tr>
-            <td scope="row">2</td>
-            <td>
-              <a href="#"><img src="images/cat21.jpg" style="width: 46px; height: 46px;"></a>
-            </td>
-            <td>상품문의</td>
-            <td>사이즈 관련 문의 드려요</td>
-            <td>이**</td>
-            <td>2022-12-08</td>
-          </tr>
+            <c:choose>
+              <c:when test="${empty quesList}" >
+                <tr><td colspan="5" align-text="center">문의내역이 없습니다.</td></tr>
+              </c:when>
+              <c:when test="${!empty quesList}">
+                <c:forEach var="list" items="${quesList}" varStatus="status">
+                  <tr>
+                    <td scope="row">${prodQuesCnt - status.index - pagination.startList}</td>
+                    <td>
+                      <c:forEach items="${productImg}" var="pImg">
+                        <c:if test="${list.productId eq pImg.foreignId}">
+                          <a href="${contextPath}/product/detail?id=${pImg.foreignId}">
+                            <img src="${contextPath}/util/upload/display?fileName=${pImg.uploadPath}/s_${pImg.imgUUID}_${pImg.orgImgName}"
+                                 class="link-dark fw-bold" width="48" height="48" alt="상품사진">
+                          </a>
+                        </c:if>
+                      </c:forEach>
+                    </td>
+                    <td>
+                      <c:choose>
+                        <c:when test="${list.category eq '1'.charAt(0)}">
+                          상품문의
+                        </c:when>
+                        <c:when test="${list.category eq '2'.charAt(0)}">
+                          배송문의
+                        </c:when>
+                        <c:when test="${list.category eq '3'.charAt(0)}">
+                          교환/반품/취소문의
+                        </c:when>
+                        <c:when test="${list.category eq '4'.charAt(0)}">
+                          기타문의
+                        </c:when>
+                      </c:choose>
+                    </td>
+                    <td>${list.title}</td>
+                    <td>${list.nickname}</td>
+                    <td><fmt:formatDate value="${list.regDate}" pattern="yyyy.MM.dd"/></td>
+                  </tr>
+                </c:forEach>
+              </c:when>
+            </c:choose>
           </tbody>
         </table>
         <div class="d-flex justify-content-end">
-          <a href="#" class="btn btn-secondary m-1 btn-sm">상품문의하기</a>
-          <a href="#" class="btn btn-light m-1 btn-sm">모두보기</a>
+<%--          <a href="#" class="btn btn-secondary m-1 btn-sm">상품문의하기</a>--%>
+<%--          <a href="#" class="btn btn-light m-1 btn-sm">모두보기</a>--%>
         </div>
       </div>
       <!-- end tab item -->
       <div class="">
         <nav aria-label="Page navigation">
           <ul class="pagination justify-content-center">
-            <li class="page-item">
-              <a class="page-link link-dark" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link link-dark" href="#">1</a></li>
-            <li class="page-item"><a class="page-link link-dark" href="#">2</a></li>
-            <li class="page-item"><a class="page-link link-dark" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link link-dark" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
+            <c:if test="${pagination.prev}">
+              <li class="page-item">
+                <a class="page-link link-dark"
+                   href="#qanda"
+                   onclick="fn_quesPrev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${question.productId}')"
+                   aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            </c:if>
+            <c:forEach var="idx" begin="${pagination.startPage}" end="${pagination.endPage}">
+              <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
+                <a class="page-link link-dark"
+                   href="#qanda"
+                   onclick="fn_quesNum('${idx}', '${pagination.range}', '${question.productId}')">
+                    ${idx}
+                </a>
+              </li>
+            </c:forEach>
+            <c:if test="${pagination.next}">
+              <li class="page-item">
+                <a class="page-link link-dark"
+                   href="#qanda"
+                   onclick="fn_quesNext('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${question.productId}')"
+                   aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </c:if>
           </ul>
         </nav>
       </div>
@@ -152,5 +191,93 @@
 <hr>
 <jsp:include page="../common/footer.jsp" flush="false" />
 
+<script>
+  function fn_quesPrev(page, range, rangeSize, productId) {
+    var page = ((range - 2) * rangeSize) + 1;
+    var range = range - 1;
+
+    $.ajax({
+      type: "get",
+      url: "${contextPath}/allQuestionList",
+      data: {
+        page: page,
+        range: range,
+        productId: productId
+      },
+      success: function (result) {
+        $("body").html(result);
+      },
+      error: function(request, error){
+        alert(
+                "code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" +
+                "error:" +
+                error
+        );
+      }
+    });
+  }
+
+  function fn_quesNum(page, range, productId) {
+    $.ajax({
+      type: "get",
+      url: "${contextPath}/allQuestionList",
+      data: {
+        page: page,
+        range: range,
+        productId: productId
+      },
+      success: function (result) {
+        $("body").html(result);
+      },
+      error: function(request, error){
+        alert(
+                "code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" +
+                "error:" +
+                error
+        );
+      }
+    });
+  }
+
+  function fn_quesNext(page, range, rangeSize, productId) {
+    var page = parseInt((range * rangeSize)) + 1;
+    var range = parseInt(range) + 1;
+
+    $.ajax({
+      type: "get",
+      url: "${contextPath}/allQuestionList",
+      data: {
+        page: page,
+        range: range,
+        productId: productId
+      },
+      success: function (result) {
+        $("body").html(result);
+      },
+      error: function(request, error){
+        alert(
+                "code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" +
+                "error:" +
+                error
+        );
+      }
+    });
+  }
+</script>
 </body>
 </html>

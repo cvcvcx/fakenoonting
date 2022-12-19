@@ -145,7 +145,7 @@
                     포토 (${reviewImgCnt})
                 </div>
                 <div class="col text-end">
-                    <a href="#" class="link-secondary">
+                    <a href="${contextPath}/allReviewList" class="link-secondary">
                         전체보기
                         <span class="material-icons-round">
                             navigate_next
@@ -540,6 +540,14 @@
             }
         });
     }
+
+    var input = document.getElementById("searchKeyword");
+    input.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("searchBtn").click();
+        }
+    });
 
 </script>
 

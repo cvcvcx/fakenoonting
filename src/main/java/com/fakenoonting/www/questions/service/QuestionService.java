@@ -1,8 +1,10 @@
 package com.fakenoonting.www.questions.service;
 
+import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.questions.domain.Question;
 import com.fakenoonting.www.questions.repository.QuestionRepository;
 import com.fakenoonting.www.util.paging.Pagination;
+import com.fakenoonting.www.util.upload.vo.ImgItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,9 +61,6 @@ public class QuestionService {
         return questionRepository.allQuestionCount();
     }
 
-
-
-
     // 특정 상품의 모든 문의글 개수
     public int getProdQuesCnt(Map<String, Object> map) throws Exception {
         return questionRepository.getProdQuesCnt(map);
@@ -70,6 +69,14 @@ public class QuestionService {
     // 특정 상품의 모든 문의글 찾기
     public List<Question> findAllProdQuesByProductId(Map<String, Object> map) throws Exception {
         return questionRepository.findAllProdQuesByProductId(map);
+    }
+
+    public List<ImgItemVO> getProductImg(Long productId) {
+        return questionRepository.getProductImg(productId);
+    }
+
+    public List<ProductVO> getProductName(Long productId) {
+        return questionRepository.getProductName(productId);
     }
 
 }
