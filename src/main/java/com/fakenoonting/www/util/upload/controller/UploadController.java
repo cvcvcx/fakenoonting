@@ -79,9 +79,13 @@ public class UploadController {
         return result;
     }
     
-    // 업로드한 이미지 삭제
+    // 업로드 상태 이미지 삭제
     @PostMapping("/deleteFile")
-    public ResponseEntity<String> deleteFile(String fileName){
+    public ResponseEntity<String> deleteFile(String fileName, String type){
+    	
+    	log.info("삭제 파일 : " + fileName);
+    	log.info("삭제 파일 타입 : " + type);
+    	
         File file = null;
 
         try {

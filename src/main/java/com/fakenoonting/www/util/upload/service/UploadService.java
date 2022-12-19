@@ -112,6 +112,7 @@ public class UploadService {
 			try {
 				// 파일 업로드
 				multipartFile.transferTo(saveFile);
+				log.info("받은 파일 타입 : " + Files.probeContentType(saveFile.toPath()));
 				// 작은 이미지 생성
 				File thumbnailFile = new File(savePath, "s_" + uploadFileName);
 				// 작은 이미지도 원하는 사이즈로 위에 만든 경로에 저장
