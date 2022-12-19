@@ -165,7 +165,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                   type="text"
                   class="form-control"
                   width="30px"
-                  id="regEmail"
+                  id="email"
                   name="email"
                   placeholder="이메일"
                   aria-label="Username"
@@ -404,7 +404,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         type: "post",
         dataType: "json",
         data: {
-          email: $("#regEmail").val(),
+          email: $("#email").val(),
         }, // id가 email인 값을 val()함수로 가져온다.
         success: function (data) {
           if (data == 1) {
@@ -480,12 +480,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     											return false;
     										}
 
-    							// 성별 공란 판단
-    							if ( $("#gender").val() == "") {
-    								alert("성별을 고르셔야 합니다.");
-    								$("#gender").focus();
-    								return false;
-    							}
+    										// 성별 공란 판단
+    										if ( $("#gender").val() == "") {
+    											alert("성별을 고르셔야 합니다.");
+    											$("#gender").focus();
+    											return false;
+    										}
 
     										// 닉네임 공란 판단
     										if ($("#nick").val() == "") {

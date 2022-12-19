@@ -28,7 +28,7 @@
 	<!-- 로그인 처리 -->
 	<select id="loginByEmail"
 		parameterType="com.fakenoonting.www.member.vo.MemberVO"
-		resultType="com.fakenoonting.www.member.vo.MemberVO">
+		resultMap="memberResult">
 		<![CDATA[
 			SELECT * FROM MEMBER WHERE email = #{email}
 		]]>
