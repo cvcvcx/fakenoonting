@@ -8,8 +8,8 @@ import lombok.ToString;
 
 @Getter @Setter @ToString @NoArgsConstructor
 public class ProductSizeVO {
-    private Long id;
-    private Long productId;
-    private String size;
-    private Integer productCount;
+    private Long id;				// ProductSize 부분 개발자 쪽 구분 ID
+    private Long productId;			// Product 부분 개발자 쪽 구분 ID
+    private String size;			// 사이즈
+    private Integer productCount;	// 각 사이즈 별 제품 갯수
 }

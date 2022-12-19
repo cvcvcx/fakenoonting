@@ -4,7 +4,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <link
-	href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Sharp|Material+Icons+Two+Tone|Material+Icons+Outlined"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Sharp|Material+Icons+Two+Tone|Material+Icons+Outlined|Material+Icons+Round"
 	rel="stylesheet" />
 <!-- CSS only -->
 <link
@@ -45,16 +45,19 @@
 								</c:otherwise>
 							</c:choose>
 
-							<a href="${contextPath}/member/regiMemberForm.do"><button type="button" class="btn btn-default">JOIN
-									US</button></a>
+							<a href="${contextPath}/member/regiMemberForm.do"><button
+									type="button" class="btn btn-default">JOIN US</button></a>
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default dropdown-toggle"
 									data-bs-toggle="dropdown" aria-expanded="false">MY
 									PAGE</button>
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="${contextPath}/member/myPage.do">마이 페이지</a></li>
-									<li><a class="dropdown-item" href="${contextPath}/order/orderLookup">주문조회</a></li>
-									<li><a class="dropdown-item" href="${contextPath}/member/updateMemberForm.do">회원정보수정</a></li>
+									<li><a class="dropdown-item"
+										href="${contextPath}/member/myPage.do">마이 페이지</a></li>
+									<li><a class="dropdown-item"
+										href="${contextPath}/order/orderLookup">주문조회</a></li>
+									<li><a class="dropdown-item"
+										href="${contextPath}/member/updateMemberForm.do">회원정보수정</a></li>
 									<li><a class="dropdown-item" href="#">최근본상품</a></li>
 									<li><a class="dropdown-item" href="#">관심상품</a></li>
 									<li><a class="dropdown-item" href="#">나의리뷰</a></li>
@@ -83,7 +86,7 @@
 										class="material-icons-outlined"> favorite_border </span></a>
 								</div>
 								<div class="">
-									<a href="#" class="cart_icon"> <span
+									<a href=" ${contextPath}/cart/list" class="cart_icon"> <span
 										class="material-icons-outlined"> shopping_cart </span></a>
 								</div>
 							</form>
@@ -102,44 +105,40 @@
 						</div>
 					</div>
 					<div class="offcanvas-body">
-						<div class="item">
-							<fieldset>
+						<form class="form-horizontal" method="post" name="hamLoginForm"
+							action="${contextPath}/member/login.do">
+							<div class="item">
+								<fieldset>
 
-								<c:choose>
-									<c:when test="${isLogOn == true && member != null}">
-										<a href="${contextPath}/member/logout.do">
-											<button type="button" class="btn btn-default">LOGOUT</button>
-										</a>
-									</c:when>
-									<c:otherwise>
-										<ul class="navbar-nav justify-content-end flex-grow-1 pe-1">
-											<li class="nav-item"><b>MEMBER LOGIN</b></li>
-											<li class="nav-item"><input class="form-control "
-												type="text" placeholder="E-MAIL"></li>
-											<li class="nav-item"><input class="form-control "
-												type="password" placeholder="PW"></li>
-											<div class="btn-group" role="group"
-												aria-label="Default button group">
-												<form class="form-horizontal" method="post"
-													name="hamLoginForm" action="${contextPath}/member/login.do">
+									<c:choose>
+										<c:when test="${isLogOn == true && member != null}">
+											<a href="${contextPath}/member/logout.do">
+												<button type="button" class="btn btn-default">LOGOUT</button>
+											</a>
+										</c:when>
+										<c:otherwise>
+											<ul class="navbar-nav justify-content-end flex-grow-1 pe-1">
+												<li class="nav-item"><b>MEMBER LOGIN</b></li>
+												<li class="nav-item"><input class="form-control "
+													type="text" id="emailsub" name="emailsub" placeholder="E-MAIL"></li>
+												<li class="nav-item"><input class="form-control "
+													type="password" id="pwdsub" name="pwdsub" placeholder="Password"></li>
+												<div class="" 	>
 													<button type="submit" class="btn btn-black">Login</button>
-												</form>
-												<form class="form-horizontal" method="get"
-													name="hamLoginForm" action="${contextPath}/member/regiMemberForm.do">
-													<button type="button" class="btn btn-black">Join
-														Us</button>
-												</form>
-												<!-- <button type="button" class="btn btn-outline-light">Join Us</button> -->
-											</div>
-										</ul>
-									</c:otherwise>
-								</c:choose>
+													<a  href="${contextPath}/member/regiMemberForm.do">
+														<button type="button" class="btn btn-black">Join Us	</button>
+													</a>
+												</div>
+											</ul>
+										</c:otherwise>
+									</c:choose>
 
-							</fieldset>
-						</div>
-						<div class="right_board">
-							<a href="#">Q&A</a> <a href="#">REVIEW</a>
-						</div>
+								</fieldset>
+							</div>
+							<div class="right_board">
+								<a href="#">Q&A</a> <a href="#">REVIEW</a>
+							</div>
+						</form>
 						<hr>
 						<div class="item">
 							<div>
@@ -178,8 +177,8 @@
 		<div class="nav-scroller py-1 mb-2 col-lg-8 align-self-center"
 			id="top_menu_list">
 			<nav class="nav d-flex justify-content-between" id="top_menu_bar">
-				<a class="p-2 link-secondary" href="${contextPath}/product/list">TOP</a> <a
-					class="p-2 link-secondary" href="#">PANTS</a> <a
+				<a class="p-2 link-secondary" href="${contextPath}/product/list">TOP</a>
+				<a class="p-2 link-secondary" href="#">PANTS</a> <a
 					class="p-2 link-secondary" href="#">OUTER</a> <a
 					class="p-2 link-secondary" href="#">SHOES</a> <a
 					class="p-2 link-secondary" href="#">BAG</a> <a
@@ -197,8 +196,16 @@
 				<ul class="dropdown-menu">
 					<li><a class="dropdown-item" href="#">QandA</a></li>
 					<li><a class="dropdown-item" href="#">REVIEW</a></li>
-					<li><a class="dropdown-item" href="${contextPath}/product/adminList">adminList</a></li>
-					<li><a class="dropdown-item" href="${contextPath}/product/upload">adminProductUpload</a></li>
+
+					<c:choose>
+						<c:when test="${isLogOn == true && member != null}">
+							<li><a class="dropdown-item"
+								href="${contextPath}/product/adminList">admin 물품 리스트</a></li>
+							<li><a class="dropdown-item"
+								href="${contextPath}/product/upload">admin 물품 등록</a></li>
+						</c:when>
+					</c:choose>
+
 				</ul>
 			</div>
 		</div>

@@ -225,4 +225,10 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+# user input ignoreFile and Folder
+classes/
+.idea
+
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,intellij,maven
+
+# End of https://www.toptal.com/developers/gitignore/api/java,intellij,maven,eclipse

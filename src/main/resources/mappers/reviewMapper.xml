@@ -13,14 +13,41 @@
         <result column="create_date" property="regDate"/>
         <result column="grade" property="grade"/>
         <result column="isExist" property="isExist"/>
+        <result column="nickname" property="nickname"/>
     </resultMap>
 
-    <!-- 리뷰 등록하기    테스트용으로 각 아이디, 평점값 넣어둠 -->
-    <insert id="register" parameterType="com.fakenoonting.www.reviews.domain.Review">
+    <resultMap id="reviewImg" type="com.fakenoonting.www.util.upload.vo.ImgReviewItemVo">
+        <result column="img_uuid" property="imgUUID"/>
+        <result column="review_id" property="reviewId"/>
+        <result column="product_id" property="productId"/>
+        <result column="org_img_name" property="orgImgName"/>
+        <result column="upload_path" property="uploadPath"/>
+        <result column="create_date" property="createDate"/>
+    </resultMap>
+
+    <resultMap id="productImgItem" type="com.fakenoonting.www.util.upload.vo.ImgItemVO">
+        <result column="img_UUID" property="imgUUID" />
+        <result column="product_id" property="foreignId" />
+        <result column="org_img_name" property="orgImgName" />
+        <result column="upload_path" property="uploadPath" />
+        <result column="create_date" property="createDate" />
+    </resultMap>
+
+    <resultMap id="productResultMap" type="com.fakenoonting.www.product.vo.ProductVO">
+        <result column="id" property="id" />
+        <result column="prod_name" property="productName" />
+        <result column="price" property="price" />
+        <result column="content" property="content" />
+        <result column="create_date" property="uploadDate" />
+        <result column="useyn" property="productStatus" />
+        <result column="modify_date" property="modifyDate" />
+    </resultMap>
+
+    <!-- 리뷰 등록하기 -->
+    <insert id="register" parameterType="com.fakenoonting.www.reviews.domain.Review" useGeneratedKeys="true" keyProperty="reviewId">
         <![CDATA[
-			INSERT INTO review (id, member_id, product_id, content, create_date, grade, isExist)
-			SELECT IFNULL(MAX(id), 0)+1, 111, 222, #{contents}, now(), #{grade}, 1
-            FROM review
+			INSERT INTO review (member_id, product_id, content, create_date, grade, isExist, nickname)
+            values (#{memberId}, #{productId}, #{contents}, now(), #{grade}, 1, #{nickname})
 		]]>
     </insert>
 
@@ -43,15 +70,15 @@
     </update>
 
     <!-- 리뷰 삭제하기 -->
-    <delete id="delete" parameterType="int">
+    <delete id="delete" parameterType="Long">
         <![CDATA[
             DELETE FROM review
             WHERE id = #{reviewId}
         ]]>
     </delete>
 
-    <!-- 리뷰 1개 찾기(고유번호 사용) -->
-    <select id="findById" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+    <!-- 리뷰 1개 찾기 -->
+    <select id="findById" parameterType="Long" resultType="com.fakenoonting.www.reviews.domain.Review">
         <![CDATA[
             SELECT *
             FROM review
@@ -68,65 +95,156 @@
         ]]>
     </select>
 
-    <!-- 모든 상품의 모든 리뷰 찾기 + 페이징적용-->
-    <select id="findAllPaging" parameterType="com.fakenoonting.www.util.paging.Pagination" resultType="com.fakenoonting.www.reviews.domain.Review" resultMap="reviewResult">
+    <!-- 특정 상품의 리뷰 평균 평점 구하기 -->
+    <select id="getProdRvAvgGrade" parameterType="Long" resultType="double">
         <![CDATA[
-            SELECT id, content, create_date, grade
+            SELECT ifnull(AVG(grade), 0)
             FROM review
-            ORDER BY id DESC
+            WHERE 1=1
+        ]]>
+        <if test="productId != null">
+            <![CDATA[
+                AND product_id = #{productId}
+            ]]>
+        </if>
+    </select>
+
+    <!-- 특정 상품의 모든 리뷰 개수 -->
+    <select id="getProdRvCnt" parameterType="HashMap" resultType="int">
+        <![CDATA[
+            SELECT COUNT(*)
+            FROM review
+            WHERE 1=1
+        ]]>
+        <if test="productId != null">
+            <![CDATA[
+                AND product_id = #{productId}
+            ]]>
+        </if>
+        <if test="contents != null and contents != '' ">
+            <![CDATA[
+                AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
+    </select>
+
+    <!-- 특정 상품의 모든 리뷰 찾기 -->
+    <select id="findAllProdRvByProductId" parameterType="HashMap" resultMap="reviewResult">
+        <![CDATA[
+            SELECT *
+            FROM review
+            WHERE 1=1
+        ]]>
+        <if test="productId != null">
+            <![CDATA[
+                AND product_id = #{productId}
+            ]]>
+        </if>
+        <if test="contents != null and contents != '' ">
+            <![CDATA[
+                AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
+        <![CDATA[
+            ORDER BY create_date DESC
             LIMIT #{startList}, #{listSize}
         ]]>
     </select>
 
-    <!-- 특정 상품의 모든 리뷰 찾기 -->
-    <select id="findAllByProductId" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+    <!-- 특정 상품의 평점별 리뷰 개수 -->
+    <select id="getProdRvCntByGrade" parameterType="HashMap" resultType="int">
         <![CDATA[
-            SELECT *
+            SELECT COUNT(*)
             FROM review
-            WHERE product_id = #{productId}
-            ORDER BY create_date DESC
+            WHERE 1=1
         ]]>
-    </select>
-
-    <!-- 특정 유저의 모든 리뷰 찾기 -->
-    <select id="findAllByMemberId" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+        <if test="productId != null">
+            <![CDATA[
+                AND product_id = #{productId}
+            ]]>
+        </if>
+        <if test="contents != null and contents != '' ">
+            <![CDATA[
+                AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
         <![CDATA[
-            SELECT *
-            FROM review
-            WHERE member_id = #{memberId}
-            ORDER BY create_date DESC
+            AND grade = #{grade}
         ]]>
     </select>
 
     <!-- 특정 상품의 모든 리뷰 평점순으로 찾기 -->
-    <select id="findAllByGrade" parameterType="int" resultType="com.fakenoonting.www.reviews.domain.Review">
+    <select id="findAllProdRvByGrade" parameterType="HashMap" resultMap="reviewResult">
         <![CDATA[
             SELECT *
-            FROM (
-                    SELECT *
-                    FROM review
-                    WHERE product_id = #{productId}
-                    ORDER BY create_date DESC
-                 )
-            ORDER BY grade DESC
-        ]]>
-    </select>
-
-    <!-- 특정 상품의 리뷰 평균 평점 구하기 -->
-    <select id="getAvgGrade" parameterType="int" resultType="double">
-        <![CDATA[
-            SELECT AVG(grade)
             FROM review
-            WHERE product_id = #{productId}
+            WHERE 1=1
         ]]>
-    </select>
-
-    <!-- 모든 상품의 모든 리뷰 개수 -->
-    <select id="allReviewCount" resultType="int">
+        <if test="productId != null">
+            <![CDATA[
+                AND product_id = #{productId}
+            ]]>
+        </if>
+        <if test="contents != null and contents != '' ">
+            <![CDATA[
+                AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
         <![CDATA[
-            SELECT COUNT(*)
-            FROM review
+            ORDER BY grade DESC, create_date DESC
+            LIMIT #{startList}, #{listSize}
         ]]>
     </select>
 
+    <!-- 리뷰 상품 사진 업로드 -->
+    <insert id="uploadRvImg" parameterType="com.fakenoonting.www.util.upload.vo.ImgReviewItemVo">
+        INSERT INTO review_img_item (img_uuid, review_id, product_id, org_img_name, upload_path, create_date)
+        values (#{imgUUID}, #{reviewId}, #{productId}, #{orgImgName}, #{uploadPath}, now())
+    </insert>
+
+    <select id="getAllReviewImg" parameterType="Long" resultMap="reviewImg">
+        SELECT *
+        FROM review_img_item
+        WHERE product_id = #{productId}
+        ORDER BY create_date DESC
+    </select>
+
+    <select id="getReviewImg" parameterType="Long" resultMap="reviewImg">
+        SELECT *
+        FROM review_img_item
+        WHERE 1=1
+        <if test="productId != null">
+            <![CDATA[
+                AND product_id = #{productId}
+            ]]>
+        </if>
+    </select>
+
+    <select id="getRvImgCnt" parameterType="Long" resultType="int">
+        SELECT COUNT(*)
+        FROM review_img_item
+        WHERE product_id = #{productId}
+    </select>
+
+    <select id="getProductImg" parameterType="Long" resultMap="productImgItem">
+        SELECT *
+        FROM product_img_item
+        WHERE 1=1
+        <if test="productId != null">
+            <![CDATA[
+                AND product_id = #{foreignId}
+            ]]>
+        </if>
+    </select>
+
+    <select id="getProductName" parameterType="Long" resultMap="productResultMap">
+        SELECT *
+        FROM product
+        WHERE 1=1
+        <if test="id != null">
+            <![CDATA[
+                AND id = #{id}
+            ]]>
+        </if>
+    </select>
 </mapper>

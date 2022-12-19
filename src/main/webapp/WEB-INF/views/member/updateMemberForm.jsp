@@ -214,7 +214,7 @@ ul {
 									class="btn ">다시쓰기</button>
 							</div>
 							<br>
-							<div class="form-group d-grid" id="loginbtn">
+							<div class="form-group d-flex justify-content-center" id="loginbtn">
 								<a href="${contextPath}/member/deleteMember.do">
 									<button type="button" class="btn btn-danger" >회원 탈퇴</button>
 								</a> 
@@ -307,8 +307,15 @@ ul {
 											}
 
 											// 폰번호2 공란 판단
-											if ($("#phone2").val() == "") {
+											if ($("#phone2").val() == "" ) {
 												alert("핸드폰 번호를 입력하셔야 합니다.");
+												$("#phone2").focus();
+												return false;
+											}
+											
+											// 폰번호2 갯수 판단
+											if ($("#phone2").val().length >= 5 ) {
+												alert("핸드폰 번호 형식을 맞춰주세요");
 												$("#phone2").focus();
 												return false;
 											}
@@ -316,6 +323,13 @@ ul {
 											// 폰번호3 공란 판단
 											if ($("#phone3").val() == "") {
 												alert("핸드폰 번호를 입력하셔야 합니다.");
+												$("#phone3").focus();
+												return false;
+											}
+											
+											// 폰번호3 갯수 판단
+											if ($("#phone3").val().length >= 5 ) {
+												alert("핸드폰 번호 형식을 맞춰주세요");
 												$("#phone3").focus();
 												return false;
 											}
@@ -362,10 +376,12 @@ ul {
 												let phone = $(
 														'select[id=phone1]')
 														.val()
+														+ "-"
 														+ $('input[id=phone2]')
-																.val()
+														.val()
+														+ "-"
 														+ $('input[id=phone3]')
-																.val();
+														.val();
 												str += "<input type='hidden' name=phone value= ' " + phone + " ' >";
 
 												phoneObj.append(str);

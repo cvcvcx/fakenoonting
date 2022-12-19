@@ -15,14 +15,32 @@
         <result column="isLock" property="isLock"/>
         <result column="isReplyExist" property="isReplyExist"/>
         <result column="category" property="category"/>
+        <result column="nickname" property="nickname"/>
     </resultMap>
 
-    <!-- 문의글 등록하기   테스트용으로 각 아이디값 넣어둠 -->
+    <resultMap id="productImgItem" type="com.fakenoonting.www.util.upload.vo.ImgItemVO">
+        <result column="img_UUID" property="imgUUID" />
+        <result column="product_id" property="foreignId" />
+        <result column="org_img_name" property="orgImgName" />
+        <result column="upload_path" property="uploadPath" />
+        <result column="create_date" property="createDate" />
+    </resultMap>
+
+    <resultMap id="productResultMap" type="com.fakenoonting.www.product.vo.ProductVO">
+        <result column="id" property="id" />
+        <result column="prod_name" property="productName" />
+        <result column="price" property="price" />
+        <result column="content" property="content" />
+        <result column="create_date" property="uploadDate" />
+        <result column="useyn" property="productStatus" />
+        <result column="modify_date" property="modifyDate" />
+    </resultMap>
+
+    <!-- 문의글 등록하기 -->
     <insert id="register" parameterType="com.fakenoonting.www.questions.domain.Question">
         <![CDATA[
-            INSERT INTO question (id, member_id, product_id, title, content, create_date, isLock, isReplyExist, category)
-            SELECT IFNULL(MAX(id), 0)+1, 111, 222, #{title}, #{contents}, now(), #{isLock}, 0, #{category}
-            FROM question
+            INSERT INTO question (member_id, product_id, title, content, create_date, isLock, isReplyExist, category, nickname)
+            values (#{memberId}, #{productId}, #{title}, #{contents}, now(), #{isLock}, 0, #{category}, #{nickname})
         ]]>
     </insert>
 
@@ -62,16 +80,6 @@
         ]]>
     </select>
 
-    <!-- 특정 상품의 모든 문의글 찾기 -->
-    <select id="findAllByProductId" parameterType="int" resultType="com.fakenoonting.www.questions.domain.Question">
-        <![CDATA[
-            SELECT *
-            FROM question
-            WHERE product_id = #{productId}
-            ORDER BY create_date DESC
-        ]]>
-    </select>
-
     <!-- 특정 유저의 모든 문의글 찾기 -->
     <select id="findAllByMemberId" parameterType="int" resultType="com.fakenoonting.www.questions.domain.Question">
         <![CDATA[
@@ -100,16 +108,114 @@
         ]]>
     </select>
 
+
+
+
+
+
     <!-- 특정 상품의 모든 문의글 개수 -->
-    <select id="productQuestionCount" parameterType="int" resultType="int">
+    <select id="getProdQuesCnt" parameterType="HashMap" resultType="int">
         <![CDATA[
             SELECT COUNT(*)
             FROM question
-            WHERE product_id = #{productId}
+            WHERE 1=1
+        ]]>
+        <if test="productId != null">
+            <![CDATA[
+                AND product_id = #{productId}
+            ]]>
+        </if>
+        <if test="contents != null and contents != '' ">
+            <![CDATA[
+                AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
+        <if test="category == 1">
+            <![CDATA[
+                AND category = 1
+            ]]>
+        </if>
+        <if test="category == 2">
+            <![CDATA[
+                AND category = 2
+            ]]>
+        </if>
+        <if test="category == 3">
+            <![CDATA[
+                AND category = 3
+            ]]>
+        </if>
+        <if test="category == 4">
+            <![CDATA[
+                AND category = 4
+            ]]>
+        </if>
+    </select>
+
+    <!-- 특정 상품의 모든 문의글 찾기 -->
+    <select id="findAllProdQuesByProductId" parameterType="HashMap" resultMap="questionResult">
+        <![CDATA[
+            SELECT *
+            FROM question
+            WHERE 1=1
+        ]]>
+        <if test="productId != null">
+            <![CDATA[
+                AND product_id = #{productId}
+            ]]>
+        </if>
+        <if test="contents != null and contents != '' ">
+            <![CDATA[
+                AND content LIKE CONCAT('%', #{contents}, '%')
+            ]]>
+        </if>
+        <if test="category == 1">
+            <![CDATA[
+                AND category = 1
+            ]]>
+        </if>
+        <if test="category == 2">
+            <![CDATA[
+                AND category = 2
+            ]]>
+        </if>
+        <if test="category == 3">
+            <![CDATA[
+                AND category = 3
+            ]]>
+        </if>
+        <if test="category == 4">
+            <![CDATA[
+                AND category = 4
+            ]]>
+        </if>
+        <![CDATA[
+            ORDER BY create_date DESC
+            LIMIT #{startList}, #{listSize}
         ]]>
     </select>
 
+    <select id="getProductImg" parameterType="Long" resultMap="productImgItem">
+        SELECT *
+        FROM product_img_item
+        WHERE 1=1
+        <if test="productId != null">
+            <![CDATA[
+                AND product_id = #{productId}
+            ]]>
+        </if>
+    </select>
 
+    <select id="getProductName" parameterType="Long" resultMap="productResultMap">
+        SELECT *
+        FROM product
+        WHERE 1=1
+        <if test="id != null">
+            <![CDATA[
+                AND id = #{id}
+            ]]>
+        </if>
+    </select>
 
     <!-- 답변 미완료된 모든 문의글 찾기 -->
     <!-- 답변 완료된 모든 문의글 찾기 -->

@@ -1,10 +1,12 @@
 package com.fakenoonting.www.questions.repository;
 
+import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.questions.domain.Question;
-import com.fakenoonting.www.reviews.domain.Review;
 import com.fakenoonting.www.util.paging.Pagination;
+import com.fakenoonting.www.util.upload.vo.ImgItemVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface QuestionRepository {
 
@@ -23,9 +25,6 @@ public interface QuestionRepository {
     // 모든 상품의 모든 문의글 찾기 + 페이징적용
     public List<Question> findAllPaging(Pagination pagination) throws Exception;
 
-    // 특정 상품의 모든 문의글 찾기
-    public List<Question> findAllByProductId(int productId) throws Exception;
-
     // 특정 유저의 모든 문의글 찾기
     public List<Question> findAllByMemberId(int memberId) throws Exception;
 
@@ -36,6 +35,12 @@ public interface QuestionRepository {
     public int allQuestionCount() throws Exception;
 
     // 특정 상품의 모든 문의글 개수
-    public int productQuestionCount(int productId) throws Exception;
+    public int getProdQuesCnt(Map<String, Object> map) throws Exception;
 
+    // 특정 상품의 모든 문의글 찾기
+    public List<Question> findAllProdQuesByProductId(Map<String, Object> map) throws Exception;
+
+    public List<ImgItemVO> getProductImg(Long productId);
+
+    public List<ProductVO> getProductName(Long productId);
 }
