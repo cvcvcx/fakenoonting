@@ -44,16 +44,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       }
     </style>
   </head>
-  
+
   <body>
-  
-  	    <!-- 메뉴바 -->
-		<jsp:include page="../common/header.jsp" flush="false"/>
-  
+    <!-- 메뉴바 -->
+    <jsp:include page="../common/header.jsp" flush="false" />
+
     <div id="modalChangeDiv">
       <div class="container">
         <div class="contents d-flex flex-column mb-2">
-  
           <form action="" class="cart-table">
             <div>
               <div>
@@ -160,7 +158,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             role="group"
                             aria-label="Vertical button group"
                           >
-                            <a type="button" class="btn btn-light">order</a>
+                            <a
+                              type="button"
+                              class="btn btn-light"
+                              role="orderBtn"
+                              value="${cartItem.id}"
+                              >order</a
+                            >
 
                             <a
                               type="button"
@@ -293,235 +297,272 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     </div>
 
     <hr />
-	<jsp:include page="../common/footer.jsp" flush="false"/>
- 
+    <jsp:include page="../common/footer.jsp" flush="false" />
   </body>
-  
-  
-     <script>
-      // 이벤트 시작 ================================================================================================
-      $("document").ready(function () {
-        //cancel 취소 버튼이 눌렸을 때
-        $("a[role='cancelBtn']").click(function (e) {
-          let cancelCartItemId = e.target.getAttribute("value");
-          let cartItemIdArr = new Array();
-          cartItemIdArr.push(cancelCartItemId);
-          fn_deleteCartItem(cartItemIdArr);
-        });
-        //체크박스가 체크되거나, 체크가 풀릴 때, 계산된 가격을 수정한다.
-        $("input[role='cartItemCheckbox']").change(function () {
-          checkedCalculatePrice();
-          fn_checkedItemCount();
-        });
-      });
 
-      //플러스버튼 클릭
-      //계산된 가격을 수정해야한다.
-      $("button[data-function-type='plus']").on("click", function (e) {
-        fn_quantityIncrease($(this));
-        checkedCalculatePrice();
-      });
-      //마이너스 버튼 클릭
-      $("button[data-function-type='minus']").on("click", function (e) {
-        fn_quantityDecrease($(this));
-        checkedCalculatePrice();
-      });
-      //개수 변경시에 발생하는 이벤트 복사나, 값을 임의로 변경해도 다 일어나는 이벤트이다.
-      $("input[data-input-value='quantity']").on(
-        "propertychange change keyup paste input",
-        function (e) {
-          fn_quantityOnChange($(this));
-          checkedCalculatePrice();
-        }
-      );
-
-      // 이벤트 끝 ================================================================================================
-
-      //모든 체크박스를 체크하는 함수
-      function selectAll() {
-        let checkboxes = $("input[role='cartItemCheckbox']");
-        checkboxes.prop("checked", true);
-        checkedCalculatePrice();
-      }
-
-      //선택된 아이템을 삭제하는 함수
-      function checkedItemDelete() {
+  <script>
+    // 이벤트 시작 ================================================================================================
+    $("document").ready(function () {
+      //cancel 취소 버튼이 눌렸을 때
+      $("a[role='cancelBtn']").click(function (e) {
+        let cancelCartItemId = e.target.getAttribute("value");
         let cartItemIdArr = new Array();
-        $("input[role='cartItemCheckbox']:checked").each(function () {
-          cartItemIdArr.push($(this).val());
-        });
-        if (cartItemIdArr.length === 0) {
-          alert("선택된 상품이 없습니다.");
-          return;
-        }
+        cartItemIdArr.push(cancelCartItemId);
         fn_deleteCartItem(cartItemIdArr);
-      }
-      
-      //체크된 상품 최종 가격 계산
-      function checkedCalculatePrice() {
-        let resultPrice = 0;
-        $("input[role='cartItemCheckbox']:checked").each(function () {
-          let cartItemId = $(this).val();
-          console.log($("#resultPrice_" + cartItemId).text());
-          let itemResultPrice = $("#resultPrice_" + cartItemId).text();
-          let itemResultPriceNum = Number(itemResultPrice);
-          resultPrice += itemResultPriceNum;
-        });
-        $("#calculateResultPrice").text(resultPrice + "원");
-      }
+      });
 
-      function fn_checkedItemCount() {
-        let count = 0;
-        $("input[role='cartItemCheckbox']:checked").each(function () {
-          count++;
-        });
-        $("#calculateItemCount").text(count + "개");
+      $("a[role='orderBtn']").click(function () {
+        console.dir($(this).attr("value"));
+        fn_buyItemByOrderBtn($(this));
+      });
+      //체크박스가 체크되거나, 체크가 풀릴 때, 계산된 가격을 수정한다.
+      $("input[role='cartItemCheckbox']").change(function () {
+        checkedCalculatePrice();
+        fn_checkedItemCount();
+      });
+    });
+
+    //플러스버튼 클릭
+    //계산된 가격을 수정해야한다.
+    $("button[data-function-type='plus']").on("click", function (e) {
+      fn_quantityIncrease($(this));
+      checkedCalculatePrice();
+    });
+    //마이너스 버튼 클릭
+    $("button[data-function-type='minus']").on("click", function (e) {
+      fn_quantityDecrease($(this));
+      checkedCalculatePrice();
+    });
+    //개수 변경시에 발생하는 이벤트 복사나, 값을 임의로 변경해도 다 일어나는 이벤트이다.
+    $("input[data-input-value='quantity']").on(
+      "propertychange change keyup paste input",
+      function (e) {
+        validateNumber($(this));
+        fn_quantityOnChange($(this));
+        checkedCalculatePrice();
       }
-      //ajax- cartItemId배열을 받아서 ajax요청으로 컨트롤러로 뿌려줌 CartController 참조
-      function fn_deleteCartItem(cartItemIdArr) {
-        $.ajax({
-          url: "${contextPath}/cart/delete",
-          type: "post",
-          //contentType에 형식을 지정해주고, data를 JSON.stringify를 통해 변환해줘야 컨트롤러에서 List<Long>타입으로 받을 수 있음
-          contentType: "application/json; charset:UTF-8",
-          data: JSON.stringify(cartItemIdArr),
-          success: function (result) {
-            //상품을 삭제할때 일어나는 애니메이션
-            cartItemIdArr.forEach((cancelCartItemId) => {
-              $("#card_" + cancelCartItemId).slideUp(400, function () {
-                $("#card_" + cancelCartItemId).remove();
-                checkedCalculatePrice();
-                fn_checkedItemCount();
-              });
+    );
+
+    // 이벤트 끝 ================================================================================================
+
+    //모든 체크박스를 체크하는 함수
+    function selectAll() {
+      let checkboxes = $("input[role='cartItemCheckbox']");
+      checkboxes.prop("checked", true);
+      checkedCalculatePrice();
+    }
+
+    //선택된 아이템을 삭제하는 함수
+    function checkedItemDelete() {
+      let cartItemIdArr = new Array();
+      $("input[role='cartItemCheckbox']:checked").each(function () {
+        cartItemIdArr.push($(this).val());
+      });
+      if (cartItemIdArr.length === 0) {
+        alert("선택된 상품이 없습니다.");
+        return;
+      }
+      fn_deleteCartItem(cartItemIdArr);
+    }
+
+    //체크된 상품 최종 가격 계산
+    function checkedCalculatePrice() {
+      let resultPrice = 0;
+      $("input[role='cartItemCheckbox']:checked").each(function () {
+        let cartItemId = $(this).val();
+        console.log($("#resultPrice_" + cartItemId).text());
+        let itemResultPrice = $("#resultPrice_" + cartItemId).text();
+        let itemResultPriceNum = Number(itemResultPrice);
+        resultPrice += itemResultPriceNum;
+      });
+      $("#calculateResultPrice").text(resultPrice + "원");
+    }
+
+    function fn_checkedItemCount() {
+      let count = 0;
+      $("input[role='cartItemCheckbox']:checked").each(function () {
+        count++;
+      });
+      $("#calculateItemCount").text(count + "개");
+    }
+    //ajax- cartItemId배열을 받아서 ajax요청으로 컨트롤러로 뿌려줌 CartController 참조
+    function fn_deleteCartItem(cartItemIdArr) {
+      $.ajax({
+        url: "${contextPath}/cart/delete",
+        type: "post",
+        //contentType에 형식을 지정해주고, data를 JSON.stringify를 통해 변환해줘야 컨트롤러에서 List<Long>타입으로 받을 수 있음
+        contentType: "application/json; charset:UTF-8",
+        data: JSON.stringify(cartItemIdArr),
+        success: function (result) {
+          //상품을 삭제할때 일어나는 애니메이션
+          cartItemIdArr.forEach((cancelCartItemId) => {
+            $("#card_" + cancelCartItemId).slideUp(400, function () {
+              $("#card_" + cancelCartItemId).remove();
+              checkedCalculatePrice();
+              fn_checkedItemCount();
             });
-          },
-          error: function (request, status, error) {
-            alert(
-              "code:" +
-                request.status +
-                "\n" +
-                "message:" +
-                request.responseText +
-                "\n" +
-                "error:" +
-                error
-            );
-          },
-        });
-      }
-
-      //상품의 개수를 늘리는 함수(+버튼 클릭시)
-      function fn_quantityIncrease(e) {
-        let quantity = fn_getQuantityId(e);
-        let quantityValue = fn_getQuantityValue(quantity);
-        let changedValue = quantityValue + 1;
-        $("#" + quantity).attr("value", changedValue);
-        $("#" + quantity).val(changedValue);
-        fn_quantityOnChange($("#" + quantity));
-        return;
-      }
-
-      //상품의 개수를 줄이는 함수(-버튼 클릭시)
-      function fn_quantityDecrease(e) {
-        let quantity = fn_getQuantityId(e);
-        let quantityValue = fn_getQuantityValue(quantity);
-        let changedValue = quantityValue - 1;
-        $("#" + quantity).attr("value", changedValue);
-        $("#" + quantity).val(changedValue);
-        fn_quantityOnChange($("#" + quantity));
-        return;
-      }
-
-      //누른 버튼의 data-quantity-id 의 값을 가져오는 함수(String으로 반환됨)
-      function fn_getQuantityId(e) {
-        let quantity = $(e).data("quantityId");
-        return quantity;
-      }
-
-      //버튼의 data-quantity-id를 가지고, 그 값의 아이디를 가진 인풋창의 밸류를 가져와서 반환하는 함수
-      function fn_getQuantityValue(quantity) {
-        let quantityValue = $("#" + quantity).val();
-        quantityValue = Number(quantityValue);
-        return quantityValue;
-      }
-      //개수가 변경될 때 실행되는 함수
-      function fn_quantityOnChange(e) {
-        let changedValue = Number($(e).val());
-
-        e.attr("value", changedValue);
-
-        let resultPriceId = $(e).data("resultPriceId");
-        let resultQuantityId = $(e).data("resultQuantityId");
-        let itemPrice = $(e).data("price");
-        let itemPriceNum = Number(itemPrice);
-
-        let resultPriceValue = itemPrice * changedValue;
-        $("#" + resultPriceId).text(resultPriceValue);
-        $("#" + resultQuantityId).text(changedValue);
-        return;
-      }
-
-      //인풋의 값이 변화할 때(입력되거나, 증가버튼 또는 감소버튼을 통해 바뀔때) 그 값이 음수가 되지는 않는지 검증하는 함수
-      function validateNumber(e) {
-        let numberValue = $(e).val();
-        if (numberValue <= 0) {
-          $(e).val(1);
-        }
-        return;
-      }
-      //상품 단일로 버튼으로 구매할 경우
-
-      //OrderForm으로 보내야 하기때문에, orderController에서 처리함
-      //선택된 상품을 리스트로 만들어서 orderController의 postOrder에서 처리하게 됨
-      function fn_buySelectedItem() {
-        //post요청을 보낼 form 생성
-        let newForm = document.createElement("form");
-        newForm.setAttribute("method", "Post");
-        newForm.setAttribute("action", "${contextPath}/order/newOrder");
-        newForm.setAttribute("enctype", "application/x-www-form-urlencoded");
-
-        $("input[role='cartItemCheckbox']:checked").each(function (index) {
-          let hiddenInputId = document.createElement("input");
-          let hiddenInputSize = document.createElement("input");
-          let hiddenInputCount = document.createElement("input");
-          //카트아이템을 인풋에 저장된 밸류를 통해서 가져옴
-          let cartItemId = $(this).val();
-          //가져온 카트 아이템 아이디로 개수와 사이즈를 가져옴
-          let itemSize = $("#size_" + cartItemId).text();
-          let itemCount = $("#resultQuantity_" + cartItemId).text();
-          let itemCountNum = Number(itemCount);
-          //cartId를 cartItemVOList의 변수로 넘겨줌
-          hiddenInputId.setAttribute("type", "hidden");
-          hiddenInputId.setAttribute(
-            "name",
-            "cartItemVOList[" + index + "].id"
+          });
+        },
+        error: function (request, status, error) {
+          alert(
+            "code:" +
+              request.status +
+              "\n" +
+              "message:" +
+              request.responseText +
+              "\n" +
+              "error:" +
+              error
           );
-          hiddenInputId.setAttribute("value", cartItemId);
+        },
+      });
+    }
 
-          newForm.append(hiddenInputId);
+    //상품의 개수를 늘리는 함수(+버튼 클릭시)
+    function fn_quantityIncrease(e) {
+      let quantity = fn_getQuantityId(e);
+      let quantityValue = fn_getQuantityValue(quantity);
+      let changedValue = quantityValue + 1;
+      $("#" + quantity).attr("value", changedValue);
+      $("#" + quantity).val(changedValue);
+      fn_quantityOnChange($("#" + quantity));
+      return;
+    }
 
-          hiddenInputSize.setAttribute("type", "hidden");
-          hiddenInputSize.setAttribute(
-            "name",
-            "cartItemVOList[" + index + "].productSize"
-          );
-          hiddenInputSize.setAttribute("value", itemSize);
+    //상품의 개수를 줄이는 함수(-버튼 클릭시)
+    function fn_quantityDecrease(e) {
+      let quantity = fn_getQuantityId(e);
+      let quantityValue = fn_getQuantityValue(quantity);
+      let changedValue = quantityValue > 1 ? quantityValue - 1 : 1;
+      $("#" + quantity).attr("value", changedValue);
+      $("#" + quantity).val(changedValue);
+      fn_quantityOnChange($("#" + quantity));
+      return;
+    }
 
-          newForm.append(hiddenInputSize);
+    //누른 버튼의 data-quantity-id 의 값을 가져오는 함수(String으로 반환됨)
+    function fn_getQuantityId(e) {
+      let quantity = $(e).data("quantityId");
+      return quantity;
+    }
 
-          hiddenInputCount.setAttribute("type", "hidden");
-          hiddenInputCount.setAttribute(
-            "name",
-            "cartItemVOList[" + index + "].productCount"
-          );
-          hiddenInputCount.setAttribute("value", itemCount);
+    //버튼의 data-quantity-id를 가지고, 그 값의 아이디를 가진 인풋창의 밸류를 가져와서 반환하는 함수
+    function fn_getQuantityValue(quantity) {
+      let quantityValue = $("#" + quantity).val();
+      quantityValue = Number(quantityValue);
+      return quantityValue;
+    }
+    //개수가 변경될 때 실행되는 함수
+    function fn_quantityOnChange(e) {
+      let changedValue = Number($(e).val());
 
-          newForm.append(hiddenInputCount);
-        });
-        document.body.append(newForm);
-        newForm.submit();
+      e.attr("value", changedValue);
+
+      let resultPriceId = $(e).data("resultPriceId");
+      let resultQuantityId = $(e).data("resultQuantityId");
+      let itemPrice = $(e).data("price");
+      let itemPriceNum = Number(itemPrice);
+
+      let resultPriceValue = itemPrice * changedValue;
+      $("#" + resultPriceId).text(resultPriceValue);
+      $("#" + resultQuantityId).text(changedValue);
+      return;
+    }
+
+    //인풋의 값이 변화할 때(입력되거나, 증가버튼 또는 감소버튼을 통해 바뀔때) 그 값이 음수가 되지는 않는지 검증하는 함수
+    function validateNumber(e) {
+      let numberValue = $(e).val();
+      if (numberValue <= 0) {
+        $(e).val(1);
       }
-    </script>
-    
-    
+      return;
+    }
+    //상품 단일로 버튼으로 구매할 경우
+    function fn_buyItemByOrderBtn(e) {
+      let newForm = document.createElement("form");
+      newForm.setAttribute("method", "Post");
+      newForm.setAttribute("action", "${contextPath}/order/newOrder");
+      newForm.setAttribute("enctype", "application/x-www-form-urlencoded");
+
+      let hiddenInputId = document.createElement("input");
+      let hiddenInputSize = document.createElement("input");
+      let hiddenInputCount = document.createElement("input");
+      //카트아이템을 인풋에 저장된 밸류를 통해서 가져옴
+      let cartItemId = $(e).attr("value");
+      console.log(cartItemId);
+      //가져온 카트 아이템 아이디로 개수와 사이즈를 가져옴
+      let itemSize = $("#size_" + cartItemId).text();
+      let productId = "${cartItemId}";
+      let itemCount = $("#resultQuantity_" + cartItemId).text();
+      let itemCountNum = Number(itemCount);
+      //cartId를 cartItemVOList의 변수로 넘겨줌
+      hiddenInputId.setAttribute("type", "hidden");
+      hiddenInputId.setAttribute("name", "id");
+      hiddenInputId.setAttribute("value", cartItemId);
+
+      newForm.append(hiddenInputId);
+
+      hiddenInputSize.setAttribute("type", "hidden");
+      hiddenInputSize.setAttribute("name", "productSize");
+      hiddenInputSize.setAttribute("value", itemSize);
+
+      newForm.append(hiddenInputSize);
+
+      hiddenInputCount.setAttribute("type", "hidden");
+      hiddenInputCount.setAttribute("name", "productCount");
+      hiddenInputCount.setAttribute("value", itemCount);
+
+      newForm.append(hiddenInputCount);
+
+      document.body.append(newForm);
+      newForm.submit();
+    }
+    //OrderForm으로 보내야 하기때문에, orderController에서 처리함
+    //선택된 상품을 리스트로 만들어서 orderController의 postOrder에서 처리하게 됨
+    function fn_buySelectedItem() {
+      //post요청을 보낼 form 생성
+      let newForm = document.createElement("form");
+      newForm.setAttribute("method", "Post");
+      newForm.setAttribute("action", "${contextPath}/order/newOrder");
+      newForm.setAttribute("enctype", "application/x-www-form-urlencoded");
+
+      $("input[role='cartItemCheckbox']:checked").each(function (index) {
+        let hiddenInputId = document.createElement("input");
+        let hiddenInputSize = document.createElement("input");
+        let hiddenInputCount = document.createElement("input");
+        //카트아이템을 인풋에 저장된 밸류를 통해서 가져옴
+        let cartItemId = $(this).val();
+        //가져온 카트 아이템 아이디로 개수와 사이즈를 가져옴
+        let itemSize = $("#size_" + cartItemId).text();
+        let itemCount = $("#resultQuantity_" + cartItemId).text();
+        let itemCountNum = Number(itemCount);
+        //cartId를 cartItemVOList의 변수로 넘겨줌
+        hiddenInputId.setAttribute("type", "hidden");
+        hiddenInputId.setAttribute("name", "cartItemVOList[" + index + "].id");
+        hiddenInputId.setAttribute("value", cartItemId);
+
+        newForm.append(hiddenInputId);
+
+        hiddenInputSize.setAttribute("type", "hidden");
+        hiddenInputSize.setAttribute(
+          "name",
+          "cartItemVOList[" + index + "].productSize"
+        );
+        hiddenInputSize.setAttribute("value", itemSize);
+
+        newForm.append(hiddenInputSize);
+
+        hiddenInputCount.setAttribute("type", "hidden");
+        hiddenInputCount.setAttribute(
+          "name",
+          "cartItemVOList[" + index + "].productCount"
+        );
+        hiddenInputCount.setAttribute("value", itemCount);
+
+        newForm.append(hiddenInputCount);
+      });
+      document.body.append(newForm);
+      newForm.submit();
+    }
+  </script>
 </html>

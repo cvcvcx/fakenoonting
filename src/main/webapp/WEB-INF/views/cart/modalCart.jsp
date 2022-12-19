@@ -145,7 +145,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         role="group"
                         aria-label="Vertical button group"
                       >
-                        <a type="button" class="btn btn-light">order</a>
+                        <a
+                          type="button"
+                          class="btn btn-light"
+                          role="orderBtn"
+                          value="${cartItem.id}"
+                          >order</a
+                        >
 
                         <a
                           type="button"
@@ -289,6 +295,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       cartItemIdArr.push(cancelCartItemId);
       fn_deleteCartItem(cartItemIdArr);
     });
+    $("a[role='orderBtn']").click(function () {
+      console.dir($(this).attr("value"));
+      fn_buyItemByOrderBtn($(this));
+    });
     //체크박스가 체크되거나, 체크가 풀릴 때, 계산된 가격을 수정한다.
     $("input[role='cartItemCheckbox']").change(function () {
       checkedCalculatePrice();
@@ -311,6 +321,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   $("input[data-input-value='quantity']").on(
     "propertychange change keyup paste input",
     function (e) {
+      validateNumber($(this));
       fn_quantityOnChange($(this));
       checkedCalculatePrice();
     }
@@ -405,7 +416,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
   function fn_quantityDecrease(e) {
     let quantity = fn_getQuantityId(e);
     let quantityValue = fn_getQuantityValue(quantity);
-    let changedValue = quantityValue - 1;
+    let changedValue = quantityValue > 1 ? quantityValue - 1 : 1;
     $("#" + quantity).attr("value", changedValue);
     $("#" + quantity).val(changedValue);
     fn_quantityOnChange($("#" + quantity));
@@ -450,7 +461,46 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     return;
   }
   //상품 단일로 버튼으로 구매할 경우
+  function fn_buyItemByOrderBtn(e) {
+    let newForm = document.createElement("form");
 
+    newForm.setAttribute("method", "Post");
+    newForm.setAttribute("action", "${contextPath}/order/newOrder");
+    newForm.setAttribute("enctype", "application/x-www-form-urlencoded");
+
+    let hiddenInputId = document.createElement("input");
+    let hiddenInputSize = document.createElement("input");
+    let hiddenInputCount = document.createElement("input");
+    //카트아이템을 인풋에 저장된 밸류를 통해서 가져옴
+    let cartItemId = $(e).attr("value");
+    console.log(cartItemId);
+    //가져온 카트 아이템 아이디로 개수와 사이즈를 가져옴
+    let itemSize = $("#size_" + cartItemId).text();
+    let productId = "${cartItemId}";
+    let itemCount = $("#resultQuantity_" + cartItemId).text();
+    let itemCountNum = Number(itemCount);
+    //cartId를 cartItemVOList의 변수로 넘겨줌
+    hiddenInputId.setAttribute("type", "hidden");
+    hiddenInputId.setAttribute("name", "id");
+    hiddenInputId.setAttribute("value", cartItemId);
+
+    newForm.append(hiddenInputId);
+
+    hiddenInputSize.setAttribute("type", "hidden");
+    hiddenInputSize.setAttribute("name", "productSize");
+    hiddenInputSize.setAttribute("value", itemSize);
+
+    newForm.append(hiddenInputSize);
+
+    hiddenInputCount.setAttribute("type", "hidden");
+    hiddenInputCount.setAttribute("name", "productCount");
+    hiddenInputCount.setAttribute("value", itemCount);
+
+    newForm.append(hiddenInputCount);
+
+    document.body.append(newForm);
+    newForm.submit();
+  }
   //OrderForm으로 보내야 하기때문에, orderController에서 처리함
   //선택된 상품을 리스트로 만들어서 orderController의 postOrder에서 처리하게 됨
   function fn_buySelectedItem() {
@@ -461,41 +511,37 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     newForm.setAttribute("enctype", "application/x-www-form-urlencoded");
 
     $("input[role='cartItemCheckbox']:checked").each(function (index) {
-      let hiddenInputId = document.createElement("input");
-      let hiddenInputSize = document.createElement("input");
-      let hiddenInputCount = document.createElement("input");
-      //카트아이템을 인풋에 저장된 밸류를 통해서 가져옴
+      //카트아이템을 체크박스에 저장된 밸류를 통해서 가져옴
       let cartItemId = $(this).val();
       //가져온 카트 아이템 아이디로 개수와 사이즈를 가져옴
       let itemSize = $("#size_" + cartItemId).text();
       let itemCount = $("#resultQuantity_" + cartItemId).text();
       let itemCountNum = Number(itemCount);
       //cartId를 cartItemVOList의 변수로 넘겨줌
-      hiddenInputId.setAttribute("type", "hidden");
-      hiddenInputId.setAttribute("name", "cartItemVOList[" + index + "].id");
-      hiddenInputId.setAttribute("value", cartItemId);
+      let hiddenInputId = $("<input/>", {
+        type: "hidden",
+        name: "cartItemVOList[" + index + "].id",
+        value: cartItemId,
+      });
 
-      newForm.append(hiddenInputId);
+      hiddenInputId.appendTo(newForm);
 
-      hiddenInputSize.setAttribute("type", "hidden");
-      hiddenInputSize.setAttribute(
-        "name",
-        "cartItemVOList[" + index + "].productSize"
-      );
-      hiddenInputSize.setAttribute("value", itemSize);
+      let hiddenInputSize = $("<input/>", {
+        type: "hidden",
+        name: "cartItemVOList[" + index + "].productSize",
+        value: itemSize,
+      });
+      hiddenInputSize.appendTo(newForm);
 
-      newForm.append(hiddenInputSize);
-
-      hiddenInputCount.setAttribute("type", "hidden");
-      hiddenInputCount.setAttribute(
-        "name",
-        "cartItemVOList[" + index + "].productCount"
-      );
-      hiddenInputCount.setAttribute("value", itemCount);
-
-      newForm.append(hiddenInputCount);
+      let hiddenInputCount = $("<input/>", {
+        type: "hidden",
+        name: "cartItemVOList[" + index + "].productCount",
+        value: itemCount,
+      });
+      hiddenInputCount.appendTo(newForm);
     });
     document.body.append(newForm);
     newForm.submit();
   }
+  //새로운 폼을 만드는 함수 - 주문정보를 전송하기위함
 </script>

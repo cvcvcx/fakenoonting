@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fakenoonting.order">
+
+    <resultMap id="order" type="com.fakenoonting.www.order.vo.OrdersVO">
+        <result column="id" property="id" />
+        <result column="member_id" property="memberId" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="address1" property="address1" />
+        <result column="address2" property="address2" />
+        <result column="status" property="status" />
+        <result column="shipping_request" property="shippingRequest" />
+        <result column="pay_point" property="payPoint" />
+    </resultMap>
+
+
+
+    <insert id="saveOrder" parameterType="com.fakenoonting.www.order.vo.OrdersVO">
+        <![CDATA[
+            insert into orders(member_id,name,phone,address1,address2,zipcode,shipping_request,pay_point)
+            values(#{memberId},#{name},#{phone},#{address1},#{address2},#{zipcode},#{shippingRequest},#{payPoint})
+        ]]>
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    
+    <select id="findOrderListByMemberId" parameterType="com.fakenoonting.www.member.vo.MemberVO" resultMap="order">
+        <![CDATA[
+            select *
+            from orders
+            where member_id = #{id}
+        ]]>
+    </select>
+
+
+</mapper>

@@ -71,4 +71,12 @@ public class CartController implements CartControllerInterface {
 		return "redirect:/cart/list";
 	}
 
+	@PostMapping("/updateState")
+	public String updateCartItemState(@RequestBody CartItemVO cartItemVO) {
+		log.info("updateCartItemState 실행...");
+		CartItemVO cartItemByCartId = cartService.findCartItemByCartId(cartItemVO);
+		cartItemByCartId.setStatus(cartItemVO.getStatus());
+		cartService.updateCartItemToGoal(cartItemByCartId);
+		return "redirect:/cart/list";
+	}
 }

@@ -33,7 +33,9 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    //cartId만 가지고 모든 값을 가지고 있는 CartItemVO를 반환하는 함수
+    /**
+     * cartId만 가지고 모든 값을 가지고 있는 CartItemVO를 반환하는 함수
+     */
     @Override
     public CartItemVO findCartItemByCartId(CartItemVO cartItemId){
         ProductVO productVO = new ProductVO();
@@ -62,16 +64,44 @@ public class CartServiceImpl implements CartService {
         return result;
     }
 
+    @Override
+    public List<CartItemVO> findCartItemsByMemberIdForOrder(MemberVO memberVO) {
+
+        List<CartItemVO> cartItemVOList = cartItemDAO.findCartItemsByMemberIdForOrder(memberVO);
+        ArrayList<CartItemVO> result = new ArrayList<>();
+        cartItemVOList.forEach(cartItemVO -> {
+            result.add(findCartItemByCartId(cartItemVO));
+        });
+
+        return result;
+    }
+
 
     //사용자는 카트에 올라간 상품의 개수를 조정할 수 있다.
     //상품이 결제화면을 올라갔을 때, 상품의 개수를 장바구니에 저장한다.
     @Override
     public void updateCartItem(List<CartItemVO> cartItems) {
         cartItems.forEach(cartItemVO -> {
+            cartItemVO.setStatus('C');
             cartItemDAO.updateCartItem(cartItemVO);
         });
 
     }
+    @Override
+    public void updateCartItemToOrder(List<CartItemVO> cartItems) {
+        cartItems.forEach(cartItemVO -> {
+            cartItemVO.setStatus('O');
+            log.info("cartItemUpdate중..."+cartItemVO);
+            cartItemDAO.updateCartItem(cartItemVO);
+        });
+
+    }
+
+    @Override
+    public int updateCartItemToGoal(CartItemVO cartItemVO) {
+        return cartItemDAO.updateCartItem(cartItemVO);
+    }
+
 
     @Override
     public int deleteCartItem(Long cartItemId) {

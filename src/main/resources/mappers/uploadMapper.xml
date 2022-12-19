@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fakenoonting.www.util.upload">
+
+	<!-- Img 정보 -->
+	<resultMap id="uploadResult"
+		type="com.fakenoonting.www.util.upload.vo.ImgItemVO">
+		<result column="img_UUID" property="imgUUID" />
+		<result column="product_id" property="foreignId" />
+		<result column="org_img_name" property="orgImgName" />
+		<result column="upload_path" property="uploadPath" />
+		<result column="create_date" property="createDate" />
+	</resultMap>
+
+
+
+	<!-- 이미지 등록 처리 -->
+<!-- 	<insert id="registerImg"
+		parameterType="com.fakenoonting.www.util.upload.vo.ImgItemVO">
+		<![CDATA[
+			INSERT INTO IMG (img_UUID, org_img_name, upload_path ) 
+			VALUES (#{imgUUID}, #{orgImgName}, #{nauploadPathme} )
+		]]>
+	</insert> -->
+
+
+
+	<!-- 이미지 삭제 -->
+<!-- 	<delete id="deleteImg" parameterType="String">
+		<![CDATA[
+		DELETE	FROM IMG
+		WHERE	email = #{email}
+		]]>
+	</delete> -->
+
+
+</mapper>

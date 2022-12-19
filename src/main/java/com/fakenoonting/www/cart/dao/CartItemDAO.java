@@ -2,6 +2,7 @@ package com.fakenoonting.www.cart.dao;
 
 import com.fakenoonting.www.cart.vo.CartItemVO;
 import com.fakenoonting.www.member.vo.MemberVO;
+import com.fakenoonting.www.order.vo.OrdersVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,13 @@ public class CartItemDAO {
 
     public List<CartItemVO> findCartItemsByMemberId(MemberVO memberVO) {
         return sqlSession.selectList(nameSpace + ".findCartItemsByMemberId", memberVO);
+    }
+    public List<CartItemVO> findCartItemsByMemberIdForOrder(MemberVO memberVO) {
+        return sqlSession.selectList(nameSpace + ".findCartItemsByMemberIdForOrder", memberVO);
+    }
+
+    public List<CartItemVO> findCartItemsByOrderId(OrdersVO ordersVO) {
+        return sqlSession.selectList(nameSpace + ".findCartItemsByOrderId", ordersVO);
     }
 
     public int updateCartItem(CartItemVO cartItemVO){
