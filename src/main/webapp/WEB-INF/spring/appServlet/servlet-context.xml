@@ -34,7 +34,7 @@
 		<!-- 아래 밸류가 저장되는 위치 자기 컴퓨터에서 폴더 하나 만들어서 경로 설정할것 -->
 <!--		<beans:constructor-arg value="/Users/chochanghun/Desktop/studyImgData"/>-->
 		<!-- <beans:constructor-arg value="C:/Users/0rcti/Desktop/ImgData"/> -->
-		<beans:constructor-arg value="/Users/ttekkeollug/Desktop/imgimg"/>
+		<beans:constructor-arg value="C:\Users\whdkf\Desktop"/>
 	</beans:bean>
 
 
