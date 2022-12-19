@@ -5,11 +5,23 @@
 <%  request.setCharacterEncoding("UTF-8"); %>
 
 <article>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="justify-content-center text-center">
+                    <a class="btn btn-dark btn-sm" href="#reviews" id="reviews">구매후기 (${productReviewCount})</a>
+                    <a class="btn btn-light btn-sm" href="#qanda">상품문의 (${prodQuesCnt})</a>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
     <div class="container">
         <div>
             <div class="row mt-4">
                 <div class="col mb-3">
-                    <h4>REVIEW<div class="vr mx-1"></div>
+                    <h4>REVIEW
+                        <div class="vr mx-1"></div>
                         <c:choose>
                             <c:when test="${productReviewCount == null}">
                                 <div>리뷰가 없습니다.</div>
@@ -141,10 +153,10 @@
 
             <div class="row">
                 <div class="col">
-                    포토 (11)
+                    포토 (${reviewImgCnt})
                 </div>
                 <div class="col text-end">
-                    <a href="#" class="link-secondary">
+                    <a href="${contextPath}/allReviewList" class="link-secondary">
                         전체보기
                         <span class="material-icons-round">
                             navigate_next
@@ -154,14 +166,21 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="#"><img src="images/cat1.jpg" width="142" height="157"></a>
-<%--                    <a href="#"><img src="images/cat10.jpg" width="142" height="157"></a>--%>
-<%--                    <a href="#"><img src="images/cat11.png" width="142" height="157"></a>--%>
-<%--                    <a href="#"><img src="images/cat12.png" width="142" height="157"></a>--%>
-<%--                    <a href="#"><img src="images/cat13.png" width="142" height="157"></a>--%>
-<%--                    <a href="#"><img src="images/cat14.jpg" width="142" height="157"></a>--%>
-<%--                    <a href="#"><img src="images/cat15.jpg" width="142" height="157"></a>--%>
-<%--                    <a href="#"><img src="images/cat16.png" width="142" height="157"></a>--%>
+                    <c:choose>
+                        <c:when test="${empty allReviewImg}">
+                            리뷰사진이 없습니다.
+                        </c:when>
+                        <c:when test="${!empty allReviewImg}">
+                            <c:forEach items="${allReviewImg}" var="img" varStatus="status">
+                                <c:if test="${status.count <= 6}">
+                                    <a href="#">
+                                        <img src="${contextPath}/util/upload/display?fileName=${img.uploadPath}/s_${img.imgUUID}_${img.orgImgName}"
+                                             class="card-img-top" style="width:200px; height:200px" alt="리뷰사진">
+                                    </a>
+                                </c:if>
+                            </c:forEach>
+                        </c:when>
+                    </c:choose>
                 </div>
             </div>
             <hr class="mb-0"/>
@@ -286,15 +305,37 @@
                                         star
                                     </span>
                                 </c:forEach>
+                                <c:choose>
+                                    <c:when test="${list.grade == 1}">
+                                        <span>별로에요</span>
+                                    </c:when>
+                                    <c:when test="${list.grade == 2}">
+                                        <span>그냥 그래요</span>
+                                    </c:when>
+                                    <c:when test="${list.grade == 3}">
+                                        <span>보통이에요</span>
+                                    </c:when>
+                                    <c:when test="${list.grade == 4}">
+                                        <span>맘에 들어요</span>
+                                    </c:when>
+                                    <c:when test="${list.grade == 5}">
+                                        <span>아주 좋아요</span>
+                                    </c:when>
+                                </c:choose>
                                 <div class="text-secondary"><td><fmt:formatDate value="${list.regDate}" pattern="yyyy.MM.dd"/></td></div>
                             </div>
                             <div class="col-12 mt-2">
-                                <td><p><c:out value="${list.contents}"/></p></td>
-                                <div class="col-12 mt-3">
-                                    <a href="#"><img src="images/cat22.jpg" width="142" height="157"></a>
-                                    <a href="#"><img src="images/cat21.jpg" width="142" height="157"></a>
-                                    <a href="#"><img src="images/cat20.jpg" width="142" height="157"></a>
-                                </div>
+                                <td>
+                                    <p><c:out value="${list.contents}"/></p>
+                                </td>
+                                <c:forEach items="${reviewImg}" var="img">
+                                    <c:if test="${list.reviewId eq img.reviewId}">
+                                        <a href="#">
+                                            <img src="${contextPath}/util/upload/display?fileName=${img.uploadPath}/s_${img.imgUUID}_${img.orgImgName}"
+                                                 class="card-img-top" style="width:100px; height:100px" alt="리뷰사진">
+                                        </a>
+                                    </c:if>
+                                </c:forEach>
                             </div>
                             <div class="col-12 mt-2">
                                 <a href="#" class="link-secondary">
@@ -326,12 +367,12 @@
                                 <div>사이즈 : <span class="mx-1">S</span></div>
                             </div>
                         </div>
+                        <hr />
                         </c:forEach>
                     </c:when>
                 </c:choose>
                 </tbody>
             </div>
-            <hr />
 
 
             <div class="m-3">
@@ -392,7 +433,7 @@
             success: function(result){
                 $("#reviewList").html(result);
             },
-            error: function(request, error){
+            error: function(request, error){w
                 alert(
                     "code:" +
                     request.status +
@@ -510,7 +551,20 @@
             }
         });
     }
+
+    var input = document.getElementById("searchKeyword");
+    input.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("searchBtn").click();
+        }
+    });
+
 </script>
+
+
+
+
 
     <%--$(function(e){--%>
     <%--    $("input[id='keyword']").on(--%>

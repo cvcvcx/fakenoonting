@@ -226,20 +226,8 @@ request.setCharacterEncoding("UTF-8");
 		<!-- end 제품 상세 이미지, 텍스트 -->
 
 		<!-- start section -->
-		<!-- 리뷰관련 -->
-		<section
-			class="border-top border-width-1px border-color-medium-gray pt-0">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-12">
-						<div class="justify-content-center text-center">
-							<a class="btn btn-dark btn-sm" href="#reviews" id="reviews">구매후기
-								(5)</a> <a class="btn btn-light btn-sm" href="#qanda">상품문의 (2)</a>
-						</div>
-					</div>
-					<hr />
-				</div>
-			</div>
+		<section class="border-top border-width-1px border-color-medium-gray pt-0">
+			<!-- 리뷰관련 -->
 			<div class="container">
 				<div class="tab-content" id="reviewList">
 					<jsp:include page="../review/reviewList.jsp" flush="false" />
@@ -247,22 +235,9 @@ request.setCharacterEncoding("UTF-8");
 			</div>
 
 			<!-- 문의관련 -->
-			<div class="container-fluid"></div>
-			<div class="row">
-				<div class="col-12">
-					<div class="justify-content-center text-center">
-						<a class="btn btn-light btn-sm" href="#reviews">구매후기 (5)</a> <a
-							class="btn btn-dark btn-sm" href="#qanda" id="qanda">상품문의 (2)</a>
-					</div>
-				</div>
-				<hr />
-			</div>
-			</div>
-			<div>
-				<div class="container">
-					<div class="tab-content" id="questionList">
-						<jsp:include page="../question/questionList.jsp" />
-					</div>
+			<div class="container">
+				<div class="tab-content" id="questionList">
+					<jsp:include page="../question/questionList.jsp" flush="false"/>
 				</div>
 			</div>
 		</section>

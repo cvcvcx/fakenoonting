@@ -5,17 +5,18 @@
 <%  request.setCharacterEncoding("UTF-8"); %>
 
 
-    <style>
-        body {
-            padding-top: 70px;
-            padding-bottom: 30px;
-        }
-    </style>
-    <title>문의리스트</title>
-</head>
-<body>
 <article>
-
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="justify-content-center text-center">
+                    <a class="btn btn-light btn-sm" href="#reviews">구매후기 (${productReviewCount})</a>
+                    <a class="btn btn-dark btn-sm" href="#qanda" id="qanda">상품문의 (${prodQuesCnt})</a>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
     <div>
         <div class="row align-items-center justify-content-center">
             <div class="col-12 text-center mt-4 mb-4">
@@ -24,10 +25,6 @@
             </div>
         </div>
         <div class="container">
-            <!--
-                        <h2>문의개수 ${allQuestionCount}</h2>
-                        <h2>문의조회, 수정, 삭제, 검색기능 추가필요</h2>
-                        -->
             <table class="table table-hover text-center">
                 <thead class="table-light">
                 <tr>
@@ -39,182 +36,179 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>배송문의</td>
-                    <td>옷 언제와요</td>
-                    <td>조**</td>
-                    <td>2022-12-07</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>배송문의</td>
-                    <td>주말은 배송안하나요</td>
-                    <td>조**</td>
-                    <td>2022-12-07</td>
-                </tr>
+                    <c:choose>
+                        <c:when test="${empty quesList}" >
+                            <tr><td colspan="5" align-text="center">문의내역이 없습니다.</td></tr>
+                        </c:when>
+                        <c:when test="${!empty quesList}">
+                            <c:forEach var="list" items="${quesList}" varStatus="status">
+                                <tr>
+                                    <th scope="row">${prodQuesCnt - status.index - pagination.startList}</th>
+                                    <td>
+                                        <c:if test="${list.category == '1'.charAt(0)}">
+                                            상품문의
+                                        </c:if>
+                                        <c:if test="${list.category == '2'.charAt(0)}">
+                                            배송문의
+                                        </c:if>
+                                        <c:if test="${list.category == '3'.charAt(0)}">
+                                            교환/반품/취소문의
+                                        </c:if>
+                                        <c:if test="${list.category == '4'.charAt(0)}">
+                                            기타문의
+                                        </c:if>
+                                    </td>
+                                    <td>${list.title}</td>
+                                    <td>${list.nickname}</td>
+                                    <td><fmt:formatDate value="${list.regDate}" pattern="yyyy.MM.dd"/></td>
+                                </tr>
+                            </c:forEach>
+                        </c:when>
+                    </c:choose>
                 </tbody>
             </table>
             <div class="d-flex justify-content-end">
-                <a href="#" class="btn btn-secondary m-1 btn-sm">상품문의하기</a>
-                <a href="#" class="btn btn-light m-1 btn-sm">모두보기</a>
+                <a href="${contextPath}/questionForm?productId=${question.productId}" class="btn btn-secondary m-1 btn-sm">상품문의하기</a>
+                <a href="${contextPath}/allQuestionList" class="btn btn-light m-1 btn-sm">모두보기</a>
             </div>
         </div>
         <!-- end tab item -->
         <div class="">
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link link-dark" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link link-dark" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link link-dark" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link link-dark" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link link-dark" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
+                    <c:if test="${pagination.prev}">
+                        <li class="page-item">
+                            <a class="page-link link-dark"
+                               href="#qanda"
+                               onclick="fn_quesPrev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${question.productId}')"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:forEach var="idx" begin="${pagination.startPage}" end="${pagination.endPage}">
+                        <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
+                            <a class="page-link link-dark"
+                               href="#qanda"
+                               onclick="fn_quesNum('${idx}', '${pagination.range}', '${question.productId}')">
+                                    ${idx}
+                            </a>
+                        </li>
+                    </c:forEach>
+                    <c:if test="${pagination.next}">
+                        <li class="page-item">
+                            <a class="page-link link-dark"
+                               href="#qanda"
+                               onclick="fn_quesNext('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${question.productId}')"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
                 </ul>
             </nav>
         </div>
     </div>
-
-
 </article>
 
-<%--<script>--%>
-<%--    $("#registerQuestion").on("click", function(e) {--%>
-<%--        e.preventDefault();--%>
-<%--        location.href="${contextPath}/questionForm";--%>
-<%--    });--%>
 
-<%--    $(function checkSuccess() {--%>
-<%--        let result = "${result}";--%>
+<script>
+    $(function checkSuccess() {
+        let result = '<c:out value="${result}"/>';
 
-<%--        if(result === '') {--%>
-<%--            return;--%>
-<%--        }--%>
+        if(result === '') {
+            return;
+        }
 
-<%--        if(result === "success") {--%>
-<%--            alert("문의가 등록되었습니다.");--%>
-<%--        }--%>
-<%--    });--%>
+        if(result === "ques register success") {
+            alert("문의가 등록되었습니다.");
+        }
+    });
 
-<%--    $("#btnProductDetails").on("click", function(e) {--%>
-<%--        e.preventDefault();--%>
-<%--        location.href="/product/detail";--%>
-<%--    });--%>
-<%--</script>--%>
+    function fn_quesPrev(page, range, rangeSize, productId) {
+        var page = ((range - 2) * rangeSize) + 1;
+        var range = range - 1;
 
-<%--<script>--%>
-<%--    // 이전 버튼 이벤트--%>
-<%--    function fn_prev(page, range, rangeSize) {--%>
-<%--        var page = ((range - 2) * rangeSize) + 1;--%>
-<%--        var range = range - 1;--%>
+        $.ajax({
+            type: "get",
+            url: "${contextPath}/questionList",
+            data: {
+                page: page,
+                range: range,
+                productId: productId
+            },
+            success: function (result) {
+                $("#questionList").html(result);
+            },
+            error: function(request, error){
+                alert(
+                    "code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" +
+                    "error:" +
+                    error
+                );
+            }
+        });
+    }
 
-<%--        var url = "${pageContext.request.contextPath}/questionTest";--%>
-<%--        url = url + "?page=" + page;--%>
-<%--        url = url + "&range=" + range;--%>
+    function fn_quesNum(page, range, productId) {
+        $.ajax({
+            type: "get",
+            url: "${contextPath}/questionList",
+            data: {
+                page: page,
+                range: range,
+                productId: productId
+            },
+            success: function (result) {
+                $("#questionList").html(result);
+            },
+            error: function(request, error){
+                alert(
+                    "code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" +
+                    "error:" +
+                    error
+                );
+            }
+        });
+    }
 
-<%--        location.href = url;--%>
-<%--    }--%>
+    function fn_quesNext(page, range, rangeSize, productId) {
+        var page = parseInt((range * rangeSize)) + 1;
+        var range = parseInt(range) + 1;
 
-<%--    // 페이지 번호 클릭--%>
-<%--    function fn_pagination(page, range) {--%>
-<%--        var url = "${pageContext.request.contextPath}/questionTest";--%>
-<%--        url = url + "?page=" + page;--%>
-<%--        url = url + "&range=" + range;--%>
-
-<%--        location.href = url;--%>
-<%--    }--%>
-
-<%--    // 다음 버튼 이벤트--%>
-<%--    function fn_next(page, range, rangeSize) {--%>
-<%--        var page = parseInt((range * rangeSize)) + 1;--%>
-<%--        var range = parseInt(range) + 1;--%>
-
-<%--        var url = "${pageContext.request.contextPath}/questionTest";--%>
-<%--        url = url + "?page=" + page;--%>
-<%--        url = url + "&range=" + range;--%>
-
-<%--        location.href = url;--%>
-<%--    }--%>
-<%--</script>--%>
-
-
-
-<%--<div class="container">--%>
-<%--    <br>--%>
-<%--    <h2>문의개수 ${allQuestionCount}</h2>--%>
-<%--    <h2>문의조회, 수정, 삭제, 검색기능 추가필요</h2>--%>
-<%--    <br>--%>
-<%--    <div class="table-responsive">--%>
-<%--        <table class="table table-striped table-sm">--%>
-<%--            <colgroup>--%>
-<%--                <col style="width:10%;" />--%>
-<%--                <col style="width:10%;" />--%>
-<%--                <col style="width:auto;" />--%>
-<%--                <col style="width:10%;" />--%>
-<%--                <col style="width:10%;" />--%>
-<%--            </colgroup>--%>
-<%--            <thead>--%>
-<%--            <tr>--%>
-<%--                <th>NO</th>--%>
-<%--                <th>카테고리</th>--%>
-<%--                <th>제목</th>--%>
-<%--                <th>작성자</th>--%>
-<%--                <th>작성일</th>--%>
-<%--            </tr>--%>
-<%--            </thead>--%>
-<%--            <tbody>--%>
-<%--            <c:choose>--%>
-<%--                <c:when test="${empty boardList}" >--%>
-<%--                    <tr><td colspan="5" align="center">데이터가 없습니다.</td></tr>--%>
-<%--                </c:when>--%>
-<%--                <c:when test="${!empty boardList}">--%>
-<%--                    <c:forEach var="list" items="${boardList}">--%>
-<%--                        <tr>--%>
-<%--                            <td><c:out value="${list.questionId}"/></td>--%>
-<%--                            <td><c:out value="${list.category}"/></td>--%>
-<%--                            <td><c:out value="${list.title}"/></td>--%>
-<%--                            <td><c:out value="${list.memberId}"/></td>--%>
-<%--                            <td><fmt:formatDate value="${list.regDate}" pattern="yyyy.MM.dd"/></td>--%>
-<%--                        </tr>--%>
-<%--                    </c:forEach>--%>
-<%--                </c:when>--%>
-<%--            </c:choose>--%>
-<%--            </tbody>--%>
-<%--        </table>--%>
-
-<%--        <button type="button" class="btn btn-sm btn-primary" id="registerQuestion">문의하기</button>--%>
-<%--        <button type="button" class="btn btn-sm btn-primary" id="btnProductDetails">뒤로가기</button>--%>
-<%--        <br>--%>
-<%--        <br>--%>
-
-<%--        <div id="paginationBox">--%>
-<%--            <ul class="pagination">--%>
-<%--                <c:if test="${pagination.prev}">--%>
-<%--                    <li class="page-item">--%>
-<%--                        <a class="page-link" href="#" onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}')">Previous</a>--%>
-<%--                    </li>--%>
-<%--                </c:if>--%>
-
-<%--                <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="idx">--%>
-<%--                    <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">--%>
-<%--                        <a class="page-link" href="#" onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}')"> ${idx} </a>--%>
-<%--                    </li>--%>
-<%--                </c:forEach>--%>
-
-<%--                <c:if test="${pagination.next}">--%>
-<%--                    <li class="page-item">--%>
-<%--                        <a class="page-link" href="#" onClick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}')" >Next</a>--%>
-<%--                    </li>--%>
-<%--                </c:if>--%>
-<%--            </ul>--%>
-<%--        </div>--%>
-
-<%--    </div>--%>
-<%--</div>--%>
+        $.ajax({
+            type: "get",
+            url: "${contextPath}/questionList",
+            data: {
+                page: page,
+                range: range,
+                productId: productId
+            },
+            success: function (result) {
+                $("#questionList").html(result);
+            },
+            error: function(request, error){
+                alert(
+                    "code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" +
+                    "error:" +
+                    error
+                );
+            }
+        });
+    }
+</script>

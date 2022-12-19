@@ -1,7 +1,10 @@
 package com.fakenoonting.www.reviews.repository;
 
+import com.fakenoonting.www.product.vo.ProductVO;
 import com.fakenoonting.www.reviews.domain.Review;
 import com.fakenoonting.www.util.paging.Pagination;
+import com.fakenoonting.www.util.upload.vo.ImgItemVO;
+import com.fakenoonting.www.util.upload.vo.ImgReviewItemVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,9 +48,9 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         return sqlSession.delete(namespace + ".delete", reviewId);
     }
 
-    // 리뷰 1개 찾기(고유번호 사용)
+    // 리뷰 1개 찾기
     @Override
-    public Review findById(int reviewId) throws Exception {
+    public Review findById(Long reviewId) throws Exception {
         return sqlSession.selectOne(namespace + ".findById", reviewId);
     }
 
@@ -55,12 +58,6 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     @Override
     public List<Review> findAll() throws Exception {
         return sqlSession.selectList(namespace + ".findAll");
-    }
-
-    // 모든 상품의 모든 리뷰 찾기 + 페이징적용
-    @Override
-    public List<Review> findAllPaging(Pagination pagination) throws Exception {
-        return sqlSession.selectList(namespace + ".findAllPaging", pagination);
     }
 
     // 특정 상품의 리뷰 평균 평점 구하기
@@ -93,9 +90,34 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         return sqlSession.selectList(namespace + ".findAllProdRvByGrade", map);
     }
 
-    // 특정 유저의 모든 리뷰 찾기
+    // 리뷰 상품 사진 업로드
     @Override
-    public List<Review> findAllProdRvByMemberId(int memberId) throws Exception {
-        return sqlSession.selectList(namespace + ".findAllProdRvByMemberId");
+    public int uploadRvImg(ImgReviewItemVo img) {
+        return sqlSession.insert(namespace + ".uploadRvImg", img);
+    }
+
+    @Override
+    public List<ImgReviewItemVo> getAllReviewImg(Long productId) {
+        return sqlSession.selectList(namespace + ".getAllReviewImg", productId);
+    }
+
+    @Override
+    public List<ImgReviewItemVo> getReviewImg(Long productId) {
+        return sqlSession.selectList(namespace + ".getReviewImg", productId);
+    }
+
+    @Override
+    public int getRvImgCnt(Long productId) {
+        return sqlSession.selectOne(namespace + ".getRvImgCnt", productId);
+    }
+
+    @Override
+    public List<ImgItemVO> getProductImg(Long productId) {
+        return sqlSession.selectList(namespace + ".getProductImg", productId);
+    }
+
+    @Override
+    public List<ProductVO> getProductName(Long productId) {
+        return sqlSession.selectList(namespace + ".getProductName", productId);
     }
 }

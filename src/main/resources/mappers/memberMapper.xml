@@ -46,7 +46,8 @@
 	<!-- 아이디 존재 여부 체크 -->
 	<select id="emailCheck"
 		parameterType="com.fakenoonting.www.member.vo.MemberVO"
-		resultType="int">
+			resultType="int"
+		>
 		<![CDATA[
 		SELECT	COUNT(*)
 		FROM	MEMBER
