@@ -129,14 +129,11 @@ public class ReviewController {
             model.addAttribute("memberVO", memberVO);
 
             String productId = request.getParameter("productId");
-            logger.info("prodId " + productId);
 
             List<ImgItemVO> productImg = reviewService.getProductImg(Long.parseLong(productId));
-            logger.info(productImg.toString());
             model.addAttribute("productImg", productImg);
 
             List<ProductVO> productName = reviewService.getProductName(Long.parseLong(productId));
-            logger.info(productName.toString());
             model.addAttribute("productName", productName);
 
             return "review/reviewForm";
@@ -157,8 +154,6 @@ public class ReviewController {
 
         review.setMemberId(memberVO.getId());
         review.setNickname(memberVO.getNick());
-
-        logger.info(review.toString());
 
         reviewService.register(review);
         reviewService.uploadRvImg(review);
