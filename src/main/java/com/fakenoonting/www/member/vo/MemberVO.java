@@ -28,6 +28,7 @@ public class MemberVO {
 	private Date create_date; // ID 생성 날짜
 	private Date delete_date; // ID 삭제 날짜
 	private int money_point; // 포인트
+	private Character isAdmin;
 
 
 	//database에 존재하지 않는 변수들

@@ -22,6 +22,7 @@
 		<result property="create_date" column="create_date" />
 		<result property="delete_date" column="delete_date" />
 		<result property="money_point" column="money_point" />
+		<result property="isAdmin" column="is_admin" />
 	</resultMap>
 
 	<!-- 로그인 처리 -->

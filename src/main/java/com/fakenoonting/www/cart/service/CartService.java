@@ -21,6 +21,8 @@ public interface CartService {
 
     void updateCartItemToOrder(List<CartItemVO> cartItems);
 
+    int updateCartItemToGoal(CartItemVO cartItemVO);
+
     public int deleteCartItem(Long cartItemId);
 
 }

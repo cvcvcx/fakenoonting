@@ -98,6 +98,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public int updateCartItemToGoal(CartItemVO cartItemVO) {
+        return cartItemDAO.updateCartItem(cartItemVO);
+    }
+
+
+    @Override
     public int deleteCartItem(Long cartItemId) {
         log.info("deleteCartItem 실행중...Service");
         return cartItemDAO.deleteCartItem(cartItemId);

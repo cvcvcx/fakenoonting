@@ -148,7 +148,7 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
                 </div>
               </div>
               <c:forEach items="${cartList}" var="cartItem">
-                <div class="card mb-3" id="card_${cartItem.id}">
+                <div class="card offset-1 col-9 mb-3" id="card_${cartItem.id}">
                   <div class="row g-0 justify-content-around">
                     <div class="col-3 align-items-center">
                       <a href="" class="align-self-center">
@@ -196,7 +196,7 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
                       </p>
                     </div>
                     <div
-                      class="col-2 align-self-center row justify-content-center"
+                      class="col-3 align-self-center row justify-content-center"
                     >
                       <div class="row">
                         <a
@@ -480,6 +480,23 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
         });
       });
       //배송완료 버튼을 눌렀을 때
+      $("a[role='completeBtn']").on("click", function (e) {
+        let targetItemId = e.target.getAttribute("value");
+        let completeState = "G";
+        let url = "${contextPath}/cart/updateState";
+
+        $.ajax({
+          url: url,
+          type: "post",
+          contentType: "application/json; charset:UTF-8",
+          data: JSON.stringify({ id: targetItemId, status: completeState }),
+          success: function () {
+            $("#card_" + targetItemId).slideUp(300, function () {
+              $("#card_" + targetItemId).remove();
+            });
+          },
+        });
+      });
     </script>
     <jsp:include page="../common/footer.jsp" flush="false" />
   </body>
