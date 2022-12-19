@@ -105,7 +105,7 @@
                     </c:choose>
 
                     <form action="${contextPath}/reviewForm">
-                        <input type="hidden" name="productId" value="${product.id}">
+                        <input type="hidden" name="productId" value="${review.productId}">
                         <button type="submit" class="btn btn-secondary mt-4" id="registerReview">상품 리뷰 작성하기</button>
                     </form>
                 </div>
