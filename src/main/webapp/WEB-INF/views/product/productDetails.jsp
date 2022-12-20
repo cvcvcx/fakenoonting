@@ -211,15 +211,95 @@ request.setCharacterEncoding("UTF-8");
       <!-- end section -->
 
 		<!-- start 제품 상세 이미지, 텍스트 -->
-		<section class="mt-5">
-			<div class="container">
+		<section class="mt-5 bg-secondary bg-opacity-10">
+			<div class="container py-5">
 				<div class="text-center">
 					<c:forEach items="${product.productContentImgItems}" var="imgItem"
 						varStatus="status">
 						<img
 							src="${contextPath}/util/upload/display?fileName=${imgItem.uploadPath}/${imgItem.imgUUID}_${imgItem.orgImgName}"
-							class="w-100" alt="..." />
+							style="width: 580px; height: 620px" class="mb-2" alt="..." />
 					</c:forEach>
+				</div>
+			</div>
+			<div class="container pb-4">
+				<div id="modal-popup">
+					<table class="table table-hover">
+						<thead>
+						<tr class="table-light">
+							<th scope="col">사이즈</th>
+							<th scope="col">S</th>
+							<th scope="col">M</th>
+							<th scope="col">L</th>
+							<th scope="col">XL</th>
+							<th scope="col">2XL</th>
+							<th scope="col">3XL</th>
+							<th scope="col">4XL</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<th scope="row">어깨</th>
+							<td>16</td>
+							<td>17</td>
+							<td>18</td>
+							<td>19</td>
+							<td>20</td>
+							<td>21</td>
+							<td>22</td>
+						</tr>
+						<tr>
+							<th scope="row">가슴단</th>
+							<td>28-29</td>
+							<td>30-31</td>
+							<td>32-33</td>
+							<td>34-35</td>
+							<td>36-37</td>
+							<td>38-39</td>
+							<td>40-41</td>
+						</tr>
+						<tr>
+							<th scope="row">소매단</th>
+							<td>9</td>
+							<td>9.5</td>
+							<td>10</td>
+							<td>10.5</td>
+							<td>11</td>
+							<td>11.5</td>
+							<td>12</td>
+						</tr>
+						<tr>
+							<th scope="row">총길이</th>
+							<td>63</td>
+							<td>66</td>
+							<td>69</td>
+							<td>72</td>
+							<td>75</td>
+							<td>78</td>
+							<td>81</td>
+						</tr>
+						<tr>
+							<th scope="row">밑단</th>
+							<td>33</td>
+							<td>33.5</td>
+							<td>34</td>
+							<td>34.5</td>
+							<td>35</td>
+							<td>35.5</td>
+							<td>36</td>
+						</tr>
+						<tr>
+							<th scope="row">암홀</th>
+							<td>22</td>
+							<td>22.5</td>
+							<td>32</td>
+							<td>23.5</td>
+							<td>24</td>
+							<td>24.5</td>
+							<td>25</td>
+						</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</section>
@@ -436,7 +516,6 @@ request.setCharacterEncoding("UTF-8");
 				});
 	</script>
 	<!-- footer -->
-	<hr />
 	<jsp:include page="../common/footer.jsp" flush="false" />
 </body>
 </html>

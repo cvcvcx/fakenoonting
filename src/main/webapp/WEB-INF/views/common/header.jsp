@@ -25,30 +25,30 @@
 <header>
 	<div class="container">
 		<!-- 상위네브바 -->
-		<div class="row d-flex justify-content-start p-2">
-			<nav class="navbar navbar-white bg-white fuxid-top">
+		<div class="row">
+			<nav class="navbar navbar-white bg-white">
 				<div class="row container-fluid">
-					<div class="col-lg-3 col-sm-1">
+					<div class="col-3 justify-content-start">
 						<div class="btn-group" role="group"
 							aria-label="Button group with nested dropdown">
 
 							<c:choose>
 								<c:when test="${isLogOn == true && member != null}">
 									<a href="${contextPath}/member/logout.do">
-										<button type="button" class="btn btn-default">LOGOUT</button>
+										<button type="button" class="btn btn-default btn-sm">LOGOUT</button>
 									</a>
 								</c:when>
 								<c:otherwise>
 									<a href="${contextPath}/member/loginForm.do">
-										<button type="button" class="btn btn-default">LOGIN</button>
+										<button type="button" class="btn btn-default btn-sm">LOGIN</button>
 									</a>
 								</c:otherwise>
 							</c:choose>
 
 							<a href="${contextPath}/member/regiMemberForm.do"><button
-									type="button" class="btn btn-default">JOIN US</button></a>
+									type="button" class="btn btn-default btn-sm">JOIN US</button></a>
 							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default dropdown-toggle"
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm"
 									data-bs-toggle="dropdown" aria-expanded="false">MY
 									PAGE</button>
 								<ul class="dropdown-menu">
@@ -66,27 +66,26 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-6 col-sm-2 text-center">
+					<div class="col-5 text-center">
 						<a href="${contextPath}/"><button class="btn btn-black"
 								type="button">
 								<img src="${contextPath}/resources/images/logo.png">
 							</button></a>
 					</div>
-					<div class="col-lg-3 col-sm-1">
-						<div class="col-lg-2 input-group">
-							<!-- mb-2 pt-2 -->
+					<div class="col-3 sm-3 justify-content-end">
+						<div class="input-group">
 							<form class="d-flex" role="button">
 								<input type="text" class="form-control rounede-start"
 									id="keyword" name="keyword" placeholder="검색">
 								<button class="btn btn-outline-secondary" type="submit">
 									<span class="material-icons-outlined"> search </span>
 								</button>
-								<div class="">
-									<a href="#" class="wish_icon"> <span
+								<div class="align-self-center mx-1">
+									<a href="#" class="wish_icon link-secondary"> <span
 										class="material-icons-outlined"> favorite_border </span></a>
 								</div>
-								<div class="">
-									<a href=" ${contextPath}/cart/list" class="cart_icon"> <span
+								<div class="align-self-center mx-1">
+									<a href=" ${contextPath}/cart/list" class="cart_icon link-secondary"> <span
 										class="material-icons-outlined"> shopping_cart </span></a>
 								</div>
 							</form>
@@ -99,9 +98,11 @@
 					id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
 					<div class="offcanvas-header">
 						<div class="offcanvas-title" id="offcanvasDarkNavbarLabel">
-							<a href="#"><button class="btn btn-black" type="button">
+							<a href="#">
+								<button class="btn btn-black" type="button">
 									<img src="${contextPath}/resources/images/logo.png">
-								</button></a>
+								</button>
+							</a>
 						</div>
 					</div>
 					<div class="offcanvas-body">
@@ -123,9 +124,9 @@
 													type="text" id="emailSub" name="emailSub" placeholder="E-MAIL"></li>
 												<li class="nav-item"><input class="form-control "
 													type="password" id="pwdSub" name="pwdSub" placeholder="Password"></li>
-												<div class="" 	>
+												<div class="">
 													<button type="submit" class="btn btn-black">Login</button>
-													<a  href="${contextPath}/member/regiMemberForm.do">
+													<a href="${contextPath}/member/regiMemberForm.do">
 														<button type="button" class="btn btn-black">Join Us	</button>
 													</a>
 												</div>
@@ -136,7 +137,7 @@
 								</fieldset>
 							</div>
 							<div class="right_board">
-								<a href="#">Q&A</a> <a href="#">REVIEW</a>
+								<a href="#" style="text-decoration: none;" class="text-secondary">Q&A</a> <a href="#" style="text-decoration: none;" class="text-secondary">REVIEW</a>
 							</div>
 						</form>
 						<hr>
@@ -164,33 +165,31 @@
 		</div>
 	</div>
 	<hr>
-	<div class="row container-fluid" style="float: none; margin: auto;"
+	<div class="row container-fluid"
 		id="main_list">
-		<div class="col-lg-2 align-self-center"
-			style="float: none; margin: auto;">
+		<div class="col-lg-2 align-self-center">
 			<button class="navbar-toggler btn pull-left" type="button"
 				data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
 				aria-controls="offcanvasDarkNavbar">
 				<span class="material-icons-outlined">menu</span>
 			</button>
 		</div>
-		<div class="nav-scroller py-1 mb-2 col-lg-8 align-self-center"
+		<div class="col-8 nav-scroller py-1 col-lg-8 align-self-center"
 			id="top_menu_list">
 			<nav class="nav d-flex justify-content-between" id="top_menu_bar">
-				<a class="p-2 link-secondary" href="${contextPath}/product/list">TOP</a>
-				<a class="p-2 link-secondary" href="#">PANTS</a> <a
-					class="p-2 link-secondary" href="#">OUTER</a> <a
-					class="p-2 link-secondary" href="#">SHOES</a> <a
-					class="p-2 link-secondary" href="#">BAG</a> <a
-					class="p-2 link-secondary" href="#">ACC</a> <a
-					class="p-2 link-secondary" href="#"><b style="color: red;">SALE</b></a>
+				<a class="p-2 link-secondary" href="${contextPath}/product/list" style="text-decoration: none">TOP</a>
+				<a class="p-2 link-secondary" href="#" style="text-decoration: none">PANTS</a>
+				<a class="p-2 link-secondary" href="#" style="text-decoration: none">OUTER</a>
+				<a class="p-2 link-secondary" href="#" style="text-decoration: none">SHOES</a>
+				<a class="p-2 link-secondary" href="#" style="text-decoration: none">BAG</a>
+				<a class="p-2 link-secondary" href="#" style="text-decoration: none">ACC</a>
+				<a class="p-2 link-secondary" href="#" style="text-decoration: none"><b style="color: red;">SALE</b></a>
 			</nav>
 		</div>
 		<!-- 커뮤니티 버튼 -->
-		<div class="col-md-2 align-self-center"
-			style="float: none; margin: auto;">
+		<div class="col-2 align-self-center">
 			<div class="dropdown d-grid gap-2 d-md-flex justify-content-md-end">
-				<a class="btn btn-success btn-sm dropdown-toggle" href="#"
+				<a class="btn btn-light btn-sm dropdown-toggle" href="#"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
 					COMMUNITY </a>
 				<ul class="dropdown-menu">
