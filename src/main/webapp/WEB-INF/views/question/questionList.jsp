@@ -78,7 +78,7 @@
                 <ul class="pagination justify-content-center">
                     <c:if test="${pagination.prev}">
                         <li class="page-item">
-                            <a class="page-link link-dark"
+                            <a class="page-link"
                                href="#qanda"
                                onclick="fn_quesPrev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${question.productId}')"
                                aria-label="Previous">
@@ -88,7 +88,7 @@
                     </c:if>
                     <c:forEach var="idx" begin="${pagination.startPage}" end="${pagination.endPage}">
                         <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
-                            <a class="page-link link-dark"
+                            <a class="page-link"
                                href="#qanda"
                                onclick="fn_quesNum('${idx}', '${pagination.range}', '${question.productId}')">
                                     ${idx}
@@ -97,7 +97,7 @@
                     </c:forEach>
                     <c:if test="${pagination.next}">
                         <li class="page-item">
-                            <a class="page-link link-dark"
+                            <a class="page-link"
                                href="#qanda"
                                onclick="fn_quesNext('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${question.productId}')"
                                aria-label="Next">

@@ -4,11 +4,34 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%  request.setCharacterEncoding("UTF-8"); %>
 
+<style>
+    .page-link {
+        color: #000;
+        background-color: #fff;
+        border: 1px solid #ccc;
+    }
+
+    .page-item.active .page-link {
+        z-index: 1;
+        color: #555;
+        font-weight:bold;
+        background-color: #f1f1f1;
+        border-color: #ccc;
+
+    }
+
+    .page-link:focus, .page-link:hover {
+        color: #000;
+        background-color: #fafafa;
+        border-color: #ccc;
+    }
+</style>
+
 <article>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="justify-content-center text-center">
+                <div class="justify-content-center text-center mt-3">
                     <a class="btn btn-dark btn-sm" href="#reviews" id="reviews">구매후기 (${productReviewCount})</a>
                     <a class="btn btn-light btn-sm" href="#qanda">상품문의 (${prodQuesCnt})</a>
                 </div>
@@ -33,7 +56,7 @@
                     </h4>
                 </div>
                 <div class="col">
-                    <div><a href="${contextPath}/allReviewList" class="link-secondary">전체 상품 리뷰 보기</a><div class="vr mx-1"></div>
+                    <div><a href="${contextPath}/allReviewList" class="link-secondary" style="text-decoration: none">전체 상품 리뷰 보기</a><div class="vr mx-1"></div>
                         <div class="modal fade" id="textModal" aria-hidden="true" aria-labelledby="textModalLabel" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
@@ -73,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a class="link-secondary" data-bs-toggle="modal" href="#textModal" role="button">공지사항 1</a>
+                        <a class="link-secondary" data-bs-toggle="modal" href="#textModal" role="button" style="text-decoration: none">공지사항 1</a>
                     </div>
                 </div>
             </div>
@@ -156,7 +179,7 @@
                     포토 (${reviewImgCnt})
                 </div>
                 <div class="col text-end">
-                    <a href="${contextPath}/allReviewList" class="link-secondary">
+                    <a href="${contextPath}/allReviewList" class="link-secondary" style="text-decoration: none">
                         전체보기
                         <span class="material-icons-round">
                             navigate_next
@@ -214,74 +237,160 @@
 
 
             <hr class="mt-0 mb-2"/>
-            <div class="row">
-                <div class="col">
-                    <div class="btn-group">
-                        <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                            별점
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><button class="dropdown-item btn btn-black">확인</button></li>
-                        </ul>
+            <form>
+                <div class="row">
+                    <div class="col-auto">
+                        <select class="form-select" id="starselectone">
+                            <option disabled selected>
+                                별점
+                            </option>
+                            <option>
+                                ⭐⭐⭐⭐⭐
+                            </option>
+                            <option>
+                                ⭐⭐⭐⭐
+                            </option>
+                            <option>
+                                ⭐⭐⭐
+                            </option>
+                            <option>
+                                ⭐⭐
+                            </option>
+                            <option>
+                                ⭐
+                            </option>
+                        </select>
                     </div>
-                    <div class="btn-group">
-                        <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                            키
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><input type="radio" class="btn-check" name="options" id="option1" autocomplete="off">
-                                <label class="dropdown-item" for="option1">150 cm 이하</label></li>
-                            <li><input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
-                                <label class="dropdown-item" for="option2">150 - 160cm</label></li>
-                            <li><input type="radio" class="btn-check" name="options" id="option3" autocomplete="off">
-                                <label class="dropdown-item" for="option3">160 - 170cm</label></li>
-                            <li><input type="radio" class="btn-check" name="options" id="option4" autocomplete="off">
-                                <label class="dropdown-item" for="option4">170 - 180cm</label></li>
-                            <li><input type="radio" class="btn-check" name="options" id="option5" autocomplete="off">
-                                <label class="dropdown-item" for="option5">180 - 190cm</label></li>
-                            <li><input type="radio" class="btn-check" name="options" id="option6" autocomplete="off">
-                                <label class="dropdown-item" for="option6">190 cm 이상</label></li>
-                            <li><a class="dropdown-item btn" href="#">확인</a></li>
-                        </ul>
+                    <div class="col-auto">
+                        <select class="form-select" id="heightselect">
+                            <option disabled selected>
+                                키
+                            </option>
+                            <option>
+                                150 cm 이하
+                            </option>
+                            <option>
+                                150 - 160cm
+                            </option>
+                            <option>
+                                160 - 170cm
+                            </option>
+                            <option>
+                                170 - 180cm
+                            </option>
+                            <option>
+                                180 - 190cm
+                            </option>
+                            <option>
+                                190 cm 이상
+                            </option>
+                        </select>
                     </div>
-                    <div class="btn-group">
-                        <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                            몸무게
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item btn" href="#">확인</a></li>
-                        </ul>
+                    <div class="col-auto">
+                        <select class="form-select" id="weightselect">
+                            <option disabled selected>
+                                몸무게
+                            </option>
+                            <option>
+                                전체 카테고리
+                            </option>
+                            <option>
+                                TOP
+                            </option>
+                            <option>
+                                PANTS
+                            </option>
+                            <option>
+                                OUTER
+                            </option>
+                            <option>
+                                SHOES
+                            </option>
+                            <option>
+                                BAG
+                            </option>
+                            <option>
+                                ACC
+                            </option>
+                            <option>
+                                SALE
+                            </option>
+                        </select>
                     </div>
-                    <div class="btn-group">
-                        <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                            평소사이즈-상의
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item btn" href="#">확인</a></li>
-                        </ul>
+                    <div class="col-auto">
+                        <select class="form-select" id="topselect">
+                            <option disabled selected>
+                                평소사이즈-상의
+                            </option>
+                            <option>
+                                XS
+                            </option>
+                            <option>
+                                S
+                            </option>
+                            <option>
+                                M
+                            </option>
+                            <option>
+                                L
+                            </option>
+                            <option>
+                                XL
+                            </option>
+                            <option>
+                                XXL
+                            </option>
+                            <option>
+                                XXXL
+                            </option>
+                        </select>
                     </div>
-                    <div class="btn-group">
-                        <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                            평소사이즈-하의
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item btn" href="#">확인</a></li>
-                        </ul>
+                    <div class="col-auto">
+                        <select class="form-select" id="underselect">
+                            <option disabled selected>
+                                평소사이즈-하의
+                            </option>
+                            <option>
+                                23
+                            </option>
+                            <option>
+                                24
+                            </option>
+                            <option>
+                                25
+                            </option>
+                            <option>
+                                26
+                            </option>
+                            <option>
+                                27
+                            </option>
+                            <option>
+                                28
+                            </option>
+                            <option>
+                                29
+                            </option>
+                            <option>
+                                30
+                            </option>
+                            <option>
+                                31
+                            </option>
+                            <option>
+                                32
+                            </option>
+                            <option>
+                                33
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-light">확인</button>
                     </div>
                 </div>
-            </div>
+            </form>
+
             <hr class="mt-2" />
 
 
@@ -338,20 +447,20 @@
                                 </c:forEach>
                             </div>
                             <div class="col-12 mt-2">
-                                <a href="#" class="link-secondary">
+                                <a href="#" class="link-secondary" style="text-decoration: none">
                                     <span class="material-icons-outlined">
                                         thumb_up
                                     </span>
                                     도움돼요 3
                                 </a>
-                                <a href="#" class="link-secondary mx-2">
+                                <a href="#" class="link-secondary mx-2" style="text-decoration: none">
                                     <span class="material-icons-outlined">
                                         thumb_down
                                     </span>
                                     도움안돼요 1
                                 </a>
                                 <div class="vr"></div>
-                                <a href="#" class="link-secondary mx-2">댓글 0</a>
+                                <a href="#" class="link-secondary mx-2" style="text-decoration: none">댓글 0</a>
                             </div>
                         </div>
                         <div class="col-4">
@@ -380,7 +489,7 @@
                     <ul class="pagination justify-content-center">
                         <c:if test="${pagination.prev}">
                             <li class="page-item">
-                                <a class="page-link link-dark"
+                                <a class="page-link"
                                    href="#reviews"
                                    onclick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${review.productId}', '${sortNum}', '${keyword}')"
                                    aria-label="Previous">
@@ -391,7 +500,7 @@
 
                         <c:forEach var="idx" begin="${pagination.startPage}" end="${pagination.endPage}">
                             <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
-                                <a class="page-link link-dark"
+                                <a class="page-link"
                                    href="#reviews"
                                    onclick="fn_pagination('${idx}', '${pagination.range}', '${review.productId}', '${sortNum}', '${keyword}')">
                                     ${idx}
@@ -401,7 +510,7 @@
 
                         <c:if test="${pagination.next}">
                             <li class="page-item">
-                                <a class="page-link link-dark"
+                                <a class="page-link"
                                    href="#reviews"
                                    onclick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}', '${review.productId}', '${sortNum}', '${keyword}')"
                                    aria-label="Next">

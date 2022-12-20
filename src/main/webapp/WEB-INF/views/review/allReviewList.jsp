@@ -10,27 +10,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Sharp|Material+Icons+Two+Tone|Material+Icons+Outlined|Material+Icons+Round"
-          rel="stylesheet">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-          crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-            crossorigin="anonymous">
-    </script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous">
     </script>
     <style>
-        footer {
-            background-color: rgb(249, 249, 249);
+         .page-link {
+             color: #000;
+             background-color: #fff;
+             border: 1px solid #ccc;
+         }
+
+        .page-item.active .page-link {
+            z-index: 1;
+            color: #555;
+            font-weight:bold;
+            background-color: #f1f1f1;
+            border-color: #ccc;
+
         }
-        a {
-            text-decoration: none;
+
+        .page-link:focus, .page-link:hover {
+            color: #000;
+            background-color: #fafafa;
+            border-color: #ccc;
         }
     </style>
     <title>kikerday</title>
@@ -86,7 +89,7 @@
                             </div>
                         </div>
                     </div>
-                    <a class="link-secondary" data-bs-toggle="modal" href="#textModal" role="button">공지사항 1</a>
+                    <a class="link-secondary text-decoration-none" data-bs-toggle="modal" href="#textModal" role="button">공지사항 1</a>
                 </div>
             </div>
             <hr class="m-0"/>
@@ -111,32 +114,66 @@
                 </div>
             </div>
             <hr class="mt-0 mb-2"/>
-            <div class="row">
-                <div class="col">
-                    <div class="btn-group">
-                        <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                            전체 카테고리
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><button class="dropdown-item btn btn-black">확인</button></li>
-                        </ul>
+            <form>
+                <div class="row">
+                    <div class="col-3">
+                        <select class="form-select" id="categoryselect">
+                            <option disabled selected>
+                                카테고리
+                            </option>
+                            <option>
+                                전체 카테고리
+                            </option>
+                            <option>
+                                TOP
+                            </option>
+                            <option>
+                                PANTS
+                            </option>
+                            <option>
+                                OUTER
+                            </option>
+                            <option>
+                                SHOES
+                            </option>
+                            <option>
+                                BAG
+                            </option>
+                            <option>
+                                ACC
+                            </option>
+                            <option>
+                                SALE
+                            </option>
+                        </select>
                     </div>
-                    <div class="btn-group">
-                        <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                            별점
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item btn" href="#">확인</a></li>
-                        </ul>
+                    <div class="col-3">
+                        <select class="form-select" id="starselect">
+                            <option disabled selected>
+                                별점
+                            </option>
+                            <option>
+                                ⭐⭐⭐⭐⭐
+                            </option>
+                            <option>
+                                ⭐⭐⭐⭐
+                            </option>
+                            <option>
+                                ⭐⭐⭐
+                            </option>
+                            <option>
+                                ⭐⭐
+                            </option>
+                            <option>
+                                ⭐
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-light">확인</button>
                     </div>
                 </div>
-            </div>
+            </form>
             <hr class="mt-2" />
             <c:choose>
                 <c:when test="${empty dataList}" >
@@ -179,7 +216,7 @@
                             <div class="col-12 my-2">
                                 <c:forEach items="${productImg}" var="pImg">
                                     <c:if test="${list.productId eq pImg.foreignId}">
-                                        <a href="${contextPath}/product/detail?id=${pImg.foreignId}">
+                                        <a href="${contextPath}/product/detail?id=${pImg.foreignId}" style="text-decoration: none" class="link-dark">
                                             <img src="${contextPath}/util/upload/display?fileName=${pImg.uploadPath}/s_${pImg.imgUUID}_${pImg.orgImgName}"
                                                  class="link-dark fw-bold" width="48" height="48" alt="상품사진">
                                                     <c:forEach items="${productName}" var="pName">
@@ -207,19 +244,19 @@
                                 </div>
                             </div>
                             <div class="col-12 mt-2">
-                                <a href="#" class="link-secondary">
+                                <a href="#" class="link-secondary" style="text-decoration: none">
                                             <span class="material-icons-outlined">
                                                 thumb_up
                                             </span>도움돼요 3
                                 </a>
-                                <a href="#" class="link-secondary mx-2">
+                                <a href="#" class="link-secondary mx-2" style="text-decoration: none">
                                             <span class="material-icons-outlined">
                                                 thumb_down
                                             </span>
                                     도움안돼요 1
                                 </a>
                                 <div class="vr"></div>
-                                <a href="#" class="link-secondary mx-2">댓글 0</a>
+                                <a href="#" class="link-secondary mx-2" style="text-decoration: none">댓글 0</a>
                             </div>
                         </div>
                         <div class="col-4">
@@ -247,7 +284,7 @@
                     <ul class="pagination justify-content-center">
                         <c:if test="${pagination.prev}">
                             <li class="page-item">
-                                <a class="page-link link-dark"
+                                <a class="page-link"
                                    href="#"
                                    onclick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${review.productId}', '${sortNum}', '${keyword}')"
                                    aria-label="Previous">
@@ -258,7 +295,7 @@
 
                         <c:forEach var="idx" begin="${pagination.startPage}" end="${pagination.endPage}">
                             <li class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> ">
-                                <a class="page-link link-dark"
+                                <a class="page-link"
                                    href="#"
                                    onclick="fn_pagination('${idx}', '${pagination.range}', '${review.productId}', '${sortNum}', '${keyword}')">
                                         ${idx}
@@ -268,7 +305,7 @@
 
                         <c:if test="${pagination.next}">
                             <li class="page-item">
-                                <a class="page-link link-dark"
+                                <a class="page-link"
                                    href="#"
                                    onclick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}', '${review.productId}', '${sortNum}', '${keyword}')"
                                    aria-label="Next">

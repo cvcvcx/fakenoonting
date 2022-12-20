@@ -21,28 +21,28 @@
             <section>
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
-                            TOTAL 11 PRODUCT
+                        <div class="col-6">
+                            TOTAL 0 PRODUCT
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-6 text-end">
                             <div class="row">
-                                <div class="col-2 col-md-2">
-                                    <a href="#" class="link-secondary">
+                                <div class="col-3">
+                                    <a href="#" class="link-secondary" style="text-decoration: none;">
                                         신상품
                                     </a>
                                 </div>
-                                <div class="col-2 col-md-2">
-                                    <a href="#" class="link-secondary">
+                                <div class="col-3">
+                                    <a href="#" class="link-secondary" style="text-decoration: none;">
                                         낮은가격
                                     </a>
                                 </div>
-                                <div class="col-2 col-md-2">
-                                    <a href="#" class="link-secondary">
+                                <div class="col-3">
+                                    <a href="#" class="link-secondary" style="text-decoration: none;">
                                         높은가격
                                     </a>
                                 </div>
-                                <div class="col-2 col-md-2">
-                                    <a href="#" class="link-secondary">
+                                <div class="col-3">
+                                    <a href="#" class="link-secondary" style="text-decoration: none;">
                                         인기상품
                                     </a>
                                 </div>
@@ -54,23 +54,26 @@
 
             <!-- 상품 -->
             <section>
-                <div class="row row-cols-1 row-cols-md-4 g-4 mt-5">
-                <c:forEach items="${list}" var="list">
-                              <c:set var="imgItem" value="${list.productImgItems[0]}" />
-                              <div class="col">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-md-4 g-4 mt-5">
+                    <c:forEach items="${list}" var="list">
+                        <c:set var="imgItem" value="${list.productImgItems[0]}" />
+                            <div class="col">
                                 <div class="card h-100">
                                     <a href="${contextPath}/product/detail?id=${list.id}">
                                         <img src="${contextPath}/util/upload/display?fileName=${imgItem.uploadPath}/s_${imgItem.imgUUID}_${imgItem.orgImgName}"
-                                         class="card-img-top w-100" alt="상품">
+                                        class="card-img-top w-100" alt="상품">
                                     </a>
-                          		    <div class="card-body">
-                                    <p class="card-title">${list.productName}</p>
-                                     <hr/>
-                                    <p class="card-text">${list.price}</p>
+                                    <div class="card-body">
+                                        <p class="card-title">${list.productName}</p>
+                                            <hr/>
+                                        <p class="card-text">${list.price}</p>
                                     </div>
                                 </div>
-                              </div>
-                </c:forEach>
+                            </div>
+                    </c:forEach>
+                    </div>
+                </div>
             </section>
             <section>
                 <nav aria-label="Page navigation" class="text-center">

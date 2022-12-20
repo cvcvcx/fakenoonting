@@ -69,23 +69,25 @@
                 </div>
             </section>
             <section>
-            	<div class="row row-cols-1 row-cols-md-4 g-4 mt-5">
-                    <c:forEach items="${list}" var="list">
-                        <c:set var="imgItem" value="${list.productImgItems[0]}" />
-                        <div class="col">
-                          <div class="card h-100">
-                              <a href="${contextPath}/product/detail?id=${list.id}">
-                                  <img src="${contextPath}/util/upload/display?fileName=${imgItem.uploadPath}/s_${imgItem.imgUUID}_${imgItem.orgImgName}"
-                                   class="card-img-top w-100" alt="상품">
-                              </a>
-                                <div class="card-body">
-                              <p class="card-title">${list.productName}</p>
-                               <hr/>
-                              <p class="card-text">${list.price}</p>
-                              </div>
-                          </div>
-                        </div>
-                    </c:forEach>
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-md-4 g-4 mt-5">
+                        <c:forEach items="${list}" var="list">
+                            <c:set var="imgItem" value="${list.productImgItems[0]}" />
+                            <div class="col">
+                                <div class="card h-100">
+                                    <a href="${contextPath}/product/detail?id=${list.id}">
+                                        <img src="${contextPath}/util/upload/display?fileName=${imgItem.uploadPath}/s_${imgItem.imgUUID}_${imgItem.orgImgName}"
+                                            class="card-img-top w-100" alt="상품">
+                                    </a>
+                                    <div class="card-body">
+                                        <p class="card-title">${list.productName}</p>
+                                        <hr/>
+                                        <p class="card-text">${list.price}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
                 </div>
             </section>
         </article>

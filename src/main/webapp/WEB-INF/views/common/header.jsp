@@ -35,20 +35,20 @@
 							<c:choose>
 								<c:when test="${isLogOn == true && member != null}">
 									<a href="${contextPath}/member/logout.do">
-										<button type="button" class="btn btn-default">LOGOUT</button>
+										<button type="button" class="btn btn-default btn-sm">LOGOUT</button>
 									</a>
 								</c:when>
 								<c:otherwise>
 									<a href="${contextPath}/member/loginForm.do">
-										<button type="button" class="btn btn-default">LOGIN</button>
+										<button type="button" class="btn btn-default btn-sm">LOGIN</button>
 									</a>
 								</c:otherwise>
 							</c:choose>
 
 							<a href="${contextPath}/member/regiMemberForm.do"><button
-									type="button" class="btn btn-default">JOIN US</button></a>
+									type="button" class="btn btn-default btn-sm">JOIN US</button></a>
 							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default dropdown-toggle"
+								<button type="button" class="btn btn-default dropdown-toggle btn-sm"
 									data-bs-toggle="dropdown" aria-expanded="false">MY
 									PAGE</button>
 								<ul class="dropdown-menu">
@@ -80,12 +80,12 @@
 								<button class="btn btn-outline-secondary" type="submit">
 									<span class="material-icons-outlined"> search </span>
 								</button>
-								<div class="">
-									<a href="#" class="wish_icon"> <span
+								<div class="align-self-center mx-1">
+									<a href="#" class="wish_icon link-secondary"> <span
 										class="material-icons-outlined"> favorite_border </span></a>
 								</div>
-								<div class="">
-									<a href=" ${contextPath}/cart/list" class="cart_icon"> <span
+								<div class="align-self-center mx-1">
+									<a href=" ${contextPath}/cart/list" class="cart_icon link-secondary"> <span
 										class="material-icons-outlined"> shopping_cart </span></a>
 								</div>
 							</form>
@@ -137,7 +137,7 @@
 								</fieldset>
 							</div>
 							<div class="right_board">
-								<a href="#">Q&A</a> <a href="#">REVIEW</a>
+								<a href="#" style="text-decoration: none;" class="text-secondary">Q&A</a> <a href="#" style="text-decoration: none;" class="text-secondary">REVIEW</a>
 							</div>
 						</form>
 						<hr>
